@@ -91,6 +91,11 @@ export default function DashboardDemo() {
     picRole: "",
   });
 
+  const [initialTasks, setInitialTasks] = useState<Note[]>([]);
+  const [newInitialTask, setNewInitialTask] = useState("");
+  const [initialTaskStatus, setInitialTaskStatus] = useState<"done" | "progress" | "problem">("progress");
+  const [initialTaskDue, setInitialTaskDue] = useState("");
+
   const [newTask, setNewTask] = useState("");
   const [taskStatus, setTaskStatus] = useState<"done" | "progress" | "problem">("progress");
   const [taskDue, setTaskDue] = useState("");
@@ -105,12 +110,41 @@ export default function DashboardDemo() {
       due: form.due,
       pic: form.pic,
       picRole: form.picRole,
-      notes: [],
+      notes: initialTasks,
     };
 
     addProjectToFirebase(newProject);
     setShowAddForm(false);
     setForm({ name: "", location: "", pm: "", due: "", pic: "", picRole: "" });
+    setInitialTasks([]);
+    setNewInitialTask("");
+    setInitialTaskStatus("progress");
+    setInitialTaskDue("");
+  }
+
+  function addInitialTask() {
+    if (!newInitialTask.trim()) return;
+
+    const task: Note = {
+      text: newInitialTask,
+      status: initialTaskStatus,
+      due: initialTaskDue,
+    };
+
+    setInitialTasks([...initialTasks, task]);
+    setNewInitialTask("");
+    setInitialTaskDue("");
+    setInitialTaskStatus("progress");
+  }
+
+  function removeInitialTask(index: number) {
+    setInitialTasks(initialTasks.filter((_, i) => i !== index));
+  }
+
+  function updateInitialTaskStatus(index: number, status: "done" | "progress" | "problem") {
+    const updatedTasks = [...initialTasks];
+    updatedTasks[index].status = status;
+    setInitialTasks(updatedTasks);
   }
 
   function addTask() {
@@ -266,11 +300,101 @@ export default function DashboardDemo() {
                     <input className="flex h-12 w-full rounded-xl border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-4 py-3 text-sm font-medium placeholder:text-slate-400 text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" placeholder="Due Date" value={form.due} onChange={(e)=>setForm({...form,due:e.target.value})}/>
                     <input className="flex h-12 w-full rounded-xl border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-4 py-3 text-sm font-medium placeholder:text-slate-400 text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" placeholder="PIC" value={form.pic} onChange={(e)=>setForm({...form,pic:e.target.value})}/>
                     <input className="flex h-12 w-full rounded-xl border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-4 py-3 text-sm font-medium placeholder:text-slate-400 text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" placeholder="PIC Role" value={form.picRole} onChange={(e)=>setForm({...form,picRole:e.target.value})}/>
+                  </motion.div>
+                )}
+
+                {showAddForm && (
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0 }} 
+                    animate={{ opacity: 1, height: "auto" }} 
+                    exit={{ opacity: 0, height: 0 }}
+                    className="p-6 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-xl border border-slate-600 mt-4"
+                  >
+                    <h4 className="text-lg font-semibold text-slate-100 mb-4 flex items-center gap-2">
+                      <span className="w-5 h-5 bg-red-700 rounded-lg flex items-center justify-center">
+                        <span className="text-white text-xs">+</span>
+                      </span>
+                      Add Initial Tasks
+                    </h4>
+                    
+                    <div className="flex flex-col sm:flex-row gap-3 mb-4">
+                      <input 
+                        className="flex h-12 w-full rounded-xl border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-4 py-3 text-sm font-medium placeholder:text-slate-400 text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                        value={newInitialTask} 
+                        onChange={(e)=>setNewInitialTask(e.target.value)} 
+                        placeholder="Task description..."
+                      />
+                      <input 
+                        className="flex h-12 w-full rounded-xl border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-4 py-3 text-sm font-medium placeholder:text-slate-400 text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                        value={initialTaskDue} 
+                        onChange={(e)=>setInitialTaskDue(e.target.value)} 
+                        placeholder="Due Date"
+                      />
+                      <select 
+                        className="flex h-12 w-full rounded-xl border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-4 py-3 text-sm font-medium text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                        value={initialTaskStatus} 
+                        onChange={(e)=>setInitialTaskStatus(e.target.value as "done" | "progress" | "problem")}
+                      >
+                        <option value="done">Done</option>
+                        <option value="progress">Progress</option>
+                        <option value="problem">Problem</option>
+                      </select>
+                      <Button 
+                        onClick={addInitialTask}
+                        className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold"
+                      >
+                        Add Task
+                      </Button>
+                    </div>
+
+                    {initialTasks.length > 0 && (
+                      <div className="space-y-2">
+                        <h5 className="text-sm font-medium text-slate-300">Initial Tasks ({initialTasks.length}):</h5>
+                        {initialTasks.map((task, index)=> (
+                          <div key={index} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 p-3 bg-slate-800/50 rounded-lg border border-slate-600">
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-slate-100">{task.text}</p>
+                              <p className="text-xs text-slate-400">Due: {task.due}</p>
+                            </div>
+                            <div className="flex gap-2 items-center">
+                              <TaskBadge status={task.status}/>
+                              <select 
+                                className="flex h-8 rounded-lg border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-2 py-1 text-xs font-medium text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                                value={task.status} 
+                                onChange={(e)=>updateInitialTaskStatus(index, e.target.value as "done" | "progress" | "problem")}
+                              >
+                                <option value="done">Done</option>
+                                <option value="progress">Progress</option>
+                                <option value="problem">Problem</option>
+                              </select>
+                              <Button 
+                                size="sm" 
+                                variant="ghost" 
+                                onClick={()=>removeInitialTask(index)}
+                                className="text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-200 h-8 w-8 p-0"
+                              >
+                                🗑️
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {showAddForm && (
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0 }} 
+                    animate={{ opacity: 1, height: "auto" }} 
+                    exit={{ opacity: 0, height: 0 }}
+                    className="flex justify-center"
+                  >
                     <Button 
                       onClick={handleAddProject}
-                      className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold"
+                      className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold px-8"
                     >
-                      Save Project
+                      Save Project with {initialTasks.length} Task{initialTasks.length !== 1 ? 's' : ''}
                     </Button>
                   </motion.div>
                 )}
