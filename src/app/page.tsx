@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import { addProject as addProjectToFirebase, updateProject, deleteProject as deleteProjectFromFirebase } from "@/lib/firestore";
 import { RealtimeIndicator } from "@/components/RealtimeIndicator";
 import { useFirebase } from "@/components/FirebaseProvider";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 interface Note {
   text: string;
@@ -78,9 +80,32 @@ function hasLateTask(project: Project): boolean {
 }
 
 export default function DashboardDemo() {
+  const { user, loading: authLoading, logout } = useAuth();
   const { projects, loading, error } = useFirebase();
+  const router = useRouter();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, authLoading, router]);
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-white text-lg">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null; // Will redirect to login
+  }
 
   const [form, setForm] = useState({
     name: "",
@@ -207,9 +232,25 @@ export default function DashboardDemo() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 md:p-6">
       <header className="mb-8">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Project Dashboard</h1>
-          <p className="text-slate-300 text-lg">Manage your projects and tasks efficiently</p>
-          <div className="flex justify-center items-center gap-4 mt-4">
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Project Dashboard</h1>
+              <p className="text-slate-300 text-lg">Manage your projects and tasks efficiently</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-slate-300 text-sm">Welcome back</p>
+                <p className="text-white font-medium">{user?.email}</p>
+              </div>
+              <Button 
+                onClick={logout}
+                className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300"
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
+          <div className="flex justify-center items-center gap-4">
             <RealtimeIndicator />
           </div>
         </motion.div>
