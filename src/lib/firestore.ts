@@ -21,8 +21,10 @@ export interface Project {
 export interface Note {
   id?: string;
   text: string;
-  status: "done" | "progress" | "problem";
+  status: "done" | "progress" | "problem" | "service" | "notStarted";
   due: string;
+  department?: string;
+  service?: string;
   createdAt?: Date;
 }
 

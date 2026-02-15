@@ -5,35 +5,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-import { addProject as addProjectToFirebase, updateProject, deleteProject as deleteProjectFromFirebase } from "@/lib/firestore";
+import { addProject as addProjectToFirebase, updateProject, deleteProject as deleteProjectFromFirebase, Project, Note } from "@/lib/firestore";
 import { RealtimeIndicator } from "@/components/RealtimeIndicator";
 import { useFirebase } from "@/components/FirebaseProvider";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-
-interface Note {
-  text: string;
-  status: "done" | "progress" | "problem";
-  due: string;
-  notes?: string;
-  service?: string;
-  createdAt?: Date;
-}
-
-interface Project {
-  id?: string;
-  name: string;
-  location: string;
-  pm: string;
-  pic: string;
-  picRole: string;
-  due: string;
-  notes: Note[];
-  createdAt?: Date;
-  updatedAt?: Date;
-}
 
 const initialProjects: Project[] = [
   {
@@ -69,7 +47,28 @@ function StatusBadge({ status }: { status: string }) {
 function TaskBadge({ status }: { status: string }) {
   if (status === "done") return <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white border-0 shadow-md text-xs">Done</Badge>;
   if (status === "problem") return <Badge className="bg-gradient-to-r from-red-500 to-red-600 text-white border-0 shadow-md text-xs">Problem</Badge>;
+  if (status === "service") return <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 shadow-md text-xs">Service</Badge>;
+  if (status === "notStarted") return <Badge className="bg-gradient-to-r from-gray-500 to-gray-600 text-white border-0 shadow-md text-xs">Not Started</Badge>;
   return <Badge className="bg-gradient-to-r from-amber-400 to-amber-500 text-white border-0 shadow-md text-xs">Progress</Badge>;
+}
+
+function DepartmentBadge({ department }: { department: string }) {
+  const getDepartmentColor = (dept: string) => {
+    switch (dept?.toLowerCase()) {
+      case "procurement": return "bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0 shadow-md text-xs";
+      case "drafter": return "bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 shadow-md text-xs";
+      case "engineering": return "bg-gradient-to-r from-cyan-500 to-cyan-600 text-white border-0 shadow-md text-xs";
+      case "team sales": return "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-0 shadow-md text-xs";
+      case "warehouse": return "bg-gradient-to-r from-gray-500 to-gray-600 text-white border-0 shadow-md text-xs";
+      case "technician": return "bg-gradient-to-r from-green-500 to-green-600 text-white border-0 shadow-md text-xs";
+      case "project manager": return "bg-gradient-to-r from-yellow-500 to-yellow-600 text-white border-0 shadow-md text-xs";
+      default: return "bg-gradient-to-r from-slate-500 to-slate-600 text-white border-0 shadow-md text-xs";
+    }
+  };
+
+  const displayDept = department || "Unassigned";
+  
+  return <Badge className={getDepartmentColor(displayDept)}>{displayDept}</Badge>;
 }
 
 function isLate(taskDue: string, projectDue: string): boolean {
@@ -103,17 +102,19 @@ export default function DashboardDemo() {
 
   const [initialTasks, setInitialTasks] = useState<Note[]>([]);
   const [newInitialTask, setNewInitialTask] = useState("");
-  const [initialTaskStatus, setInitialTaskStatus] = useState<"done" | "progress" | "problem">("progress");
+  const [initialTaskStatus, setInitialTaskStatus] = useState<"done" | "progress" | "problem" | "service" | "notStarted">("notStarted");
   const [initialTaskDue, setInitialTaskDue] = useState("");
+  const [initialTaskDepartment, setInitialTaskDepartment] = useState("");
   const [initialTaskNotes, setInitialTaskNotes] = useState("");
   const [initialTaskService, setInitialTaskService] = useState("");
   const [initialTaskUrgency, setInitialTaskUrgency] = useState("medium");
 
   const [newTask, setNewTask] = useState("");
   const [taskDue, setTaskDue] = useState("");
+  const [taskDepartment, setTaskDepartment] = useState("");
   const [taskNotes, setTaskNotes] = useState("");
   const [taskService, setTaskService] = useState("");
-  const [taskStatus, setTaskStatus] = useState<"done" | "progress" | "problem">("progress");
+  const [taskStatus, setTaskStatus] = useState<"done" | "progress" | "problem" | "service" | "notStarted">("progress");
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -154,9 +155,12 @@ export default function DashboardDemo() {
     setForm({ name: "", location: "", pm: "", due: "", pic: "", picRole: "" });
     setInitialTasks([]);
     setNewInitialTask("");
-    setInitialTaskStatus("progress");
     setInitialTaskDue("");
+    setInitialTaskDepartment("");
     setInitialTaskNotes("");
+    setInitialTaskStatus("notStarted"); // Reset to "Not Started"
+    setInitialTaskUrgency("medium");
+    setInitialTaskDepartment(""); // Reset initialTaskDepartment
   }
 
   function addInitialTask() {
@@ -165,14 +169,15 @@ export default function DashboardDemo() {
       text: newInitialTask,
       status: initialTaskStatus,
       due: initialTaskDue,
-      notes: initialTaskNotes,
+      department: initialTaskDepartment,
       service: initialTaskUrgency
     };
     setInitialTasks([...initialTasks, task]);
     setNewInitialTask("");
     setInitialTaskDue("");
+    setInitialTaskDepartment("");
     setInitialTaskNotes("");
-    setInitialTaskStatus("progress");
+    setInitialTaskStatus("notStarted"); // Set default to "Not Started"
     setInitialTaskUrgency("medium");
   }
 
@@ -180,7 +185,7 @@ export default function DashboardDemo() {
     setInitialTasks(initialTasks.filter((_, i) => i !== index));
   }
 
-  function updateInitialTaskStatus(index: number, status: "done" | "progress" | "problem") {
+  function updateInitialTaskStatus(index: number, status: "done" | "progress" | "problem" | "service" | "notStarted") {
     const updatedTasks = [...initialTasks];
     updatedTasks[index].status = status;
     setInitialTasks(updatedTasks);
@@ -191,18 +196,19 @@ export default function DashboardDemo() {
 
     const updatedProject = {
       ...selectedProject,
-      notes: [...selectedProject.notes, { text: newTask, status: taskStatus, due: taskDue, service: taskService }],
+      notes: [...selectedProject.notes, { text: newTask, status: taskStatus, due: taskDue, department: taskDepartment, service: taskService }],
     };
 
     updateProject(selectedProject.id!, updatedProject);
     setNewTask("");
     setTaskDue("");
+    setTaskDepartment("");
     setTaskNotes("");
     setTaskService("");
     setTaskStatus("progress");
   }
 
-  function updateTaskStatus(index: number, value: "done" | "progress" | "problem") {
+  function updateTaskStatus(index: number, value: "done" | "progress" | "problem" | "service" | "notStarted") {
     if (!selectedProject) return;
     const updatedNotes = [...selectedProject.notes];
     updatedNotes[index].status = value;
@@ -484,12 +490,20 @@ export default function DashboardDemo() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">Project Manager</label>
+                      <label className="block text-sm font-medium text-white mb-2">PIC Internal</label>
                       <input 
                         className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                         value={form.pm} 
                         onChange={(e)=>setForm({...form,pm:e.target.value})}
                       />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-white mb-2">PIC Site</label>
+                      <input className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" value={form.pic} onChange={(e)=>setForm({...form,pic:e.target.value})}/>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-white mb-2">PIC Site (Role)</label>
+                      <input className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" value={form.picRole} onChange={(e)=>setForm({...form,picRole:e.target.value})}/>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-white mb-2">Due Date</label>
@@ -499,14 +513,6 @@ export default function DashboardDemo() {
                         value={form.due} 
                         onChange={(e)=>setForm({...form,due:e.target.value})}
                       />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-white mb-2">PIC</label>
-                      <input className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" value={form.pic} onChange={(e)=>setForm({...form,pic:e.target.value})}/>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-white mb-2">PIC Role</label>
-                      <input className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" value={form.picRole} onChange={(e)=>setForm({...form,picRole:e.target.value})}/>
                     </div>
                   </motion.div>
                 )}
@@ -522,53 +528,94 @@ export default function DashboardDemo() {
                       <span className="w-5 h-5 bg-red-700 rounded-lg flex items-center justify-center">
                         <span className="text-white text-xs">+</span>
                       </span>
-                      Add Initial Tasks
+                      Add Outstanding Tasks
                     </h4>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                      <div>
-                        <label className="block text-sm font-medium text-white mb-2">Task Description</label>
-                        <input 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={newInitialTask} 
-                          onChange={(e)=>setNewInitialTask(e.target.value)} 
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-white mb-2">Due Date</label>
-                        <input 
-                          type="date"
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={initialTaskDue} 
-                          onChange={(e)=>setInitialTaskDue(e.target.value)} 
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-white mb-2">Level Urgency</label>
-                        <select 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={initialTaskUrgency} 
-                          onChange={(e)=>setInitialTaskUrgency(e.target.value)}
-                        >
-                          <option value="low">Low</option>
-                          <option value="medium">Medium</option>
-                          <option value="high">High</option>
-                          <option value="critical">Critical</option>
-                        </select>
-                      </div>
-                      <div className="flex flex-col justify-end">
-                        <label className="block text-sm font-medium text-white mb-2">Notes</label>
-                        <input 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={initialTaskNotes} 
-                          onChange={(e)=>setInitialTaskNotes(e.target.value)} 
-                        />
-                        <Button 
-                          onClick={addInitialTask}
-                          className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold mt-2"
-                        >
-                          Add Task
-                        </Button>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-white mb-2">Task Description</label>
+                          <input 
+                            className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                            value={newInitialTask} 
+                            onChange={(e)=>setNewInitialTask(e.target.value)} 
+                          />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-white mb-2">Due Date</label>
+                            <input 
+                              type="date"
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              value={initialTaskDue} 
+                              onChange={(e)=>setInitialTaskDue(e.target.value)} 
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-white mb-2">Department</label>
+                            <select 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              value={initialTaskDepartment} 
+                              onChange={(e)=>setInitialTaskDepartment(e.target.value)}
+                            >
+                              <option value="">Select Department</option>
+                              <option value="Procurement">Procurement</option>
+                              <option value="Drafter">Drafter</option>
+                              <option value="Engineering">Engineering</option>
+                              <option value="Team Sales">Team Sales</option>
+                              <option value="Warehouse">Warehouse</option>
+                              <option value="Technician">Technician</option>
+                              <option value="Project Manager">Project Manager</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-white mb-2">Level Urgency</label>
+                            <select 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              value={initialTaskUrgency} 
+                              onChange={(e)=>setInitialTaskUrgency(e.target.value)}
+                            >
+                              <option value="low">Low</option>
+                              <option value="medium">Medium</option>
+                              <option value="high">High</option>
+                              <option value="critical">Critical</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-white mb-2">Status</label>
+                            <select 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              value={initialTaskStatus} 
+                              onChange={(e)=>setInitialTaskStatus(e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
+                            >
+                              <option value="notStarted">Not Started</option>
+                              <option value="progress">In Progress</option>
+                              <option value="problem">Problem</option>
+                              <option value="service">Service</option>
+                              <option value="done">Done</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="flex-1">
+                            <label className="block text-sm font-medium text-white mb-2">Notes</label>
+                            <input 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              value={initialTaskNotes} 
+                              onChange={(e)=>setInitialTaskNotes(e.target.value)} 
+                            />
+                          </div>
+                          <div className="flex items-end">
+                            <Button 
+                              onClick={addInitialTask}
+                              className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold"
+                            >
+                              Add Task
+                            </Button>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -580,20 +627,20 @@ export default function DashboardDemo() {
                             <div className="flex-1">
                               <p className="text-sm font-medium text-white">{task.text}</p>
                               <p className="text-xs text-white">Due: {task.due}</p>
-                              {task.notes && (
-                                <p className="text-xs text-white italic mt-1">Notes: {task.notes}</p>
-                              )}
                             </div>
                             <div className="flex gap-2 items-center">
                               <TaskBadge status={task.status}/>
+                              <DepartmentBadge department={task.department || "Unassigned"}/>
                               <select 
                                 className="flex h-8 rounded-lg border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                                 value={task.status} 
-                                onChange={(e)=>updateInitialTaskStatus(index, e.target.value as "done" | "progress" | "problem")}
+                                onChange={(e)=>updateInitialTaskStatus(index, e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
                               >
                                 <option value="done">Done</option>
                                 <option value="progress">Progress</option>
                                 <option value="problem">Problem</option>
+                                <option value="service">Service</option>
+                                <option value="notStarted">Not Started</option>
                               </select>
                               <Button 
                                 size="sm" 
@@ -835,27 +882,63 @@ export default function DashboardDemo() {
                       <div className="flex-1">
                         <label className="block text-sm font-medium text-white mb-2">Task Description</label>
                         <input 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={newTask} 
-                          onChange={(e)=>setNewTask(e.target.value)} 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          value={newInitialTask} 
+                          onChange={(e)=>setNewInitialTask(e.target.value)} 
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-white mb-2">Due Date</label>
                         <input 
                           type="date"
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={taskDue} 
-                          onChange={(e)=>setTaskDue(e.target.value)} 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          value={initialTaskDue} 
+                          onChange={(e)=>setInitialTaskDue(e.target.value)} 
                         />
                       </div>
-                      <div className="flex-1">
-                        <label className="block text-sm font-medium text-white mb-2">Notes</label>
-                        <input 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={taskNotes} 
-                          onChange={(e)=>setTaskNotes(e.target.value)} 
-                        />
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">Department</label>
+                        <select 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          value={initialTaskDepartment} 
+                          onChange={(e)=>setInitialTaskDepartment(e.target.value)}
+                        >
+                          <option value="">Select Department</option>
+                          <option value="Procurement">Procurement</option>
+                          <option value="Drafter">Drafter</option>
+                          <option value="Engineering">Engineering</option>
+                          <option value="Team Sales">Team Sales</option>
+                          <option value="Warehouse">Warehouse</option>
+                          <option value="Technician">Technician</option>
+                          <option value="Project Manager">Project Manager</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">Level Urgency</label>
+                        <select 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          value={initialTaskUrgency} 
+                          onChange={(e)=>setInitialTaskUrgency(e.target.value)}
+                        >
+                          <option value="low">Low</option>
+                          <option value="medium">Medium</option>
+                          <option value="high">High</option>
+                          <option value="critical">Critical</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-white mb-2">Status</label>
+                        <select 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          value={initialTaskStatus} 
+                          onChange={(e)=>setInitialTaskStatus(e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
+                        >
+                          <option value="notStarted">Not Started</option>
+                          <option value="progress">In Progress</option>
+                          <option value="problem">Problem</option>
+                          <option value="service">Service</option>
+                          <option value="done">Done</option>
+                        </select>
                       </div>
                       <Button 
                         onClick={addTask}
@@ -871,7 +954,7 @@ export default function DashboardDemo() {
                       <span className="w-6 h-6 bg-red-700 rounded-lg flex items-center justify-center">
                         <span className="text-white text-sm">📋</span>
                       </span>
-                      Site Notes & Tasks
+                      Outstanding Tasks
                     </h3>
                     <div className="space-y-3">
                       {selectedProject.notes.map((note,index)=> (
@@ -890,20 +973,20 @@ export default function DashboardDemo() {
                             <p className={`text-sm ${isLate(note.due,selectedProject.due)?"text-red-500":"text-white"}`}>
                               Due: {note.due}
                             </p>
-                            {note.notes && (
-                              <p className="text-xs text-white italic mt-1">Notes: {note.notes}</p>
-                            )}
                           </div>
                           <div className="flex gap-2 items-center">
                             <TaskBadge status={note.status}/>
+                            <DepartmentBadge department={note.department || "Unassigned"}/>
                             <select 
                               className="flex h-10 rounded-lg border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-3 py-2 text-sm font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                               value={note.status} 
-                              onChange={(e)=>updateTaskStatus(index, e.target.value as "done" | "progress" | "problem")}
+                              onChange={(e)=>updateTaskStatus(index, e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
                             >
                               <option value="done">Done</option>
                               <option value="progress">Progress</option>
                               <option value="problem">Problem</option>
+                              <option value="service">Service</option>
+                              <option value="notStarted">Not Started</option>
                             </select>
                             <Button 
                               size="icon" 
