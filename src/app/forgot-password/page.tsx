@@ -35,27 +35,27 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <Card className="bg-slate-800/90 backdrop-blur-sm border border-slate-700 shadow-2xl">
+        <Card className="bg-white/95 backdrop-blur-sm border border-gray-200 shadow-2xl">
           <CardHeader className="text-center pb-6">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring" }}
-              className="w-16 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-4"
+              className="w-24 h-24 flex items-center justify-center mx-auto mb-4"
             >
-              <span className="text-white text-2xl font-bold">🔐</span>
+              <img src="/logo.svg" alt="Project Tracker Logo" className="w-full h-full" />
             </motion.div>
-            <CardTitle className="text-2xl font-bold text-white">
+            <CardTitle className="text-2xl font-bold text-gray-800">
               POCTAL
             </CardTitle>
-            <p className="text-slate-300 mt-2">
+            <p className="text-gray-600 mt-2">
               Enter your email to receive password reset link
             </p>
           </CardHeader>
@@ -63,14 +63,14 @@ export default function ForgotPasswordPage() {
           <CardContent className="space-y-6">
             <form onSubmit={handleResetPassword} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Email Address
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-12 rounded-xl border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-4 py-3 text-sm font-medium text-slate-100 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter your email"
                   required
                 />
