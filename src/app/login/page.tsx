@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -25,6 +25,20 @@ export default function LoginPage() {
       router.push("/");
     } catch (err: any) {
       setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleGoogleSignIn() {
+    setLoading(true);
+    setError("");
+
+    try {
+      await signInWithPopup(auth, googleProvider);
+      router.push("/");
+    } catch (err: any) {
+      setError(err.message || "Google sign-in failed");
     } finally {
       setLoading(false);
     }
@@ -108,6 +122,37 @@ export default function LoginPage() {
                   </div>
                 ) : (
                   "Sign In"
+                )}
+              </Button>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-slate-600"></div>
+                </div>
+                <span className="relative bg-slate-800/90 px-3 text-xs text-slate-400">OR</span>
+              </div>
+
+              <Button
+                type="button"
+                onClick={handleGoogleSignIn}
+                disabled={loading}
+                className="w-full bg-white hover:bg-gray-50 text-slate-700 border border-slate-300 shadow-lg hover:shadow-xl transition-all duration-300 h-12 rounded-xl font-semibold flex items-center justify-center gap-3"
+              >
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-slate-700"></div>
+                    Connecting...
+                  </div>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" viewBox="0 0 24 24">
+                      <path
+                        fill="#4285F4"
+                        d="M22.56 12.25c0-.138-.112-.25-.25-.25H2.75c-.138 0-.25.112-.25-.25V6.75c0-.138.112-.25.25-.25h19.5c.138 0 .25.112.25.25v5.25c0 .138-.112.25-.25.25H23c.138 0 .25-.112.25-.25V12.5c0-.138-.112-.25-.25-.25zm-11.56.5c0-.138.112-.25.25-.25H2.688c-.138 0-.25.112-.25-.25V8.688c0-.138.112-.25-.25-.25h8.063c.138 0 .25.112.25.25v3.563c0 .138.112.25.25.25zm-11.56 5.5c0-.138.112-.25.25-.25H2.688c-.138 0-.25.112-.25-.25v-3.563c0-.138.112-.25-.25-.25h8.063c.138 0 .25.112.25.25v3.563c0 .138.112.25.25.25z"
+                      />
+                    </svg>
+                    Sign in with Google
+                  </>
                 )}
               </Button>
             </form>

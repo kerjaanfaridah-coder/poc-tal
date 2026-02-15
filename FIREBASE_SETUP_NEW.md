@@ -13,7 +13,11 @@
 1. In Firebase Console, go to "Authentication"
 2. Click "Get started"
 3. Enable "Email/Password" sign-in method
-4. Click "Save"
+4. Click "Add new provider"
+5. Select "Google" from the list
+6. Enable Google Sign-In
+7. Add your project domain to authorized domains
+8. Click "Save"
 
 ## Step 3: Configure Email Recovery
 
@@ -69,13 +73,18 @@ export const auth = getAuth(app);
 export default app;
 ```
 
-## Step 7: Test Login & Password Reset
+## Step 7: Test Login & Google Sign-In
 
 1. Run `npm run dev`
 2. Go to http://localhost:3002
-3. Try to login with any email/password
+3. Try to login with email/password
 4. First time users will be created automatically
-5. Test password reset:
+5. Test Google Sign-In:
+   - Click "Sign in with Google"
+   - Choose Google account
+   - Allow permissions
+   - Auto redirect to dashboard
+6. Test password reset:
    - Click "Forgot your password?"
    - Enter email
    - Check your email for reset link
