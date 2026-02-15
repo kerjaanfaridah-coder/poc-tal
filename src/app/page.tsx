@@ -86,6 +86,24 @@ export default function DashboardDemo() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
 
+  const [form, setForm] = useState({
+    name: "",
+    location: "",
+    pm: "",
+    due: "",
+    pic: "",
+    picRole: "",
+  });
+
+  const [initialTasks, setInitialTasks] = useState<Note[]>([]);
+  const [newInitialTask, setNewInitialTask] = useState("");
+  const [initialTaskStatus, setInitialTaskStatus] = useState<"done" | "progress" | "problem">("progress");
+  const [initialTaskDue, setInitialTaskDue] = useState("");
+
+  const [newTask, setNewTask] = useState("");
+  const [taskStatus, setTaskStatus] = useState<"done" | "progress" | "problem">("progress");
+  const [taskDue, setTaskDue] = useState("");
+
   useEffect(() => {
     if (!authLoading && !user) {
       router.push("/login");
@@ -106,24 +124,6 @@ export default function DashboardDemo() {
   if (!user) {
     return null; // Will redirect to login
   }
-
-  const [form, setForm] = useState({
-    name: "",
-    location: "",
-    pm: "",
-    due: "",
-    pic: "",
-    picRole: "",
-  });
-
-  const [initialTasks, setInitialTasks] = useState<Note[]>([]);
-  const [newInitialTask, setNewInitialTask] = useState("");
-  const [initialTaskStatus, setInitialTaskStatus] = useState<"done" | "progress" | "problem">("progress");
-  const [initialTaskDue, setInitialTaskDue] = useState("");
-
-  const [newTask, setNewTask] = useState("");
-  const [taskStatus, setTaskStatus] = useState<"done" | "progress" | "problem">("progress");
-  const [taskDue, setTaskDue] = useState("");
 
   function handleAddProject() {
     if (!form.name) return;
@@ -234,7 +234,7 @@ export default function DashboardDemo() {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
           <div className="flex justify-between items-center mb-4">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Project Dashboard</h1>
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">POCTAL</h1>
               <p className="text-slate-300 text-lg">Manage your projects and tasks efficiently</p>
             </div>
             <div className="flex items-center gap-4">

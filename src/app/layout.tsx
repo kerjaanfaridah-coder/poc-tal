@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Project Dashboard",
+  title: "POCTAL",
   description: "Manage your projects and tasks efficiently",
 };
 
