@@ -195,12 +195,19 @@ export default function DashboardDemo() {
   function addTask() {
     if (!newTask.trim() || !selectedProject) return;
 
+    const newNote = { text: newTask, status: taskStatus, due: taskDue, department: taskDepartment, service: taskService, notes: taskNotes };
     const updatedProject = {
       ...selectedProject,
-      notes: [...selectedProject.notes, { text: newTask, status: taskStatus, due: taskDue, department: taskDepartment, service: taskService, notes: taskNotes }],
+      notes: [...selectedProject.notes, newNote],
     };
 
+    // Update local state immediately for better UX
+    setSelectedProject(updatedProject);
+    
+    // Update in Firebase
     updateProject(selectedProject.id!, updatedProject);
+    
+    // Reset form fields
     setNewTask("");
     setTaskDue("");
     setTaskDepartment("");
@@ -213,13 +220,25 @@ export default function DashboardDemo() {
     if (!selectedProject) return;
     const updatedNotes = [...selectedProject.notes];
     updatedNotes[index].status = value;
-    updateProject(selectedProject.id!, { ...selectedProject, notes: updatedNotes });
+    const updatedProject = { ...selectedProject, notes: updatedNotes };
+    
+    // Update local state immediately for better UX
+    setSelectedProject(updatedProject);
+    
+    // Update in Firebase
+    updateProject(selectedProject.id!, updatedProject);
   }
 
   function deleteTask(index: number) {
     if (!selectedProject) return;
     const updatedNotes = selectedProject.notes.filter((_, i) => i !== index);
-    updateProject(selectedProject.id!, { ...selectedProject, notes: updatedNotes });
+    const updatedProject = { ...selectedProject, notes: updatedNotes };
+    
+    // Update local state immediately for better UX
+    setSelectedProject(updatedProject);
+    
+    // Update in Firebase
+    updateProject(selectedProject.id!, updatedProject);
   }
 
   function deleteProject(id: string) {
@@ -643,7 +662,7 @@ export default function DashboardDemo() {
                       <div className="space-y-2">
                         <h5 className="text-sm font-medium text-gray-900">Initial Tasks ({initialTasks.length}):</h5>
                         {initialTasks.map((task, index)=> (
-                          <div key={index} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                          <div key={`${task.text}-${index}`} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
                             <div className="flex-1">
                               <p className="text-sm font-medium text-gray-900">{task.text}</p>
                               <p className="text-xs text-gray-700">Due: {task.due}</p>
@@ -907,8 +926,8 @@ export default function DashboardDemo() {
                         <label className="block text-sm font-bold text-black mb-2">Task Description</label>
                         <input 
                           className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={newInitialTask} 
-                          onChange={(e)=>setNewInitialTask(e.target.value)} 
+                          value={newTask} 
+                          onChange={(e)=>setNewTask(e.target.value)} 
                         />
                       </div>
                       <div>
@@ -916,16 +935,16 @@ export default function DashboardDemo() {
                         <input 
                           type="date"
                           className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={initialTaskDue} 
-                          onChange={(e)=>setInitialTaskDue(e.target.value)} 
+                          value={taskDue} 
+                          onChange={(e)=>setTaskDue(e.target.value)} 
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-bold text-black mb-2">Department</label>
                         <select 
                           className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={initialTaskDepartment} 
-                          onChange={(e)=>setInitialTaskDepartment(e.target.value)}
+                          value={taskDepartment} 
+                          onChange={(e)=>setTaskDepartment(e.target.value)}
                         >
                           <option value="">Select Department</option>
                           <option value="Procurement">Procurement</option>
@@ -941,8 +960,8 @@ export default function DashboardDemo() {
                         <label className="block text-sm font-bold text-black mb-2">Level Urgency</label>
                         <select 
                           className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={initialTaskUrgency} 
-                          onChange={(e)=>setInitialTaskUrgency(e.target.value)}
+                          value={taskService} 
+                          onChange={(e)=>setTaskService(e.target.value)}
                         >
                           <option value="low">Low</option>
                           <option value="medium">Medium</option>
@@ -954,8 +973,8 @@ export default function DashboardDemo() {
                         <label className="block text-sm font-bold text-black mb-2">Status</label>
                         <select 
                           className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={initialTaskStatus} 
-                          onChange={(e)=>setInitialTaskStatus(e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
+                          value={taskStatus} 
+                          onChange={(e)=>setTaskStatus(e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
                         >
                           <option value="notStarted">Not Started</option>
                           <option value="progress">In Progress</option>
@@ -968,8 +987,8 @@ export default function DashboardDemo() {
                         <label className="block text-sm font-bold text-black mb-2">Notes</label>
                         <input 
                           className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
-                          value={initialTaskNotes} 
-                          onChange={(e)=>setInitialTaskNotes(e.target.value)} 
+                          value={taskNotes} 
+                          onChange={(e)=>setTaskNotes(e.target.value)} 
                         />
                         <Button 
                           onClick={addTask}
@@ -991,7 +1010,7 @@ export default function DashboardDemo() {
                     <div className="space-y-3">
                       {selectedProject.notes.map((note,index)=> (
                         <motion.div 
-                          key={index} 
+                          key={`${note.text}-${index}`} 
                           initial={{ opacity: 0, x: -20 }} 
                           animate={{ opacity: 1, x: 0 }} 
                           transition={{ delay: index * 0.1 }}
