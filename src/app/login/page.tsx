@@ -60,10 +60,10 @@ export default function LoginPage() {
               transition={{ delay: 0.2, type: "spring" }}
               className="w-16 h-16 flex items-center justify-center mx-auto mb-4"
             >
-              <img src="/logo-poc.png" alt="Dashboard Project POC Technology Logo" className="w-16 h-16 object-contain" />
+              <img src="/logo-poc.png" alt="Dashboard Project Logo" className="w-16 h-16 object-contain" />
             </motion.div>
             <CardTitle className="text-2xl font-bold text-gray-800">
-              Dashboard Project POC Technology
+              Dashboard Project
             </CardTitle>
           </CardHeader>
           

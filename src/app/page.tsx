@@ -368,10 +368,10 @@ export default function DashboardDemo() {
                 transition={{ delay: 0.1, type: "spring" }}
                 className="w-16 h-16 flex items-center justify-center"
               >
-                <img src="/logo-poc.png" alt="Dashboard Project POC Technology Logo" className="w-16 h-16 object-contain" />
+                <img src="/logo-poc.png" alt="Dashboard Project Logo" className="w-16 h-16 object-contain" />
               </motion.div>
               <div>
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Dashboard Project POC Technology</h1>
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Dashboard Project</h1>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -399,69 +399,88 @@ export default function DashboardDemo() {
         <>
          
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ staggerChildren: 0.1 }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <motion.div whileHover={{ scale: 1.02, y: -2 }} transition={{ type: "spring", stiffness: 300 }}>
-              <Card className="bg-black/90 backdrop-blur-sm border border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-slate-500/20 transition-all duration-300">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <Card className="bg-white shadow-sm border border-gray-200 hover:shadow-md hover:shadow-gray-500/20 transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-white">Total Project</p>
-                    <div className="w-8 h-8 bg-gray-900/20 rounded-lg flex items-center justify-center border border-gray-900/30">
-                      <span className="text-white text-sm font-bold">📊</span>
+                    <p className="text-sm font-bold text-black">Total Project</p>
+                    <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                      <span className="text-gray-700 text-sm font-bold">📊</span>
                     </div>
                   </div>
-                  <h2 className="text-3xl font-bold text-white">{projects.length}</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">{projects.length}</h2>
                 </CardContent>
               </Card>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02, y: -2 }} transition={{ type: "spring", stiffness: 300 }}>
-              <Card className="bg-black/90 backdrop-blur-sm border border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-300">
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Card className="bg-white shadow-sm border border-gray-200 hover:shadow-md hover:shadow-amber-500/20 transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-white">Progress</p>
-                    <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center border border-amber-500/30">
-                      <span className="text-amber-400 text-sm font-bold">⏳</span>
+                    <p className="text-sm font-bold text-black">Progress</p>
+                    <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center border border-amber-200">
+                      <span className="text-amber-600 text-sm font-bold">⏳</span>
                     </div>
                   </div>
-                  <h2 className="text-3xl font-bold text-white">{projects.filter((p)=>getProjectStatus(p)==="progress").length}</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">{projects.filter((p)=>getProjectStatus(p)==="progress").length}</h2>
                 </CardContent>
               </Card>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02, y: -2 }} transition={{ type: "spring", stiffness: 300 }}>
-              <Card className="bg-black/90 backdrop-blur-sm border border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-red-500/20 transition-all duration-300">
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <Card className="bg-white shadow-sm border border-gray-200 hover:shadow-md hover:shadow-red-500/20 transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-white">Urgent</p>
-                    <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center border border-red-500/30">
-                      <span className="text-red-400 text-sm font-bold">🚨</span>
+                    <p className="text-sm font-bold text-black">Urgent</p>
+                    <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center border border-red-200">
+                      <span className="text-red-600 text-sm font-bold">🚨</span>
                     </div>
                   </div>
-                  <h2 className="text-3xl font-bold text-white">{projects.filter((p)=>getProjectStatus(p)==="urgent").length}</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">{projects.filter((p)=>getProjectStatus(p)==="urgent").length}</h2>
                 </CardContent>
               </Card>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.02, y: -2 }} transition={{ type: "spring", stiffness: 300 }}>
-              <Card className="bg-black/90 backdrop-blur-sm border border-slate-700 shadow-xl hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-300">
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <Card className="bg-white shadow-sm border border-gray-200 hover:shadow-md hover:shadow-green-500/20 transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-white">Done</p>
-                    <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center border border-green-500/30">
-                      <span className="text-green-400 text-sm font-bold">✅</span>
+                    <p className="text-sm font-bold text-black">Done</p>
+                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center border border-green-200">
+                      <span className="text-green-600 text-sm font-bold">✅</span>
                     </div>
                   </div>
-                  <h2 className="text-3xl font-bold text-white">{projects.filter((p)=>getProjectStatus(p)==="done").length}</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">{projects.filter((p)=>getProjectStatus(p)==="done").length}</h2>
                 </CardContent>
               </Card>
             </motion.div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-            <Card className="bg-black/90 backdrop-blur-sm border border-slate-700 shadow-2xl">
+            <Card className="bg-white shadow-sm border border-gray-200">
               <CardContent className="p-6 space-y-6">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-2xl font-bold text-white">Project List</h3>
+                  <h3 className="text-2xl font-bold text-gray-900">Project List</h3>
                   <Button 
                     size="sm" 
                     onClick={()=>setShowAddForm(!showAddForm)}
-                    className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300"
+                    className="bg-red-600 hover:bg-red-700 text-white border-0 shadow-sm hover:shadow-md hover:shadow-red-500/30 transition-all duration-300"
                   >
                     + Add Project
                   </Button>
@@ -472,45 +491,45 @@ export default function DashboardDemo() {
                     initial={{ opacity: 0, height: 0 }} 
                     animate={{ opacity: 1, height: "auto" }} 
                     exit={{ opacity: 0, height: 0 }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-xl border border-slate-600"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-white rounded-xl border border-gray-200 shadow-sm"
                   >
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">Project Name</label>
+                      <label className="block text-sm font-bold text-black mb-2">Project Name</label>
                       <input 
-                        className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                        className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                         value={form.name} 
                         onChange={(e)=>setForm({...form,name:e.target.value})}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">Location</label>
+                      <label className="block text-sm font-bold text-black mb-2">Location</label>
                       <input 
-                        className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                        className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                         value={form.location} 
                         onChange={(e)=>setForm({...form,location:e.target.value})}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">PIC Internal</label>
+                      <label className="block text-sm font-bold text-black mb-2">PIC Internal</label>
                       <input 
-                        className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                        className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                         value={form.pm} 
                         onChange={(e)=>setForm({...form,pm:e.target.value})}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">PIC Site</label>
-                      <input className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" value={form.pic} onChange={(e)=>setForm({...form,pic:e.target.value})}/>
+                      <label className="block text-sm font-bold text-black mb-2">PIC Site</label>
+                      <input className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" value={form.pic} onChange={(e)=>setForm({...form,pic:e.target.value})}/>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">PIC Site (Role)</label>
-                      <input className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" value={form.picRole} onChange={(e)=>setForm({...form,picRole:e.target.value})}/>
+                      <label className="block text-sm font-bold text-black mb-2">PIC Site (Role)</label>
+                      <input className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" value={form.picRole} onChange={(e)=>setForm({...form,picRole:e.target.value})}/>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-white mb-2">Due Date</label>
+                      <label className="block text-sm font-bold text-black mb-2">Due Date</label>
                       <input 
                         type="date"
-                        className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                        className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                         value={form.due} 
                         onChange={(e)=>setForm({...form,due:e.target.value})}
                       />
@@ -523,10 +542,10 @@ export default function DashboardDemo() {
                     initial={{ opacity: 0, height: 0 }} 
                     animate={{ opacity: 1, height: "auto" }} 
                     exit={{ opacity: 0, height: 0 }}
-                    className="p-6 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-xl border border-slate-600 mt-4"
+                    className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm mt-4"
                   >
-                    <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                      <span className="w-5 h-5 bg-red-700 rounded-lg flex items-center justify-center">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                      <span className="w-5 h-5 bg-red-600 rounded-lg flex items-center justify-center">
                         <span className="text-white text-xs">+</span>
                       </span>
                       Add Outstanding Tasks
@@ -535,27 +554,27 @@ export default function DashboardDemo() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                       <div className="space-y-4">
                         <div>
-                          <label className="block text-sm font-medium text-white mb-2">Task Description</label>
+                          <label className="block text-sm font-bold text-black mb-2">Task Description</label>
                           <input 
-                            className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                            className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                             value={newInitialTask} 
                             onChange={(e)=>setNewInitialTask(e.target.value)} 
                           />
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-white mb-2">Due Date</label>
+                            <label className="block text-sm font-bold text-black mb-2">Due Date</label>
                             <input 
                               type="date"
-                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                               value={initialTaskDue} 
                               onChange={(e)=>setInitialTaskDue(e.target.value)} 
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-white mb-2">Department</label>
+                            <label className="block text-sm font-bold text-black mb-2">Department</label>
                             <select 
-                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                               value={initialTaskDepartment} 
                               onChange={(e)=>setInitialTaskDepartment(e.target.value)}
                             >
@@ -572,9 +591,9 @@ export default function DashboardDemo() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-sm font-medium text-white mb-2">Level Urgency</label>
+                            <label className="block text-sm font-bold text-black mb-2">Level Urgency</label>
                             <select 
-                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                               value={initialTaskUrgency} 
                               onChange={(e)=>setInitialTaskUrgency(e.target.value)}
                             >
@@ -585,9 +604,9 @@ export default function DashboardDemo() {
                             </select>
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-white mb-2">Status</label>
+                            <label className="block text-sm font-bold text-black mb-2">Status</label>
                             <select 
-                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                               value={initialTaskStatus} 
                               onChange={(e)=>setInitialTaskStatus(e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
                             >
@@ -601,9 +620,9 @@ export default function DashboardDemo() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="flex-1">
-                            <label className="block text-sm font-medium text-white mb-2">Notes</label>
+                            <label className="block text-sm font-bold text-black mb-2">Notes</label>
                             <input 
-                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                               value={initialTaskNotes} 
                               onChange={(e)=>setInitialTaskNotes(e.target.value)} 
                             />
@@ -611,7 +630,7 @@ export default function DashboardDemo() {
                           <div className="flex items-end">
                             <Button 
                               onClick={addInitialTask}
-                              className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold"
+                              className="bg-red-600 hover:bg-red-700 text-white border-0 shadow-sm hover:shadow-md hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold"
                             >
                               Add Task
                             </Button>
@@ -622,18 +641,18 @@ export default function DashboardDemo() {
 
                     {initialTasks.length > 0 && (
                       <div className="space-y-2">
-                        <h5 className="text-sm font-medium text-white">Initial Tasks ({initialTasks.length}):</h5>
+                        <h5 className="text-sm font-medium text-gray-900">Initial Tasks ({initialTasks.length}):</h5>
                         {initialTasks.map((task, index)=> (
-                          <div key={index} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 p-3 bg-slate-800/50 rounded-lg border border-slate-600">
+                          <div key={index} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
                             <div className="flex-1">
-                              <p className="text-sm font-medium text-white">{task.text}</p>
-                              <p className="text-xs text-white">Due: {task.due}</p>
+                              <p className="text-sm font-medium text-gray-900">{task.text}</p>
+                              <p className="text-xs text-gray-700">Due: {task.due}</p>
                             </div>
                             <div className="flex gap-2 items-center">
                               <TaskBadge status={task.status}/>
                               <DepartmentBadge department={task.department || "Unassigned"}/>
                               <select 
-                                className="flex h-8 rounded-lg border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                                className="flex h-8 rounded-lg border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                                 value={task.status} 
                                 onChange={(e)=>updateInitialTaskStatus(index, e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
                               >
@@ -647,7 +666,7 @@ export default function DashboardDemo() {
                                 size="sm" 
                                 variant="ghost" 
                                 onClick={()=>removeInitialTask(index)}
-                                className="text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-200 h-8 w-8 p-0"
+                                className="text-red-600 hover:text-red-700 hover:bg-red-50 transition-all duration-200 h-8 w-8 p-0"
                               >
                                 🗑️
                               </Button>
@@ -683,38 +702,38 @@ export default function DashboardDemo() {
                       animate={{ opacity: 1, x: 0 }} 
                       transition={{ delay: index * 0.1 }}
                       whileHover={{ scale: 1.01, y: -2 }}
-                      className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-6 bg-gradient-to-r from-slate-800/50 to-slate-700/50 rounded-2xl border border-slate-600 shadow-lg hover:shadow-xl hover:shadow-slate-500/20 transition-all duration-300"
+                      className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-6 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:shadow-gray-500/20 transition-all duration-300"
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <p className="text-lg font-semibold text-white">{project.name}</p>
-                          {hasLateTask(project)&&<span className="text-red-400 text-lg animate-pulse">⚠️</span>}
+                          <p className="text-lg font-semibold text-gray-900">{project.name}</p>
+                          {hasLateTask(project)&&<span className="text-red-600 text-lg animate-pulse">⚠️</span>}
                         </div>
-                        <p className="text-sm text-white flex items-center gap-2">
+                        <p className="text-sm text-gray-700 flex items-center gap-2">
                           <span className="inline-flex items-center gap-1">
-                            <span className="w-4 h-4 bg-gray-900/20 rounded-full flex items-center justify-center border border-gray-900/30">
-                              <span className="text-white text-xs">📍</span>
+                            <span className="w-4 h-4 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200">
+                              <span className="text-gray-700 text-xs">📍</span>
                             </span>
                             {project.location}
                           </span>
-                          <span className="text-slate-500">•</span>
+                          <span className="text-gray-400">•</span>
                           <span className="inline-flex items-center gap-1">
-                            <span className="w-4 h-4 bg-purple-500/20 rounded-full flex items-center justify-center border border-purple-500/30">
-                              <span className="text-purple-400 text-xs">👤</span>
+                            <span className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center border border-purple-200">
+                              <span className="text-purple-600 text-xs">👤</span>
                             </span>
                             PM: {project.pm}
                           </span>
-                          <span className="text-slate-500">•</span>
+                          <span className="text-gray-400">•</span>
                           <span className="inline-flex items-center gap-1">
-                            <span className="w-4 h-4 bg-green-500/20 rounded-full flex items-center justify-center border border-green-500/30">
-                              <span className="text-green-400 text-xs">👥</span>
+                            <span className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center border border-green-200">
+                              <span className="text-green-600 text-xs">👥</span>
                             </span>
                             PIC: {project.pic}
                           </span>
-                          <span className="text-slate-500">•</span>
+                          <span className="text-gray-400">•</span>
                           <span className="inline-flex items-center gap-1">
-                            <span className="w-4 h-4 bg-orange-500/20 rounded-full flex items-center justify-center border border-orange-500/30">
-                              <span className="text-orange-400 text-xs">📅</span>
+                            <span className="w-4 h-4 bg-orange-100 rounded-full flex items-center justify-center border border-orange-200">
+                              <span className="text-orange-600 text-xs">📅</span>
                             </span>
                             Due: {project.due}
                           </span>
@@ -726,7 +745,7 @@ export default function DashboardDemo() {
                           size="sm" 
                           variant="outline" 
                           onClick={()=>setEditingProject(project)}
-                          className="border-gray-300 text-white hover:bg-gray-600/20 hover:border-gray-500 hover:text-gray-300 transition-all duration-200 mr-2"
+                          className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 hover:text-gray-800 transition-all duration-200 mr-2"
                         >
                           ✏️ Edit
                         </Button>
@@ -734,7 +753,7 @@ export default function DashboardDemo() {
                           size="sm" 
                           variant="outline" 
                           onClick={()=>setSelectedProject(project)}
-                          className="border-red-600 text-red-400 hover:bg-red-600/20 hover:border-red-500 hover:text-red-300 transition-all duration-200"
+                          className="border-red-300 text-red-600 hover:bg-red-50 hover:border-red-400 hover:text-red-700 transition-all duration-200"
                         >
                           Detail
                         </Button>
@@ -742,7 +761,7 @@ export default function DashboardDemo() {
                           size="icon" 
                           variant="ghost" 
                           onClick={()=>deleteProject(project.id!)}
-                          className="text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-200"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 transition-all duration-200"
                         >
                           🗑️
                         </Button>
@@ -762,7 +781,7 @@ export default function DashboardDemo() {
             <h3 className="text-xl font-bold text-gray-800 mb-4">Edit Project</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Project Name</label>
+                <label className="block text-sm font-bold text-black mb-2">Project Name</label>
                 <input 
                   className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                   value={editingProject.name} 
@@ -770,7 +789,7 @@ export default function DashboardDemo() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <label className="block text-sm font-bold text-black mb-2">Location</label>
                 <input 
                   className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                   value={editingProject.location} 
@@ -778,7 +797,7 @@ export default function DashboardDemo() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Project Manager</label>
+                <label className="block text-sm font-bold text-black mb-2">Project Manager</label>
                 <input 
                   className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                   value={editingProject.pm} 
@@ -786,7 +805,7 @@ export default function DashboardDemo() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Due Date</label>
+                <label className="block text-sm font-bold text-black mb-2">Due Date</label>
                 <input 
                   type="date"
                   className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
@@ -795,7 +814,7 @@ export default function DashboardDemo() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">PIC</label>
+                <label className="block text-sm font-bold text-black mb-2">PIC</label>
                 <input 
                   className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                   value={editingProject.pic} 
@@ -803,7 +822,7 @@ export default function DashboardDemo() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">PIC Role</label>
+                <label className="block text-sm font-bold text-black mb-2">PIC Role</label>
                 <input 
                   className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                   value={editingProject.picRole} 
@@ -836,33 +855,37 @@ export default function DashboardDemo() {
         <motion.div initial={{opacity:0}} animate={{opacity:1}} className="space-y-6">
           <Button 
             onClick={()=>setSelectedProject(null)}
-            className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300"
+            className="bg-red-600 hover:bg-red-700 text-white border-0 shadow-sm hover:shadow-md hover:shadow-red-500/30 transition-all duration-300"
           >
             ← Back to Projects
           </Button>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <Card className="bg-black/90 backdrop-blur-sm border border-slate-700 shadow-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <Card className="bg-white shadow-sm border border-gray-200">
               <CardContent className="p-8 space-y-8">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-600">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-gray-200">
                   <div>
-                    <h2 className="text-3xl font-bold text-white mb-3">{selectedProject.name}</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-3">{selectedProject.name}</h2>
                     <div className="space-y-2">
-                      <p className="text-white flex items-center gap-2">
-                        <span className="w-5 h-5 bg-gray-900/20 rounded-full flex items-center justify-center border border-gray-900/30">
-                          <span className="text-white text-xs">📍</span>
+                      <p className="text-gray-700 flex items-center gap-2">
+                        <span className="w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200">
+                          <span className="text-gray-700 text-xs">📍</span>
                         </span>
                         {selectedProject.location}
                       </p>
-                      <p className="text-white flex items-center gap-2">
-                        <span className="w-5 h-5 bg-purple-500/20 rounded-full flex items-center justify-center border border-purple-500/30">
-                          <span className="text-purple-400 text-xs">👤</span>
+                      <p className="text-gray-700 flex items-center gap-2">
+                        <span className="w-5 h-5 bg-purple-100 rounded-full flex items-center justify-center border border-purple-200">
+                          <span className="text-purple-600 text-xs">👤</span>
                         </span>
                         PM: {selectedProject.pm}
                       </p>
-                      <p className="text-white flex items-center gap-2">
-                        <span className="w-5 h-5 bg-green-500/20 rounded-full flex items-center justify-center border border-green-500/30">
-                          <span className="text-green-400 text-xs">🔧</span>
+                      <p className="text-gray-700 flex items-center gap-2">
+                        <span className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center border border-green-200">
+                          <span className="text-green-600 text-xs">🔧</span>
                         </span>
                         PIC: {selectedProject.pic} ({selectedProject.picRole})
                       </p>
@@ -872,35 +895,35 @@ export default function DashboardDemo() {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="bg-gradient-to-r from-slate-700/50 to-slate-600/50 p-6 rounded-2xl border border-slate-600">
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                      <span className="w-6 h-6 bg-red-700 rounded-lg flex items-center justify-center">
+                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <span className="w-6 h-6 bg-red-600 rounded-lg flex items-center justify-center">
                         <span className="text-white text-sm">+</span>
                       </span>
                       Add New Task
                     </h3>
                     <div className="flex flex-col sm:flex-row gap-3">
                       <div className="flex-1">
-                        <label className="block text-sm font-medium text-white mb-2">Task Description</label>
+                        <label className="block text-sm font-bold text-black mb-2">Task Description</label>
                         <input 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                           value={newInitialTask} 
                           onChange={(e)=>setNewInitialTask(e.target.value)} 
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-white mb-2">Due Date</label>
+                        <label className="block text-sm font-bold text-black mb-2">Due Date</label>
                         <input 
                           type="date"
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                           value={initialTaskDue} 
                           onChange={(e)=>setInitialTaskDue(e.target.value)} 
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-white mb-2">Department</label>
+                        <label className="block text-sm font-bold text-black mb-2">Department</label>
                         <select 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                           value={initialTaskDepartment} 
                           onChange={(e)=>setInitialTaskDepartment(e.target.value)}
                         >
@@ -915,9 +938,9 @@ export default function DashboardDemo() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-white mb-2">Level Urgency</label>
+                        <label className="block text-sm font-bold text-black mb-2">Level Urgency</label>
                         <select 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                           value={initialTaskUrgency} 
                           onChange={(e)=>setInitialTaskUrgency(e.target.value)}
                         >
@@ -928,9 +951,9 @@ export default function DashboardDemo() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-white mb-2">Status</label>
+                        <label className="block text-sm font-bold text-black mb-2">Status</label>
                         <select 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                           value={initialTaskStatus} 
                           onChange={(e)=>setInitialTaskStatus(e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
                         >
@@ -942,15 +965,15 @@ export default function DashboardDemo() {
                         </select>
                       </div>
                       <div className="flex flex-col">
-                        <label className="block text-sm font-medium text-white mb-2">Notes</label>
+                        <label className="block text-sm font-bold text-black mb-2">Notes</label>
                         <input 
-                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                           value={initialTaskNotes} 
                           onChange={(e)=>setInitialTaskNotes(e.target.value)} 
                         />
                         <Button 
                           onClick={addTask}
-                          className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold mt-2"
+                          className="bg-red-600 hover:bg-red-700 text-white border-0 shadow-sm hover:shadow-md hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold mt-2"
                         >
                           Add Task
                         </Button>
@@ -959,8 +982,8 @@ export default function DashboardDemo() {
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                      <span className="w-6 h-6 bg-red-700 rounded-lg flex items-center justify-center">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <span className="w-6 h-6 bg-red-600 rounded-lg flex items-center justify-center">
                         <span className="text-white text-sm">📋</span>
                       </span>
                       Outstanding Tasks
@@ -973,13 +996,13 @@ export default function DashboardDemo() {
                           animate={{ opacity: 1, x: 0 }} 
                           transition={{ delay: index * 0.1 }}
                           whileHover={{ scale: 1.01, y: -1 }}
-                          className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 bg-gradient-to-r from-slate-800/50 to-slate-700/50 rounded-xl border border-slate-600 shadow-md hover:shadow-lg hover:shadow-slate-500/20 transition-all duration-300"
+                          className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 p-4 bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:shadow-gray-500/20 transition-all duration-300"
                         >
                           <div className="flex-1">
-                            <p className={`font-medium text-white ${isLate(note.due,selectedProject.due)?"text-red-400":""}`}>
+                            <p className={`font-medium text-gray-900 ${isLate(note.due,selectedProject.due)?"text-red-600":""}`}>
                               {note.text}
                             </p>
-                            <p className={`text-sm ${isLate(note.due,selectedProject.due)?"text-red-500":"text-white"}`}>
+                            <p className={`text-sm ${isLate(note.due,selectedProject.due)?"text-red-500":"text-gray-700"}`}>
                               Due: {note.due}
                             </p>
                             {note.notes && (
@@ -992,7 +1015,7 @@ export default function DashboardDemo() {
                             <TaskBadge status={note.status}/>
                             <DepartmentBadge department={note.department || "Unassigned"}/>
                             <select 
-                              className="flex h-10 rounded-lg border border-slate-600 bg-slate-700/80 backdrop-blur-sm px-3 py-2 text-sm font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                              className="flex h-10 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
                               value={note.status} 
                               onChange={(e)=>updateTaskStatus(index, e.target.value as "done" | "progress" | "problem" | "service" | "notStarted")}
                             >
@@ -1006,7 +1029,7 @@ export default function DashboardDemo() {
                               size="icon" 
                               variant="ghost" 
                               onClick={()=>deleteTask(index)}
-                              className="text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-200"
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50 transition-all duration-200"
                             >
                               🗑️
                             </Button>
@@ -1014,7 +1037,7 @@ export default function DashboardDemo() {
                         </motion.div>
                       ))}
                       {selectedProject.notes.length === 0 && (
-                        <div className="text-center py-12 text-white">
+                        <div className="text-center py-12 text-gray-700">
                           <span className="text-4xl mb-2 block">📝</span>
                           <p>No tasks yet. Add your first task above!</p>
                         </div>
