@@ -2,11 +2,25 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #b61010;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+.notesText {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 4px;
+  color: #d1d5db;
+  line-height: 1.4;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+body {
   font-family: Arial, Helvetica, sans-serif;
 }

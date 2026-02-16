@@ -170,7 +170,8 @@ export default function DashboardDemo() {
       status: initialTaskStatus,
       due: initialTaskDue,
       department: initialTaskDepartment,
-      service: initialTaskUrgency
+      service: initialTaskUrgency,
+      notes: initialTaskNotes
     };
     setInitialTasks([...initialTasks, task]);
     setNewInitialTask("");
@@ -196,7 +197,7 @@ export default function DashboardDemo() {
 
     const updatedProject = {
       ...selectedProject,
-      notes: [...selectedProject.notes, { text: newTask, status: taskStatus, due: taskDue, department: taskDepartment, service: taskService }],
+      notes: [...selectedProject.notes, { text: newTask, status: taskStatus, due: taskDue, department: taskDepartment, service: taskService, notes: taskNotes }],
     };
 
     updateProject(selectedProject.id!, updatedProject);
@@ -940,12 +941,20 @@ export default function DashboardDemo() {
                           <option value="done">Done</option>
                         </select>
                       </div>
-                      <Button 
-                        onClick={addTask}
-                        className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold"
-                      >
-                        Add Task
-                      </Button>
+                      <div className="flex flex-col">
+                        <label className="block text-sm font-medium text-white mb-2">Notes</label>
+                        <input 
+                          className="flex h-12 w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium placeholder:text-gray-500 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all duration-200" 
+                          value={initialTaskNotes} 
+                          onChange={(e)=>setInitialTaskNotes(e.target.value)} 
+                        />
+                        <Button 
+                          onClick={addTask}
+                          className="bg-red-700 hover:bg-red-800 text-white border-0 shadow-lg hover:shadow-xl hover:shadow-red-500/30 transition-all duration-300 h-12 rounded-xl font-semibold mt-2"
+                        >
+                          Add Task
+                        </Button>
+                      </div>
                     </div>
                   </div>
 
@@ -973,6 +982,11 @@ export default function DashboardDemo() {
                             <p className={`text-sm ${isLate(note.due,selectedProject.due)?"text-red-500":"text-white"}`}>
                               Due: {note.due}
                             </p>
+                            {note.notes && (
+                              <p className="notesText">
+                                Notes: {note.notes}
+                              </p>
+                            )}
                           </div>
                           <div className="flex gap-2 items-center">
                             <TaskBadge status={note.status}/>

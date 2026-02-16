@@ -25,6 +25,7 @@ export interface Note {
   due: string;
   department?: string;
   service?: string;
+  notes?: string;
   createdAt?: Date;
 }
 
