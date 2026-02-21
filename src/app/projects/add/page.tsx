@@ -199,9 +199,87 @@ export default function AddProjectPage() {
             {activeTab === 'phase-progress' && (
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Phase Progress Table</h2>
-                <div className="border border-gray-200 rounded-lg p-8">
-                  <div className="text-center">
-                    <p className="text-gray-600">Phase progress table will be displayed here</p>
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                  <table className="w-full">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">NO</th>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Tasks</th>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Start</th>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">End</th>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Days</th>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Status</th>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">ACHIEVEMENT %</th>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Notes</th>
+                        <th className="px-4 py-3 text-left text-sm font-medium text-gray-900">Evidence / Link</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      <tr>
+                        <td className="px-4 py-3 text-sm text-gray-900">1</td>
+                        <td className="px-4 py-3">
+                          <input
+                            type="text"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Enter task name"
+                          />
+                        </td>
+                        <td className="px-4 py-3">
+                          <input
+                            type="date"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                        </td>
+                        <td className="px-4 py-3">
+                          <input
+                            type="date"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          />
+                        </td>
+                        <td className="px-4 py-3">
+                          <input
+                            type="text"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="0"
+                            readOnly
+                          />
+                        </td>
+                        <td className="px-4 py-3">
+                          <select className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select...</option>
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                          </select>
+                        </td>
+                        <td className="px-4 py-3">
+                          <input
+                            type="text"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="0%"
+                          />
+                        </td>
+                        <td className="px-4 py-3">
+                          <input
+                            type="text"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Add notes"
+                          />
+                        </td>
+                        <td className="px-4 py-3">
+                          <input
+                            type="url"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="https://..."
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="p-4 border-t border-gray-200">
+                    <button className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+                      + Add Phase
+                    </button>
                   </div>
                 </div>
               </div>
