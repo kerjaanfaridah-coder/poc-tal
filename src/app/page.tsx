@@ -439,17 +439,10 @@ export default function ProjectsPage() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">PIC</label>
                         <input
                           type="text"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-right"
-                          placeholder="0"
-                          onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, '').replace(/\B/g, '').replace(/[^\d]/g, '')
-                            const formattedValue = value ? `Rp. ${parseInt(value).toLocaleString('id-ID')}` : ''
-                            e.target.value = formattedValue
-                          }}
-                          value={newProject.pic}
-                          onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter PIC name"
+                          value={newProject.pic}
+                          onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
                         />
                       </div>
                       <div>
