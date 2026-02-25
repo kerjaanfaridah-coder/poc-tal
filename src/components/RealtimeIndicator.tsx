@@ -41,7 +41,7 @@ export function RealtimeIndicator() {
       <div className="flex items-center gap-2">
         <div className="relative">
           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-          <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
         </div>
         <span className="text-xs text-slate-400">Live</span>
       </div>

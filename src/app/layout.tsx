@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { FirebaseProvider } from "@/components/FirebaseProvider";
+import { ProjectProvider } from "@/contexts/ProjectContext";
+import Sidebar from "@/components/layout/Sidebar";
+import Navbar from "@/components/layout/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +32,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <FirebaseProvider>
-          {children}
+          <ProjectProvider>
+            <div className="min-h-screen bg-gray-50">
+              <Sidebar />
+              <div className="ml-64">
+                <Navbar />
+                <main>
+                  {children}
+                </main>
+              </div>
+            </div>
+          </ProjectProvider>
         </FirebaseProvider>
       </body>
     </html>
