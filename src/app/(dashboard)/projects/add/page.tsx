@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import Layout from '@/components/Layout'
 
 export default function AddProjectPage() {
   const [projects, setProjects] = useState<any[]>([])
@@ -69,7 +68,7 @@ export default function AddProjectPage() {
     alert('Project created successfully!')
     
     // Redirect to all projects page to see summary
-    window.location.href = '/'
+    window.location.href = '/dashboard'
   }
 
   const handleCancel = () => {
@@ -77,15 +76,14 @@ export default function AddProjectPage() {
   }
 
   return (
-    <Layout>
-      <div className="flex-1 w-full px-8 xl:px-12 py-6 bg-gray-50 min-h-screen">
-        {/* Header Section with Title and Buttons */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-800 mb-2">Add New Project</h1>
-              <p className="text-gray-600">Create a new project with detailed information, phases, budget, and tasks</p>
-            </div>
+  <div className="flex-1 w-full px-8 xl:px-12 py-6 bg-gray-50 min-h-screen">
+    {/* Header Section with Title and Buttons */}
+    <div className="mb-8">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">Add New Project</h1>
+            <p className="text-gray-600">Create a new project with detailed information, phases, budget, and tasks</p>
+          </div>
             <div className="flex gap-4">
               <Button
                 onClick={() => handleAddProject({
@@ -338,6 +336,5 @@ export default function AddProjectPage() {
           </div>
         </div>
       </div>
-    </Layout>
   )
 }

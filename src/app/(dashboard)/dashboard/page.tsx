@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { motion } from 'framer-motion'
-import Layout from '@/components/Layout'
 
 interface Project {
   id: string
@@ -138,13 +137,12 @@ export default function DashboardOverview() {
   }
 
   return (
-    <Layout>
-      <div className="p-6">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Dashboard Overview</h1>
-          <p className="text-gray-600">Comprehensive project statistics and performance overview</p>
-        </div>
+    <div className="p-6">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">Dashboard Overview</h1>
+        <p className="text-gray-600">Comprehensive project statistics and performance overview</p>
+      </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -331,6 +329,5 @@ export default function DashboardOverview() {
           </CardContent>
         </Card>
       </div>
-    </Layout>
   )
 }

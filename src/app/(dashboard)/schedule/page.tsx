@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { motion } from 'framer-motion'
-import Layout from '@/components/Layout'
 
 interface TeamMember {
   id: string
@@ -106,15 +105,14 @@ export default function ScheduleTeamProject() {
 
   
   return (
-    <Layout>
-      <div className="p-6">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-800 mb-2">Schedule Team Project</h1>
-              <p className="text-gray-600">Create and manage weekly team schedules for each project</p>
-            </div>
+  <div className="p-6">
+    {/* Header */}
+    <div className="mb-8">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">Schedule Team Project</h1>
+            <p className="text-gray-600">Create and manage weekly team schedules for each project</p>
+          </div>
             <Button 
               onClick={() => setShowAddSchedule(true)}
               className="bg-red-600 hover:bg-red-700 text-white border-0 shadow-lg"
@@ -361,6 +359,5 @@ export default function ScheduleTeamProject() {
           </motion.div>
         )}
       </div>
-    </Layout>
   )
 }
