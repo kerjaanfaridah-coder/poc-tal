@@ -63,6 +63,7 @@ export default function PhaseProgressPage() {
       status: 'COMPLETE',
       achievement: { complete: 100, ongoing: 0, notStarted: 0, total: 100 },
       noted: 'All design documents approved',
+      evidenceLink: 'https://example.com/evidence2',
       phase: 'E1'
     },
     {
@@ -90,6 +91,7 @@ export default function PhaseProgressPage() {
       status: 'IN PROGRESS',
       achievement: { complete: 60, ongoing: 40, notStarted: 0, total: 100 },
       noted: 'Foundation 60% completed',
+      evidenceLink: 'https://example.com/evidence4',
       phase: 'E2'
     },
     {
@@ -170,7 +172,7 @@ export default function PhaseProgressPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'COMPLETE': return 'bg-green-100 text-green-800 border-green-200'
+      case 'COMPLETE': return 'bg-blue-100 text-blue-800 border-blue-200'
       case 'IN PROGRESS': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
       case 'NOT STARTED': return 'bg-gray-100 text-gray-800 border-gray-200'
       case 'OVERDUE': return 'bg-red-100 text-red-800 border-red-200'
@@ -235,13 +237,68 @@ export default function PhaseProgressPage() {
     })
   }
 
+  const renderPhaseRow = (phase: string, summary: PhaseSummary) => (
+    <motion.tr
+      key={`summary-${phase}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="bg-blue-50 border-b border-blue-200 font-semibold"
+    >
+      <td className="px-4 py-3 text-left">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => togglePhase(phase)}
+            className="p-1 hover:bg-blue-100"
+          >
+            {summary.isExpanded ? (
+              <ChevronDown className="w-4 h-4 text-blue-600" />
+            ) : (
+              <ChevronRight className="w-4 h-4 text-blue-600" />
+            )}
+          </Button>
+          <span className="text-blue-900">Phase {phase}</span>
+        </div>
+      </td>
+      <td className="px-4 py-3 text-center text-blue-900">{summary.totalTasks} tasks</td>
+      <td className="px-4 py-3 text-center text-blue-900">{summary.completedTasks}</td>
+      <td className="px-4 py-3 text-center text-blue-900">{summary.inProgressTasks}</td>
+      <td className="px-4 py-3 text-center text-blue-900">{summary.notStartedTasks}</td>
+      <td className="px-4 py-3 text-center text-blue-900">{summary.overdueTasks}</td>
+      <td className="px-4 py-3 text-center">
+        <span className={`px-2 py-1 rounded text-sm font-medium ${getProgressColor(summary.overallProgress)}`}>
+          {summary.overallProgress}%
+        </span>
+      </td>
+      <td className="px-4 py-3 text-center text-blue-900">
+        {summary.completedTasks}/{summary.totalTasks}
+      </td>
+      <td className="px-4 py-3 text-center text-blue-900">
+        {summary.inProgressTasks}/{summary.totalTasks}
+      </td>
+      <td className="px-4 py-3 text-center text-blue-900">
+        {summary.notStartedTasks}/{summary.totalTasks}
+      </td>
+      <td className="px-4 py-3 text-center text-blue-900">
+        {summary.overdueTasks}/{summary.totalTasks}
+      </td>
+      <td className="px-4 py-3 text-left text-blue-900">Phase Summary</td>
+      <td className="px-4 py-3 text-center">
+        <Button variant="ghost" size="sm" className="p-1 hover:bg-blue-100">
+          <Edit className="w-4 h-4 text-blue-600" />
+        </Button>
+      </td>
+    </motion.tr>
+  )
+
   return (
     <div className="p-6">
       {/* Header */}
       <div className="mb-8">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Phase Progress</h1>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">Phase Progress Detail</h1>
             <p className="text-gray-600">Track and monitor project phase progress with detailed task breakdown</p>
           </div>
           <Button className="bg-red-600 hover:bg-red-700 text-white border-0 shadow-lg">
@@ -249,64 +306,6 @@ export default function PhaseProgressPage() {
             Add Task
           </Button>
         </div>
-      </div>
-
-      {/* Phase Summaries */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {Object.entries(phaseSummaries).map(([phase, summary]) => (
-          <Card key={phase} className="bg-white shadow-sm border border-gray-200">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-lg font-bold text-gray-900">Phase {phase}</h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => togglePhase(phase)}
-                  className="p-1 hover:bg-gray-100"
-                >
-                  {summary.isExpanded ? (
-                    <ChevronDown className="w-4 h-4 text-gray-600" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-gray-600" />
-                  )}
-                </Button>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Total Tasks:</span>
-                  <span className="text-sm font-medium text-gray-900">{summary.totalTasks}</span>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Progress:</span>
-                  <span className={`text-sm font-medium px-2 py-1 rounded ${getProgressColor(summary.overallProgress)}`}>
-                    {summary.overallProgress}%
-                  </span>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-gray-600">Complete: {summary.completedTasks}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                    <span className="text-gray-600">Progress: {summary.inProgressTasks}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
-                    <span className="text-gray-600">Not Started: {summary.notStartedTasks}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    <span className="text-gray-600">Overdue: {summary.overdueTasks}</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
       </div>
 
       {/* Main Table */}
@@ -347,53 +346,66 @@ export default function PhaseProgressPage() {
                 </tr>
               </thead>
               <tbody>
-                {phases.map((task, index) => (
-                  <motion.tr
-                    key={task.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="border-b border-gray-200 hover:bg-gray-50"
-                  >
-                    <td className="px-4 py-3 text-left">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-900">{task.taskId}</span>
-                        <span className="text-sm text-gray-600">{task.taskName}</span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-left text-sm text-gray-900">{task.assignedTo}</td>
-                    <td className="px-4 py-3 text-center text-sm text-gray-900">{task.startDate}</td>
-                    <td className="px-4 py-3 text-center text-sm text-gray-900">{task.endDate}</td>
-                    <td className="px-4 py-3 text-center text-sm text-gray-900">{calculateDays(task.startDate, task.endDate)}</td>
-                    <td className="px-4 py-3 text-center">
-                      <Badge className={`text-xs font-medium ${getStatusColor(task.status)}`}>
-                        {task.status}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-center text-sm font-medium text-gray-900">{task.achievement.complete}%</td>
-                    <td className="px-4 py-3 text-center text-sm text-gray-900">{task.achievement.ongoing}%</td>
-                    <td className="px-4 py-3 text-center text-sm text-gray-900">{task.achievement.notStarted}%</td>
-                    <td className="px-4 py-3 text-center text-sm text-gray-900">{task.achievement.total}%</td>
-                    <td className="px-4 py-3 text-left text-sm text-gray-600 max-w-xs truncate" title={task.noted}>
-                      {task.noted}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {task.evidenceLink ? (
-                        <a
-                          href={task.evidenceLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm"
+                {['E1', 'E2', 'E3', 'E4'].map(phase => {
+                  const summary = phaseSummaries[phase]
+                  const phaseTasks = phases.filter(task => task.phase === phase)
+                  
+                  return (
+                    <React.Fragment key={phase}>
+                      {/* Phase Summary Row */}
+                      {renderPhaseRow(phase, summary)}
+                      
+                      {/* Phase Task Rows */}
+                      {summary.isExpanded && phaseTasks.map((task, index) => (
+                        <motion.tr
+                          key={task.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                          className="border-b border-gray-200 hover:bg-gray-50"
                         >
-                          <ExternalLink className="w-3 h-3" />
-                          Evidence
-                        </a>
-                      ) : (
-                        <span className="text-gray-400 text-sm">-</span>
-                      )}
-                    </td>
-                  </motion.tr>
-                ))}
+                          <td className="px-4 py-3 text-left">
+                            <div className="flex items-center gap-2 pl-6">
+                              <span className="text-sm font-medium text-gray-900">{task.taskId}</span>
+                              <span className="text-sm text-gray-600">{task.taskName}</span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 text-left text-sm text-gray-900">{task.assignedTo}</td>
+                          <td className="px-4 py-3 text-center text-sm text-gray-900">{task.startDate}</td>
+                          <td className="px-4 py-3 text-center text-sm text-gray-900">{task.endDate}</td>
+                          <td className="px-4 py-3 text-center text-sm text-gray-900">{calculateDays(task.startDate, task.endDate)}</td>
+                          <td className="px-4 py-3 text-center">
+                            <Badge className={`text-xs font-medium ${getStatusColor(task.status)}`}>
+                              {task.status}
+                            </Badge>
+                          </td>
+                          <td className="px-4 py-3 text-center text-sm font-medium text-gray-900">{task.achievement.complete}%</td>
+                          <td className="px-4 py-3 text-center text-sm text-gray-900">{task.achievement.ongoing}%</td>
+                          <td className="px-4 py-3 text-center text-sm text-gray-900">{task.achievement.notStarted}%</td>
+                          <td className="px-4 py-3 text-center text-sm text-gray-900">{task.achievement.total}%</td>
+                          <td className="px-4 py-3 text-left text-sm text-gray-600 max-w-xs truncate" title={task.noted}>
+                            {task.noted}
+                          </td>
+                          <td className="px-4 py-3 text-center">
+                            {task.evidenceLink ? (
+                              <a
+                                href={task.evidenceLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm"
+                              >
+                                <ExternalLink className="w-3 h-3" />
+                                Evidence
+                              </a>
+                            ) : (
+                              <span className="text-gray-400 text-sm">-</span>
+                            )}
+                          </td>
+                        </motion.tr>
+                      ))}
+                    </React.Fragment>
+                  )
+                })}
               </tbody>
             </table>
           </div>
