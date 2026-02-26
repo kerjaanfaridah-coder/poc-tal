@@ -106,7 +106,7 @@ export default function DashboardOverview() {
         case 'done':
           return 'bg-green-500 text-white'
         case 'progress':
-          return 'bg-blue-500 text-white'
+          return 'bg-red-500 text-white'
         case 'urgent':
           return 'bg-red-500 text-white'
         default:
@@ -242,7 +242,7 @@ export default function DashboardOverview() {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                     <span className="text-gray-700">In Progress</span>
                   </div>
                   <span className="font-medium text-gray-900">{stats.inProgressProjects} projects</span>

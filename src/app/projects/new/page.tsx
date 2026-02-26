@@ -5,6 +5,7 @@ import ProjectForm from '@/components/forms/ProjectForm';
 import { Card, CardContent } from '@/components/ui/card';
 import { useProjects } from '@/contexts/ProjectContext';
 import PageHeader from '@/components/ui/PageHeader';
+import { X } from 'lucide-react';
 
 export default function NewProjectPage() {
   const router = useRouter();
@@ -30,7 +31,15 @@ export default function NewProjectPage() {
       <PageHeader 
         title="Add New Project" 
         subtitle="Create a new project with our guided workflow"
-      />
+      >
+        <button
+          onClick={handleProjectCancel}
+          className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded-lg transition-colors"
+        >
+          <X className="w-4 h-4" />
+          Cancel
+        </button>
+      </PageHeader>
 
       <ProjectForm
         onSubmit={handleProjectSubmit}

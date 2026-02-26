@@ -234,9 +234,7 @@ export function ProjectProvider({ children }: { children: ReactNode }) {
 
   // Save projects to localStorage whenever they change
   useEffect(() => {
-    if (projects.length > 0) {
-      saveProjectsToStorage(projects);
-    }
+    saveProjectsToStorage(projects);
   }, [projects]);
 
   const addProject = (projectData: Omit<Project, 'id'>) => {

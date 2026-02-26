@@ -1,18 +1,39 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Search, Filter, MoreHorizontal, Calendar, Users, CheckCircle } from 'lucide-react';
+import { Plus, Search, Filter, Calendar, Users, CheckCircle, Trash2, AlertTriangle, Clock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '@/contexts/ProjectContext';
 import PageHeader from '@/components/ui/PageHeader';
+import DeleteConfirmModal from '@/components/ui/DeleteConfirmModal';
 
 export default function ProjectsPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState<{ id: string; name: string } | null>(null);
   const router = useRouter();
-  const { projects } = useProjects();
+  const { projects, deleteProject } = useProjects();
 
   const handleNewProject = () => {
     router.push('/projects/new');
+  };
+
+  const handleDeleteClick = (projectId: string, projectName: string) => {
+    setProjectToDelete({ id: projectId, name: projectName });
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (projectToDelete) {
+      deleteProject(projectToDelete.id);
+      setConfirmOpen(false);
+      setProjectToDelete(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmOpen(false);
+    setProjectToDelete(null);
   };
 
   const filteredProjects = projects.filter(project =>
@@ -44,6 +65,21 @@ export default function ProjectsPage() {
       return Math.round(totalProgress / project.phases.length);
     }
     return 0;
+  };
+
+  const getIssuesCount = (project: any) => {
+    return project.issues ? project.issues.length : 0;
+  };
+
+  const getPendingCount = (project: any) => {
+    return project.pendingItems ? project.pendingItems.filter((item: any) => !item.completed).length : 0;
+  };
+
+  const getRemainingBudget = (project: any) => {
+    const totalBudget = project.budget || 0;
+    const usedBudget = project.phases ? 
+      project.phases.reduce((sum: number, phase: any) => sum + (phase.budget || 0), 0) : 0;
+    return totalBudget - usedBudget;
   };
 
   return (
@@ -146,94 +182,98 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      {/* Projects List */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="text-left px-6 py-4 font-semibold text-gray-900">Project Name</th>
-                <th className="text-left px-6 py-4 font-semibold text-gray-900">Status</th>
-                <th className="text-left px-6 py-4 font-semibold text-gray-900">Progress</th>
-                <th className="text-left px-6 py-4 font-semibold text-gray-900">Team</th>
-                <th className="text-left px-6 py-4 font-semibold text-gray-900">Deadline</th>
-                <th className="text-left px-6 py-4 font-semibold text-gray-900">Priority</th>
-                <th className="text-left px-6 py-4 font-semibold text-gray-900">Budget</th>
-                <th className="text-center px-6 py-4 font-semibold text-gray-900">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filteredProjects.map((project) => (
-                <tr key={project.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="space-y-1">
-                      <h3 className="font-semibold text-gray-900">{project.name}</h3>
-                      <p className="text-sm text-gray-600 line-clamp-2">{project.description}</p>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex px-4 py-2 rounded-full text-sm font-medium min-w-[100px] whitespace-nowrap ${getStatusColor(project.status)}`}>
-                      {project.status.charAt(0).toUpperCase() + project.status.slice(1).replace('-', ' ')}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="flex-1 bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-red-500 h-2 rounded-full transition-all duration-300" 
-                          style={{ width: `${getProjectProgress(project)}%` }}
-                        ></div>
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 min-w-[3rem]">{getProjectProgress(project)}%</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2 whitespace-nowrap">
-                      <Users className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                      <div className="flex flex-wrap gap-1">
-                        {project.team.length > 0 ? project.team.slice(0, 2).map((member, index) => (
-                          <span key={index} className="inline-flex items-center px-2 py-1 bg-gray-100 rounded text-xs text-gray-700 whitespace-nowrap">
-                            {member.split(' ').map(n => n[0]).join('')}
-                          </span>
-                        )) : (
-                          <span className="text-sm text-gray-500 whitespace-nowrap">No team</span>
-                        )}
-                        {project.team.length > 2 && (
-                          <span className="text-xs text-gray-500 whitespace-nowrap">+{project.team.length - 2} more</span>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600 whitespace-nowrap">
-                      <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                      <span>{project.deadline || 'Not set'}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex px-4 py-2 rounded-full text-sm font-medium min-w-[80px] whitespace-nowrap ${getPriorityColor(project.priority)}`}>
-                      {project.priority.charAt(0).toUpperCase() + project.priority.slice(1)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <span className="font-medium">IDR</span>
-                      <span className="font-semibold text-gray-900">
-                        {project.budget ? project.budget.toLocaleString('id-ID') : 'Not set'}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <button className="p-2 text-gray-400 hover:bg-gray-100 rounded-lg transition-colors">
-                      <MoreHorizontal className="w-4 h-4" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Projects Card Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {filteredProjects.map((project) => {
+          const progress = getProjectProgress(project);
+          const issuesCount = getIssuesCount(project);
+          const pendingCount = getPendingCount(project);
+          const remainingBudget = getRemainingBudget(project);
+
+          return (
+            <div key={project.id} className="rounded-2xl bg-white shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md transition">
+              {/* SECTION 1 — HEADER */}
+              <div className="flex items-start justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">{project.name}</h3>
+                <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium min-w-[80px] whitespace-nowrap ${getStatusColor(project.status)}`}>
+                  {project.status.charAt(0).toUpperCase() + project.status.slice(1).replace('-', ' ')}
+                </span>
+              </div>
+
+              {/* SECTION 2 — PHASE PROGRESS */}
+              <div className="mb-4">
+                <p className="text-xs text-gray-400 mb-1">Phase Progress</p>
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 bg-gray-100 rounded-full h-2">
+                    <div 
+                      className="h-2 bg-red-500 rounded-full" 
+                      style={{ width: `${progress}%` }}
+                    ></div>
+                  </div>
+                  <span className="text-sm font-medium text-gray-900">{progress}%</span>
+                </div>
+              </div>
+
+              {/* SECTION 3 — REMAINING BUDGET */}
+              <div className="mb-4">
+                <p className="text-xs text-gray-400 mb-1">Remaining Budget</p>
+                <p className="text-base font-semibold text-gray-900">
+                  IDR {remainingBudget.toLocaleString('id-ID')}
+                </p>
+              </div>
+
+              {/* SECTION 4 — ISSUE & PENDING ITEMS */}
+              <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-yellow-500" />
+                  <span className="text-gray-600">{issuesCount} Issues</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-orange-500" />
+                  <span className="text-gray-600">{pendingCount} Pending</span>
+                </div>
+              </div>
+
+              {/* SECTION 5 — DEADLINE, PRIORITY, ACTIONS */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-gray-400" />
+                    <span className="text-gray-600 whitespace-nowrap">{project.deadline || 'Not set'}</span>
+                  </div>
+                  <span className={`inline-flex px-3 py-1 rounded-full text-xs font-medium min-w-[60px] whitespace-nowrap ${getPriorityColor(project.priority)}`}>
+                    {project.priority.charAt(0).toUpperCase() + project.priority.slice(1)}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => router.push(`/projects/${project.id}/detail`)}
+                    className="px-3 py-1.5 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                    title="View project details"
+                  >
+                    Detail
+                  </button>
+                  <button 
+                    onClick={() => handleDeleteClick(project.id, project.name)}
+                    className="text-red-500 hover:text-red-600 transition-colors"
+                    title="Delete project"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal
+        isOpen={confirmOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        projectName={projectToDelete?.name || ''}
+      />
     </div>
   );
 }

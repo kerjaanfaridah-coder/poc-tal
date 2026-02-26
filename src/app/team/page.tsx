@@ -1,261 +1,517 @@
 'use client';
 
-import { useState } from 'react';
-import { Plus, Search, Mail, Phone, MapPin, MoreHorizontal, Users, Crown, Shield } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Plus, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react';
+import DeleteConfirmModal from '@/components/ui/DeleteConfirmModal';
+
+interface WeeklySchedule {
+  id: string;
+  memberId: string;
+  projectName: string;
+  task: string;
+  startDate: string;
+  endDate: string;
+  hours: number;
+  priority: string;
+  status: string;
+}
+
+interface TeamWorkload {
+  memberId: string;
+  memberName: string;
+  totalHours: number;
+  projectCount: number;
+  taskCount: number;
+  schedules: WeeklySchedule[];
+}
 
 export default function TeamPage() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [currentWeek, setCurrentWeek] = useState(new Date());
+  const [weeklySchedules, setWeeklySchedules] = useState<WeeklySchedule[]>([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<{ id: string; projectName: string } | null>(null);
+  const [newSchedule, setNewSchedule] = useState({
+    memberId: '',
+    projectName: '',
+    task: '',
+    startDate: '',
+    endDate: '',
+    hours: 0,
+    priority: 'medium',
+    status: 'planned'
+  });
 
-  const teamMembers = [
-    {
-      id: 1,
-      name: 'Sarah Chen',
-      email: 'sarah.chen@company.com',
-      role: 'Project Manager',
-      department: 'Management',
-      avatar: 'SC',
-      status: 'Active',
-      joinDate: '2022-03-15',
-      projects: 8,
-      performance: 95
-    },
-    {
-      id: 2,
-      name: 'Mike Johnson',
-      email: 'mike.johnson@company.com',
-      role: 'Senior Developer',
-      department: 'Engineering',
-      avatar: 'MJ',
-      status: 'Active',
-      joinDate: '2021-07-20',
-      projects: 12,
-      performance: 88
-    },
-    {
-      id: 3,
-      name: 'Emma Davis',
-      email: 'emma.davis@company.com',
-      role: 'UX Designer',
-      department: 'Design',
-      avatar: 'ED',
-      status: 'Active',
-      joinDate: '2022-11-10',
-      projects: 6,
-      performance: 92
-    },
-    {
-      id: 4,
-      name: 'Alex Kim',
-      email: 'alex.kim@company.com',
-      role: 'Frontend Developer',
-      department: 'Engineering',
-      avatar: 'AK',
-      status: 'On Leave',
-      joinDate: '2023-01-05',
-      projects: 4,
-      performance: 85
-    },
-    {
-      id: 5,
-      name: 'Lisa Wang',
-      email: 'lisa.wang@company.com',
-      role: 'Backend Developer',
-      department: 'Engineering',
-      avatar: 'LW',
-      status: 'Active',
-      joinDate: '2022-09-12',
-      projects: 10,
-      performance: 90
-    },
-    {
-      id: 6,
-      name: 'Tom Wilson',
-      email: 'tom.wilson@company.com',
-      role: 'QA Engineer',
-      department: 'Quality',
-      avatar: 'TW',
-      status: 'Active',
-      joinDate: '2021-12-01',
-      projects: 15,
-      performance: 87
+  // Load schedules from localStorage on mount
+  useEffect(() => {
+    const savedSchedules = localStorage.getItem('weeklySchedules');
+    if (savedSchedules) {
+      try {
+        const parsedSchedules = JSON.parse(savedSchedules);
+        setWeeklySchedules(parsedSchedules);
+      } catch (error) {
+        console.error('Error loading schedules from localStorage:', error);
+      }
     }
+  }, []);
+
+  // Save schedules to localStorage whenever they change
+  useEffect(() => {
+    if (weeklySchedules.length > 0) {
+      localStorage.setItem('weeklySchedules', JSON.stringify(weeklySchedules));
+    }
+  }, [weeklySchedules]);
+
+  // Sample data
+  const teamMembers = [
+    { id: '1', name: 'Jovan', role: 'Senior Engineer' },
+    { id: '2', name: 'Alwan', role: 'Lighting Engineer' },
+    { id: '3', name: 'Robi', role: 'Audio Visual Engineer' },
+    { id: '4', name: 'Sujadi', role: 'Site Coordinator' },
+    { id: '5', name: 'Andre', role: 'Technician' },
+    { id: '6', name: 'Eka', role: 'Technician' },
+    { id: '7', name: 'Sopian', role: 'Technician' },
+    { id: '8', name: 'Sobirin', role: 'Technician' },
+    { id: '9', name: 'Puji', role: 'Technician' }
   ];
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Active': return 'bg-green-100 text-green-800';
-      case 'On Leave': return 'bg-yellow-100 text-yellow-800';
-      case 'Inactive': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+  const projects = [
+    { id: '1', name: 'Website Redesign' },
+    { id: '2', name: 'Mobile App' },
+    { id: '3', name: 'Database Migration' },
+    { id: '4', name: 'API Development' }
+  ];
+
+  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  const getWeekRange = () => {
+    const startOfWeek = new Date(currentWeek);
+    const day = startOfWeek.getDay();
+    const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1);
+    startOfWeek.setDate(diff);
+    
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    
+    const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+    return `${startOfWeek.toLocaleDateString('en-US', options)} - ${endOfWeek.toLocaleDateString('en-US', options)}`;
+  };
+
+  const navigateWeek = (direction: 'prev' | 'next') => {
+    const newWeek = new Date(currentWeek);
+    newWeek.setDate(currentWeek.getDate() + (direction === 'next' ? 7 : -7));
+    setCurrentWeek(newWeek);
+  };
+
+  const handleAddSchedule = () => {
+    if (newSchedule.memberId && newSchedule.projectName && newSchedule.task && newSchedule.startDate && newSchedule.endDate && newSchedule.hours > 0) {
+      const schedule: WeeklySchedule = {
+        id: Date.now().toString(),
+        ...newSchedule
+      };
+      setWeeklySchedules([...weeklySchedules, schedule]);
+      setNewSchedule({
+        memberId: '',
+        projectName: '',
+        task: '',
+        startDate: '',
+        endDate: '',
+        hours: 0,
+        priority: 'medium',
+        status: 'planned'
+      });
+      setShowAddForm(false);
     }
   };
 
-  const getPerformanceColor = (performance: number) => {
-    if (performance >= 90) return 'text-green-600';
-    if (performance >= 80) return 'text-blue-600';
-    if (performance >= 70) return 'text-yellow-600';
-    return 'text-red-600';
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high': return 'bg-red-100 text-red-800 border-red-200';
+      case 'medium': return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'low': return 'bg-green-100 text-green-800 border-green-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
   };
 
-  const getRoleIcon = (role: string) => {
-    if (role.includes('Manager')) return Crown;
-    if (role.includes('Lead') || role.includes('Senior')) return Shield;
-    return Users;
+  const handleDeleteSchedule = (id: string) => {
+    const schedule = weeklySchedules.find(s => s.id === id);
+    
+    if (schedule) {
+      setDeleteConfirm({
+        id: schedule.id,
+        projectName: schedule.projectName
+      });
+    }
   };
 
-  const filteredMembers = teamMembers.filter(member =>
-    member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    member.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    member.role.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleConfirmDelete = () => {
+    if (deleteConfirm) {
+      setWeeklySchedules(weeklySchedules.filter(schedule => schedule.id !== deleteConfirm.id));
+      setDeleteConfirm(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteConfirm(null);
+  };
+
+  // Calculate team workload
+  const calculateTeamWorkload = (): TeamWorkload[] => {
+    const workloadMap = new Map<string, TeamWorkload>();
+
+    teamMembers.forEach(member => {
+      workloadMap.set(member.id, {
+        memberId: member.id,
+        memberName: member.name,
+        totalHours: 0,
+        projectCount: 0,
+        taskCount: 0,
+        schedules: []
+      });
+    });
+
+    weeklySchedules.forEach(schedule => {
+      const workload = workloadMap.get(schedule.memberId);
+      if (workload) {
+        workload.totalHours += schedule.hours;
+        workload.taskCount += 1;
+        workload.schedules.push(schedule);
+        
+        const uniqueProjects = new Set(workload.schedules.map(s => s.projectName));
+        workload.projectCount = uniqueProjects.size;
+      }
+    });
+
+    return Array.from(workloadMap.values()).filter(w => w.totalHours > 0);
+  };
+
+  const teamWorkload = calculateTeamWorkload();
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Team</h1>
-            <p className="text-gray-600">Manage your team members and track their performance</p>
+      {/* Page Header */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-semibold text-gray-900">Team</h1>
+        <p className="text-base text-gray-500 mt-2">
+          Manage and track your team schedules and workload
+        </p>
+      </div>
+
+      {/* Week Filter Header */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-4">
+          <h2 className="text-lg font-semibold text-gray-900">
+            Schedule Team Weekly
+          </h2>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => navigateWeek('prev')}
+              className="text-red-500"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <span className="text-sm text-gray-600 px-3 py-1 rounded-md bg-gray-50">
+              {getWeekRange()}
+            </span>
+            <button 
+              onClick={() => navigateWeek('next')}
+              className="text-red-500"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
           </div>
+        </div>
+        <button 
+          onClick={() => setShowAddForm(true)}
+          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2"
+        >
+          <Plus className="w-4 h-4" />
+          Add Schedule
+        </button>
+      </div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Total Members</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">18</p>
-                  <p className="text-sm text-blue-600 mt-2">+2 new this month</p>
-                </div>
-                <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
-                  <Users className="w-6 h-6 text-blue-500" />
-                </div>
-              </div>
+      {/* Add Schedule Form */}
+      {showAddForm && (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Add New Schedule</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Team Member</label>
+              <select
+                value={newSchedule.memberId}
+                onChange={(e) => setNewSchedule({ ...newSchedule, memberId: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option value="">Select member...</option>
+                {teamMembers.map(member => (
+                  <option key={member.id} value={member.id}>
+                    {member.name} ({member.role})
+                  </option>
+                ))}
+              </select>
             </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Active Now</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">15</p>
-                  <p className="text-sm text-green-600 mt-2">83% active rate</p>
-                </div>
-                <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-green-500" />
-                </div>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
+              <input
+                type="text"
+                value={newSchedule.projectName}
+                onChange={(e) => setNewSchedule({ ...newSchedule, projectName: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                placeholder="Enter project name..."
+              />
             </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Departments</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">4</p>
-                  <p className="text-sm text-gray-600 mt-2">Across teams</p>
-                </div>
-                <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
-                  <Crown className="w-6 h-6 text-purple-500" />
-                </div>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Task</label>
+              <input
+                type="text"
+                value={newSchedule.task}
+                onChange={(e) => setNewSchedule({ ...newSchedule, task: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                placeholder="Enter task description..."
+              />
             </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Avg Performance</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">89%</p>
-                  <p className="text-sm text-green-600 mt-2">+3% improvement</p>
-                </div>
-                <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
-                  <Plus className="w-6 h-6 text-orange-500" />
-                </div>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+              <input
+                type="date"
+                value={newSchedule.startDate}
+                onChange={(e) => setNewSchedule({ ...newSchedule, startDate: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+              <input
+                type="date"
+                value={newSchedule.endDate}
+                onChange={(e) => setNewSchedule({ ...newSchedule, endDate: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Hours</label>
+              <input
+                type="number"
+                min="0.5"
+                max="24"
+                step="0.5"
+                value={newSchedule.hours}
+                onChange={(e) => setNewSchedule({ ...newSchedule, hours: parseFloat(e.target.value) })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+              <select
+                value={newSchedule.priority}
+                onChange={(e) => setNewSchedule({ ...newSchedule, priority: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+              <select
+                value={newSchedule.status}
+                onChange={(e) => setNewSchedule({ ...newSchedule, status: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                <option value="planned">Planned</option>
+                <option value="in-progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
             </div>
           </div>
-
-          {/* Search and Actions */}
-          <div className="bg-white rounded-xl p-6 shadow-sm mb-6">
-            <div className="flex flex-col lg:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <input
-                    type="text"
-                    placeholder="Search team members..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 rounded-lg outline-none"
-                  />
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <button className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50">
-                  <Users className="w-4 h-4" />
-                  Departments
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
-                  <Plus className="w-4 h-4" />
-                  Add Member
-                </button>
-              </div>
-            </div>
+          <div className="flex justify-end gap-3 mt-6">
+            <button
+              onClick={() => {
+                setShowAddForm(false);
+                setNewSchedule({
+                  memberId: '',
+                  projectName: '',
+                  task: '',
+                  startDate: '',
+                  endDate: '',
+                  hours: 0,
+                  priority: 'medium',
+                  status: 'planned'
+                });
+              }}
+              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleAddSchedule}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+            >
+              Save Schedule
+            </button>
           </div>
+        </div>
+      )}
 
-          {/* Team Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredMembers.map((member) => {
-              const RoleIcon = getRoleIcon(member.role);
+      {/* Schedule List */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        {weeklySchedules.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No schedules added yet</p>
+          </div>
+        ) : (
+          <div>
+            {/* HEADER ROW */}
+            <div className="grid grid-cols-[180px_220px_2fr_120px_120px_70px_100px_100px_60px] gap-4 items-center pb-3 border-b border-gray-100 text-sm font-bold text-gray-700">
+              <div>Team Member</div>
+              <div>Project</div>
+              <div>Task</div>
+              <div>Start Date</div>
+              <div>End Date</div>
+              <div>Hours</div>
+              <div>Priority</div>
+              <div>Status</div>
+              <div></div>
+            </div>
+
+            {/* LIST ROWS */}
+            {weeklySchedules.map((schedule) => {
+              const member = teamMembers.find(m => m.id === schedule.memberId);
               
               return (
-                <div key={member.id} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white font-bold">
-                        {member.avatar}
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-gray-900">{member.name}</h3>
-                        <p className="text-sm text-gray-600">{member.role}</p>
-                      </div>
+                <div 
+                  key={schedule.id} 
+                  className="grid grid-cols-[180px_220px_2fr_120px_120px_70px_100px_100px_60px] gap-4 items-center py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                >
+                  {/* COL 1: Avatar + Member Name */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white text-sm font-normal flex-shrink-0">
+                      {member?.name.charAt(0)}
                     </div>
-                    <button className="p-2 text-gray-400 hover:bg-gray-100 rounded-lg">
-                      <MoreHorizontal className="w-5 h-5" />
-                    </button>
+                    <span className="text-sm font-normal text-gray-900 truncate">{member?.name}</span>
                   </div>
 
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Mail className="w-4 h-4" />
-                      <span className="truncate">{member.email}</span>
-                    </div>
-                    
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <MapPin className="w-4 h-4" />
-                      <span>{member.department}</span>
-                    </div>
+                  {/* COL 2: Project Name */}
+                  <div className="text-sm font-normal text-gray-900 truncate">
+                    {schedule.projectName}
+                  </div>
 
-                    <div className="flex items-center justify-between">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(member.status)}`}>
-                        {member.status}
-                      </span>
-                      <div className="flex items-center gap-1">
-                        <RoleIcon className="w-4 h-4 text-gray-400" />
-                        <span className={`text-sm font-medium ${getPerformanceColor(member.performance)}`}>
-                          {member.performance}%
-                        </span>
-                      </div>
-                    </div>
+                  {/* COL 3: Task Title */}
+                  <div className="text-sm font-normal text-gray-900 truncate" title={schedule.task}>
+                    {schedule.task}
+                  </div>
 
-                    <div className="pt-3">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Projects: {member.projects}</span>
-                        <span className="text-gray-600">Joined: {member.joinDate}</span>
-                      </div>
-                    </div>
+                  {/* COL 4: Start Date */}
+                  <div className="text-sm text-gray-500">
+                    {schedule.startDate}
+                  </div>
+
+                  {/* COL 5: End Date */}
+                  <div className="text-sm text-gray-500">
+                    {schedule.endDate}
+                  </div>
+
+                  {/* COL 6: Hours */}
+                  <div className="text-sm text-gray-500">
+                    {schedule.hours}h
+                  </div>
+
+                  {/* COL 7: Priority Badge */}
+                  <div>
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-600">
+                      {schedule.priority.charAt(0).toUpperCase() + schedule.priority.slice(1)}
+                    </span>
+                  </div>
+
+                  {/* COL 8: Status Badge */}
+                  <div>
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                      {schedule.status.charAt(0).toUpperCase() + schedule.status.slice(1).replace('-', ' ')}
+                    </span>
+                  </div>
+
+                  {/* COL 9: Delete Button */}
+                  <div>
+                    <button
+                      onClick={() => handleDeleteSchedule(schedule.id)}
+                      className="p-2 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      title="Delete schedule"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               );
             })}
           </div>
+        )}
+      </div>
+
+      {/* Team Workload Section */}
+      {teamWorkload.length > 0 && (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Team Workload Overview</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {teamWorkload.map((workload) => (
+              <div key={workload.memberId} className="border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                      {workload.memberName.charAt(0)}
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">{workload.memberName}</h3>
+                      <p className="text-xs text-gray-500">{teamMembers.find(m => m.id === workload.memberId)?.role}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Total Hours:</span>
+                    <span className="text-sm font-semibold text-gray-900">{workload.totalHours}h</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Projects:</span>
+                    <span className="text-sm font-medium text-gray-900">{workload.projectCount}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Tasks:</span>
+                    <span className="text-sm font-medium text-gray-900">{workload.taskCount}</span>
+                  </div>
+                </div>
+
+                {/* Workload Progress Bar */}
+                <div className="mt-3">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-xs text-gray-500">Workload</span>
+                    <span className="text-xs text-gray-500">{Math.round((workload.totalHours / 40) * 100)}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        workload.totalHours > 40 ? 'bg-red-500' : 
+                        workload.totalHours > 30 ? 'bg-yellow-500' : 
+                        'bg-green-500'
+                      }`}
+                      style={{ width: `${Math.min((workload.totalHours / 40) * 100, 100)}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">Based on 40h/week</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal
+        isOpen={!!deleteConfirm}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        projectName={deleteConfirm?.projectName || ''}
+      />
     </div>
   );
 }

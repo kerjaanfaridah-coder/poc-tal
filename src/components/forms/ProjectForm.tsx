@@ -18,6 +18,9 @@ export interface Project {
   pm: string
   pic: string
   picRole: string
+  picSite: string
+  dueDate: string
+  notes: string
   budget: number
   team: string[]
   phases: Array<{
@@ -62,6 +65,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     pm: initialData?.pm || '',
     pic: initialData?.pic || '',
     picRole: initialData?.picRole || '',
+    picSite: initialData?.picSite || '',
+    dueDate: initialData?.dueDate || '',
+    notes: initialData?.notes || '',
     budget: initialData?.budget || 0,
     team: initialData?.team || [],
     phases: initialData?.phases || [
@@ -108,7 +114,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   }
 
   const steps = [
-    { id: 1, name: 'Basic Info' },
+    { id: 1, name: 'Project Information' },
     { id: 2, name: 'Phase Progress' },
     { id: 3, name: 'Budget' },
     { id: 4, name: 'Pending Items' },
@@ -126,80 +132,95 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <div className="grid grid-cols-2 gap-6">
-              {/* Project Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Project Name</label>
-                <input
-                  type="text"
-                  value={newProject.name}
-                  onChange={(e) => setNewProject({...newProject, name: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                  placeholder="Enter project name"
-                />
-              </div>
+            <div className="mt-6">
+              <div className="grid grid-cols-2 gap-6">
+                {/* LEFT COLUMN */}
+                
+                {/* Project Name */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1">Project Name</label>
+                  <input
+                    type="text"
+                    value={newProject.name}
+                    onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                    placeholder="Enter project name"
+                  />
+                </div>
 
-              {/* Status */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                <select
-                  value={newProject.status}
-                  onChange={(e) => setNewProject({...newProject, status: e.target.value as Project['status']})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                >
-                  <option value="in-progress">In Progress</option>
-                  <option value="on-hold">On Hold</option>
-                  <option value="completed">Completed</option>
-                </select>
-              </div>
+                {/* Location */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1">Location</label>
+                  <input
+                    type="text"
+                    value={newProject.location || ''}
+                    onChange={(e) => setNewProject({...newProject, location: e.target.value})}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                    placeholder="Enter project location"
+                  />
+                </div>
 
-              {/* Priority */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
-                <select
-                  value={newProject.priority}
-                  onChange={(e) => setNewProject({...newProject, priority: e.target.value as Project['priority']})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
+                {/* PIC Internal */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1">PIC Internal</label>
+                  <input
+                    type="text"
+                    value={newProject.pic || ''}
+                    onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                    placeholder="Internal person in charge"
+                  />
+                </div>
 
-              {/* Start Date */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
-                <input
-                  type="date"
-                  value={newProject.startDate}
-                  onChange={(e) => setNewProject({...newProject, startDate: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                />
-              </div>
+                {/* PIC Site */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1">PIC Site</label>
+                  <input
+                    type="text"
+                    value={newProject.picSite || ''}
+                    onChange={(e) => setNewProject({...newProject, picSite: e.target.value})}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                    placeholder="Site PIC name"
+                  />
+                </div>
 
-              {/* Deadline */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Deadline</label>
-                <input
-                  type="date"
-                  value={newProject.deadline}
-                  onChange={(e) => setNewProject({...newProject, deadline: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                />
-              </div>
-            </div>
+                {/* RIGHT COLUMN */}
 
-            {/* Description - Full Width */}
-            <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
-              <textarea
-                rows={4}
-                value={newProject.description}
-                onChange={(e) => setNewProject({...newProject, description: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                placeholder="Enter project description"
-              />
+                {/* PIC Site (Role) */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1">PIC Site (Role)</label>
+                  <input
+                    type="text"
+                    value={newProject.picRole || ''}
+                    onChange={(e) => setNewProject({...newProject, picRole: e.target.value})}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                    placeholder="Role or position"
+                  />
+                </div>
+
+                {/* Due Date */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-1">Due Date</label>
+                  <input
+                    type="date"
+                    value={newProject.dueDate || ''}
+                    onChange={(e) => setNewProject({...newProject, dueDate: e.target.value})}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                  />
+                </div>
+
+                {/* Notes - Full Width */}
+                <div className="col-span-2">
+                  <label className="block text-sm font-bold text-gray-700 mb-1">Notes</label>
+                  <textarea
+                    rows={4}
+                    value={newProject.notes || ''}
+                    onChange={(e) => setNewProject({...newProject, notes: e.target.value})}
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400 resize-none"
+                    placeholder="Additional project notes..."
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
         )
@@ -357,9 +378,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   </p>
                 </div>
                 
-                <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                  <h4 className="text-sm font-medium text-blue-600 mb-2">Estimated Cost</h4>
-                  <p className="text-xl font-bold text-blue-900">
+                <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+                  <h4 className="text-sm font-medium text-red-600 mb-2">Estimated Cost</h4>
+                  <p className="text-xl font-bold text-red-900">
                     IDR {Math.round(newProject.budget * 0.75).toLocaleString('id-ID')}
                   </p>
                   <p className="text-xs text-blue-600 mt-1">75% of total budget</p>
@@ -387,7 +408,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-3">
                       <div 
-                        className="bg-blue-500 h-3 rounded-full transition-all duration-300"
+                        className="bg-red-500 h-3 rounded-full transition-all duration-300"
                         style={{ width: '75%' }}
                       ></div>
                     </div>
@@ -719,7 +740,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </select>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                           issue.status === 'open' ? 'bg-red-100 text-red-800' :
-                          issue.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+                          issue.status === 'in-progress' ? 'bg-red-100 text-red-800' :
                           issue.status === 'resolved' ? 'bg-green-100 text-green-800' :
                           'bg-gray-100 text-gray-800'
                         }`}>
@@ -834,37 +855,45 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
       className="space-y-6"
     >
       {/* Step Navigation */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
-        <div className="flex items-center justify-between">
-          {steps.map((step, index) => (
-            <div key={step.id} className="flex items-center">
-              <button
-                onClick={() => setCurrentStep(step.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                  getStepStatus(step.id) === 'completed'
-                    ? 'bg-green-500 text-white hover:bg-green-600'
-                    : getStepStatus(step.id) === 'active'
-                    ? 'bg-red-500 text-white'
-                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                }`}
-              >
+      <div className="flex items-center justify-between py-4 px-6 bg-transparent">
+        {steps.map((step, index) => (
+          <div key={step.id} className="flex items-center gap-6">
+            <div className="flex items-center gap-3">
+              {/* Number Circle */}
+              <div className={`w-6 h-6 flex items-center justify-center rounded-full text-xs font-semibold ${
+                getStepStatus(step.id) === 'active'
+                  ? 'bg-white text-red-500 ring-2 ring-red-200'
+                  : getStepStatus(step.id) === 'completed'
+                  ? 'bg-green-50 text-green-600 border border-green-200'
+                  : 'bg-gray-200 text-gray-500'
+              }`}>
                 {getStepStatus(step.id) === 'completed' ? (
-                  <Check className="w-4 h-4" />
+                  <Check className="w-3 h-3" />
                 ) : (
-                  <span className="w-4 h-4 flex items-center justify-center text-xs font-bold">
-                    {step.id}
-                  </span>
+                  step.id
                 )}
+              </div>
+              
+              {/* Step Label */}
+              <span className={`text-sm font-medium tracking-tight rounded-full px-4 py-2 ${
+                getStepStatus(step.id) === 'active'
+                  ? 'bg-red-500 text-white shadow-sm ring-2 ring-red-200'
+                  : getStepStatus(step.id) === 'completed'
+                  ? 'bg-green-50 text-green-600 border border-green-200'
+                  : 'bg-gray-100 text-gray-600'
+              }`}>
                 {step.name}
-              </button>
-              {index < steps.length - 1 && (
-                <div className={`w-8 h-0.5 mx-2 ${
-                  getStepStatus(step.id) === 'completed' ? 'bg-green-500' : 'bg-gray-300'
-                }`} />
-              )}
+              </span>
             </div>
-          ))}
-        </div>
+            
+            {/* Connector Line */}
+            {index < steps.length - 1 && (
+              <div className={`flex-1 h-[2px] ${
+                getStepStatus(step.id) === 'completed' ? 'bg-red-300' : 'bg-gray-200'
+              }`} />
+            )}
+          </div>
+        ))}
       </div>
 
       {/* Main Form Card */}

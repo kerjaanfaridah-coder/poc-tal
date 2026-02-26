@@ -1,16 +1,12 @@
 'use client';
 
-import { Search, Bell, Plus, ChevronDown, User, Settings, LogOut } from 'lucide-react';
 import { useState } from 'react';
+import { Search, Bell, User, Settings, LogOut, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const router = useRouter();
-
-  const handleNewProject = () => {
-    router.push('/projects/new');
-  };
 
   return (
     <div className="h-20 bg-white flex items-center justify-end px-6 ml-64">
@@ -29,15 +25,6 @@ export default function Navbar() {
         <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
           <Bell className="w-5 h-5" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-        </button>
-
-        {/* New Project Button */}
-        <button 
-          onClick={handleNewProject}
-          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2 font-medium text-sm"
-        >
-          <Plus className="w-4 h-4" />
-          New Project
         </button>
 
         {/* User Avatar Dropdown */}
