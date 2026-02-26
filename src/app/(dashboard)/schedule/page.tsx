@@ -103,7 +103,7 @@ export default function ScheduleTeamProject() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-4xl font-bold text-gray-800 mb-2">Schedule Team Project</h1>
-            <p className="text-gray-600">Create and manage weekly team schedules for each project</p>
+            <p className="text-gray-600">Create and manage team schedules for each project</p>
           </div>
             <Button 
               onClick={() => setShowAddSchedule(true)}
@@ -143,7 +143,7 @@ export default function ScheduleTeamProject() {
         {/* Schedule List */}
         <Card className="bg-white shadow-sm border border-gray-200 mb-8">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-gray-900">Schedule List Weekly</CardTitle>
+            <CardTitle className="text-lg font-semibold text-gray-900">Schedule List</CardTitle>
           </CardHeader>
           <CardContent className="p-6">
             <div className="overflow-x-auto">
