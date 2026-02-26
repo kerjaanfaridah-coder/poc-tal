@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react';
+import { Plus, ChevronLeft, ChevronRight, Trash2, RefreshCw } from 'lucide-react';
 import DeleteConfirmModal from '@/components/ui/DeleteConfirmModal';
 
 interface WeeklySchedule {
@@ -43,20 +43,40 @@ export default function TeamPage() {
 
   // Load schedules from localStorage on mount
   useEffect(() => {
-    const savedSchedules = localStorage.getItem('weeklySchedules');
-    if (savedSchedules) {
-      try {
+    loadSchedulesFromStorage();
+    
+    // Listen for storage changes from other tabs
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'weeklySchedules') {
+        loadSchedulesFromStorage();
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const loadSchedulesFromStorage = () => {
+    try {
+      const savedSchedules = localStorage.getItem('weeklySchedules');
+      if (savedSchedules) {
         const parsedSchedules = JSON.parse(savedSchedules);
         setWeeklySchedules(parsedSchedules);
-      } catch (error) {
-        console.error('Error loading schedules from localStorage:', error);
+      } else {
+        setWeeklySchedules([]);
       }
+    } catch (error) {
+      console.error('Error loading schedules from localStorage:', error);
+      setWeeklySchedules([]);
     }
-  }, []);
+  };
 
   // Save schedules to localStorage whenever they change
   useEffect(() => {
-    if (weeklySchedules.length > 0) {
+    if (weeklySchedules.length >= 0) {
       localStorage.setItem('weeklySchedules', JSON.stringify(weeklySchedules));
     }
   }, [weeklySchedules]);
@@ -108,7 +128,13 @@ export default function TeamPage() {
         id: Date.now().toString(),
         ...newSchedule
       };
-      setWeeklySchedules([...weeklySchedules, schedule]);
+      const updatedSchedules = [...weeklySchedules, schedule];
+      setWeeklySchedules(updatedSchedules);
+      
+      // Clear and reset localStorage
+      localStorage.removeItem('weeklySchedules');
+      localStorage.setItem('weeklySchedules', JSON.stringify(updatedSchedules));
+      
       setNewSchedule({
         memberId: '',
         projectName: '',
@@ -121,6 +147,10 @@ export default function TeamPage() {
       });
       setShowAddForm(false);
     }
+  };
+
+  const handleRefreshData = () => {
+    loadSchedulesFromStorage();
   };
 
   const getPriorityColor = (priority: string) => {
@@ -145,8 +175,21 @@ export default function TeamPage() {
 
   const handleConfirmDelete = () => {
     if (deleteConfirm) {
-      setWeeklySchedules(weeklySchedules.filter(schedule => schedule.id !== deleteConfirm.id));
+      // Remove from state immediately
+      const updatedSchedules = weeklySchedules.filter(schedule => schedule.id !== deleteConfirm.id);
+      setWeeklySchedules(updatedSchedules);
+      
+      // Clear localStorage and set fresh data
+      localStorage.removeItem('weeklySchedules');
+      localStorage.setItem('weeklySchedules', JSON.stringify(updatedSchedules));
+      
+      // Close modal
       setDeleteConfirm(null);
+      
+      // Force a refresh of the component state
+      setTimeout(() => {
+        loadSchedulesFromStorage();
+      }, 100);
     }
   };
 
@@ -154,8 +197,8 @@ export default function TeamPage() {
     setDeleteConfirm(null);
   };
 
-  // Calculate team workload
-  const calculateTeamWorkload = (): TeamWorkload[] => {
+  // Calculate team workload - always use latest state
+  const calculateTeamWorkload = (schedules: WeeklySchedule[] = weeklySchedules): TeamWorkload[] => {
     const workloadMap = new Map<string, TeamWorkload>();
 
     teamMembers.forEach(member => {
@@ -169,7 +212,7 @@ export default function TeamPage() {
       });
     });
 
-    weeklySchedules.forEach(schedule => {
+    schedules.forEach(schedule => {
       const workload = workloadMap.get(schedule.memberId);
       if (workload) {
         workload.totalHours += schedule.hours;
@@ -184,7 +227,8 @@ export default function TeamPage() {
     return Array.from(workloadMap.values()).filter(w => w.totalHours > 0);
   };
 
-  const teamWorkload = calculateTeamWorkload();
+  // Calculate workload from latest schedules
+  const teamWorkload = calculateTeamWorkload(weeklySchedules);
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-8">
@@ -220,13 +264,23 @@ export default function TeamPage() {
             </button>
           </div>
         </div>
-        <button 
-          onClick={() => setShowAddForm(true)}
-          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          Add Schedule
-        </button>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={handleRefreshData}
+            className="px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
+            title="Refresh data"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Refresh
+          </button>
+          <button 
+            onClick={() => setShowAddForm(true)}
+            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Add Schedule
+          </button>
+        </div>
       </div>
 
       {/* Add Schedule Form */}
