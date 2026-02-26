@@ -9,8 +9,7 @@ interface WeeklySchedule {
   memberId: string;
   projectName: string;
   task: string;
-  startDate: string;
-  endDate: string;
+  dueDate: string;
   hours: number;
   priority: string;
   status: string;
@@ -34,8 +33,7 @@ export default function TeamPage() {
     memberId: '',
     projectName: '',
     task: '',
-    startDate: '',
-    endDate: '',
+    dueDate: '',
     hours: 0,
     priority: 'medium',
     status: 'planned'
@@ -123,7 +121,7 @@ export default function TeamPage() {
   };
 
   const handleAddSchedule = () => {
-    if (newSchedule.memberId && newSchedule.projectName && newSchedule.task && newSchedule.startDate && newSchedule.endDate && newSchedule.hours > 0) {
+    if (newSchedule.memberId && newSchedule.projectName && newSchedule.task && newSchedule.dueDate && newSchedule.hours > 0) {
       const schedule: WeeklySchedule = {
         id: Date.now().toString(),
         ...newSchedule
@@ -139,8 +137,7 @@ export default function TeamPage() {
         memberId: '',
         projectName: '',
         task: '',
-        startDate: '',
-        endDate: '',
+        dueDate: '',
         hours: 0,
         priority: 'medium',
         status: 'planned'
@@ -324,20 +321,11 @@ export default function TeamPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
               <input
                 type="date"
-                value={newSchedule.startDate}
-                onChange={(e) => setNewSchedule({ ...newSchedule, startDate: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
-              <input
-                type="date"
-                value={newSchedule.endDate}
-                onChange={(e) => setNewSchedule({ ...newSchedule, endDate: e.target.value })}
+                value={newSchedule.dueDate}
+                onChange={(e) => setNewSchedule({ ...newSchedule, dueDate: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
@@ -420,8 +408,7 @@ export default function TeamPage() {
               <div>Team Member</div>
               <div>Project</div>
               <div>Task</div>
-              <div>Start Date</div>
-              <div>End Date</div>
+              <div>Due Date</div>
               <div>Hours</div>
               <div>Priority</div>
               <div>Status</div>
@@ -455,17 +442,12 @@ export default function TeamPage() {
                     {schedule.task}
                   </div>
 
-                  {/* COL 4: Start Date */}
+                  {/* COL 4: Due Date */}
                   <div className="text-sm text-gray-500">
-                    {schedule.startDate}
+                    {schedule.dueDate}
                   </div>
 
-                  {/* COL 5: End Date */}
-                  <div className="text-sm text-gray-500">
-                    {schedule.endDate}
-                  </div>
-
-                  {/* COL 6: Hours */}
+                  {/* COL 5: Hours */}
                   <div className="text-sm text-gray-500">
                     {schedule.hours}h
                   </div>
