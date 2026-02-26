@@ -924,7 +924,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
       {/* Main Form Card */}
       <div className="bg-white rounded-2xl shadow-sm p-6">
-        {currentStep === 4 ? (
+        {Number(currentStep) === 4 ? (
           // Pending Items step - no card title to avoid duplicate
           <>
             <div className="space-y-6">
@@ -937,7 +937,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             <div className="flex justify-between items-center pt-6 border-t border-gray-200">
               <Button 
                 onClick={prevStep}
-                disabled={currentStep === 1}
+                disabled={Number(currentStep) === 1}
                 variant="outline"
                 className="border-gray-300 text-gray-700"
               >
@@ -945,7 +945,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 Previous
               </Button>
 
-              {currentStep === totalSteps ? (
+              {Number(currentStep) === Number(totalSteps) ? (
                 <Button 
                   onClick={handleSubmit}
                   className="bg-red-600 hover:bg-red-700 text-white"
@@ -981,7 +981,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
               <div className="flex justify-between items-center pt-6 border-t border-gray-200">
                 <Button 
                   onClick={prevStep}
-                  disabled={currentStep === 1}
+                  disabled={Number(currentStep) === 1}
                   variant="outline"
                   className="border-gray-300 text-gray-700"
                 >
@@ -989,7 +989,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   Previous
                 </Button>
 
-                {currentStep === totalSteps ? (
+                {Number(currentStep) === Number(totalSteps) ? (
                   <Button 
                     onClick={handleSubmit}
                     className="bg-red-600 hover:bg-red-700 text-white"
