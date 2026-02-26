@@ -8,7 +8,8 @@ import {
   BarChart3, 
   Calendar, 
   FileText, 
-  Settings 
+  Settings,
+  TrendingUp
 } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -17,6 +18,7 @@ const menuItems = [
   { icon: FolderKanban, label: 'Projects', href: '/projects' },
   { icon: CheckSquare, label: 'Tasks', href: '/tasks' },
   { icon: Users, label: 'Team', href: '/team' },
+  { icon: TrendingUp, label: 'Phase Progress', href: '/phase-progress' },
   { icon: BarChart3, label: 'Analytics', href: '/analytics' },
   { icon: Calendar, label: 'Calendar', href: '/calendar' },
   { icon: FileText, label: 'Reports', href: '/reports' },
