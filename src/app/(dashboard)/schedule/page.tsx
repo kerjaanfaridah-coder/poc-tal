@@ -22,7 +22,7 @@ interface ScheduleItem {
   teamMemberId: string
   teamMemberName: string
   task: string
-  date: string
+  dueDate: string
   status: 'scheduled' | 'in-progress' | 'completed' | 'cancelled'
   priority: 'low' | 'medium' | 'high'
   estimatedHours: number
@@ -59,7 +59,7 @@ export default function ScheduleTeamProject() {
     projectName: '',
     teamMemberId: '',
     task: '',
-    date: '',
+    dueDate: '',
     status: 'scheduled' as 'scheduled' | 'in-progress' | 'completed' | 'cancelled',
     priority: 'medium' as 'low' | 'medium' | 'high',
     estimatedHours: 0
@@ -80,7 +80,7 @@ export default function ScheduleTeamProject() {
       teamMemberId: newSchedule.teamMemberId,
       teamMemberName: newSchedule.teamMemberId,
       task: newSchedule.task,
-      date: newSchedule.date,
+      dueDate: newSchedule.dueDate,
       status: newSchedule.status,
       priority: newSchedule.priority,
       estimatedHours: newSchedule.estimatedHours
@@ -90,7 +90,7 @@ export default function ScheduleTeamProject() {
       projectName: '',
       teamMemberId: '',
       task: '',
-      date: '',
+      dueDate: '',
       status: 'scheduled',
       priority: 'medium',
       estimatedHours: 0
@@ -180,7 +180,7 @@ export default function ScheduleTeamProject() {
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Team Member</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Project</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Task</th>
-                    <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Date</th>
+                    <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Due Date</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Hours</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Priority</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Status</th>
@@ -204,7 +204,7 @@ export default function ScheduleTeamProject() {
                       </td>
                       <td className="px-4 py-3 text-gray-900">{schedule.projectName}</td>
                       <td className="px-4 py-3 text-gray-900">{schedule.task}</td>
-                      <td className="px-4 py-3 text-gray-900">{schedule.date}</td>
+                      <td className="px-4 py-3 text-gray-900">{schedule.dueDate}</td>
                       <td className="px-4 py-3 text-gray-900">{schedule.estimatedHours}h</td>
                       <td className="px-4 py-3">
                         <span className="text-sm text-gray-900">{schedule.priority}</span>
@@ -288,11 +288,11 @@ export default function ScheduleTeamProject() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Due Date</label>
                       <input
                         type="date"
-                        value={newSchedule.date}
-                        onChange={(e) => setNewSchedule({...newSchedule, date: e.target.value})}
+                        value={newSchedule.dueDate}
+                        onChange={(e) => setNewSchedule({...newSchedule, dueDate: e.target.value})}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
