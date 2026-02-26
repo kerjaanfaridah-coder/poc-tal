@@ -117,10 +117,11 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   }
 
   const getStepStatus = (step: number) => {
-    if (step < currentStep) return 'completed';
-    if (step === currentStep) return 'active';
+    const currentStepNum = Number(currentStep);
+    if (step < currentStepNum) return 'completed';
+    if (step === currentStepNum) return 'active';
     return 'pending';
-  }
+  };
 
   const steps = [
     { id: 1, name: 'Project Information' },
