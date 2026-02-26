@@ -22,7 +22,7 @@ interface ScheduleItem {
   teamMemberId: string
   teamMemberName: string
   task: string
-  dueDate: string
+  date: string
   status: 'scheduled' | 'in-progress' | 'completed' | 'cancelled'
   priority: 'low' | 'medium' | 'high'
   estimatedHours: number
@@ -43,14 +43,9 @@ export default function ScheduleTeamProject() {
 
   const [schedules, setSchedules] = useState<ScheduleItem[]>([])
 
-  const [selectedWeek, setSelectedWeek] = useState(() => {
+  const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date()
-    const dayOfWeek = today.getDay()
-    const startOfWeek = new Date(today)
-    startOfWeek.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1))
-    const endOfWeek = new Date(startOfWeek)
-    endOfWeek.setDate(startOfWeek.getDate() + 6)
-    return { weekStart: startOfWeek, weekEnd: endOfWeek }
+    return today
   })
   const [selectedProject, setSelectedProject] = useState('all')
   const [showAddSchedule, setShowAddSchedule] = useState(false)
@@ -59,7 +54,7 @@ export default function ScheduleTeamProject() {
     projectName: '',
     teamMemberId: '',
     task: '',
-    dueDate: '',
+    date: '',
     status: 'scheduled' as 'scheduled' | 'in-progress' | 'completed' | 'cancelled',
     priority: 'medium' as 'low' | 'medium' | 'high',
     estimatedHours: 0
@@ -69,7 +64,8 @@ export default function ScheduleTeamProject() {
 
   const filteredSchedules = schedules.filter(schedule => {
     const projectMatch = selectedProject === 'all' || schedule.projectName === selectedProject
-    return projectMatch
+    const dateMatch = schedule.date === selectedDate.toISOString().split('T')[0]
+    return projectMatch && dateMatch
   })
 
   const handleAddSchedule = () => {
@@ -80,7 +76,7 @@ export default function ScheduleTeamProject() {
       teamMemberId: newSchedule.teamMemberId,
       teamMemberName: newSchedule.teamMemberId,
       task: newSchedule.task,
-      dueDate: newSchedule.dueDate,
+      date: newSchedule.date,
       status: newSchedule.status,
       priority: newSchedule.priority,
       estimatedHours: newSchedule.estimatedHours
@@ -90,7 +86,7 @@ export default function ScheduleTeamProject() {
       projectName: '',
       teamMemberId: '',
       task: '',
-      dueDate: '',
+      date: '',
       status: 'scheduled',
       priority: 'medium',
       estimatedHours: 0
@@ -98,11 +94,7 @@ export default function ScheduleTeamProject() {
     setShowAddSchedule(false)
   }
 
-  const formatDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }
-    return date.toLocaleDateString('en-GB', options).replace(',', '')
-  }
-
+  
   
   return (
   <div className="p-6">
@@ -125,32 +117,13 @@ export default function ScheduleTeamProject() {
         {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Week</label>
-            <div className="relative">
-              <input
-                type="text"
-                readOnly
-                value={`${formatDate(selectedWeek.weekStart)} - ${formatDate(selectedWeek.weekEnd)}`}
-                onClick={() => (document.getElementById('week-picker') as HTMLInputElement)?.showPicker?.()}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg cursor-pointer bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Select week"
-              />
-              <input
-                id="week-picker"
-                type="date"
-                className="absolute inset-0 opacity-0 pointer-events-none"
-                value={selectedWeek.weekStart.toISOString().split('T')[0]}
-                onChange={(e) => {
-                  const picked = new Date(e.target.value)
-                  const dayOfWeek = picked.getDay()
-                  const startOfWeek = new Date(picked)
-                  startOfWeek.setDate(picked.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1))
-                  const endOfWeek = new Date(startOfWeek)
-                  endOfWeek.setDate(startOfWeek.getDate() + 6)
-                  setSelectedWeek({ weekStart: startOfWeek, weekEnd: endOfWeek })
-                }}
-              />
-            </div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+            <input
+              type="date"
+              value={selectedDate.toISOString().split('T')[0]}
+              onChange={(e) => setSelectedDate(new Date(e.target.value))}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Project</label>
@@ -180,7 +153,7 @@ export default function ScheduleTeamProject() {
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Team Member</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Project</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Task</th>
-                    <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Due Date</th>
+                    <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Date</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Hours</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Priority</th>
                     <th className="px-4 py-2 text-left text-xs font-semibold text-gray-900 border-b border-gray-200">Status</th>
@@ -204,7 +177,7 @@ export default function ScheduleTeamProject() {
                       </td>
                       <td className="px-4 py-3 text-gray-900">{schedule.projectName}</td>
                       <td className="px-4 py-3 text-gray-900">{schedule.task}</td>
-                      <td className="px-4 py-3 text-gray-900">{schedule.dueDate}</td>
+                      <td className="px-4 py-3 text-gray-900">{schedule.date}</td>
                       <td className="px-4 py-3 text-gray-900">{schedule.estimatedHours}h</td>
                       <td className="px-4 py-3">
                         <span className="text-sm text-gray-900">{schedule.priority}</span>
@@ -253,16 +226,6 @@ export default function ScheduleTeamProject() {
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Project</label>
-                      <input
-                        type="text"
-                        value={newSchedule.projectName}
-                        onChange={(e) => setNewSchedule({...newSchedule, projectName: e.target.value})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter project name"
-                      />
-                    </div>
-                    <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Team Member</label>
                       <select
                         value={newSchedule.teamMemberId}
@@ -277,8 +240,18 @@ export default function ScheduleTeamProject() {
                         ))}
                       </select>
                     </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Project Name</label>
+                      <input
+                        type="text"
+                        value={newSchedule.projectName}
+                        onChange={(e) => setNewSchedule({...newSchedule, projectName: e.target.value})}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter project name"
+                      />
+                    </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Task Description</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Task</label>
                       <input
                         type="text"
                         value={newSchedule.task}
@@ -287,54 +260,58 @@ export default function ScheduleTeamProject() {
                         placeholder="Enter task description"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Due Date</label>
-                      <input
-                        type="date"
-                        value={newSchedule.dueDate}
-                        onChange={(e) => setNewSchedule({...newSchedule, dueDate: e.target.value})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Due Date</label>
+                        <input
+                          type="date"
+                          value={newSchedule.date}
+                          onChange={(e) => setNewSchedule({...newSchedule, date: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Hours</label>
+                        <input
+                          type="number"
+                          value={newSchedule.estimatedHours}
+                          onChange={(e) => setNewSchedule({...newSchedule, estimatedHours: parseInt(e.target.value) || 0})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Enter estimated hours"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                      <select
-                        value={newSchedule.status}
-                        onChange={(e) =>
-                          setNewSchedule({
-                            ...newSchedule,
-                            status: e.target.value as 'scheduled' | 'in-progress' | 'completed' | 'cancelled'
-                          })
-                        }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      >
-                        <option value="scheduled">Scheduled</option>
-                        <option value="in-progress">In Progress</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
-                      <select
-                        value={newSchedule.priority}
-                        onChange={(e) => setNewSchedule({...newSchedule, priority: e.target.value as 'low' | 'medium' | 'high'})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      >
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Estimated Hours</label>
-                      <input
-                        type="number"
-                        value={newSchedule.estimatedHours}
-                        onChange={(e) => setNewSchedule({...newSchedule, estimatedHours: parseInt(e.target.value) || 0})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter estimated hours"
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                        <select
+                          value={newSchedule.priority}
+                          onChange={(e) => setNewSchedule({...newSchedule, priority: e.target.value as 'low' | 'medium' | 'high'})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="low">Low</option>
+                          <option value="medium">Medium</option>
+                          <option value="high">High</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                        <select
+                          value={newSchedule.status}
+                          onChange={(e) =>
+                            setNewSchedule({
+                              ...newSchedule,
+                              status: e.target.value as 'scheduled' | 'in-progress' | 'completed' | 'cancelled'
+                            })
+                          }
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="scheduled">Scheduled</option>
+                          <option value="in-progress">In Progress</option>
+                          <option value="completed">Completed</option>
+                          <option value="cancelled">Cancelled</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
