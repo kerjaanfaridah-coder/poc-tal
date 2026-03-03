@@ -29,7 +29,6 @@ export interface Project {
   team: string[]
   phases: Array<{
     id: string
-    no: number
     tasks: string
     assignedTo: string
     startDate: string
@@ -93,7 +92,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     phases: initialData?.phases || [
       {
         id: 'phase-1',
-        no: 1,
         tasks: 'Phase 1 - Planning',
         assignedTo: '',
         startDate: '',
@@ -269,7 +267,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Header Row */}
                     <thead>
                       <tr className="bg-gray-100 border-b border-gray-300">
-                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50">No</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[200px]">Tasks</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[120px]">Assigned To</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[100px]">Start Date</th>
@@ -292,21 +289,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     <tbody>
                       {newProject.phases.map((phase, phaseIndex) => (
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
-                          {/* No */}
-                          <td className="border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white">
-                            <input
-                              type="number"
-                              value={phase.no || phaseIndex + 1}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].no = parseInt(e.target.value) || 0
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
-                              min="1"
-                            />
-                          </td>
-
                           {/* Tasks */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <input
@@ -467,20 +449,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               placeholder="https://..."
                             />
                           </td>
-
-                          {/* Actions */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const updatedPhases = newProject.phases.filter((_, index) => index !== phaseIndex)
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
-                            >
-                              Delete
-                            </button>
-                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -492,7 +460,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     onClick={() => {
                       const newPhase = {
                         id: `phase-${Date.now()}`,
-                        no: newProject.phases.length + 1,
                         tasks: '',
                         assignedTo: '',
                         startDate: '',
