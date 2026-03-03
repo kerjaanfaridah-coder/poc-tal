@@ -776,7 +776,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </td>
                         <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          18 tasks total
+                          16 tasks total
                         </td>
                       </tr>
 
@@ -962,7 +962,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </td>
                         <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          18 tasks total
+                          16 tasks total
                         </td>
                       </tr>
 
@@ -973,7 +973,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       {/* Phase 3 Task Rows */}
-                      {newProject.phases.filter((_, index) => index >= 13 && index < 25).map((phase, phaseIndex) => (
+                      {newProject.phases.filter((_, index) => index >= 13 && index < 18).map((phase, phaseIndex) => (
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Same task row structure - abbreviated for brevity */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
@@ -1140,7 +1140,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </td>
                         <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          18 tasks total
+                          16 tasks total
                         </td>
                       </tr>
 
@@ -1151,7 +1151,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       {/* Phase 4 Task Rows */}
-                      {newProject.phases.filter((_, index) => index >= 25).map((phase, phaseIndex) => (
+                      {newProject.phases.filter((_, index) => index >= 18).map((phase, phaseIndex) => (
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Same task row structure - abbreviated for brevity */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
@@ -1318,7 +1318,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </td>
                         <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          8 tasks total
+                          6 tasks total
                         </td>
                       </tr>
                     </tbody>
