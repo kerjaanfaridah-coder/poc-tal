@@ -571,7 +571,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Header Row */}
                     <thead>
                       <tr className="bg-gray-100 border-b border-gray-300">
-                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[200px]">Tasks</th>
+                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[300px]">Tasks</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[120px]">Assigned To</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[100px]">Start Date</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[100px]">End Date</th>
@@ -587,7 +587,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[150px]">Noted</th>
-                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[200px]">Evidence / Link</th>
+                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[300px]">Evidence / Link</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -610,7 +610,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].tasks = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Enter task description"
                             />
                           </td>
@@ -625,7 +625,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].assignedTo = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Assign to..."
                             />
                           </td>
@@ -647,7 +647,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             />
                           </td>
 
@@ -668,7 +668,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             />
                           </td>
 
@@ -682,7 +682,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               min="0"
                             />
                           </td>
@@ -696,7 +696,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             >
                               <option value="Not Started">Not Started</option>
                               <option value="In Progress">In Progress</option>
@@ -722,7 +722,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                       updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
                                       setNewProject({...newProject, phases: updatedPhases})
                                     }}
-                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                                     min="0"
                                     max="100"
                                   />
@@ -741,7 +741,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].noted = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Add notes..."
                             />
                           </td>
@@ -756,7 +756,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].evidence = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="https://..."
                             />
                           </td>
@@ -799,7 +799,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].tasks = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Enter task description"
                             />
                           </td>
@@ -814,7 +814,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].assignedTo = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Assign to..."
                             />
                           </td>
@@ -835,7 +835,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             />
                           </td>
 
@@ -855,7 +855,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             />
                           </td>
 
@@ -869,7 +869,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               min="0"
                             />
                           </td>
@@ -883,7 +883,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             >
                               <option value="Not Started">Not Started</option>
                               <option value="In Progress">In Progress</option>
@@ -908,7 +908,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                       updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
                                       setNewProject({...newProject, phases: updatedPhases})
                                     }}
-                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                                     min="0"
                                     max="100"
                                   />
@@ -927,7 +927,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].noted = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Add notes..."
                             />
                           </td>
@@ -942,7 +942,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].evidence = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="https://..."
                             />
                           </td>
@@ -985,7 +985,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].tasks = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Enter task description"
                             />
                           </td>
@@ -999,7 +999,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].assignedTo = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Assign to..."
                             />
                           </td>
@@ -1019,7 +1019,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             />
                           </td>
 
@@ -1038,7 +1038,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             />
                           </td>
 
@@ -1051,7 +1051,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               min="0"
                             />
                           </td>
@@ -1064,7 +1064,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             >
                               <option value="Not Started">Not Started</option>
                               <option value="In Progress">In Progress</option>
@@ -1088,7 +1088,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                       updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
                                       setNewProject({...newProject, phases: updatedPhases})
                                     }}
-                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                                     min="0"
                                     max="100"
                                   />
@@ -1106,7 +1106,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].noted = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Add notes..."
                             />
                           </td>
@@ -1120,7 +1120,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].evidence = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="https://..."
                             />
                           </td>
@@ -1163,7 +1163,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].tasks = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Enter task description"
                             />
                           </td>
@@ -1177,7 +1177,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].assignedTo = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Assign to..."
                             />
                           </td>
@@ -1197,7 +1197,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             />
                           </td>
 
@@ -1216,7 +1216,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             />
                           </td>
 
@@ -1229,7 +1229,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               min="0"
                             />
                           </td>
@@ -1242,7 +1242,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                             >
                               <option value="Not Started">Not Started</option>
                               <option value="In Progress">In Progress</option>
@@ -1266,7 +1266,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                       updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
                                       setNewProject({...newProject, phases: updatedPhases})
                                     }}
-                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                                     min="0"
                                     max="100"
                                   />
@@ -1284,7 +1284,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].noted = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="Add notes..."
                             />
                           </td>
@@ -1298,7 +1298,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].evidence = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
                               placeholder="https://..."
                             />
                           </td>
