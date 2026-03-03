@@ -90,9 +90,313 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     costManPower: initialData?.costManPower || 0,
     team: initialData?.team || [],
     phases: initialData?.phases || [
+      // PHASE 1 TASKS
       {
-        id: 'phase-1',
-        tasks: 'Phase 1 - Planning',
+        id: 'phase-1-1',
+        tasks: '1. Kick off Meeting',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-1-2',
+        tasks: '2. Produce Shop Drawing',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-1-3',
+        tasks: '3. Project ON DP 1',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      // PHASE 2 TASKS
+      {
+        id: 'phase-2-4',
+        tasks: '4. Survey',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-2-5',
+        tasks: '5. Material Approval',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-2-6',
+        tasks: '6. Cable Delivery',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-2-7',
+        tasks: '7. Cabling Installation',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-2-8',
+        tasks: '8. Marking Device',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-2-9',
+        tasks: '9. Report Progress to Owner',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-2-10',
+        tasks: '10. QC Cabling & Placement',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      // PHASE 3 TASKS
+      {
+        id: 'phase-3-11',
+        tasks: '11. Payment DP II',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-3-12',
+        tasks: '12. Device Delivery',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-3-13',
+        tasks: '13. Device Installation',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-3-14',
+        tasks: '14. QC Installation & Racking',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-3-15',
+        tasks: '15. Report Progress to Owner',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-3-16',
+        tasks: '16. Integration - Setting & Configuration',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-3-17',
+        tasks: '17. Testing Function',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-3-18',
+        tasks: '18. QC Integration',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      // PHASE 4 TASKS
+      {
+        id: 'phase-4-19',
+        tasks: '19. Handover Document',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-4-20',
+        tasks: '20. Test Commisioning',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-4-21',
+        tasks: '21. Final QC',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-4-22',
+        tasks: '22. Function/ Defect Checklist',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-4-23',
+        tasks: '23. Repair Defect',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-4-24',
+        tasks: '24. Training',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-4-25',
+        tasks: '25. BAST',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-4-26',
+        tasks: '26. Maintenance',
         assignedTo: '',
         startDate: '',
         endDate: '',
@@ -472,7 +776,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </td>
                         <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          3 tasks total
+                          18 tasks total
                         </td>
                       </tr>
 
@@ -483,7 +787,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       {/* Phase 2 Task Rows */}
-                      {newProject.phases.filter((_, index) => index >= 3 && index < 6).map((phase, phaseIndex) => (
+                      {newProject.phases.filter((_, index) => index >= 3 && index < 13).map((phase, phaseIndex) => (
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Same task row structure as Phase 1 */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
@@ -658,7 +962,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </td>
                         <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          3 tasks total
+                          18 tasks total
                         </td>
                       </tr>
 
@@ -669,7 +973,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       {/* Phase 3 Task Rows */}
-                      {newProject.phases.filter((_, index) => index >= 6 && index < 9).map((phase, phaseIndex) => (
+                      {newProject.phases.filter((_, index) => index >= 13 && index < 25).map((phase, phaseIndex) => (
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Same task row structure - abbreviated for brevity */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
@@ -836,7 +1140,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </td>
                         <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          3 tasks total
+                          18 tasks total
                         </td>
                       </tr>
 
@@ -847,7 +1151,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       {/* Phase 4 Task Rows */}
-                      {newProject.phases.filter((_, index) => index >= 9).map((phase, phaseIndex) => (
+                      {newProject.phases.filter((_, index) => index >= 25).map((phase, phaseIndex) => (
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Same task row structure - abbreviated for brevity */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
@@ -1014,7 +1318,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </td>
                         <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          0 tasks total
+                          8 tasks total
                         </td>
                       </tr>
                     </tbody>
