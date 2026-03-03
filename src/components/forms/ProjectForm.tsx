@@ -296,7 +296,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 text-sm text-gray-900 bg-white">
                             <input
                               type="number"
-                              value={phase.no}
+                              value={phase.no || phaseIndex + 1}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].no = parseInt(e.target.value) || 0
@@ -311,7 +311,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <input
                               type="text"
-                              value={phase.tasks}
+                              value={phase.tasks || (phase as any).name || ''}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].tasks = e.target.value
@@ -326,7 +326,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <input
                               type="text"
-                              value={phase.assignedTo}
+                              value={phase.assignedTo || (phase as any).owner || ''}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].assignedTo = e.target.value
@@ -341,7 +341,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <input
                               type="date"
-                              value={phase.startDate}
+                              value={phase.startDate || ''}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].startDate = e.target.value
@@ -362,7 +362,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <input
                               type="date"
-                              value={phase.endDate}
+                              value={phase.endDate || ''}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].endDate = e.target.value
@@ -383,7 +383,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 text-center bg-white">
                             <input
                               type="number"
-                              value={phase.days}
+                              value={phase.days || 0}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
@@ -397,7 +397,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           {/* Status */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <select
-                              value={phase.status}
+                              value={phase.status || 'Not Started'}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
@@ -419,9 +419,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 <div key={type} className="border-r border-gray-200 last:border-r-0">
                                   <input
                                     type="number"
-                                    value={phase.achievement[type]}
+                                    value={phase.achievement?.[type] || 0}
                                     onChange={(e) => {
                                       const updatedPhases = [...newProject.phases]
+                                      // Ensure achievement object exists
+                                      if (!updatedPhases[phaseIndex].achievement) {
+                                        updatedPhases[phaseIndex].achievement = { C: 0, O: 0, I: 0, N: 100 }
+                                      }
                                       updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
                                       setNewProject({...newProject, phases: updatedPhases})
                                     }}
@@ -438,7 +442,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <input
                               type="text"
-                              value={phase.noted}
+                              value={phase.noted || ''}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].noted = e.target.value
@@ -453,7 +457,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <input
                               type="text"
-                              value={phase.evidence}
+                              value={phase.evidence || ''}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].evidence = e.target.value
