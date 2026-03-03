@@ -260,7 +260,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             className="space-y-6"
           >
             <div className="mt-6">
-              {/* Excel-style Project Monitoring Table */}
+              {/* Excel-style Project Monitoring Table with Phase Structure */}
               <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
                 <div className="overflow-x-auto">
                   <table className="w-full border-collapse">
@@ -287,7 +287,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       </tr>
                     </thead>
                     <tbody>
-                      {newProject.phases.map((phase, phaseIndex) => (
+                      {/* PHASE 1 */}
+                      <tr className="bg-blue-50 border-b-2 border-blue-300">
+                        <td colSpan={9} className="px-3 py-2 font-bold text-blue-900 text-left">
+                          PHASE 1
+                        </td>
+                      </tr>
+                      {/* Phase 1 Task Rows */}
+                      {newProject.phases.filter((_, index) => index < 3).map((phase, phaseIndex) => (
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Tasks */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
@@ -451,6 +458,565 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
                         </tr>
                       ))}
+                      {/* Phase 1 Achievement Summary */}
+                      <tr className="bg-blue-100 border-b border-gray-300">
+                        <td colSpan={6} className="px-3 py-2 font-semibold text-blue-900 text-right">
+                          PHASE 1 ACHIEVEMENT SUMMARY
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2">
+                          <div className="grid grid-cols-4 gap-0">
+                            <div className="border-r border-gray-300 pr-1 text-xs font-bold text-center">75%</div>
+                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">15%</div>
+                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">5%</div>
+                            <div className="pl-1 text-xs font-bold text-center">5%</div>
+                          </div>
+                        </td>
+                        <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
+                          3 tasks total
+                        </td>
+                      </tr>
+
+                      {/* PHASE 2 */}
+                      <tr className="bg-green-50 border-b-2 border-green-300">
+                        <td colSpan={9} className="px-3 py-2 font-bold text-green-900 text-left">
+                          PHASE 2
+                        </td>
+                      </tr>
+                      {/* Phase 2 Task Rows */}
+                      {newProject.phases.filter((_, index) => index >= 3 && index < 6).map((phase, phaseIndex) => (
+                        <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
+                          {/* Same task row structure as Phase 1 */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.tasks || (phase as any).name || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].tasks = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Enter task description"
+                            />
+                          </td>
+
+                          {/* Assigned To */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.assignedTo || (phase as any).owner || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].assignedTo = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Assign to..."
+                            />
+                          </td>
+
+                          {/* Start Date */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="date"
+                              value={phase.startDate || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].startDate = e.target.value
+                                if (updatedPhases[phaseIndex].endDate) {
+                                  const start = new Date(e.target.value)
+                                  const end = new Date(updatedPhases[phaseIndex].endDate)
+                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
+                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
+                                }
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            />
+                          </td>
+
+                          {/* End Date */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="date"
+                              value={phase.endDate || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].endDate = e.target.value
+                                if (updatedPhases[phaseIndex].startDate) {
+                                  const start = new Date(updatedPhases[phaseIndex].startDate)
+                                  const end = new Date(e.target.value)
+                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
+                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
+                                }
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            />
+                          </td>
+
+                          {/* Days */}
+                          <td className="border border-gray-300 px-3 py-2 text-center bg-white">
+                            <input
+                              type="number"
+                              value={phase.days || 0}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              min="0"
+                            />
+                          </td>
+
+                          {/* Status */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <select
+                              value={phase.status || 'Not Started'}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            >
+                              <option value="Not Started">Not Started</option>
+                              <option value="In Progress">In Progress</option>
+                              <option value="Completed">Completed</option>
+                              <option value="On Hold">On Hold</option>
+                            </select>
+                          </td>
+
+                          {/* Achievement % - C | O | I | N */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <div className="grid grid-cols-4 gap-0">
+                              {(['C', 'O', 'I', 'N'] as const).map((type) => (
+                                <div key={type} className="border-r border-gray-200 last:border-r-0">
+                                  <input
+                                    type="number"
+                                    value={phase.achievement?.[type] || 0}
+                                    onChange={(e) => {
+                                      const updatedPhases = [...newProject.phases]
+                                      if (!updatedPhases[phaseIndex].achievement) {
+                                        updatedPhases[phaseIndex].achievement = { C: 0, O: 0, I: 0, N: 100 }
+                                      }
+                                      updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
+                                      setNewProject({...newProject, phases: updatedPhases})
+                                    }}
+                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    min="0"
+                                    max="100"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+
+                          {/* Noted */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.noted || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].noted = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Add notes..."
+                            />
+                          </td>
+
+                          {/* Evidence / Link */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.evidence || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].evidence = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="https://..."
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                      {/* Phase 2 Achievement Summary */}
+                      <tr className="bg-green-100 border-b border-gray-300">
+                        <td colSpan={6} className="px-3 py-2 font-semibold text-green-900 text-right">
+                          PHASE 2 ACHIEVEMENT SUMMARY
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2">
+                          <div className="grid grid-cols-4 gap-0">
+                            <div className="border-r border-gray-300 pr-1 text-xs font-bold text-center">60%</div>
+                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">25%</div>
+                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">10%</div>
+                            <div className="pl-1 text-xs font-bold text-center">5%</div>
+                          </div>
+                        </td>
+                        <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
+                          3 tasks total
+                        </td>
+                      </tr>
+
+                      {/* PHASE 3 */}
+                      <tr className="bg-purple-50 border-b-2 border-purple-300">
+                        <td colSpan={9} className="px-3 py-2 font-bold text-purple-900 text-left">
+                          PHASE 3
+                        </td>
+                      </tr>
+                      {/* Phase 3 Task Rows */}
+                      {newProject.phases.filter((_, index) => index >= 6 && index < 9).map((phase, phaseIndex) => (
+                        <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
+                          {/* Same task row structure - abbreviated for brevity */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.tasks || (phase as any).name || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].tasks = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Enter task description"
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.assignedTo || (phase as any).owner || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].assignedTo = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Assign to..."
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="date"
+                              value={phase.startDate || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].startDate = e.target.value
+                                if (updatedPhases[phaseIndex].endDate) {
+                                  const start = new Date(e.target.value)
+                                  const end = new Date(updatedPhases[phaseIndex].endDate)
+                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
+                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
+                                }
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="date"
+                              value={phase.endDate || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].endDate = e.target.value
+                                if (updatedPhases[phaseIndex].startDate) {
+                                  const start = new Date(updatedPhases[phaseIndex].startDate)
+                                  const end = new Date(e.target.value)
+                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
+                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
+                                }
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 text-center bg-white">
+                            <input
+                              type="number"
+                              value={phase.days || 0}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              min="0"
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <select
+                              value={phase.status || 'Not Started'}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            >
+                              <option value="Not Started">Not Started</option>
+                              <option value="In Progress">In Progress</option>
+                              <option value="Completed">Completed</option>
+                              <option value="On Hold">On Hold</option>
+                            </select>
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <div className="grid grid-cols-4 gap-0">
+                              {(['C', 'O', 'I', 'N'] as const).map((type) => (
+                                <div key={type} className="border-r border-gray-200 last:border-r-0">
+                                  <input
+                                    type="number"
+                                    value={phase.achievement?.[type] || 0}
+                                    onChange={(e) => {
+                                      const updatedPhases = [...newProject.phases]
+                                      if (!updatedPhases[phaseIndex].achievement) {
+                                        updatedPhases[phaseIndex].achievement = { C: 0, O: 0, I: 0, N: 100 }
+                                      }
+                                      updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
+                                      setNewProject({...newProject, phases: updatedPhases})
+                                    }}
+                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    min="0"
+                                    max="100"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.noted || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].noted = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Add notes..."
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.evidence || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].evidence = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="https://..."
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                      {/* Phase 3 Achievement Summary */}
+                      <tr className="bg-purple-100 border-b border-gray-300">
+                        <td colSpan={6} className="px-3 py-2 font-semibold text-purple-900 text-right">
+                          PHASE 3 ACHIEVEMENT SUMMARY
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2">
+                          <div className="grid grid-cols-4 gap-0">
+                            <div className="border-r border-gray-300 pr-1 text-xs font-bold text-center">30%</div>
+                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">20%</div>
+                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">25%</div>
+                            <div className="pl-1 text-xs font-bold text-center">25%</div>
+                          </div>
+                        </td>
+                        <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
+                          3 tasks total
+                        </td>
+                      </tr>
+
+                      {/* PHASE 4 */}
+                      <tr className="bg-orange-50 border-b-2 border-orange-300">
+                        <td colSpan={9} className="px-3 py-2 font-bold text-orange-900 text-left">
+                          PHASE 4
+                        </td>
+                      </tr>
+                      {/* Phase 4 Task Rows */}
+                      {newProject.phases.filter((_, index) => index >= 9).map((phase, phaseIndex) => (
+                        <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
+                          {/* Same task row structure - abbreviated for brevity */}
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.tasks || (phase as any).name || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].tasks = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Enter task description"
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.assignedTo || (phase as any).owner || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].assignedTo = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Assign to..."
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="date"
+                              value={phase.startDate || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].startDate = e.target.value
+                                if (updatedPhases[phaseIndex].endDate) {
+                                  const start = new Date(e.target.value)
+                                  const end = new Date(updatedPhases[phaseIndex].endDate)
+                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
+                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
+                                }
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="date"
+                              value={phase.endDate || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].endDate = e.target.value
+                                if (updatedPhases[phaseIndex].startDate) {
+                                  const start = new Date(updatedPhases[phaseIndex].startDate)
+                                  const end = new Date(e.target.value)
+                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
+                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
+                                }
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 text-center bg-white">
+                            <input
+                              type="number"
+                              value={phase.days || 0}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              min="0"
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <select
+                              value={phase.status || 'Not Started'}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                            >
+                              <option value="Not Started">Not Started</option>
+                              <option value="In Progress">In Progress</option>
+                              <option value="Completed">Completed</option>
+                              <option value="On Hold">On Hold</option>
+                            </select>
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <div className="grid grid-cols-4 gap-0">
+                              {(['C', 'O', 'I', 'N'] as const).map((type) => (
+                                <div key={type} className="border-r border-gray-200 last:border-r-0">
+                                  <input
+                                    type="number"
+                                    value={phase.achievement?.[type] || 0}
+                                    onChange={(e) => {
+                                      const updatedPhases = [...newProject.phases]
+                                      if (!updatedPhases[phaseIndex].achievement) {
+                                        updatedPhases[phaseIndex].achievement = { C: 0, O: 0, I: 0, N: 100 }
+                                      }
+                                      updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
+                                      setNewProject({...newProject, phases: updatedPhases})
+                                    }}
+                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    min="0"
+                                    max="100"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.noted || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].noted = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="Add notes..."
+                            />
+                          </td>
+
+                          <td className="border border-gray-300 px-3 py-2 bg-white">
+                            <input
+                              type="text"
+                              value={phase.evidence || ''}
+                              onChange={(e) => {
+                                const updatedPhases = [...newProject.phases]
+                                updatedPhases[phaseIndex].evidence = e.target.value
+                                setNewProject({...newProject, phases: updatedPhases})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              placeholder="https://..."
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                      {/* Phase 4 Achievement Summary */}
+                      <tr className="bg-orange-100 border-b border-gray-300">
+                        <td colSpan={6} className="px-3 py-2 font-semibold text-orange-900 text-right">
+                          PHASE 4 ACHIEVEMENT SUMMARY
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2">
+                          <div className="grid grid-cols-4 gap-0">
+                            <div className="border-r border-gray-300 pr-1 text-xs font-bold text-center">0%</div>
+                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">0%</div>
+                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">0%</div>
+                            <div className="pl-1 text-xs font-bold text-center">100%</div>
+                          </div>
+                        </td>
+                        <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
+                          0 tasks total
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
