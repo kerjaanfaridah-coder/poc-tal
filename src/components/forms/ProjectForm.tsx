@@ -468,10 +468,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* Project Name */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">Project Name</label>
-                  <input
+                  <div
                     type="text"
                     value={newProject.name}
-                    onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Enter project name"
                   />
@@ -480,10 +480,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* Location */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">Location</label>
-                  <input
+                  <div
                     type="text"
                     value={newProject.location || ''}
-                    onChange={(e) => setNewProject({...newProject, location: e.target.value})}
+
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Enter project location"
                   />
@@ -492,10 +492,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* PIC Internal */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">PIC Internal</label>
-                  <input
+                  <div
                     type="text"
                     value={newProject.pic || ''}
-                    onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
+
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Internal person in charge"
                   />
@@ -504,10 +504,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* PIC Site */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">PIC Site</label>
-                  <input
+                  <div
                     type="text"
                     value={newProject.picSite || ''}
-                    onChange={(e) => setNewProject({...newProject, picSite: e.target.value})}
+
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Site PIC name"
                   />
@@ -518,10 +518,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* PIC Site (Role) */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">PIC Site (Role)</label>
-                  <input
+                  <div
                     type="text"
                     value={newProject.picRole || ''}
-                    onChange={(e) => setNewProject({...newProject, picRole: e.target.value})}
+
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Role or position"
                   />
@@ -530,10 +530,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* Due Date */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">Due Date</label>
-                  <input
+                  <div
                     type="date"
                     value={newProject.dueDate || ''}
-                    onChange={(e) => setNewProject({...newProject, dueDate: e.target.value})}
+
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                   />
                 </div>
@@ -544,7 +544,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   <textarea
                     rows={4}
                     value={newProject.notes || ''}
-                    onChange={(e) => setNewProject({...newProject, notes: e.target.value})}
+
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400 resize-none"
                     placeholder="Additional project notes..."
                   />
@@ -602,7 +602,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Tasks */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.tasks || (phase as any).name || ''}
                               onChange={(e) => {
@@ -617,7 +617,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Assigned To */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.assignedTo || (phase as any).owner || ''}
                               onChange={(e) => {
@@ -632,7 +632,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Start Date */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="date"
                               value={phase.startDate || ''}
                               onChange={(e) => {
@@ -653,7 +653,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* End Date */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="date"
                               value={phase.endDate || ''}
                               onChange={(e) => {
@@ -674,7 +674,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Days */}
                           <td className="border border-gray-300 px-3 py-2 text-center bg-white">
-                            <input
+                            <div
                               type="number"
                               value={phase.days || 0}
                               onChange={(e) => {
@@ -710,7 +710,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <div className="grid grid-cols-4 gap-0">
                               {(['C', 'O', 'I', 'N'] as const).map((type) => (
                                 <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                  <input
+                                  <div
                                     type="number"
                                     value={phase.achievement?.[type] || 0}
                                     onChange={(e) => {
@@ -733,7 +733,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Noted */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.noted || ''}
                               onChange={(e) => {
@@ -748,7 +748,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Evidence / Link */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.evidence || ''}
                               onChange={(e) => {
@@ -791,7 +791,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Same task row structure as Phase 1 */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.tasks || (phase as any).name || ''}
                               onChange={(e) => {
@@ -806,7 +806,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Assigned To */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.assignedTo || (phase as any).owner || ''}
                               onChange={(e) => {
@@ -821,7 +821,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Start Date */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="date"
                               value={phase.startDate || ''}
                               onChange={(e) => {
@@ -841,7 +841,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* End Date */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="date"
                               value={phase.endDate || ''}
                               onChange={(e) => {
@@ -861,7 +861,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Days */}
                           <td className="border border-gray-300 px-3 py-2 text-center bg-white">
-                            <input
+                            <div
                               type="number"
                               value={phase.days || 0}
                               onChange={(e) => {
@@ -897,7 +897,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <div className="grid grid-cols-4 gap-0">
                               {(['C', 'O', 'I', 'N'] as const).map((type) => (
                                 <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                  <input
+                                  <div
                                     type="number"
                                     value={phase.achievement?.[type] || 0}
                                     onChange={(e) => {
@@ -919,7 +919,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Noted */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.noted || ''}
                               onChange={(e) => {
@@ -934,7 +934,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Evidence / Link */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.evidence || ''}
                               onChange={(e) => {
@@ -977,7 +977,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Same task row structure - abbreviated for brevity */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.tasks || (phase as any).name || ''}
                               onChange={(e) => {
@@ -991,7 +991,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.assignedTo || (phase as any).owner || ''}
                               onChange={(e) => {
@@ -1005,7 +1005,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="date"
                               value={phase.startDate || ''}
                               onChange={(e) => {
@@ -1024,7 +1024,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="date"
                               value={phase.endDate || ''}
                               onChange={(e) => {
@@ -1043,7 +1043,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 text-center bg-white">
-                            <input
+                            <div
                               type="number"
                               value={phase.days || 0}
                               onChange={(e) => {
@@ -1077,7 +1077,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <div className="grid grid-cols-4 gap-0">
                               {(['C', 'O', 'I', 'N'] as const).map((type) => (
                                 <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                  <input
+                                  <div
                                     type="number"
                                     value={phase.achievement?.[type] || 0}
                                     onChange={(e) => {
@@ -1098,7 +1098,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.noted || ''}
                               onChange={(e) => {
@@ -1112,7 +1112,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.evidence || ''}
                               onChange={(e) => {
@@ -1155,7 +1155,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Same task row structure - abbreviated for brevity */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.tasks || (phase as any).name || ''}
                               onChange={(e) => {
@@ -1169,7 +1169,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.assignedTo || (phase as any).owner || ''}
                               onChange={(e) => {
@@ -1183,7 +1183,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="date"
                               value={phase.startDate || ''}
                               onChange={(e) => {
@@ -1202,7 +1202,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="date"
                               value={phase.endDate || ''}
                               onChange={(e) => {
@@ -1221,7 +1221,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 text-center bg-white">
-                            <input
+                            <div
                               type="number"
                               value={phase.days || 0}
                               onChange={(e) => {
@@ -1255,7 +1255,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <div className="grid grid-cols-4 gap-0">
                               {(['C', 'O', 'I', 'N'] as const).map((type) => (
                                 <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                  <input
+                                  <div
                                     type="number"
                                     value={phase.achievement?.[type] || 0}
                                     onChange={(e) => {
@@ -1276,7 +1276,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.noted || ''}
                               onChange={(e) => {
@@ -1290,7 +1290,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
 
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
+                            <div
                               type="text"
                               value={phase.evidence || ''}
                               onChange={(e) => {
@@ -1344,7 +1344,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     }}
                     className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                   >
-                    + Add Row
                   </button>
                 </div>
               </div>
@@ -1365,10 +1364,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
               {/* Total Budget Input */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Total Budget (IDR)</label>
-                <input
+                <div
                   type="number"
                   value={newProject.budget}
-                  onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value) || 0})}
+                  readOnly
                   className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                   placeholder="Enter total project budget"
                 />
@@ -1452,10 +1451,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Outsource */}
                     <div className="flex items-center justify-between py-4 border-b border-gray-100">
                       <span className="text-sm text-gray-700">Outsource</span>
-                      <input
+                      <div
                         type="number"
                         value={newProject.outsource || 0}
-                        onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
+    
                         className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                         placeholder="0"
                       />
@@ -1464,10 +1463,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Cost Other */}
                     <div className="flex items-center justify-between py-4 border-b border-gray-100">
                       <span className="text-sm text-gray-700">Cost Other</span>
-                      <input
+                      <div
                         type="number"
                         value={newProject.costOther || 0}
-                        onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
+    
                         className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                         placeholder="0"
                       />
@@ -1476,10 +1475,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Cost Overtime */}
                     <div className="flex items-center justify-between py-4 border-b border-gray-100">
                       <span className="text-sm text-gray-700">Cost Overtime</span>
-                      <input
+                      <div
                         type="number"
                         value={newProject.costOvertime || 0}
-                        onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
+    
                         className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                         placeholder="0"
                       />
@@ -1488,10 +1487,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Cost Man Power */}
                     <div className="flex items-center justify-between py-4">
                       <span className="text-sm text-gray-700">Cost Man Power</span>
-                      <input
+                      <div
                         type="number"
                         value={newProject.costManPower || 0}
-                        onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
+    
                         className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                         placeholder="0"
                       />
@@ -1547,7 +1546,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 <div>
                   {/* Table Header - Direct start, no inner card title */}
                   <div className="grid grid-cols-[220px_120px_1fr] gap-x-4 items-center py-3 px-4 text-sm font-semibold text-gray-600 border-b">
-                    <div>Type</div>
+                    <div>type</div>
                     <div className="text-center">Total</div>
                     <div>Note</div>
                   </div>
@@ -1600,7 +1599,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <div className="space-y-2">
                           {newProject.pendingItems.map((item, index) => (
                             <div key={item.id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
-                              <input
+                              <div
                                 type="checkbox"
                                 checked={item.completed}
                                 onChange={(e) => {
@@ -1626,7 +1625,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 <option value="Actions">Actions</option>
                                 <option value="Change Request">Change Request</option>
                               </select>
-                              <input
+                              <div
                                 type="text"
                                 value={item.assignedPerson}
                                 onChange={(e) => {
@@ -1639,7 +1638,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }`}
                                 placeholder="Note/description"
                               />
-                              <input
+                              <div
                                 type="text"
                                 value={item.dueDate}
                                 onChange={(e) => {
@@ -1694,7 +1693,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       {/* Issue Title */}
                       <div className="md:col-span-2">
                         <label className="block text-xs font-medium text-gray-600 mb-1">Issue Title</label>
-                        <input
+                        <div
                           type="text"
                           value={issue.title}
                           onChange={(e) => {
@@ -1728,7 +1727,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       {/* Assigned To */}
                       <div>
                         <label className="block text-xs font-medium text-gray-600 mb-1">Assigned To</label>
-                        <input
+                        <div
                           type="text"
                           value={issue.assignedTo}
                           onChange={(e) => {
