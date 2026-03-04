@@ -33,21 +33,21 @@ export interface Project {
     owner: string
     progress: number
     status: 'not-started' | 'in-progress' | 'completed' | 'on-hold'
-  }>
+  }
   pendingItems: Array<{
     id: string
     itemName: string
     dueDate: string
     assignedPerson: string
     completed: boolean
-  }>
+  }
   issues: Array<{
     id: string
     title: string
     severity: 'low' | 'medium' | 'high'
     assignedTo: string
     status: 'open' | 'in-progress' | 'resolved' | 'closed'
-  }>
+  }
 }
 
 interface ProjectFormProps {
@@ -582,7 +582,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               itemType === 'action' ? 'bg-orange-100 text-orange-800' :
                               itemType === 'change' ? 'bg-purple-100 text-purple-800' :
                               'bg-gray-100 text-gray-800'
-                            }`}>
+                            }`}
                               {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
                             </span>
                           </td>
@@ -630,7 +630,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             />
                           </td>
                           <td className="px-3 py-2">
-                            <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusColor}`}>
+                            <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusColor}`}
                               {status}
                             </span>
                           </td>
@@ -905,7 +905,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   : getStepStatus(step.id) === 'completed'
                   ? 'bg-green-50 text-green-600 border border-green-200'
                   : 'bg-gray-200 text-gray-500'
-              }`}>
+              }`}
                 {getStepStatus(step.id) === 'completed' ? (
                   <Check className="w-3 h-3" />
                 ) : (
@@ -920,7 +920,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   : getStepStatus(step.id) === 'completed'
                   ? 'bg-green-50 text-green-600 border border-green-200'
                   : 'bg-gray-100 text-gray-600'
-              }`}>
+              }`}
                 {step.name}
               </span>
             </div>
