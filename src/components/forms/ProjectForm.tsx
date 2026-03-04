@@ -885,23 +885,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     <Plus className="w-8 h-8 text-gray-400" />
                   </div>
                   <h4 className="text-lg font-medium text-gray-900 mb-2">No Issues</h4>
-                  <p className="text-gray-600 mb-4">Track and manage project issues here</p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newIssue = {
-                        id: `issue-${Date.now()}`,
-                        title: '',
-                        severity: 'medium' as const,
-                        assignedTo: '',
-                        status: 'open' as const
-                      }
-                      setNewProject({...newProject, issues: [...newProject.issues, newIssue]})
-                    }}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                  >
-                    Add First Issue
-                  </button>
+                  <p className="text-gray-600 mb-2">Track and manage project issues here.</p>
+                  <p className="text-sm text-gray-500">Use the form above to add a new issue.</p>
                 </div>
               )}
             </div>
