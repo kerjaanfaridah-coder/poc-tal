@@ -700,7 +700,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             {/* Issue Tracker - Simplified UX */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-gray-900">Issue Tracker</h2>
+                <h2 className="text-lg font-semibold text-gray-900"></h2>
               </div>
 
               {/* Simplified Summary */}
@@ -878,24 +878,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 </div>
               )}
 
-              {/* Empty State */}
-              {newProject.issues.length === 0 && (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Plus className="w-8 h-8 text-gray-400" />
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 mb-2">No Issues</h4>
-                  <p className="text-gray-600 mb-2">Track and manage project issues here.</p>
-                  <p className="text-sm text-gray-500">Use the form above to add a new issue.</p>
-                </div>
-              )}
-            </div>
+                          </div>
           </motion.div>
         )
 
       default:
         return null
-    }
+```
   }
 
   return (
