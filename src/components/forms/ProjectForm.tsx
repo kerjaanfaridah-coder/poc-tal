@@ -697,155 +697,184 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Issue Tracker</h3>
-            
-            <div className="space-y-4">
-              {/* Issues List */}
-              {newProject.issues.map((issue, index) => (
-                <div key={issue.id} className="bg-white border border-gray-200 rounded-lg p-4">
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                      {/* Issue Title */}
-                      <div className="md:col-span-2">
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Issue Title</label>
-                        <input
-                          type="text"
-                          value={issue.title}
-                          onChange={(e) => {
-                            const updatedIssues = [...newProject.issues]
-                            updatedIssues[index].title = e.target.value
-                            setNewProject({...newProject, issues: updatedIssues})
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                          placeholder="Enter issue title"
-                        />
-                      </div>
+            {/* Issue Tracker - Simplified UX */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-lg font-semibold text-gray-900">Issue Tracker</h2>
+              </div>
 
-                      {/* Severity */}
-                      <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Severity</label>
-                        <select
-                          value={issue.severity}
-                          onChange={(e) => {
-                            const updatedIssues = [...newProject.issues]
-                            updatedIssues[index].severity = e.target.value as Project['issues'][0]['severity']
-                            setNewProject({...newProject, issues: updatedIssues})
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                        >
-                          <option value="low">Low</option>
-                          <option value="medium">Medium</option>
-                          <option value="high">High</option>
-                        </select>
-                      </div>
-
-                      {/* Assigned To */}
-                      <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Assigned To</label>
-                        <input
-                          type="text"
-                          value={issue.assignedTo}
-                          onChange={(e) => {
-                            const updatedIssues = [...newProject.issues]
-                            updatedIssues[index].assignedTo = e.target.value
-                            setNewProject({...newProject, issues: updatedIssues})
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                          placeholder="Enter assignee"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Status Badge */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <label className="text-xs font-medium text-gray-600">Status:</label>
-                        <select
-                          value={issue.status}
-                          onChange={(e) => {
-                            const updatedIssues = [...newProject.issues]
-                            updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
-                            setNewProject({...newProject, issues: updatedIssues})
-                          }}
-                          className="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                        >
-                          <option value="open">Open</option>
-                          <option value="in-progress">In Progress</option>
-                          <option value="resolved">Resolved</option>
-                          <option value="closed">Closed</option>
-                        </select>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          issue.status === 'open' ? 'bg-red-100 text-red-800' :
-                          issue.status === 'in-progress' ? 'bg-red-100 text-red-800' :
-                          issue.status === 'resolved' ? 'bg-green-100 text-green-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {issue.status.charAt(0).toUpperCase() + issue.status.slice(1).replace('-', ' ')}
-                        </span>
-                      </div>
-
-                      {/* Delete Button */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const updatedIssues = newProject.issues.filter((_, issueIndex) => issueIndex !== index)
-                          setNewProject({...newProject, issues: updatedIssues})
-                        }}
-                        className="text-red-600 hover:text-red-700 text-sm font-medium"
-                      >
-                        Delete Issue
-                      </button>
-                    </div>
-                  </div>
+              {/* Simplified Summary */}
+              <div className="bg-gray-50 rounded-lg p-3 mb-6">
+                <div className="flex items-center gap-4 text-sm">
+                  <span className="text-gray-600">Total:</span>
+                  <span className="font-semibold text-gray-900">
+                    {newProject.issues?.length || 0}
+                  </span>
+                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-600">Open:</span>
+                  <span className="font-semibold text-red-600">
+                    {newProject.issues?.filter(issue => issue.status === 'open').length || 0}
+                  </span>
+                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-600">In Progress:</span>
+                  <span className="font-semibold text-blue-600">
+                    {newProject.issues?.filter(issue => issue.status === 'in-progress').length || 0}
+                  </span>
+                  <span className="text-gray-400">|</span>
+                  <span className="text-gray-600">Resolved:</span>
+                  <span className="font-semibold text-green-600">
+                    {newProject.issues?.filter(issue => issue.status === 'resolved' || issue.status === 'closed').length || 0}
+                  </span>
                 </div>
-              ))}
+              </div>
 
-              {/* Add Issue Button */}
-              <button
-                type="button"
-                onClick={() => {
-                  const newIssue = {
-                    id: `issue-${Date.now()}`,
-                    title: '',
-                    severity: 'medium' as const,
-                    assignedTo: '',
-                    status: 'open' as const
-                  }
-                  setNewProject({...newProject, issues: [...newProject.issues, newIssue]})
-                }}
-                className="w-full py-3 px-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-red-500 hover:text-red-600 transition-colors flex items-center justify-center gap-2"
-              >
-                <Plus className="w-5 h-5" />
-                Add Issue
-              </button>
+              {/* Simplified Quick Add */}
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <Plus className="w-4 h-4 text-gray-500" />
+                  <span className="text-sm font-medium text-gray-700">Add Issue</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="text"
+                    placeholder="Enter issue title..."
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                    id="quick-add-issue-title"
+                  />
+                  <select
+                    id="quick-add-issue-severity"
+                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                    defaultValue="medium"
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Assignee..."
+                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                    id="quick-add-issue-assignee"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const title = (document.getElementById('quick-add-issue-title') as HTMLInputElement)?.value || 'New Issue';
+                      const severity = (document.getElementById('quick-add-issue-severity') as HTMLSelectElement)?.value || 'medium';
+                      const assignedTo = (document.getElementById('quick-add-issue-assignee') as HTMLInputElement)?.value || '';
+                      
+                      const newIssue = {
+                        id: `issue-${Date.now()}`,
+                        title: title,
+                        severity: severity as Project['issues'][0]['severity'],
+                        assignedTo: assignedTo,
+                        status: 'open' as const
+                      };
+                      
+                      setNewProject({...newProject, issues: [...newProject.issues, newIssue]});
+                      
+                      // Clear form
+                      (document.getElementById('quick-add-issue-title') as HTMLInputElement).value = '';
+                      (document.getElementById('quick-add-issue-assignee') as HTMLInputElement).value = '';
+                    }}
+                    className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
 
-              {/* Summary Stats */}
+              {/* Simplified Issue Table */}
               {newProject.issues.length > 0 && (
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
-                    <div>
-                      <p className="text-2xl font-bold text-gray-900">{newProject.issues.length}</p>
-                      <p className="text-sm text-gray-600">Total Issues</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-red-600">
-                        {newProject.issues.filter(issue => issue.status === 'open').length}
-                      </p>
-                      <p className="text-sm text-gray-600">Open</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-blue-600">
-                        {newProject.issues.filter(issue => issue.status === 'in-progress').length}
-                      </p>
-                      <p className="text-sm text-gray-600">In Progress</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-green-600">
-                        {newProject.issues.filter(issue => issue.status === 'resolved' || issue.status === 'closed').length}
-                      </p>
-                      <p className="text-sm text-gray-600">Resolved/Closed</p>
-                    </div>
-                  </div>
+                <div className="border border-gray-200 rounded-lg overflow-hidden">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-gray-50 border-b border-gray-200">
+                        <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                        <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severity</th>
+                        <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
+                        <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {newProject.issues.map((issue, index) => (
+                        <tr key={issue.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-3 py-2">
+                            <input
+                              type="text"
+                              value={issue.title}
+                              onChange={(e) => {
+                                const updatedIssues = [...newProject.issues]
+                                updatedIssues[index].title = e.target.value
+                                setNewProject({...newProject, issues: updatedIssues})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                              placeholder="Issue title..."
+                            />
+                          </td>
+                          <td className="px-3 py-2">
+                            <select
+                              value={issue.severity}
+                              onChange={(e) => {
+                                const updatedIssues = [...newProject.issues]
+                                updatedIssues[index].severity = e.target.value as Project['issues'][0]['severity']
+                                setNewProject({...newProject, issues: updatedIssues})
+                              }}
+                              className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                            >
+                              <option value="low">Low</option>
+                              <option value="medium">Medium</option>
+                              <option value="high">High</option>
+                            </select>
+                          </td>
+                          <td className="px-3 py-2">
+                            <input
+                              type="text"
+                              value={issue.assignedTo}
+                              onChange={(e) => {
+                                const updatedIssues = [...newProject.issues]
+                                updatedIssues[index].assignedTo = e.target.value
+                                setNewProject({...newProject, issues: updatedIssues})
+                              }}
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                              placeholder="Assignee..."
+                            />
+                          </td>
+                          <td className="px-3 py-2">
+                            <select
+                              value={issue.status}
+                              onChange={(e) => {
+                                const updatedIssues = [...newProject.issues]
+                                updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
+                                setNewProject({...newProject, issues: updatedIssues})
+                              }}
+                              className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                            >
+                              <option value="open">Open</option>
+                              <option value="in-progress">In Progress</option>
+                              <option value="resolved">Resolved</option>
+                              <option value="closed">Closed</option>
+                            </select>
+                          </td>
+                          <td className="px-3 py-2 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const updatedIssues = newProject.issues.filter((_, issueIndex) => issueIndex !== index)
+                                  setNewProject({...newProject, issues: updatedIssues})
+                                }}
+                                className="text-red-500 hover:text-red-600"
+                              >
+                                🗑
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
 
