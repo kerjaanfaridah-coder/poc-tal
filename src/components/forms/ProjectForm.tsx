@@ -245,9 +245,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             className="space-y-6"
           >
             <div className="mt-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Phase Progress</h2>
-              <p className="text-gray-600 mb-6">Configure project phases and progress tracking</p>
-              
               {/* Placeholder for Phase Progress */}
               <div className="border border-gray-300 rounded-lg p-8 text-center">
                 <div className="text-gray-500">
