@@ -33,21 +33,21 @@ export interface Project {
     owner: string
     progress: number
     status: 'not-started' | 'in-progress' | 'completed' | 'on-hold'
-  }>
+  }
   pendingItems: Array<{
     id: string
     itemName: string
     dueDate: string
     assignedPerson: string
     completed: boolean
-  }>
+  }
   issues: Array<{
     id: string
     title: string
     severity: 'low' | 'medium' | 'high'
     assignedTo: string
     status: 'open' | 'in-progress' | 'resolved' | 'closed'
-  }>
+  }
 }
 
 interface ProjectFormProps {
@@ -97,31 +97,31 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   const nextStep = () => {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1)
-    }>
-  }>
+    }
+  }
 
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
-    }>
-  }>
+    }
+  }
 
   const handleSubmit = () => {
     // Validate required fields
     if (!newProject.name.trim()) {
       alert('Project name is required');
       return;
-    }>
+    }
     
     onSubmit(newProject);
-  }>
+  }
 
   const getStepStatus = (step: number) => {
     const currentStepNum = Number(currentStep);
     if (step < currentStepNum) return 'completed';
     if (step === currentStepNum) return 'active';
     return 'pending';
-  }>;
+  };
 
   const steps = [
     { id: 1, name: 'Project Information' },
@@ -885,7 +885,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
       default:
         return null
 
-  }>
+  }
 
   return (
     <motion.div 
