@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Save, X, Plus, Trash2, Edit2, Check } from 'lucide-react';
+import { ArrowLeft, Save, X, Plus, Trash2, Edit2, Check, AlertTriangle, Clock } from 'lucide-react';
 import { useProjects } from '@/contexts/ProjectContext';
 import PageHeader from '@/components/ui/PageHeader';
 
@@ -670,9 +670,9 @@ export default function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Pending Items */}
+      {/* Pending Items - Modern SaaS Style */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-gray-900">Pending Items</h2>
           {isEditing && (
             <button
@@ -684,50 +684,192 @@ export default function ProjectDetailPage() {
             </button>
           )}
         </div>
-        <div className="space-y-4">
-          {(isEditing ? editedProject.pendingItems : project.pendingItems)?.map((item: PendingItem, index: number) => (
-            <div key={item.id} className="border border-gray-200 rounded-lg p-4">
-              <div className="flex items-start gap-3">
-                {isEditing ? (
-                  <input
-                    type="checkbox"
-                    checked={item.completed}
-                    onChange={(e) => {
-                      const updatedItems = [...(editedProject.pendingItems || [])];
-                      updatedItems[index] = { ...item, completed: e.target.checked };
-                      setEditedProject({ ...editedProject, pendingItems: updatedItems });
-                    }}
-                    className="mt-1"
-                  />
-                ) : (
-                  <div className={`mt-1 w-4 h-4 rounded border-2 ${
-                    item.completed ? 'bg-green-500 border-green-500' : 'border-gray-300'
-                  }`}>
-                    {item.completed && <Check className="w-3 h-3 text-white" />}
-                  </div>
-                )}
-                <div className="flex-1">
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={item.title}
-                      onChange={(e) => {
-                        const updatedItems = [...(editedProject.pendingItems || [])];
-                        updatedItems[index] = { ...item, title: e.target.value };
-                        setEditedProject({ ...editedProject, pendingItems: updatedItems });
-                      }}
-                      className={`font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full mb-2 ${
-                        item.completed ? 'line-through opacity-60' : ''
-                      }`}
-                    />
-                  ) : (
-                    <h3 className={`font-medium text-gray-900 ${item.completed ? 'line-through opacity-60' : ''}`}>
-                      {item.title}
-                    </h3>
-                  )}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Assignee</label>
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Total Items</p>
+                <p className="text-2xl font-bold text-gray-900 mt-1">
+                  {(isEditing ? editedProject.pendingItems : project.pendingItems)?.length || 0}
+                </p>
+              </div>
+              <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                <Plus className="w-5 h-5 text-blue-500" />
+              </div>
+            </div>
+          </div>
+          <div className="bg-orange-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-orange-600">Due Soon</p>
+                <p className="text-2xl font-bold text-orange-900 mt-1">
+                  {(() => {
+                    const items = (isEditing ? editedProject.pendingItems : project.pendingItems) || [];
+                    const today = new Date();
+                    const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+                    return items.filter((item: PendingItem) => {
+                      if (!item.dueDate || item.completed) return false;
+                      const dueDate = new Date(item.dueDate);
+                      return dueDate <= threeDaysFromNow && dueDate >= today;
+                    }).length;
+                  })()}
+                </p>
+              </div>
+              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5 text-orange-500" />
+              </div>
+            </div>
+          </div>
+          <div className="bg-red-50 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-red-600">Overdue</p>
+                <p className="text-2xl font-bold text-red-900 mt-1">
+                  {(() => {
+                    const items = (isEditing ? editedProject.pendingItems : project.pendingItems) || [];
+                    const today = new Date();
+                    return items.filter((item: PendingItem) => {
+                      if (!item.dueDate || item.completed) return false;
+                      const dueDate = new Date(item.dueDate);
+                      return dueDate < today;
+                    }).length;
+                  })()}
+                </p>
+              </div>
+              <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                <Clock className="w-5 h-5 text-red-500" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Add Item */}
+        {isEditing && (
+          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+            <div className="flex items-center gap-2 mb-2">
+              <Plus className="w-4 h-4 text-gray-500" />
+              <span className="text-sm font-medium text-gray-700">Quick Add Item</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+              <select
+                id="quick-add-type"
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                defaultValue="decision"
+              >
+                <option value="decision">Decision</option>
+                <option value="action">Action</option>
+                <option value="change">Change</option>
+                <option value="task">Task</option>
+              </select>
+              <input
+                type="text"
+                placeholder="Description..."
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                id="quick-add-description"
+              />
+              <input
+                type="date"
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                id="quick-add-date"
+              />
+              <button
+                onClick={() => {
+                  const type = (document.getElementById('quick-add-type') as HTMLSelectElement)?.value || 'decision';
+                  const description = (document.getElementById('quick-add-description') as HTMLInputElement)?.value || 'New Item';
+                  const dueDate = (document.getElementById('quick-add-date') as HTMLInputElement)?.value || '';
+                  
+                  const newPendingItem: PendingItem = {
+                    id: Date.now().toString(),
+                    title: description,
+                    description: '',
+                    assignee: '',
+                    dueDate: dueDate,
+                    completed: false
+                  };
+                  
+                  setEditedProject({
+                    ...editedProject,
+                    pendingItems: [...(editedProject.pendingItems || []), newPendingItem]
+                  });
+                  
+                  // Clear form
+                  (document.getElementById('quick-add-description') as HTMLInputElement).value = '';
+                  (document.getElementById('quick-add-date') as HTMLInputElement).value = '';
+                }}
+                className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Items Table */}
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gray-50 border-b border-gray-200">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {(isEditing ? editedProject.pendingItems : project.pendingItems)?.map((item: PendingItem, index: number) => {
+                const today = new Date();
+                const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+                const dueDate = item.dueDate ? new Date(item.dueDate) : null;
+                const isOverdue = dueDate && dueDate < today && !item.completed;
+                const isDueSoon = dueDate && dueDate <= threeDaysFromNow && dueDate >= today && !item.completed;
+                const itemType = item.title.toLowerCase().includes('decision') ? 'decision' : 
+                               item.title.toLowerCase().includes('action') ? 'action' : 
+                               item.title.toLowerCase().includes('change') ? 'change' : 'task';
+                
+                return (
+                  <tr 
+                    key={item.id} 
+                    className={`hover:bg-gray-50 transition-colors ${isOverdue ? 'bg-red-50' : ''}`}
+                  >
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                        itemType === 'decision' ? 'bg-blue-100 text-blue-800' :
+                        itemType === 'action' ? 'bg-orange-100 text-orange-800' :
+                        itemType === 'change' ? 'bg-purple-100 text-purple-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}>
+                        {itemType === 'decision' && '🔵'}
+                        {itemType === 'action' && '🟠'}
+                        {itemType === 'change' && '🟣'}
+                        {itemType === 'task' && '⚪'}
+                        {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={item.title}
+                          onChange={(e) => {
+                            const updatedItems = [...(editedProject.pendingItems || [])];
+                            updatedItems[index] = { ...item, title: e.target.value };
+                            setEditedProject({ ...editedProject, pendingItems: updatedItems });
+                          }}
+                          className={`font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full ${
+                            item.completed ? 'line-through opacity-60' : ''
+                          }`}
+                        />
+                      ) : (
+                        <div className={`font-medium text-gray-900 ${item.completed ? 'line-through opacity-60' : ''}`}>
+                          {item.title}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
                       {isEditing ? (
                         <input
                           type="text"
@@ -737,34 +879,134 @@ export default function ProjectDetailPage() {
                             updatedItems[index] = { ...item, assignee: e.target.value };
                             setEditedProject({ ...editedProject, pendingItems: updatedItems });
                           }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                          className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                          placeholder="Assignee..."
                         />
                       ) : (
-                        <p className="text-sm text-gray-900">{item.assignee || 'Not assigned'}</p>
+                        <span className="text-sm text-gray-900">{item.assignee || 'Not assigned'}</span>
                       )}
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
-                      {isEditing ? (
-                        <input
-                          type="date"
-                          value={item.dueDate}
-                          onChange={(e) => {
-                            const updatedItems = [...(editedProject.pendingItems || [])];
-                            updatedItems[index] = { ...item, dueDate: e.target.value };
-                            setEditedProject({ ...editedProject, pendingItems: updatedItems });
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        />
-                      ) : (
-                        <p className="text-sm text-gray-900">{item.dueDate || 'Not set'}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        {isEditing ? (
+                          <input
+                            type="date"
+                            value={item.dueDate}
+                            onChange={(e) => {
+                              const updatedItems = [...(editedProject.pendingItems || [])];
+                              updatedItems[index] = { ...item, dueDate: e.target.value };
+                              setEditedProject({ ...editedProject, pendingItems: updatedItems });
+                            }}
+                            className="px-2 py-1 border border-gray-300 rounded text-sm"
+                          />
+                        ) : (
+                          <span className="text-sm text-gray-900">{item.dueDate || 'Not set'}</span>
+                        )}
+                        {!item.completed && item.dueDate && (
+                          <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                            isOverdue ? 'bg-red-100 text-red-800' :
+                            isDueSoon ? 'bg-orange-100 text-orange-800' :
+                            'bg-gray-100 text-gray-800'
+                          }`}>
+                            {isOverdue && '🔴 Overdue'}
+                            {isDueSoon && '⚠️ Due Soon'}
+                            {!isOverdue && !isDueSoon && '✓ Normal'}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        {isEditing ? (
+                          <input
+                            type="checkbox"
+                            checked={item.completed}
+                            onChange={(e) => {
+                              const updatedItems = [...(editedProject.pendingItems || [])];
+                              updatedItems[index] = { ...item, completed: e.target.checked };
+                              setEditedProject({ ...editedProject, pendingItems: updatedItems });
+                            }}
+                            className="rounded border-gray-300 text-red-500 focus:ring-red-500"
+                          />
+                        ) : (
+                          <div className={`w-4 h-4 rounded border-2 ${
+                            item.completed ? 'bg-green-500 border-green-500' : 'border-gray-300'
+                          }`}>
+                            {item.completed && <Check className="w-3 h-3 text-white" />}
+                          </div>
+                        )}
+                        <span className={`text-sm font-medium ${
+                          item.completed ? 'text-green-600' : 'text-gray-600'
+                        }`}>
+                          {item.completed ? 'Completed' : 'Pending'}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        {isEditing && (
+                          <button
+                            onClick={() => {
+                              const updatedItems = (editedProject.pendingItems || []).filter((_: any, i: number) => i !== index);
+                              setEditedProject({ ...editedProject, pendingItems: updatedItems });
+                            }}
+                            className="text-red-500 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Activity Timeline */}
+        <div className="mt-8">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <h3 className="text-sm font-medium text-gray-900">Activity</h3>
+          </div>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+              <div className="flex-1">
+                <p className="text-sm text-gray-900">Decision added</p>
+                <p className="text-xs text-gray-500">John Doe – 12 Mar 2026</p>
               </div>
             </div>
-          ))}
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
+              <div className="flex-1">
+                <p className="text-sm text-gray-900">Due date updated</p>
+                <p className="text-xs text-gray-500">Decision "cddvv" → 15 Mar</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+              <div className="flex-1">
+                <p className="text-sm text-gray-900">Item completed</p>
+                <p className="text-xs text-gray-500">Action "Install cable"</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
+              <div className="flex-1">
+                <p className="text-sm text-gray-900">Added decision</p>
+                <p className="text-xs text-gray-500">2 minutes ago</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
+              <div className="flex-1">
+                <p className="text-sm text-gray-900">Updated due date</p>
+                <p className="text-xs text-gray-500">yesterday</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
