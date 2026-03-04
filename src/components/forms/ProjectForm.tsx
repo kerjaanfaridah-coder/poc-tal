@@ -86,11 +86,11 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         owner: '',
         progress: 0,
         status: 'not-started'
-      }>
+      }
     ],
     pendingItems: initialData?.pendingItems || [],
     issues: initialData?.issues || []
-  }>)
+  })
 
   const totalSteps: number = 5
 
@@ -342,7 +342,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       width: newProject.budget > 0 ? 
                         Math.min((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100, 100) + '%' 
                       : '0%'
-                    }>}
+                    }}
                   ></div>
                 </div>
               </div>
@@ -429,9 +429,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       dueDate: '',
                       assignedPerson: '',
                       completed: false
-                    }>
+                    }
                     setNewProject({...newProject, pendingItems: [...newProject.pendingItems, newItem]})
-                  }>}
+                  }}
                   className="flex items-center gap-2 px-3 py-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
                 >
                   <Plus className="w-4 h-4" />
@@ -456,8 +456,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         if (!item.dueDate || item.completed) return false;
                         const dueDate = new Date(item.dueDate);
                         return dueDate <= threeDaysFromNow && dueDate >= today;
-                      }>).length || 0;
-                    }>)()}
+                      }).length || 0;
+                    })()}
                   </span>
                   <span className="text-gray-400">|</span>
                   <span className="text-gray-600">Overdue:</span>
@@ -468,8 +468,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         if (!item.dueDate || item.completed) return false;
                         const dueDate = new Date(item.dueDate);
                         return dueDate < today;
-                      }>).length || 0;
-                    }>)()}
+                      }).length || 0;
+                    })()}
                   </span>
                 </div>
               </div>
@@ -515,17 +515,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         dueDate: dueDate,
                         assignedPerson: '',
                         completed: false
-                      }>;
+                      };
                       
                       setNewProject({
                         ...newProject,
                         pendingItems: [...(newProject.pendingItems || []), newItem]
-                      }>);
+                      });
                       
                       // Clear form
                       (document.getElementById('quick-add-description-simple-form') as HTMLInputElement).value = '';
                       (document.getElementById('quick-add-date-simple-form') as HTMLInputElement).value = '';
-                    }>}
+                    }}
                     className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
                   >
                     Add
@@ -563,13 +563,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       if (item.completed) {
                         status = 'Completed';
                         statusColor = 'bg-green-100 text-green-800';
-                      }> else if (isOverdue) {
+                      } else if (isOverdue) {
                         status = 'Overdue';
                         statusColor = 'bg-red-100 text-red-800';
-                      }> else if (isDueSoon) {
+                      } else if (isDueSoon) {
                         status = 'Due Soon';
                         statusColor = 'bg-orange-100 text-orange-800';
-                      }>
+                      }
                       
                       return (
                         <tr 
@@ -582,7 +582,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               itemType === 'action' ? 'bg-orange-100 text-orange-800' :
                               itemType === 'change' ? 'bg-purple-100 text-purple-800' :
                               'bg-gray-100 text-gray-800'
-                            }>}
+                            }}
                               {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
                             </span>
                           </td>
@@ -593,10 +593,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 const updatedItems = [...newProject.pendingItems];
                                 updatedItems[index].itemName = e.target.value;
                                 setNewProject({...newProject, pendingItems: updatedItems});
-                              }>}
+                              }}
                               className={font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full text-sm ${
                                 item.completed ? 'line-through opacity-60' : ''
-                              }>}
+                              }}
                             >
                               <option value="">Select type...</option>
                               <option value="Decision">Decision</option>
@@ -612,7 +612,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 const updatedItems = [...newProject.pendingItems];
                                 updatedItems[index].assignedPerson = e.target.value;
                                 setNewProject({...newProject, pendingItems: updatedItems});
-                              }>}
+                              }}
                               className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
                               placeholder="Assignee..."
                             />
@@ -625,7 +625,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 const updatedItems = [...newProject.pendingItems];
                                 updatedItems[index].dueDate = e.target.value;
                                 setNewProject({...newProject, pendingItems: updatedItems});
-                              }>}
+                              }}
                               className="px-2 py-1 border border-gray-300 rounded text-sm"
                             />
                           </td>
@@ -641,7 +641,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 onClick={() => {
                                   const updatedItems = newProject.pendingItems.filter((_, itemIndex) => itemIndex !== index);
                                   setNewProject({...newProject, pendingItems: updatedItems});
-                                }>}
+                                }}
                                 className="text-red-500 hover:text-red-600"
                               >
                                 🗑
@@ -650,7 +650,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </td>
                         </tr>
                       );
-                    }>)}
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -769,14 +769,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         severity: severity as Project['issues'][0]['severity'],
                         assignedTo: assignedTo,
                         status: 'open' as const
-                      }>;
+                      };
                       
                       setNewProject({...newProject, issues: [...newProject.issues, newIssue]});
                       
                       // Clear form
                       (document.getElementById('quick-add-issue-title') as HTMLInputElement).value = '';
                       (document.getElementById('quick-add-issue-assignee') as HTMLInputElement).value = '';
-                    }>}
+                    }}
                     className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
                   >
                     Add
@@ -808,7 +808,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 const updatedIssues = [...newProject.issues]
                                 updatedIssues[index].title = e.target.value
                                 setNewProject({...newProject, issues: updatedIssues})
-                              }>}
+                              }}
                               className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
                               placeholder="Issue title..."
                             />
@@ -820,7 +820,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 const updatedIssues = [...newProject.issues]
                                 updatedIssues[index].severity = e.target.value as Project['issues'][0]['severity']
                                 setNewProject({...newProject, issues: updatedIssues})
-                              }>}
+                              }}
                               className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
                             >
                               <option value="low">Low</option>
@@ -836,7 +836,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 const updatedIssues = [...newProject.issues]
                                 updatedIssues[index].assignedTo = e.target.value
                                 setNewProject({...newProject, issues: updatedIssues})
-                              }>}
+                              }}
                               className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
                               placeholder="Assignee..."
                             />
@@ -848,7 +848,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 const updatedIssues = [...newProject.issues]
                                 updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
                                 setNewProject({...newProject, issues: updatedIssues})
-                              }>}
+                              }}
                               className="px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
                             >
                               <option value="open">Open</option>
@@ -864,7 +864,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 onClick={() => {
                                   const updatedIssues = newProject.issues.filter((_, issueIndex) => issueIndex !== index)
                                   setNewProject({...newProject, issues: updatedIssues})
-                                }>}
+                                }}
                                 className="text-red-500 hover:text-red-600"
                               >
                                 🗑
@@ -905,7 +905,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   : getStepStatus(step.id) === 'completed'
                   ? 'bg-green-50 text-green-600 border border-green-200'
                   : 'bg-gray-200 text-gray-500'
-              }>}
+              }}
                 {getStepStatus(step.id) === 'completed' ? (
                   <Check className="w-3 h-3" />
                 ) : (
@@ -920,7 +920,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   : getStepStatus(step.id) === 'completed'
                   ? 'bg-green-50 text-green-600 border border-green-200'
                   : 'bg-gray-100 text-gray-600'
-              }>}
+              }}
                 {step.name}
               </span>
             </div>
@@ -929,7 +929,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             {index < steps.length - 1 && (
               <div className={flex-1 h-[2px] ${
                 getStepStatus(step.id) === 'completed' ? 'bg-red-300' : 'bg-gray-200'
-              }>} />
+              }} />
             )}
           </div>
         ))}
