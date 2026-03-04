@@ -374,8 +374,7 @@ export default function TeamPage() {
                   memberId: '',
                   projectName: '',
                   task: '',
-                  startDate: '',
-                  endDate: '',
+                  dueDate: '',
                   hours: 0,
                   priority: 'medium',
                   status: 'planned'
