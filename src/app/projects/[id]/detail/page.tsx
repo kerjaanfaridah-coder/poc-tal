@@ -670,7 +670,7 @@ export default function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Pending Items - Modern SaaS Style */}
+      {/* Pending Items - Simplified UX */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold text-gray-900">Pending Items</h2>
@@ -685,76 +685,53 @@ export default function ProjectDetailPage() {
           )}
         </div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Items</p>
-                <p className="text-2xl font-bold text-gray-900 mt-1">
-                  {(isEditing ? editedProject.pendingItems : project.pendingItems)?.length || 0}
-                </p>
-              </div>
-              <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
-                <Plus className="w-5 h-5 text-blue-500" />
-              </div>
-            </div>
-          </div>
-          <div className="bg-orange-50 rounded-lg p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-orange-600">Due Soon</p>
-                <p className="text-2xl font-bold text-orange-900 mt-1">
-                  {(() => {
-                    const items = (isEditing ? editedProject.pendingItems : project.pendingItems) || [];
-                    const today = new Date();
-                    const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
-                    return items.filter((item: PendingItem) => {
-                      if (!item.dueDate || item.completed) return false;
-                      const dueDate = new Date(item.dueDate);
-                      return dueDate <= threeDaysFromNow && dueDate >= today;
-                    }).length;
-                  })()}
-                </p>
-              </div>
-              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5 text-orange-500" />
-              </div>
-            </div>
-          </div>
-          <div className="bg-red-50 rounded-lg p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-red-600">Overdue</p>
-                <p className="text-2xl font-bold text-red-900 mt-1">
-                  {(() => {
-                    const items = (isEditing ? editedProject.pendingItems : project.pendingItems) || [];
-                    const today = new Date();
-                    return items.filter((item: PendingItem) => {
-                      if (!item.dueDate || item.completed) return false;
-                      const dueDate = new Date(item.dueDate);
-                      return dueDate < today;
-                    }).length;
-                  })()}
-                </p>
-              </div>
-              <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                <Clock className="w-5 h-5 text-red-500" />
-              </div>
-            </div>
+        {/* Simplified Summary */}
+        <div className="bg-gray-50 rounded-lg p-3 mb-6">
+          <div className="flex items-center gap-4 text-sm">
+            <span className="text-gray-600">Total:</span>
+            <span className="font-semibold text-gray-900">
+              {(isEditing ? editedProject.pendingItems : project.pendingItems)?.length || 0}
+            </span>
+            <span className="text-gray-400">|</span>
+            <span className="text-gray-600">Due Soon:</span>
+            <span className="font-semibold text-orange-600">
+              {(() => {
+                const items = (isEditing ? editedProject.pendingItems : project.pendingItems) || [];
+                const today = new Date();
+                const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+                return items.filter((item: PendingItem) => {
+                  if (!item.dueDate || item.completed) return false;
+                  const dueDate = new Date(item.dueDate);
+                  return dueDate <= threeDaysFromNow && dueDate >= today;
+                }).length;
+              })()}
+            </span>
+            <span className="text-gray-400">|</span>
+            <span className="text-gray-600">Overdue:</span>
+            <span className="font-semibold text-red-600">
+              {(() => {
+                const items = (isEditing ? editedProject.pendingItems : project.pendingItems) || [];
+                const today = new Date();
+                return items.filter((item: PendingItem) => {
+                  if (!item.dueDate || item.completed) return false;
+                  const dueDate = new Date(item.dueDate);
+                  return dueDate < today;
+                }).length;
+              })()}
+            </span>
           </div>
         </div>
 
-        {/* Quick Add Item */}
+        {/* Simplified Quick Add */}
         {isEditing && (
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
               <Plus className="w-4 h-4 text-gray-500" />
-              <span className="text-sm font-medium text-gray-700">Quick Add Item</span>
+              <span className="text-sm font-medium text-gray-700">Add Pending Item</span>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div className="flex items-center gap-3">
               <select
-                id="quick-add-type"
+                id="quick-add-type-simple"
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                 defaultValue="decision"
               >
@@ -766,19 +743,19 @@ export default function ProjectDetailPage() {
               <input
                 type="text"
                 placeholder="Description..."
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                id="quick-add-description"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                id="quick-add-description-simple"
               />
               <input
                 type="date"
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                id="quick-add-date"
+                id="quick-add-date-simple"
               />
               <button
                 onClick={() => {
-                  const type = (document.getElementById('quick-add-type') as HTMLSelectElement)?.value || 'decision';
-                  const description = (document.getElementById('quick-add-description') as HTMLInputElement)?.value || 'New Item';
-                  const dueDate = (document.getElementById('quick-add-date') as HTMLInputElement)?.value || '';
+                  const type = (document.getElementById('quick-add-type-simple') as HTMLSelectElement)?.value || 'decision';
+                  const description = (document.getElementById('quick-add-description-simple') as HTMLInputElement)?.value || 'New Item';
+                  const dueDate = (document.getElementById('quick-add-date-simple') as HTMLInputElement)?.value || '';
                   
                   const newPendingItem: PendingItem = {
                     id: Date.now().toString(),
@@ -795,8 +772,8 @@ export default function ProjectDetailPage() {
                   });
                   
                   // Clear form
-                  (document.getElementById('quick-add-description') as HTMLInputElement).value = '';
-                  (document.getElementById('quick-add-date') as HTMLInputElement).value = '';
+                  (document.getElementById('quick-add-description-simple') as HTMLInputElement).value = '';
+                  (document.getElementById('quick-add-date-simple') as HTMLInputElement).value = '';
                 }}
                 className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
               >
@@ -806,17 +783,17 @@ export default function ProjectDetailPage() {
           </div>
         )}
 
-        {/* Items Table */}
-        <div className="border border-gray-200 rounded-lg overflow-hidden">
+        {/* Simplified Table */}
+        <div className="border border-gray-200 rounded-lg overflow-hidden mb-8">
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -830,26 +807,36 @@ export default function ProjectDetailPage() {
                                item.title.toLowerCase().includes('action') ? 'action' : 
                                item.title.toLowerCase().includes('change') ? 'change' : 'task';
                 
+                // Auto status
+                let status = 'Normal';
+                let statusColor = 'bg-gray-100 text-gray-800';
+                if (item.completed) {
+                  status = 'Completed';
+                  statusColor = 'bg-green-100 text-green-800';
+                } else if (isOverdue) {
+                  status = 'Overdue';
+                  statusColor = 'bg-red-100 text-red-800';
+                } else if (isDueSoon) {
+                  status = 'Due Soon';
+                  statusColor = 'bg-orange-100 text-orange-800';
+                }
+                
                 return (
                   <tr 
                     key={item.id} 
-                    className={`hover:bg-gray-50 transition-colors ${isOverdue ? 'bg-red-50' : ''}`}
+                    className="hover:bg-gray-50 transition-colors"
                   >
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-2">
                       <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
                         itemType === 'decision' ? 'bg-blue-100 text-blue-800' :
                         itemType === 'action' ? 'bg-orange-100 text-orange-800' :
                         itemType === 'change' ? 'bg-purple-100 text-purple-800' :
                         'bg-gray-100 text-gray-800'
                       }`}>
-                        {itemType === 'decision' && '🔵'}
-                        {itemType === 'action' && '🟠'}
-                        {itemType === 'change' && '🟣'}
-                        {itemType === 'task' && '⚪'}
                         {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-2">
                       {isEditing ? (
                         <input
                           type="text"
@@ -859,17 +846,17 @@ export default function ProjectDetailPage() {
                             updatedItems[index] = { ...item, title: e.target.value };
                             setEditedProject({ ...editedProject, pendingItems: updatedItems });
                           }}
-                          className={`font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full ${
+                          className={`font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full text-sm ${
                             item.completed ? 'line-through opacity-60' : ''
                           }`}
                         />
                       ) : (
-                        <div className={`font-medium text-gray-900 ${item.completed ? 'line-through opacity-60' : ''}`}>
+                        <div className={`font-medium text-gray-900 text-sm ${item.completed ? 'line-through opacity-60' : ''}`}>
                           {item.title}
                         </div>
                       )}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 py-2">
                       {isEditing ? (
                         <input
                           type="text"
@@ -886,63 +873,28 @@ export default function ProjectDetailPage() {
                         <span className="text-sm text-gray-900">{item.assignee || 'Not assigned'}</span>
                       )}
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        {isEditing ? (
-                          <input
-                            type="date"
-                            value={item.dueDate}
-                            onChange={(e) => {
-                              const updatedItems = [...(editedProject.pendingItems || [])];
-                              updatedItems[index] = { ...item, dueDate: e.target.value };
-                              setEditedProject({ ...editedProject, pendingItems: updatedItems });
-                            }}
-                            className="px-2 py-1 border border-gray-300 rounded text-sm"
-                          />
-                        ) : (
-                          <span className="text-sm text-gray-900">{item.dueDate || 'Not set'}</span>
-                        )}
-                        {!item.completed && item.dueDate && (
-                          <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                            isOverdue ? 'bg-red-100 text-red-800' :
-                            isDueSoon ? 'bg-orange-100 text-orange-800' :
-                            'bg-gray-100 text-gray-800'
-                          }`}>
-                            {isOverdue && '🔴 Overdue'}
-                            {isDueSoon && '⚠️ Due Soon'}
-                            {!isOverdue && !isDueSoon && '✓ Normal'}
-                          </span>
-                        )}
-                      </div>
+                    <td className="px-3 py-2">
+                      {isEditing ? (
+                        <input
+                          type="date"
+                          value={item.dueDate}
+                          onChange={(e) => {
+                            const updatedItems = [...(editedProject.pendingItems || [])];
+                            updatedItems[index] = { ...item, dueDate: e.target.value };
+                            setEditedProject({ ...editedProject, pendingItems: updatedItems });
+                          }}
+                          className="px-2 py-1 border border-gray-300 rounded text-sm"
+                        />
+                      ) : (
+                        <span className="text-sm text-gray-900">{item.dueDate || 'Not set'}</span>
+                      )}
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        {isEditing ? (
-                          <input
-                            type="checkbox"
-                            checked={item.completed}
-                            onChange={(e) => {
-                              const updatedItems = [...(editedProject.pendingItems || [])];
-                              updatedItems[index] = { ...item, completed: e.target.checked };
-                              setEditedProject({ ...editedProject, pendingItems: updatedItems });
-                            }}
-                            className="rounded border-gray-300 text-red-500 focus:ring-red-500"
-                          />
-                        ) : (
-                          <div className={`w-4 h-4 rounded border-2 ${
-                            item.completed ? 'bg-green-500 border-green-500' : 'border-gray-300'
-                          }`}>
-                            {item.completed && <Check className="w-3 h-3 text-white" />}
-                          </div>
-                        )}
-                        <span className={`text-sm font-medium ${
-                          item.completed ? 'text-green-600' : 'text-gray-600'
-                        }`}>
-                          {item.completed ? 'Completed' : 'Pending'}
-                        </span>
-                      </div>
+                    <td className="px-3 py-2">
+                      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusColor}`}>
+                        {status}
+                      </span>
                     </td>
-                    <td className="px-4 py-3 text-right">
+                    <td className="px-3 py-2 text-right">
                       <div className="flex items-center justify-end gap-2">
                         {isEditing && (
                           <button
@@ -950,9 +902,9 @@ export default function ProjectDetailPage() {
                               const updatedItems = (editedProject.pendingItems || []).filter((_: any, i: number) => i !== index);
                               setEditedProject({ ...editedProject, pendingItems: updatedItems });
                             }}
-                            className="text-red-500 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="text-red-500 hover:text-red-600"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            🗑
                           </button>
                         )}
                       </div>
@@ -964,47 +916,32 @@ export default function ProjectDetailPage() {
           </table>
         </div>
 
-        {/* Activity Timeline */}
-        <div className="mt-8">
+        {/* Activity Timeline - Simplified */}
+        <div className="border-t border-gray-200 pt-6">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
             <h3 className="text-sm font-medium text-gray-900">Activity</h3>
           </div>
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-900">Decision added</p>
-                <p className="text-xs text-gray-500">John Doe – 12 Mar 2026</p>
-              </div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-3 text-sm">
+              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+              <span className="text-gray-900">Decision added – John Doe</span>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-900">Due date updated</p>
-                <p className="text-xs text-gray-500">Decision "cddvv" → 15 Mar</p>
-              </div>
+            <div className="flex items-center gap-3 text-sm">
+              <div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
+              <span className="text-gray-900">Due date updated</span>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-900">Item completed</p>
-                <p className="text-xs text-gray-500">Action "Install cable"</p>
-              </div>
+            <div className="flex items-center gap-3 text-sm">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+              <span className="text-gray-900">Item completed</span>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-900">Added decision</p>
-                <p className="text-xs text-gray-500">2 minutes ago</p>
-              </div>
+            <div className="flex items-center gap-3 text-sm">
+              <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+              <span className="text-gray-900">Added decision – 2 minutes ago</span>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-gray-400 rounded-full mt-2"></div>
-              <div className="flex-1">
-                <p className="text-sm text-gray-900">Updated due date</p>
-                <p className="text-xs text-gray-500">yesterday</p>
-              </div>
+            <div className="flex items-center gap-3 text-sm">
+              <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
+              <span className="text-gray-900">Updated due date – yesterday</span>
             </div>
           </div>
         </div>
