@@ -432,7 +432,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <th className="border border-gray-300 px-3 py-2 text-center text-sm font-semibold text-gray-700 bg-gray-50 min-w-[60px]">Days</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[120px]">Status</th>
                         <th className="border border-gray-300 px-3 py-2 text-center text-sm font-semibold text-gray-700 bg-gray-50">
-                          <div className="text-center">ACHIEVEMENT %</div>
+                          <div className="text-center">Achievement</div>
                           <div className="grid grid-cols-4 gap-0 mt-1">
                             <div className="border-r border-gray-300 pr-1 text-xs">C</div>
                             <div className="border-r border-gray-300 px-1 text-xs">O</div>
@@ -441,7 +441,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[150px]">Noted</th>
-                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[200px]">Evidence / Link</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -584,7 +583,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               )}
                             </td>
 
-                            {/* Achievement % - C | O | I | N */}
+                            {/* Achievement - C | O | I | N */}
                             <td className="border border-gray-300 px-3 py-2 bg-white">
                               {isHeader ? (
                                 <div className="text-center text-gray-500">-</div>
@@ -602,22 +601,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 <div className="grid grid-cols-4 gap-0">
                                   {(['C', 'O', 'I', 'N'] as const).map((type) => (
                                     <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                      <input
-                                        type="number"
-                                        value={phase.achievement?.[type] || 0}
-                                        onChange={(e) => {
-                                          const updatedPhases = [...newProject.phases]
-                                          // Ensure achievement object exists
-                                          if (!updatedPhases[phaseIndex].achievement) {
-                                            updatedPhases[phaseIndex].achievement = { C: 0, O: 0, I: 0, N: 100 }
-                                          }
-                                          updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
-                                          setNewProject({...newProject, phases: updatedPhases})
-                                        }}
-                                        className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
-                                        min="0"
-                                        max="100"
-                                      />
+                                      <div className="text-xs text-center font-medium px-1 py-1 bg-gray-100 text-gray-700">
+                                        {phase.achievement?.[type] || 0}%
+                                      </div>
                                     </div>
                                   ))}
                                 </div>
@@ -641,11 +627,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                   placeholder="Add notes..."
                                 />
                               )}
-                            </td>
-
-                            {/* Evidence / Link */}
-                            <td className="border border-gray-300 px-3 py-2 bg-white">
-                              <div className="text-center text-gray-500">-</div>
                             </td>
                           </tr>
                         )
