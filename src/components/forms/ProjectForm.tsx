@@ -33,21 +33,21 @@ export interface Project {
     owner: string
     progress: number
     status: 'not-started' | 'in-progress' | 'completed' | 'on-hold'
-  }
+  }>
   pendingItems: Array<{
     id: string
     itemName: string
     dueDate: string
     assignedPerson: string
     completed: boolean
-  }
+  }>
   issues: Array<{
     id: string
     title: string
     severity: 'low' | 'medium' | 'high'
     assignedTo: string
     status: 'open' | 'in-progress' | 'resolved' | 'closed'
-  }
+  }>
 }
 
 interface ProjectFormProps {
@@ -424,7 +424,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   type="button"
                   onClick={() => {
                     const newItem = {
-                      id: pending-${Date.now()},
+                      id: `pending-${Date.now()}`,
                       itemName: '',
                       dueDate: '',
                       assignedPerson: '',
@@ -510,7 +510,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       const dueDate = (document.getElementById('quick-add-date-simple-form') as HTMLInputElement)?.value || '';
                       
                       const newItem = {
-                        id: pending-${Date.now()},
+                        id: `pending-${Date.now()}`,
                         itemName: description,
                         dueDate: dueDate,
                         assignedPerson: '',
@@ -577,12 +577,12 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           className="hover:bg-gray-50 transition-colors"
                         >
                           <td className="px-3 py-2">
-                            <span className={inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                            <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
                               itemType === 'decision' ? 'bg-blue-100 text-blue-800' :
                               itemType === 'action' ? 'bg-orange-100 text-orange-800' :
                               itemType === 'change' ? 'bg-purple-100 text-purple-800' :
                               'bg-gray-100 text-gray-800'
-                            }}
+                            }`}>
                               {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
                             </span>
                           </td>
@@ -594,9 +594,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedItems[index].itemName = e.target.value;
                                 setNewProject({...newProject, pendingItems: updatedItems});
                               }}
-                              className={font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full text-sm ${
+                              className={`font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full text-sm ${
                                 item.completed ? 'line-through opacity-60' : ''
-                              }}
+                              }`}
                             >
                               <option value="">Select type...</option>
                               <option value="Decision">Decision</option>
@@ -630,7 +630,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             />
                           </td>
                           <td className="px-3 py-2">
-                            <span className={inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusColor}}
+                            <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusColor}`}>
                               {status}
                             </span>
                           </td>
@@ -700,7 +700,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             {/* Issue Tracker - Simplified UX */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-gray-900"></h2>
+                <h2 className="text-lg font-semibold text-gray-900">Issue Tracker</h2>
               </div>
 
               {/* Simplified Summary */}
@@ -764,7 +764,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       const assignedTo = (document.getElementById('quick-add-issue-assignee') as HTMLInputElement)?.value || '';
                       
                       const newIssue = {
-                        id: issue-${Date.now()},
+                        id: `issue-${Date.now()}`,
                         title: title,
                         severity: severity as Project['issues'][0]['severity'],
                         assignedTo: assignedTo,
@@ -877,14 +877,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   </table>
                 </div>
               )}
-
-                          </div>
+            </div>
           </motion.div>
         )
 
       default:
         return null
-
+    }
   }
 
   return (
@@ -899,13 +898,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
           <div key={step.id} className="flex items-center gap-6">
             <div className="flex items-center gap-3">
               {/* Number Circle */}
-              <div className={w-6 h-6 flex items-center justify-center rounded-full text-xs font-semibold ${
+              <div className={`w-6 h-6 flex items-center justify-center rounded-full text-xs font-semibold ${
                 getStepStatus(step.id) === 'active'
                   ? 'bg-white text-red-500 ring-2 ring-red-200'
                   : getStepStatus(step.id) === 'completed'
                   ? 'bg-green-50 text-green-600 border border-green-200'
                   : 'bg-gray-200 text-gray-500'
-              }}
+              }`}>
                 {getStepStatus(step.id) === 'completed' ? (
                   <Check className="w-3 h-3" />
                 ) : (
@@ -914,22 +913,22 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
               </div>
               
               {/* Step Label */}
-              <span className={text-sm font-medium tracking-tight rounded-full px-4 py-2 ${
+              <span className={`text-sm font-medium tracking-tight rounded-full px-4 py-2 ${
                 getStepStatus(step.id) === 'active'
                   ? 'bg-red-500 text-white shadow-sm ring-2 ring-red-200'
                   : getStepStatus(step.id) === 'completed'
                   ? 'bg-green-50 text-green-600 border border-green-200'
                   : 'bg-gray-100 text-gray-600'
-              }}
+              }`}>
                 {step.name}
               </span>
             </div>
             
             {/* Connector Line */}
             {index < steps.length - 1 && (
-              <div className={flex-1 h-[2px] ${
+              <div className={`flex-1 h-[2px] ${
                 getStepStatus(step.id) === 'completed' ? 'bg-red-300' : 'bg-gray-200'
-              }} />
+              }`} />
             )}
           </div>
         ))}
