@@ -90,313 +90,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     costManPower: initialData?.costManPower || 0,
     team: initialData?.team || [],
     phases: initialData?.phases || [
-      // PHASE 1 TASKS
       {
-        id: 'phase-1-1',
-        tasks: '1. Kick off Meeting',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-1-2',
-        tasks: '2. Produce Shop Drawing',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-1-3',
-        tasks: '3. Project ON DP 1',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      // PHASE 2 TASKS
-      {
-        id: 'phase-2-4',
-        tasks: '4. Survey',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-2-5',
-        tasks: '5. Material Approval',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-2-6',
-        tasks: '6. Cable Delivery',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-2-7',
-        tasks: '7. Cabling Installation',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-2-8',
-        tasks: '8. Marking Device',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-2-9',
-        tasks: '9. Report Progress to Owner',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-2-10',
-        tasks: '10. QC Cabling & Placement',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      // PHASE 3 TASKS
-      {
-        id: 'phase-3-11',
-        tasks: '11. Payment DP II',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-3-12',
-        tasks: '12. Device Delivery',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-3-13',
-        tasks: '13. Device Installation',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-3-14',
-        tasks: '14. QC Installation & Racking',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-3-15',
-        tasks: '15. Report Progress to Owner',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-3-16',
-        tasks: '16. Integration - Setting & Configuration',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-3-17',
-        tasks: '17. Testing Function',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-3-18',
-        tasks: '18. QC Integration',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      // PHASE 4 TASKS
-      {
-        id: 'phase-4-19',
-        tasks: '19. Handover Document',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-4-20',
-        tasks: '20. Test Commisioning',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-4-21',
-        tasks: '21. Final QC',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-4-22',
-        tasks: '22. Function/ Defect Checklist',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-4-23',
-        tasks: '23. Repair Defect',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-4-24',
-        tasks: '24. Training',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-4-25',
-        tasks: '25. BAST',
-        assignedTo: '',
-        startDate: '',
-        endDate: '',
-        days: 0,
-        status: 'Not Started',
-        achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
-      },
-      {
-        id: 'phase-4-26',
-        tasks: '26. Maintenance',
+        id: 'phase-1',
+        tasks: 'Phase 1 - Planning',
         assignedTo: '',
         startDate: '',
         endDate: '',
@@ -468,10 +164,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* Project Name */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">Project Name</label>
-                  <div
+                  <input
                     type="text"
                     value={newProject.name}
-
+                    onChange={(e) => setNewProject({...newProject, name: e.target.value})}
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Enter project name"
                   />
@@ -480,10 +176,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* Location */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">Location</label>
-                  <div
+                  <input
                     type="text"
                     value={newProject.location || ''}
-
+                    onChange={(e) => setNewProject({...newProject, location: e.target.value})}
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Enter project location"
                   />
@@ -492,10 +188,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* PIC Internal */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">PIC Internal</label>
-                  <div
+                  <input
                     type="text"
                     value={newProject.pic || ''}
-
+                    onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Internal person in charge"
                   />
@@ -504,10 +200,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* PIC Site */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">PIC Site</label>
-                  <div
+                  <input
                     type="text"
                     value={newProject.picSite || ''}
-
+                    onChange={(e) => setNewProject({...newProject, picSite: e.target.value})}
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Site PIC name"
                   />
@@ -518,10 +214,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* PIC Site (Role) */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">PIC Site (Role)</label>
-                  <div
+                  <input
                     type="text"
                     value={newProject.picRole || ''}
-
+                    onChange={(e) => setNewProject({...newProject, picRole: e.target.value})}
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                     placeholder="Role or position"
                   />
@@ -530,10 +226,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 {/* Due Date */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-1">Due Date</label>
-                  <div
+                  <input
                     type="date"
                     value={newProject.dueDate || ''}
-
+                    onChange={(e) => setNewProject({...newProject, dueDate: e.target.value})}
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                   />
                 </div>
@@ -564,14 +260,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             className="space-y-6"
           >
             <div className="mt-6">
-              {/* Excel-style Project Monitoring Table with Phase Structure */}
+              {/* Excel-style Project Monitoring Table */}
               <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
                 <div className="overflow-x-auto">
                   <table className="w-full border-collapse">
                     {/* Header Row */}
                     <thead>
                       <tr className="bg-gray-100 border-b border-gray-300">
-                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[300px]">Tasks</th>
+                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[200px]">Tasks</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[120px]">Assigned To</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[100px]">Start Date</th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[100px]">End Date</th>
@@ -587,22 +283,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </th>
                         <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[150px]">Noted</th>
-                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[300px]">Evidence / Link</th>
+                        <th className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold text-gray-700 bg-gray-50 min-w-[200px]">Evidence / Link</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {/* PHASE 1 */}
-                      <tr className="bg-blue-50 border-b-2 border-blue-300">
-                        <td colSpan={9} className="px-3 py-2 font-bold text-blue-900 text-left">
-                          PHASE 1
-                        </td>
-                      </tr>
-                      {/* Phase 1 Task Rows */}
-                      {newProject.phases.filter((_, index) => index < 3).map((phase, phaseIndex) => (
+                      {newProject.phases.map((phase, phaseIndex) => (
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Tasks */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
+                            <input
                               type="text"
                               value={phase.tasks || (phase as any).name || ''}
                               onChange={(e) => {
@@ -610,14 +299,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].tasks = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
                               placeholder="Enter task description"
                             />
                           </td>
 
                           {/* Assigned To */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
+                            <input
                               type="text"
                               value={phase.assignedTo || (phase as any).owner || ''}
                               onChange={(e) => {
@@ -625,14 +314,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].assignedTo = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
                               placeholder="Assign to..."
                             />
                           </td>
 
                           {/* Start Date */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
+                            <input
                               type="date"
                               value={phase.startDate || ''}
                               onChange={(e) => {
@@ -647,13 +336,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
                             />
                           </td>
 
                           {/* End Date */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
+                            <input
                               type="date"
                               value={phase.endDate || ''}
                               onChange={(e) => {
@@ -668,13 +357,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
                             />
                           </td>
 
                           {/* Days */}
                           <td className="border border-gray-300 px-3 py-2 text-center bg-white">
-                            <div
+                            <input
                               type="number"
                               value={phase.days || 0}
                               onChange={(e) => {
@@ -682,7 +371,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
                               min="0"
                             />
                           </td>
@@ -696,7 +385,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
                             >
                               <option value="Not Started">Not Started</option>
                               <option value="In Progress">In Progress</option>
@@ -710,7 +399,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <div className="grid grid-cols-4 gap-0">
                               {(['C', 'O', 'I', 'N'] as const).map((type) => (
                                 <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                  <div
+                                  <input
                                     type="number"
                                     value={phase.achievement?.[type] || 0}
                                     onChange={(e) => {
@@ -722,7 +411,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                       updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
                                       setNewProject({...newProject, phases: updatedPhases})
                                     }}
-                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400"
                                     min="0"
                                     max="100"
                                   />
@@ -733,7 +422,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                           {/* Noted */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
+                            <input
                               type="text"
                               value={phase.noted || ''}
                               onChange={(e) => {
@@ -741,14 +430,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].noted = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
                               placeholder="Add notes..."
                             />
                           </td>
 
                           {/* Evidence / Link */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
+                            <input
                               type="text"
                               value={phase.evidence || ''}
                               onChange={(e) => {
@@ -756,595 +445,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 updatedPhases[phaseIndex].evidence = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
                               placeholder="https://..."
                             />
                           </td>
                         </tr>
                       ))}
-                      {/* Phase 1 Achievement Summary */}
-                      <tr className="bg-blue-100 border-b border-gray-300">
-                        <td colSpan={6} className="px-3 py-2 font-semibold text-blue-900 text-right">
-                          PHASE 1 ACHIEVEMENT SUMMARY
-                        </td>
-                        <td className="border border-gray-300 px-3 py-2">
-                          <div className="grid grid-cols-4 gap-0">
-                            <div className="border-r border-gray-300 pr-1 text-xs font-bold text-center">75%</div>
-                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">15%</div>
-                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">5%</div>
-                            <div className="pl-1 text-xs font-bold text-center">5%</div>
-                          </div>
-                        </td>
-                        <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          16 tasks total
-                        </td>
-                      </tr>
-
-                      {/* PHASE 2 */}
-                      <tr className="bg-green-50 border-b-2 border-green-300">
-                        <td colSpan={9} className="px-3 py-2 font-bold text-green-900 text-left">
-                          PHASE 2
-                        </td>
-                      </tr>
-                      {/* Phase 2 Task Rows */}
-                      {newProject.phases.filter((_, index) => index >= 3 && index < 13).map((phase, phaseIndex) => (
-                        <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
-                          {/* Same task row structure as Phase 1 */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.tasks || (phase as any).name || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].tasks = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Enter task description"
-                            />
-                          </td>
-
-                          {/* Assigned To */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.assignedTo || (phase as any).owner || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].assignedTo = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Assign to..."
-                            />
-                          </td>
-
-                          {/* Start Date */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="date"
-                              value={phase.startDate || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].startDate = e.target.value
-                                if (updatedPhases[phaseIndex].endDate) {
-                                  const start = new Date(e.target.value)
-                                  const end = new Date(updatedPhases[phaseIndex].endDate)
-                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
-                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
-                                }
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            />
-                          </td>
-
-                          {/* End Date */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="date"
-                              value={phase.endDate || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].endDate = e.target.value
-                                if (updatedPhases[phaseIndex].startDate) {
-                                  const start = new Date(updatedPhases[phaseIndex].startDate)
-                                  const end = new Date(e.target.value)
-                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
-                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
-                                }
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            />
-                          </td>
-
-                          {/* Days */}
-                          <td className="border border-gray-300 px-3 py-2 text-center bg-white">
-                            <div
-                              type="number"
-                              value={phase.days || 0}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              min="0"
-                            />
-                          </td>
-
-                          {/* Status */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <select
-                              value={phase.status || 'Not Started'}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            >
-                              <option value="Not Started">Not Started</option>
-                              <option value="In Progress">In Progress</option>
-                              <option value="Completed">Completed</option>
-                              <option value="On Hold">On Hold</option>
-                            </select>
-                          </td>
-
-                          {/* Achievement % - C | O | I | N */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div className="grid grid-cols-4 gap-0">
-                              {(['C', 'O', 'I', 'N'] as const).map((type) => (
-                                <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                  <div
-                                    type="number"
-                                    value={phase.achievement?.[type] || 0}
-                                    onChange={(e) => {
-                                      const updatedPhases = [...newProject.phases]
-                                      if (!updatedPhases[phaseIndex].achievement) {
-                                        updatedPhases[phaseIndex].achievement = { C: 0, O: 0, I: 0, N: 100 }
-                                      }
-                                      updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
-                                      setNewProject({...newProject, phases: updatedPhases})
-                                    }}
-                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                                    min="0"
-                                    max="100"
-                                  />
-                                </div>
-                              ))}
-                            </div>
-                          </td>
-
-                          {/* Noted */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.noted || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].noted = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Add notes..."
-                            />
-                          </td>
-
-                          {/* Evidence / Link */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.evidence || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].evidence = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="https://..."
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                      {/* Phase 2 Achievement Summary */}
-                      <tr className="bg-green-100 border-b border-gray-300">
-                        <td colSpan={6} className="px-3 py-2 font-semibold text-green-900 text-right">
-                          PHASE 2 ACHIEVEMENT SUMMARY
-                        </td>
-                        <td className="border border-gray-300 px-3 py-2">
-                          <div className="grid grid-cols-4 gap-0">
-                            <div className="border-r border-gray-300 pr-1 text-xs font-bold text-center">60%</div>
-                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">25%</div>
-                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">10%</div>
-                            <div className="pl-1 text-xs font-bold text-center">5%</div>
-                          </div>
-                        </td>
-                        <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          16 tasks total
-                        </td>
-                      </tr>
-
-                      {/* PHASE 3 */}
-                      <tr className="bg-purple-50 border-b-2 border-purple-300">
-                        <td colSpan={9} className="px-3 py-2 font-bold text-purple-900 text-left">
-                          PHASE 3
-                        </td>
-                      </tr>
-                      {/* Phase 3 Task Rows */}
-                      {newProject.phases.filter((_, index) => index >= 13 && index < 18).map((phase, phaseIndex) => (
-                        <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
-                          {/* Same task row structure - abbreviated for brevity */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.tasks || (phase as any).name || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].tasks = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Enter task description"
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.assignedTo || (phase as any).owner || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].assignedTo = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Assign to..."
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="date"
-                              value={phase.startDate || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].startDate = e.target.value
-                                if (updatedPhases[phaseIndex].endDate) {
-                                  const start = new Date(e.target.value)
-                                  const end = new Date(updatedPhases[phaseIndex].endDate)
-                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
-                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
-                                }
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="date"
-                              value={phase.endDate || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].endDate = e.target.value
-                                if (updatedPhases[phaseIndex].startDate) {
-                                  const start = new Date(updatedPhases[phaseIndex].startDate)
-                                  const end = new Date(e.target.value)
-                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
-                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
-                                }
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 text-center bg-white">
-                            <div
-                              type="number"
-                              value={phase.days || 0}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              min="0"
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <select
-                              value={phase.status || 'Not Started'}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            >
-                              <option value="Not Started">Not Started</option>
-                              <option value="In Progress">In Progress</option>
-                              <option value="Completed">Completed</option>
-                              <option value="On Hold">On Hold</option>
-                            </select>
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div className="grid grid-cols-4 gap-0">
-                              {(['C', 'O', 'I', 'N'] as const).map((type) => (
-                                <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                  <div
-                                    type="number"
-                                    value={phase.achievement?.[type] || 0}
-                                    onChange={(e) => {
-                                      const updatedPhases = [...newProject.phases]
-                                      if (!updatedPhases[phaseIndex].achievement) {
-                                        updatedPhases[phaseIndex].achievement = { C: 0, O: 0, I: 0, N: 100 }
-                                      }
-                                      updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
-                                      setNewProject({...newProject, phases: updatedPhases})
-                                    }}
-                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                                    min="0"
-                                    max="100"
-                                  />
-                                </div>
-                              ))}
-                            </div>
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.noted || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].noted = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Add notes..."
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.evidence || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].evidence = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="https://..."
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                      {/* Phase 3 Achievement Summary */}
-                      <tr className="bg-purple-100 border-b border-gray-300">
-                        <td colSpan={6} className="px-3 py-2 font-semibold text-purple-900 text-right">
-                          PHASE 3 ACHIEVEMENT SUMMARY
-                        </td>
-                        <td className="border border-gray-300 px-3 py-2">
-                          <div className="grid grid-cols-4 gap-0">
-                            <div className="border-r border-gray-300 pr-1 text-xs font-bold text-center">30%</div>
-                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">20%</div>
-                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">25%</div>
-                            <div className="pl-1 text-xs font-bold text-center">25%</div>
-                          </div>
-                        </td>
-                        <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          16 tasks total
-                        </td>
-                      </tr>
-
-                      {/* PHASE 4 */}
-                      <tr className="bg-orange-50 border-b-2 border-orange-300">
-                        <td colSpan={9} className="px-3 py-2 font-bold text-orange-900 text-left">
-                          PHASE 4
-                        </td>
-                      </tr>
-                      {/* Phase 4 Task Rows */}
-                      {newProject.phases.filter((_, index) => index >= 18).map((phase, phaseIndex) => (
-                        <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
-                          {/* Same task row structure - abbreviated for brevity */}
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.tasks || (phase as any).name || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].tasks = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Enter task description"
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.assignedTo || (phase as any).owner || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].assignedTo = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Assign to..."
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="date"
-                              value={phase.startDate || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].startDate = e.target.value
-                                if (updatedPhases[phaseIndex].endDate) {
-                                  const start = new Date(e.target.value)
-                                  const end = new Date(updatedPhases[phaseIndex].endDate)
-                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
-                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
-                                }
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="date"
-                              value={phase.endDate || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].endDate = e.target.value
-                                if (updatedPhases[phaseIndex].startDate) {
-                                  const start = new Date(updatedPhases[phaseIndex].startDate)
-                                  const end = new Date(e.target.value)
-                                  const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
-                                  updatedPhases[phaseIndex].days = days > 0 ? days : 0
-                                }
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 text-center bg-white">
-                            <div
-                              type="number"
-                              value={phase.days || 0}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].days = parseInt(e.target.value) || 0
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-16 px-2 py-1 border border-gray-300 rounded text-sm text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              min="0"
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <select
-                              value={phase.status || 'Not Started'}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].status = e.target.value as Project['phases'][0]['status']
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                            >
-                              <option value="Not Started">Not Started</option>
-                              <option value="In Progress">In Progress</option>
-                              <option value="Completed">Completed</option>
-                              <option value="On Hold">On Hold</option>
-                            </select>
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div className="grid grid-cols-4 gap-0">
-                              {(['C', 'O', 'I', 'N'] as const).map((type) => (
-                                <div key={type} className="border-r border-gray-200 last:border-r-0">
-                                  <div
-                                    type="number"
-                                    value={phase.achievement?.[type] || 0}
-                                    onChange={(e) => {
-                                      const updatedPhases = [...newProject.phases]
-                                      if (!updatedPhases[phaseIndex].achievement) {
-                                        updatedPhases[phaseIndex].achievement = { C: 0, O: 0, I: 0, N: 100 }
-                                      }
-                                      updatedPhases[phaseIndex].achievement[type] = parseInt(e.target.value) || 0
-                                      setNewProject({...newProject, phases: updatedPhases})
-                                    }}
-                                    className="w-full px-1 py-1 border border-gray-300 rounded text-xs text-center focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                                    min="0"
-                                    max="100"
-                                  />
-                                </div>
-                              ))}
-                            </div>
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.noted || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].noted = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="Add notes..."
-                            />
-                          </td>
-
-                          <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <div
-                              type="text"
-                              value={phase.evidence || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].evidence = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 whitespace-normal overflow-x-auto"
-                              placeholder="https://..."
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                      {/* Phase 4 Achievement Summary */}
-                      <tr className="bg-orange-100 border-b border-gray-300">
-                        <td colSpan={6} className="px-3 py-2 font-semibold text-orange-900 text-right">
-                          PHASE 4 ACHIEVEMENT SUMMARY
-                        </td>
-                        <td className="border border-gray-300 px-3 py-2">
-                          <div className="grid grid-cols-4 gap-0">
-                            <div className="border-r border-gray-300 pr-1 text-xs font-bold text-center">0%</div>
-                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">0%</div>
-                            <div className="border-r border-gray-300 px-1 text-xs font-bold text-center">0%</div>
-                            <div className="pl-1 text-xs font-bold text-center">100%</div>
-                          </div>
-                        </td>
-                        <td colSpan={2} className="px-3 py-2 text-sm text-gray-600">
-                          6 tasks total
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
-                </div>
-                <div className="p-3 border-t border-gray-200 bg-gray-50">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newPhase = {
-                        id: `phase-${Date.now()}`,
-                        tasks: '',
-                        assignedTo: '',
-                        startDate: '',
-                        endDate: '',
-                        days: 0,
-                        status: 'Not Started' as const,
-                        achievement: { C: 0, O: 0, I: 0, N: 100 },
-                        noted: '',
-                        evidence: ''
-                      }
-                      setNewProject({...newProject, phases: [...newProject.phases, newPhase]})
-                    }}
-                    className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-                  >
-                  </button>
                 </div>
               </div>
             </div>
@@ -1364,10 +472,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
               {/* Total Budget Input */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Total Budget (IDR)</label>
-                <div
+                <input
                   type="number"
                   value={newProject.budget}
-                  readOnly
+                  onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value) || 0})}
                   className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                   placeholder="Enter total project budget"
                 />
@@ -1451,10 +559,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Outsource */}
                     <div className="flex items-center justify-between py-4 border-b border-gray-100">
                       <span className="text-sm text-gray-700">Outsource</span>
-                      <div
+                      <input
                         type="number"
                         value={newProject.outsource || 0}
-    
+                        onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
                         className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                         placeholder="0"
                       />
@@ -1463,10 +571,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Cost Other */}
                     <div className="flex items-center justify-between py-4 border-b border-gray-100">
                       <span className="text-sm text-gray-700">Cost Other</span>
-                      <div
+                      <input
                         type="number"
                         value={newProject.costOther || 0}
-    
+                        onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
                         className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                         placeholder="0"
                       />
@@ -1475,10 +583,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Cost Overtime */}
                     <div className="flex items-center justify-between py-4 border-b border-gray-100">
                       <span className="text-sm text-gray-700">Cost Overtime</span>
-                      <div
+                      <input
                         type="number"
                         value={newProject.costOvertime || 0}
-    
+                        onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
                         className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                         placeholder="0"
                       />
@@ -1487,10 +595,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     {/* Cost Man Power */}
                     <div className="flex items-center justify-between py-4">
                       <span className="text-sm text-gray-700">Cost Man Power</span>
-                      <div
+                      <input
                         type="number"
                         value={newProject.costManPower || 0}
-    
+                        onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
                         className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
                         placeholder="0"
                       />
@@ -1546,7 +654,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 <div>
                   {/* Table Header - Direct start, no inner card title */}
                   <div className="grid grid-cols-[220px_120px_1fr] gap-x-4 items-center py-3 px-4 text-sm font-semibold text-gray-600 border-b">
-                    <div>type</div>
+                    <div>Type</div>
                     <div className="text-center">Total</div>
                     <div>Note</div>
                   </div>
@@ -1599,7 +707,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <div className="space-y-2">
                           {newProject.pendingItems.map((item, index) => (
                             <div key={item.id} className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg">
-                              <div
+                              <input
                                 type="checkbox"
                                 checked={item.completed}
                                 onChange={(e) => {
@@ -1625,7 +733,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 <option value="Actions">Actions</option>
                                 <option value="Change Request">Change Request</option>
                               </select>
-                              <div
+                              <input
                                 type="text"
                                 value={item.assignedPerson}
                                 onChange={(e) => {
@@ -1638,7 +746,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 }`}
                                 placeholder="Note/description"
                               />
-                              <div
+                              <input
                                 type="text"
                                 value={item.dueDate}
                                 onChange={(e) => {
@@ -1693,7 +801,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       {/* Issue Title */}
                       <div className="md:col-span-2">
                         <label className="block text-xs font-medium text-gray-600 mb-1">Issue Title</label>
-                        <div
+                        <input
                           type="text"
                           value={issue.title}
                           onChange={(e) => {
@@ -1727,7 +835,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       {/* Assigned To */}
                       <div>
                         <label className="block text-xs font-medium text-gray-600 mb-1">Assigned To</label>
-                        <div
+                        <input
                           type="text"
                           value={issue.assignedTo}
                           onChange={(e) => {
