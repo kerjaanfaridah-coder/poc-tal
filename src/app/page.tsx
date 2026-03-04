@@ -40,7 +40,8 @@ import {
   ChevronDown,
   Layers,
   Grid3x3,
-  ZapOff
+  ZapOff,
+  Plus
 } from 'lucide-react';
 import StatsCard from '@/components/dashboard/StatsCard';
 import ProjectProgress from '@/components/dashboard/ProjectProgress';
