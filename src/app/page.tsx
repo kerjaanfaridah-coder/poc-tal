@@ -38,6 +38,7 @@ import {
   RefreshCw,
   ChevronUp,
   ChevronDown,
+  ChevronRight,
   Layers,
   Grid3x3,
   ZapOff,
