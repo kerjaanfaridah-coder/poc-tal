@@ -44,7 +44,6 @@ export interface Project {
       N: number; // Not Started
     }
     noted: string
-    evidence: string
   }>
   pendingItems: Array<{
     id: string
@@ -103,8 +102,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-1-tasks',
@@ -117,8 +115,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-1-summary',
@@ -131,8 +128,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-2-header',
@@ -145,8 +141,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-2-tasks',
@@ -159,8 +154,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-2-summary',
@@ -173,8 +167,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-3-header',
@@ -187,8 +180,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-3-tasks',
@@ -201,8 +193,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-3-summary',
@@ -215,8 +206,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-4-header',
@@ -229,8 +219,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-4-tasks',
@@ -243,8 +232,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         days: 0,
         status: 'Not Started',
         achievement: { C: 0, O: 0, I: 0, N: 100 },
-        noted: '',
-        evidence: ''
+        noted: ''
       },
       {
         id: 'phase-4-summary',
