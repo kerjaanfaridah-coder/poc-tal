@@ -544,7 +544,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   <textarea
                     rows={4}
                     value={newProject.notes || ''}
-
+                    onChange={(e) => setNewProject({...newProject, notes: e.target.value})}
                     className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400 resize-none"
                     placeholder="Additional project notes..."
                   />
