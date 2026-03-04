@@ -92,7 +92,43 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     phases: initialData?.phases || [
       {
         id: 'phase-1',
-        tasks: 'Phase 1 - Planning',
+        tasks: 'PHASE 1\n1. Kick off Meeting\n2. Produce Shop Drawing\n3. Project ON DP 1',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-2',
+        tasks: 'PHASE 2\n4. Survey\n5. Material Approval\n6. Cable Delivery\n7. Cabling Installation\n8. Marking Device\n9. Report Progress to Owner\n10. QC Cabling & Placement',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-3',
+        tasks: 'PHASE 3\n11. Payment DP II\n12. Device Delivery\n13. Device Installation\n14. QC Installation & Racking\n15. Report Progress to Owner\n16. Integration - Setting & Configuration\n17. Testing Function\n18. QC Integration',
+        assignedTo: '',
+        startDate: '',
+        endDate: '',
+        days: 0,
+        status: 'Not Started',
+        achievement: { C: 0, O: 0, I: 0, N: 100 },
+        noted: '',
+        evidence: ''
+      },
+      {
+        id: 'phase-4',
+        tasks: 'PHASE 4\n19. Handover Document\n20. Test Commisioning\n21. Final QC\n22. Function/ Defect Checklist\n23. Repair Defect\n24. Training\n25. BAST\n26. Maintenance',
         assignedTo: '',
         startDate: '',
         endDate: '',
@@ -291,16 +327,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <tr key={phase.id} className="hover:bg-gray-50 border-b border-gray-200">
                           {/* Tasks */}
                           <td className="border border-gray-300 px-3 py-2 bg-white">
-                            <input
-                              type="text"
+                            <textarea
                               value={phase.tasks || (phase as any).name || ''}
                               onChange={(e) => {
                                 const updatedPhases = [...newProject.phases]
                                 updatedPhases[phaseIndex].tasks = e.target.value
                                 setNewProject({...newProject, phases: updatedPhases})
                               }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none"
                               placeholder="Enter task description"
+                              rows={4}
+                              style={{ minHeight: '80px', maxHeight: '120px' }}
                             />
                           </td>
 
