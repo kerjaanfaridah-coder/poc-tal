@@ -831,17 +831,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         return (
                           <tr key={issue.id} className="hover:bg-gray-50 transition-colors">
                             <td className="px-4 py-3">
-                              <input
-                                type="text"
-                                value={issue.title}
-                                onChange={(e) => {
-                                  const updatedIssues = [...newProject.issues]
-                                  updatedIssues[index].title = e.target.value
-                                  setNewProject({...newProject, issues: updatedIssues})
-                                }}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                                placeholder="Issue title..."
-                              />
+                              <div className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
+                                {issue.title || 'Untitled Issue'}
+                              </div>
                             </td>
                             <td className="px-4 py-3 text-center">
                               <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${severityColor}`}>
@@ -850,23 +842,25 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </span>
                             </td>
                             <td className="px-4 py-3">
-                              <input
-                                type="text"
-                                value={issue.assignedTo}
-                                onChange={(e) => {
-                                  const updatedIssues = [...newProject.issues]
-                                  updatedIssues[index].assignedTo = e.target.value
-                                  setNewProject({...newProject, issues: updatedIssues})
-                                }}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                                placeholder="Assignee..."
-                              />
+                              <div className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
+                                {issue.assignedTo || 'Unassigned'}
+                              </div>
                             </td>
                             <td className="px-4 py-3 text-center">
-                              <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${statusColor}`}>
-                                <span>{statusIcon}</span>
-                                {issue.status.charAt(0).toUpperCase() + issue.status.slice(1).replace('-', ' ')}
-                              </span>
+                              <select
+                                value={issue.status}
+                                onChange={(e) => {
+                                  const updatedIssues = [...newProject.issues]
+                                  updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
+                                  setNewProject({...newProject, issues: updatedIssues})
+                                }}
+                                className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border cursor-pointer ${statusColor}`}
+                              >
+                                <option value="open" className="bg-red-100 text-red-800">🔴 Open</option>
+                                <option value="in-progress" className="bg-blue-100 text-blue-800">🔵 In Progress</option>
+                                <option value="resolved" className="bg-green-100 text-green-800">🟢 Resolved</option>
+                                <option value="closed" className="bg-gray-100 text-gray-800">⚪ Closed</option>
+                              </select>
                             </td>
                             <td className="px-4 py-3 text-center">
                               <button
