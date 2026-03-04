@@ -1,552 +1,461 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Plus, ChevronLeft, ChevronRight, Trash2, RefreshCw } from 'lucide-react';
-import DeleteConfirmModal from '@/components/ui/DeleteConfirmModal';
-
-interface WeeklySchedule {
-  id: string;
-  memberId: string;
-  projectName: string;
-  task: string;
-  dueDate: string;
-  hours: number;
-  priority: string;
-  status: string;
-}
-
-interface TeamWorkload {
-  memberId: string;
-  memberName: string;
-  totalHours: number;
-  projectCount: number;
-  taskCount: number;
-  schedules: WeeklySchedule[];
-}
+import { useState } from 'react';
+import { Plus, Search, Filter, Users, Mail, Phone, MapPin, Calendar, Star, Trophy, ArrowUpRight, TrendingUp, MoreHorizontal, Crown, Shield, Zap, Target } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
 export default function TeamPage() {
-  const [currentWeek, setCurrentWeek] = useState(new Date());
-  const [weeklySchedules, setWeeklySchedules] = useState<WeeklySchedule[]>([]);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [deleteConfirm, setDeleteConfirm] = useState<{ id: string; projectName: string } | null>(null);
-  const [newSchedule, setNewSchedule] = useState({
-    memberId: '',
-    projectName: '',
-    task: '',
-    dueDate: '',
-    hours: 0,
-    priority: 'medium',
-    status: 'planned'
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRole, setSelectedRole] = useState('all');
+  const router = useRouter();
+
+  // Sample team members data
+  const teamMembers = [
+    {
+      id: '1',
+      name: 'John Doe',
+      email: 'john.doe@company.com',
+      role: 'Project Manager',
+      department: 'Management',
+      avatar: 'JD',
+      joinDate: '2023-01-15',
+      status: 'active',
+      projects: 8,
+      tasksCompleted: 142,
+      performance: 98,
+      location: 'New York, USA',
+      phone: '+1 (555) 123-4567',
+      skills: ['Leadership', 'Planning', 'Communication'],
+      availability: 'available'
+    },
+    {
+      id: '2',
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@company.com',
+      role: 'Senior Developer',
+      department: 'Engineering',
+      avatar: 'SJ',
+      joinDate: '2023-03-20',
+      status: 'active',
+      projects: 6,
+      tasksCompleted: 189,
+      performance: 95,
+      location: 'San Francisco, USA',
+      phone: '+1 (555) 234-5678',
+      skills: ['React', 'Node.js', 'TypeScript', 'Python'],
+      availability: 'busy'
+    },
+    {
+      id: '3',
+      name: 'Mike Kim',
+      email: 'mike.kim@company.com',
+      role: 'UX Designer',
+      department: 'Design',
+      avatar: 'MK',
+      joinDate: '2023-02-10',
+      status: 'active',
+      projects: 5,
+      tasksCompleted: 156,
+      performance: 92,
+      location: 'Los Angeles, USA',
+      phone: '+1 (555) 345-6789',
+      skills: ['Figma', 'Adobe XD', 'Sketch', 'Prototyping'],
+      availability: 'available'
+    },
+    {
+      id: '4',
+      name: 'Emily Davis',
+      email: 'emily.davis@company.com',
+      role: 'Marketing Manager',
+      department: 'Marketing',
+      avatar: 'ED',
+      joinDate: '2023-04-05',
+      status: 'active',
+      projects: 4,
+      tasksCompleted: 134,
+      performance: 88,
+      location: 'Chicago, USA',
+      phone: '+1 (555) 456-7890',
+      skills: ['SEO', 'Content Strategy', 'Analytics', 'Social Media'],
+      availability: 'available'
+    },
+    {
+      id: '5',
+      name: 'Tom Wilson',
+      email: 'tom.wilson@company.com',
+      role: 'DevOps Engineer',
+      department: 'Engineering',
+      avatar: 'TW',
+      joinDate: '2023-05-12',
+      status: 'active',
+      projects: 7,
+      tasksCompleted: 167,
+      performance: 91,
+      location: 'Seattle, USA',
+      phone: '+1 (555) 567-8901',
+      skills: ['Docker', 'Kubernetes', 'AWS', 'CI/CD'],
+      availability: 'busy'
+    },
+    {
+      id: '6',
+      name: 'Lisa Chen',
+      email: 'lisa.chen@company.com',
+      role: 'Product Designer',
+      department: 'Design',
+      avatar: 'LC',
+      joinDate: '2023-06-18',
+      status: 'away',
+      projects: 3,
+      tasksCompleted: 98,
+      performance: 87,
+      location: 'Boston, USA',
+      phone: '+1 (555) 678-9012',
+      skills: ['UI Design', 'User Research', 'Wireframing', 'Design Systems'],
+      availability: 'away'
+    }
+  ];
+
+  const handleNewMember = () => {
+    router.push('/team/new');
+  };
+
+  const handleDeleteMember = (memberId: string, memberName: string) => {
+    if (confirm(`Are you sure you want to remove "${memberName}" from the team? This action cannot be undone.`)) {
+      // Handle delete logic here
+    }
+  };
+
+  const filteredMembers = teamMembers.filter(member => {
+    const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         member.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         member.role.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesRole = selectedRole === 'all' || member.role.toLowerCase().includes(selectedRole.toLowerCase());
+    return matchesSearch && matchesRole;
   });
 
-  // Load schedules from localStorage on mount
-  useEffect(() => {
-    loadSchedulesFromStorage();
-    
-    // Listen for storage changes from other tabs
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'weeklySchedules') {
-        loadSchedulesFromStorage();
-      }
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
-    
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
-
-  const loadSchedulesFromStorage = () => {
-    try {
-      const savedSchedules = localStorage.getItem('weeklySchedules');
-      if (savedSchedules) {
-        const parsedSchedules = JSON.parse(savedSchedules);
-        setWeeklySchedules(parsedSchedules);
-      } else {
-        setWeeklySchedules([]);
-      }
-    } catch (error) {
-      console.error('Error loading schedules from localStorage:', error);
-      setWeeklySchedules([]);
-    }
-  };
-
-  // Save schedules to localStorage whenever they change
-  useEffect(() => {
-    if (weeklySchedules.length >= 0) {
-      localStorage.setItem('weeklySchedules', JSON.stringify(weeklySchedules));
-    }
-  }, [weeklySchedules]);
-
-  // Sample data
-  const teamMembers = [
-    { id: '1', name: 'Jovan', role: 'Senior Engineer' },
-    { id: '2', name: 'Alwan', role: 'Lighting Engineer' },
-    { id: '3', name: 'Robi', role: 'Audio Visual Engineer' },
-    { id: '4', name: 'Sujadi', role: 'Site Coordinator' },
-    { id: '5', name: 'Andre', role: 'Technician' },
-    { id: '6', name: 'Eka', role: 'Technician' },
-    { id: '7', name: 'Sopian', role: 'Technician' },
-    { id: '8', name: 'Sobirin', role: 'Technician' },
-    { id: '9', name: 'Puji', role: 'Technician' }
-  ];
-
-  const projects = [
-    { id: '1', name: 'Website Redesign' },
-    { id: '2', name: 'Mobile App' },
-    { id: '3', name: 'Database Migration' },
-    { id: '4', name: 'API Development' }
-  ];
-
-  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-  const getWeekRange = () => {
-    const startOfWeek = new Date(currentWeek);
-    const day = startOfWeek.getDay();
-    const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1);
-    startOfWeek.setDate(diff);
-    
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6);
-    
-    const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
-    return `${startOfWeek.toLocaleDateString('en-US', options)} - ${endOfWeek.toLocaleDateString('en-US', options)}`;
-  };
-
-  const navigateWeek = (direction: 'prev' | 'next') => {
-    const newWeek = new Date(currentWeek);
-    newWeek.setDate(currentWeek.getDate() + (direction === 'next' ? 7 : -7));
-    setCurrentWeek(newWeek);
-  };
-
-  const handleAddSchedule = () => {
-    if (newSchedule.memberId && newSchedule.projectName && newSchedule.task && newSchedule.dueDate && newSchedule.hours > 0) {
-      const schedule: WeeklySchedule = {
-        id: Date.now().toString(),
-        ...newSchedule
-      };
-      const updatedSchedules = [...weeklySchedules, schedule];
-      setWeeklySchedules(updatedSchedules);
-      
-      // Clear and reset localStorage
-      localStorage.removeItem('weeklySchedules');
-      localStorage.setItem('weeklySchedules', JSON.stringify(updatedSchedules));
-      
-      setNewSchedule({
-        memberId: '',
-        projectName: '',
-        task: '',
-        dueDate: '',
-        hours: 0,
-        priority: 'medium',
-        status: 'planned'
-      });
-      setShowAddForm(false);
-    }
-  };
-
-  const handleRefreshData = () => {
-    loadSchedulesFromStorage();
-  };
-
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium': return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'active': return 'bg-green-100 text-green-800 border-green-200';
+      case 'busy': return 'bg-red-100 text-red-800 border-red-200';
+      case 'away': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
-  const handleDeleteSchedule = (id: string) => {
-    const schedule = weeklySchedules.find(s => s.id === id);
-    
-    if (schedule) {
-      setDeleteConfirm({
-        id: schedule.id,
-        projectName: schedule.projectName
-      });
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'active': return <div className="w-2 h-2 bg-green-500 rounded-full"></div>;
+      case 'busy': return <div className="w-2 h-2 bg-red-500 rounded-full"></div>;
+      case 'away': return <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>;
+      default: return <div className="w-2 h-2 bg-gray-500 rounded-full"></div>;
     }
   };
 
-  const handleConfirmDelete = () => {
-    if (deleteConfirm) {
-      // Remove from state immediately
-      const updatedSchedules = weeklySchedules.filter(schedule => schedule.id !== deleteConfirm.id);
-      setWeeklySchedules(updatedSchedules);
-      
-      // Clear localStorage and set fresh data
-      localStorage.removeItem('weeklySchedules');
-      localStorage.setItem('weeklySchedules', JSON.stringify(updatedSchedules));
-      
-      // Close modal
-      setDeleteConfirm(null);
-      
-      // Force a refresh of the component state
-      setTimeout(() => {
-        loadSchedulesFromStorage();
-      }, 100);
+  const getAvailabilityColor = (availability: string) => {
+    switch (availability) {
+      case 'available': return 'bg-green-100 text-green-800 border-green-200';
+      case 'busy': return 'bg-red-100 text-red-800 border-red-200';
+      case 'away': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
-  const handleCancelDelete = () => {
-    setDeleteConfirm(null);
+  const getPerformanceBadge = (performance: number) => {
+    if (performance >= 95) return { color: 'bg-purple-100 text-purple-800 border-purple-200', icon: <Crown className="w-3 h-3" />, text: 'Top Performer' };
+    if (performance >= 90) return { color: 'bg-blue-100 text-blue-800 border-blue-200', icon: <Star className="w-3 h-3" />, text: 'Excellent' };
+    if (performance >= 85) return { color: 'bg-green-100 text-green-800 border-green-200', icon: <Trophy className="w-3 h-3" />, text: 'Great' };
+    return { color: 'bg-orange-100 text-orange-800 border-orange-200', icon: <Target className="w-3 h-3" />, text: 'Good' };
   };
-
-  // Calculate team workload - always use latest state
-  const calculateTeamWorkload = (schedules: WeeklySchedule[] = weeklySchedules): TeamWorkload[] => {
-    const workloadMap = new Map<string, TeamWorkload>();
-
-    teamMembers.forEach(member => {
-      workloadMap.set(member.id, {
-        memberId: member.id,
-        memberName: member.name,
-        totalHours: 0,
-        projectCount: 0,
-        taskCount: 0,
-        schedules: []
-      });
-    });
-
-    schedules.forEach(schedule => {
-      const workload = workloadMap.get(schedule.memberId);
-      if (workload) {
-        workload.totalHours += schedule.hours;
-        workload.taskCount += 1;
-        workload.schedules.push(schedule);
-        
-        const uniqueProjects = new Set(workload.schedules.map(s => s.projectName));
-        workload.projectCount = uniqueProjects.size;
-      }
-    });
-
-    return Array.from(workloadMap.values()).filter(w => w.totalHours > 0);
-  };
-
-  // Calculate workload from latest schedules
-  const teamWorkload = calculateTeamWorkload(weeklySchedules);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      {/* Page Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-semibold text-gray-900">Team</h1>
-        <p className="text-base text-gray-500 mt-2">
-          Manage and track your team schedules and workload
-        </p>
+    <ConsistentLayout 
+      title="Team" 
+      subtitle="Manage your team members and track their performance"
+      currentPage="team"
+    >
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded-lg text-xs font-bold">
+                <ArrowUpRight className="w-3 h-3" />
+                LIVE
+              </div>
+            </div>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-3xl font-bold text-slate-900 mb-1">{teamMembers.length}</p>
+                <p className="text-sm text-slate-600 font-medium">Total Members</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-bold text-green-600">+3</p>
+                <p className="text-xs text-slate-500">this month</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-lg text-xs font-bold">
+                <TrendingUp className="w-3 h-3" />
+                ACTIVE
+              </div>
+            </div>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-3xl font-bold text-slate-900 mb-1">
+                  {teamMembers.filter(m => m.status === 'active').length}
+                </p>
+                <p className="text-sm text-slate-600 font-medium">Active Now</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-bold text-green-600">+2</p>
+                <p className="text-xs text-slate-500">vs yesterday</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Zap className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex items-center gap-1 bg-purple-100 text-purple-700 px-2 py-1 rounded-lg text-xs font-bold">
+                <ArrowUpRight className="w-3 h-3" />
+                PRO
+              </div>
+            </div>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-3xl font-bold text-slate-900 mb-1">
+                  {teamMembers.filter(m => m.performance >= 90).length}
+                </p>
+                <p className="text-sm text-slate-600 font-medium">Top Performers</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-bold text-green-600">+15%</p>
+                <p className="text-xs text-slate-500">vs last month</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="group relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Trophy className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex items-center gap-1 bg-orange-100 text-orange-700 px-2 py-1 rounded-lg text-xs font-bold">
+                <ArrowUpRight className="w-3 h-3" />
+                HOT
+              </div>
+            </div>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-3xl font-bold text-slate-900 mb-1">
+                  {Math.round(teamMembers.reduce((sum, m) => sum + m.performance, 0) / teamMembers.length)}%
+                </p>
+                <p className="text-sm text-slate-600 font-medium">Avg Performance</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-bold text-green-600">+5%</p>
+                <p className="text-xs text-slate-500">vs last month</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Week Filter Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-4">
-          <h2 className="text-lg font-semibold text-gray-900">
-            Schedule Team Weekly
-          </h2>
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => navigateWeek('prev')}
-              className="text-red-500"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <span className="text-sm text-gray-600 px-3 py-1 rounded-md bg-gray-50">
-              {getWeekRange()}
-            </span>
-            <button 
-              onClick={() => navigateWeek('next')}
-              className="text-red-500"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={handleRefreshData}
-            className="px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
-            title="Refresh data"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Refresh
-          </button>
-          <button 
-            onClick={() => setShowAddForm(true)}
-            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2"
-          >
-            <Plus className="w-4 h-4" />
-            Add Schedule
-          </button>
-        </div>
-      </div>
-
-      {/* Add Schedule Form */}
-      {showAddForm && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Add New Schedule</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Team Member</label>
-              <select
-                value={newSchedule.memberId}
-                onChange={(e) => setNewSchedule({ ...newSchedule, memberId: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              >
-                <option value="">Select member...</option>
-                {teamMembers.map(member => (
-                  <option key={member.id} value={member.id}>
-                    {member.name} ({member.role})
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
+      {/* Search and Actions */}
+      <div className="bg-white rounded-2xl shadow-lg border border-indigo-100 p-6 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                value={newSchedule.projectName}
-                onChange={(e) => setNewSchedule({ ...newSchedule, projectName: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-                placeholder="Enter project name..."
+                placeholder="Search team members..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent w-80"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Task</label>
-              <input
-                type="text"
-                value={newSchedule.task}
-                onChange={(e) => setNewSchedule({ ...newSchedule, task: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-                placeholder="Enter task description..."
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
-              <input
-                type="date"
-                value={newSchedule.dueDate}
-                onChange={(e) => setNewSchedule({ ...newSchedule, dueDate: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hours</label>
-              <input
-                type="number"
-                min="0.5"
-                max="24"
-                step="0.5"
-                value={newSchedule.hours}
-                onChange={(e) => setNewSchedule({ ...newSchedule, hours: parseFloat(e.target.value) })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
-              <select
-                value={newSchedule.priority}
-                onChange={(e) => setNewSchedule({ ...newSchedule, priority: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-              <select
-                value={newSchedule.status}
-                onChange={(e) => setNewSchedule({ ...newSchedule, status: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              >
-                <option value="planned">Planned</option>
-                <option value="in-progress">In Progress</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
-          </div>
-          <div className="flex justify-end gap-3 mt-6">
-            <button
-              onClick={() => {
-                setShowAddForm(false);
-                setNewSchedule({
-                  memberId: '',
-                  projectName: '',
-                  task: '',
-                  dueDate: '',
-                  hours: 0,
-                  priority: 'medium',
-                  status: 'planned'
-                });
-              }}
-              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Cancel
+            <button className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 transition-all duration-200 flex items-center gap-2">
+              <Filter className="w-4 h-4" />
+              Filter
             </button>
-            <button
-              onClick={handleAddSchedule}
-              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-            >
-              Save Schedule
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Schedule List */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        {weeklySchedules.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500">No schedules added yet</p>
-          </div>
-        ) : (
-          <div>
-            {/* HEADER ROW */}
-            <div className="grid grid-cols-[180px_220px_2fr_120px_120px_70px_100px_100px_60px] gap-4 items-center pb-3 border-b border-gray-100 text-sm font-bold text-gray-700">
-              <div>Team Member</div>
-              <div>Project</div>
-              <div>Task</div>
-              <div>Due Date</div>
-              <div>Hours</div>
-              <div>Priority</div>
-              <div>Status</div>
-              <div></div>
-            </div>
-
-            {/* LIST ROWS */}
-            {weeklySchedules.map((schedule) => {
-              const member = teamMembers.find(m => m.id === schedule.memberId);
-              
-              return (
-                <div 
-                  key={schedule.id} 
-                  className="grid grid-cols-[180px_220px_2fr_120px_120px_70px_100px_100px_60px] gap-4 items-center py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors"
+            
+            <div className="flex items-center bg-slate-100 rounded-xl p-1">
+              {['all', 'management', 'engineering', 'design', 'marketing'].map((role) => (
+                <button
+                  key={role}
+                  onClick={() => setSelectedRole(role)}
+                  className={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    selectedRole === role
+                      ? 'bg-white text-indigo-600 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
                 >
-                  {/* COL 1: Avatar + Member Name */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white text-sm font-normal flex-shrink-0">
-                      {member?.name.charAt(0)}
-                    </div>
-                    <span className="text-sm font-normal text-gray-900 truncate">{member?.name}</span>
-                  </div>
-
-                  {/* COL 2: Project Name */}
-                  <div className="text-sm font-normal text-gray-900 truncate">
-                    {schedule.projectName}
-                  </div>
-
-                  {/* COL 3: Task Title */}
-                  <div className="text-sm font-normal text-gray-900 truncate" title={schedule.task}>
-                    {schedule.task}
-                  </div>
-
-                  {/* COL 4: Due Date */}
-                  <div className="text-sm text-gray-500">
-                    {schedule.dueDate}
-                  </div>
-
-                  {/* COL 5: Hours */}
-                  <div className="text-sm text-gray-500">
-                    {schedule.hours}h
-                  </div>
-
-                  {/* COL 7: Priority Badge */}
-                  <div>
-                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-600">
-                      {schedule.priority.charAt(0).toUpperCase() + schedule.priority.slice(1)}
-                    </span>
-                  </div>
-
-                  {/* COL 8: Status Badge */}
-                  <div>
-                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-                      {schedule.status.charAt(0).toUpperCase() + schedule.status.slice(1).replace('-', ' ')}
-                    </span>
-                  </div>
-
-                  {/* COL 9: Delete Button */}
-                  <div>
-                    <button
-                      onClick={() => handleDeleteSchedule(schedule.id)}
-                      className="p-2 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                      title="Delete schedule"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                  {role === 'all' ? 'All Roles' : role.charAt(0).toUpperCase() + role.slice(1)}
+                </button>
+              ))}
+            </div>
           </div>
-        )}
+          
+          <button
+            onClick={handleNewMember}
+            className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-bold hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg flex items-center gap-2"
+          >
+            <Plus className="w-5 h-5" />
+            Add Member
+          </button>
+        </div>
       </div>
 
-      {/* Team Workload Section */}
-      {teamWorkload.length > 0 && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Team Workload Overview</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {teamWorkload.map((workload) => (
-              <div key={workload.memberId} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                      {workload.memberName.charAt(0)}
+      {/* Team Members Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredMembers.map((member) => {
+          const performanceBadge = getPerformanceBadge(member.performance);
+          return (
+            <div key={member.id} className="group bg-white rounded-2xl shadow-lg border border-slate-100 p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                      {member.avatar}
                     </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900">{workload.memberName}</h3>
-                      <p className="text-xs text-gray-500">{teamMembers.find(m => m.id === workload.memberId)?.role}</p>
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-md">
+                      {getStatusIcon(member.status)}
                     </div>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900">{member.name}</h3>
+                    <p className="text-sm text-slate-600">{member.role}</p>
                   </div>
                 </div>
-                
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Total Hours:</span>
-                    <span className="text-sm font-semibold text-gray-900">{workload.totalHours}h</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Projects:</span>
-                    <span className="text-sm font-medium text-gray-900">{workload.projectCount}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Tasks:</span>
-                    <span className="text-sm font-medium text-gray-900">{workload.taskCount}</span>
-                  </div>
-                </div>
-
-                {/* Workload Progress Bar */}
-                <div className="mt-3">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs text-gray-500">Workload</span>
-                    <span className="text-xs text-gray-500">{Math.round((workload.totalHours / 40) * 100)}%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        workload.totalHours > 40 ? 'bg-red-500' : 
-                        workload.totalHours > 30 ? 'bg-yellow-500' : 
-                        'bg-green-500'
-                      }`}
-                      style={{ width: `${Math.min((workload.totalHours / 40) * 100, 100)}%` }}
-                    ></div>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">Based on 40h/week</p>
+                <div className="flex items-center gap-2">
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getAvailabilityColor(member.availability)}`}>
+                    {member.availability.charAt(0).toUpperCase() + member.availability.slice(1)}
+                  </span>
+                  <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${performanceBadge.color}`}>
+                    {performanceBadge.icon}
+                    {performanceBadge.text}
+                  </span>
                 </div>
               </div>
-            ))}
+              
+              <div className="space-y-3 mb-4">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <Mail className="w-4 h-4" />
+                  <span>{member.email}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <Phone className="w-4 h-4" />
+                  <span>{member.phone}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <MapPin className="w-4 h-4" />
+                  <span>{member.location}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <Calendar className="w-4 h-4" />
+                  <span>Joined {member.joinDate}</span>
+                </div>
+              </div>
+
+              <div className="space-y-3 mb-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-600">Projects</span>
+                  <span className="font-medium text-slate-900">{member.projects}</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-600">Tasks Completed</span>
+                  <span className="font-medium text-slate-900">{member.tasksCompleted}</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-600">Performance</span>
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 bg-slate-200 rounded-full h-2">
+                      <div 
+                        className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full transition-all duration-300" 
+                        style={{ width: `${member.performance}%` }}
+                      ></div>
+                    </div>
+                    <span className="font-medium text-slate-900">{member.performance}%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-sm font-medium text-slate-700 mb-2">Skills</p>
+                <div className="flex flex-wrap gap-2">
+                  {member.skills.map((skill, index) => (
+                    <span key={index} className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg text-xs font-medium">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+                <div className="flex items-center gap-2 text-xs text-slate-500">
+                  <span>Department:</span>
+                  <span className="font-medium text-slate-700">{member.department}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button className="p-2 text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition-colors">
+                    <Mail className="w-4 h-4" />
+                  </button>
+                  <button className="p-2 text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition-colors">
+                    <Phone className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteMember(member.id, member.name)}
+                    className="p-2 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <MoreHorizontal className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Empty State */}
+      {filteredMembers.length === 0 && (
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-12 text-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-slate-200 to-slate-300 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Users className="w-8 h-8 text-slate-400" />
           </div>
+          <h3 className="text-lg font-bold text-slate-900 mb-2">No team members found</h3>
+          <p className="text-slate-600 mb-6">Get started by adding your first team member</p>
+          <button
+            onClick={handleNewMember}
+            className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-bold hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg flex items-center gap-2 mx-auto"
+          >
+            <Plus className="w-5 h-5" />
+            Add Member
+          </button>
         </div>
       )}
-
-      {/* Delete Confirmation Modal */}
-      <DeleteConfirmModal
-        isOpen={!!deleteConfirm}
-        onClose={handleCancelDelete}
-        onConfirm={handleConfirmDelete}
-        projectName={deleteConfirm?.projectName || ''}
-      />
-    </div>
+    </ConsistentLayout>
   );
 }
