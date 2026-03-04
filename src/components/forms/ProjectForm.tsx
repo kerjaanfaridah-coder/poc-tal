@@ -329,12 +329,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <td className="border border-gray-300 px-3 py-2 bg-white">
                             <textarea
                               value={phase.tasks || (phase as any).name || ''}
-                              onChange={(e) => {
-                                const updatedPhases = [...newProject.phases]
-                                updatedPhases[phaseIndex].tasks = e.target.value
-                                setNewProject({...newProject, phases: updatedPhases})
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none"
+                              readOnly
+                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm bg-gray-50 text-gray-700 resize-none cursor-not-allowed"
                               placeholder="Enter task description"
                               rows={4}
                               style={{ minHeight: '80px', maxHeight: '120px' }}
