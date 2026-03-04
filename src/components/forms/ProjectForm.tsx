@@ -697,190 +697,209 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            {/* Issue Tracker - Modern Visual UX */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-gray-900">Issue Tracker</h2>
-              </div>
-
-              {/* Modern Summary with Badges */}
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <div className="flex items-center gap-6 text-sm">
+            {/* Issue Tracker - Glassmorphism Theme */}
+            <div className="relative">
+              {/* Background Glass Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-2xl border border-white/20"></div>
+              
+              {/* Content */}
+              <div className="relative bg-white/40 backdrop-blur-lg rounded-2xl border border-white/30 shadow-xl p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-semibold text-gray-900">Issue Tracker</h2>
                   <div className="flex items-center gap-2">
-                    <span className="text-gray-600 font-medium">Total:</span>
-                    <span className="text-xl font-bold text-gray-900">
-                      {newProject.issues?.length || 0}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-500">🔴</span>
-                    <span className="text-gray-600 font-medium">Open:</span>
-                    <span className="text-lg font-bold text-red-600">
-                      {newProject.issues?.filter(issue => issue.status === 'open').length || 0}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-blue-500">🔵</span>
-                    <span className="text-gray-600 font-medium">In Progress:</span>
-                    <span className="text-lg font-bold text-blue-600">
-                      {newProject.issues?.filter(issue => issue.status === 'in-progress').length || 0}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-green-500">🟢</span>
-                    <span className="text-gray-600 font-medium">Resolved:</span>
-                    <span className="text-lg font-bold text-green-600">
-                      {newProject.issues?.filter(issue => issue.status === 'resolved' || issue.status === 'closed').length || 0}
-                    </span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-gray-600">Live</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Balanced Quick Add Form */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Plus className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm font-medium text-gray-700">Add Issue</span>
-                </div>
-                <div className="grid grid-cols-12 gap-3">
-                  <div className="col-span-6">
-                    <input
-                      type="text"
-                      placeholder="Enter issue title..."
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                      id="quick-add-issue-title"
-                    />
-                  </div>
-                  <div className="col-span-2">
-                    <select
-                      id="quick-add-issue-severity"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                      defaultValue="medium"
-                    >
-                      <option value="low">Low</option>
-                      <option value="medium">Medium</option>
-                      <option value="high">High</option>
-                    </select>
-                  </div>
-                  <div className="col-span-3">
-                    <input
-                      type="text"
-                      placeholder="Assignee..."
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                      id="quick-add-issue-assignee"
-                    />
-                  </div>
-                  <div className="col-span-1">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const title = (document.getElementById('quick-add-issue-title') as HTMLInputElement)?.value || 'New Issue';
-                        const severity = (document.getElementById('quick-add-issue-severity') as HTMLSelectElement)?.value || 'medium';
-                        const assignedTo = (document.getElementById('quick-add-issue-assignee') as HTMLInputElement)?.value || '';
-                        
-                        const newIssue = {
-                          id: `issue-${Date.now()}`,
-                          title: title,
-                          severity: severity as Project['issues'][0]['severity'],
-                          assignedTo: assignedTo,
-                          status: 'open' as const
-                        };
-                        
-                        setNewProject({...newProject, issues: [...newProject.issues, newIssue]});
-                        
-                        // Clear form
-                        (document.getElementById('quick-add-issue-title') as HTMLInputElement).value = '';
-                        (document.getElementById('quick-add-issue-assignee') as HTMLInputElement).value = '';
-                      }}
-                      className="w-full px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm font-medium transition-colors"
-                    >
-                      Add
-                    </button>
+                {/* Glassmorphism Summary */}
+                <div className="relative overflow-hidden rounded-xl mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10"></div>
+                  <div className="relative bg-white/50 backdrop-blur-sm border border-white/30 rounded-xl p-4">
+                    <div className="flex items-center gap-6 text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                          {newProject.issues?.length || 0}
+                        </div>
+                        <span className="text-gray-700 font-medium">Total</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                          {newProject.issues?.filter(issue => issue.status === 'open').length || 0}
+                        </div>
+                        <span className="text-gray-700 font-medium">Open</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                          {newProject.issues?.filter(issue => issue.status === 'in-progress').length || 0}
+                        </div>
+                        <span className="text-gray-700 font-medium">In Progress</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                          {newProject.issues?.filter(issue => issue.status === 'resolved' || issue.status === 'closed').length || 0}
+                        </div>
+                        <span className="text-gray-700 font-medium">Resolved</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Modern Issue Table */}
-              {newProject.issues.length > 0 && (
-                <div className="border border-gray-200 rounded-lg overflow-hidden">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="bg-gray-50 border-b border-gray-200">
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Title</th>
-                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Severity</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Assignee</th>
-                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {newProject.issues.map((issue, index) => {
-                        const severityColor = issue.severity === 'high' ? 'bg-red-100 text-red-800 border-red-200' :
-                                           issue.severity === 'medium' ? 'bg-orange-100 text-orange-800 border-orange-200' :
-                                           'bg-gray-100 text-gray-800 border-gray-200';
-                        const severityIcon = issue.severity === 'high' ? '🔴' :
-                                           issue.severity === 'medium' ? '🟠' : '⚪';
-                        
-                        const statusColor = issue.status === 'open' ? 'bg-red-100 text-red-800 border-red-200' :
-                                          issue.status === 'in-progress' ? 'bg-blue-100 text-blue-800 border-blue-200' :
-                                          issue.status === 'resolved' ? 'bg-green-100 text-green-800 border-green-200' :
-                                          'bg-gray-100 text-gray-800 border-gray-200';
-                        const statusIcon = issue.status === 'open' ? '🔴' :
-                                          issue.status === 'in-progress' ? '🔵' : '🟢';
-                        
-                        return (
-                          <tr key={issue.id} className="hover:bg-gray-50 transition-colors">
-                            <td className="px-4 py-3">
-                              <div className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
-                                {issue.title || 'Untitled Issue'}
-                              </div>
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${severityColor}`}>
-                                <span>{severityIcon}</span>
-                                {issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1)}
-                              </span>
-                            </td>
-                            <td className="px-4 py-3">
-                              <div className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
-                                {issue.assignedTo || 'Unassigned'}
-                              </div>
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              <select
-                                value={issue.status}
-                                onChange={(e) => {
-                                  const updatedIssues = [...newProject.issues]
-                                  updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
-                                  setNewProject({...newProject, issues: updatedIssues})
-                                }}
-                                className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border cursor-pointer ${statusColor}`}
-                              >
-                                <option value="open" className="bg-red-100 text-red-800">🔴 Open</option>
-                                <option value="in-progress" className="bg-blue-100 text-blue-800">🔵 In Progress</option>
-                                <option value="resolved" className="bg-green-100 text-green-800">🟢 Resolved</option>
-                                <option value="closed" className="bg-gray-100 text-gray-800">⚪ Closed</option>
-                              </select>
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const updatedIssues = newProject.issues.filter((_, issueIndex) => issueIndex !== index)
-                                  setNewProject({...newProject, issues: updatedIssues})
-                                }}
-                                className="text-red-500 hover:text-red-600 text-lg"
-                              >
-                                🗑
-                              </button>
-                            </td>
+                {/* Glassmorphism Quick Add Form */}
+                <div className="relative mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-pink-500/5 rounded-xl"></div>
+                  <div className="relative bg-white/30 backdrop-blur-sm border border-white/40 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-6 h-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        <Plus className="w-3 h-3 text-white" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">Add Issue</span>
+                    </div>
+                    <div className="grid grid-cols-12 gap-3">
+                      <div className="col-span-6">
+                        <input
+                          type="text"
+                          placeholder="Enter issue title..."
+                          className="w-full px-3 py-2 bg-white/50 backdrop-blur-sm border border-white/40 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400/50 placeholder-gray-500"
+                          id="quick-add-issue-title"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <select
+                          id="quick-add-issue-severity"
+                          className="w-full px-3 py-2 bg-white/50 backdrop-blur-sm border border-white/40 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400/50"
+                          defaultValue="medium"
+                        >
+                          <option value="low">Low</option>
+                          <option value="medium">Medium</option>
+                          <option value="high">High</option>
+                        </select>
+                      </div>
+                      <div className="col-span-3">
+                        <input
+                          type="text"
+                          placeholder="Assignee..."
+                          className="w-full px-3 py-2 bg-white/50 backdrop-blur-sm border border-white/40 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-400/50 placeholder-gray-500"
+                          id="quick-add-issue-assignee"
+                        />
+                      </div>
+                      <div className="col-span-1">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const title = (document.getElementById('quick-add-issue-title') as HTMLInputElement)?.value || 'New Issue';
+                            const severity = (document.getElementById('quick-add-issue-severity') as HTMLSelectElement)?.value || 'medium';
+                            const assignedTo = (document.getElementById('quick-add-issue-assignee') as HTMLInputElement)?.value || '';
+                            
+                            const newIssue = {
+                              id: `issue-${Date.now()}`,
+                              title: title,
+                              severity: severity as Project['issues'][0]['severity'],
+                              assignedTo: assignedTo,
+                              status: 'open' as const
+                            };
+                            
+                            setNewProject({...newProject, issues: [...newProject.issues, newIssue]});
+                            
+                            // Clear form
+                            (document.getElementById('quick-add-issue-title') as HTMLInputElement).value = '';
+                            (document.getElementById('quick-add-issue-assignee') as HTMLInputElement).value = '';
+                          }}
+                          className="w-full px-3 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 text-sm font-medium transition-all duration-200 shadow-lg shadow-purple-500/25"
+                        >
+                          Add
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Glassmorphism Issue Table */}
+                {newProject.issues.length > 0 && (
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-white/30 rounded-xl"></div>
+                    <div className="relative bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl overflow-hidden">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="bg-white/30 backdrop-blur-sm border-b border-white/20">
+                            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Title</th>
+                            <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Severity</th>
+                            <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Assignee</th>
+                            <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                            <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Action</th>
                           </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+                        </thead>
+                        <tbody className="divide-y divide-white/10">
+                          {newProject.issues.map((issue, index) => {
+                            const severityColor = issue.severity === 'high' ? 'bg-red-100/80 text-red-800 border-red-200/50 backdrop-blur-sm' :
+                                               issue.severity === 'medium' ? 'bg-orange-100/80 text-orange-800 border-orange-200/50 backdrop-blur-sm' :
+                                               'bg-gray-100/80 text-gray-800 border-gray-200/50 backdrop-blur-sm';
+                            const severityIcon = issue.severity === 'high' ? '🔴' :
+                                               issue.severity === 'medium' ? '🟠' : '⚪';
+                            
+                            const statusColor = issue.status === 'open' ? 'bg-red-100/80 text-red-800 border-red-200/50 backdrop-blur-sm' :
+                                              issue.status === 'in-progress' ? 'bg-blue-100/80 text-blue-800 border-blue-200/50 backdrop-blur-sm' :
+                                              issue.status === 'resolved' ? 'bg-green-100/80 text-green-800 border-green-200/50 backdrop-blur-sm' :
+                                              'bg-gray-100/80 text-gray-800 border-gray-200/50 backdrop-blur-sm';
+                            const statusIcon = issue.status === 'open' ? '🔴' :
+                                              issue.status === 'in-progress' ? '🔵' : '🟢';
+                            
+                            return (
+                              <tr key={issue.id} className="hover:bg-white/20 transition-colors duration-200">
+                                <td className="px-4 py-3">
+                                  <div className="w-full px-3 py-2 bg-white/30 backdrop-blur-sm border border-white/40 rounded-lg text-sm">
+                                    {issue.title || 'Untitled Issue'}
+                                  </div>
+                                </td>
+                                <td className="px-4 py-3 text-center">
+                                  <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${severityColor} shadow-sm`}>
+                                    <span>{severityIcon}</span>
+                                    {issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1)}
+                                  </span>
+                                </td>
+                                <td className="px-4 py-3">
+                                  <div className="w-full px-3 py-2 bg-white/30 backdrop-blur-sm border border-white/40 rounded-lg text-sm">
+                                    {issue.assignedTo || 'Unassigned'}
+                                  </div>
+                                </td>
+                                <td className="px-4 py-3 text-center">
+                                  <select
+                                    value={issue.status}
+                                    onChange={(e) => {
+                                      const updatedIssues = [...newProject.issues]
+                                      updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
+                                      setNewProject({...newProject, issues: updatedIssues})
+                                    }}
+                                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border cursor-pointer backdrop-blur-sm ${statusColor} shadow-sm`}
+                                  >
+                                    <option value="open" className="bg-red-100 text-red-800">🔴 Open</option>
+                                    <option value="in-progress" className="bg-blue-100 text-blue-800">🔵 In Progress</option>
+                                    <option value="resolved" className="bg-green-100 text-green-800">🟢 Resolved</option>
+                                    <option value="closed" className="bg-gray-100 text-gray-800">⚪ Closed</option>
+                                  </select>
+                                </td>
+                                <td className="px-4 py-3 text-center">
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const updatedIssues = newProject.issues.filter((_, issueIndex) => issueIndex !== index)
+                                      setNewProject({...newProject, issues: updatedIssues})
+                                    }}
+                                    className="text-red-500 hover:text-red-600 text-lg hover:bg-red-50/50 rounded-lg p-1 transition-all duration-200"
+                                  >
+                                    🗑
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
         )
