@@ -634,8 +634,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   </div>
                 </div>
 
-                {/* Add Item Section - Following Projects Page Search/Actions Style */}
-                <div className="bg-white rounded-2xl shadow-lg border border-red-100 p-6 mb-8">
+                {/* Add New Item Section - Clearly Separated Form Card */}
+                <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6 mb-10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                      <Plus className="w-4 h-4 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900">Add New Item</h3>
+                  </div>
+                  
                   <div className="flex flex-col lg:flex-row lg:items-end gap-6">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4 flex-1">
                       {/* Type Field */}
@@ -643,7 +650,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <label className="block text-xs font-bold text-slate-700 mb-2">Type</label>
                         <select
                           id="quick-add-type-modern-form"
-                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           defaultValue="decision"
                         >
                           <option value="decision">🤔 Decision</option>
@@ -660,7 +667,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <input
                           type="text"
                           placeholder="Enter description..."
-                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           id="quick-add-description-modern-form"
                         />
                       </div>
@@ -671,7 +678,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <input
                           type="text"
                           placeholder="Enter assignee..."
-                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           id="quick-add-assignee-modern-form"
                         />
                       </div>
@@ -681,7 +688,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <label className="block text-xs font-bold text-slate-700 mb-2">Priority</label>
                         <select
                           id="quick-add-priority-modern-form"
-                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           defaultValue="medium"
                         >
                           <option value="low">🟢 Low</option>
@@ -695,7 +702,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <label className="block text-xs font-bold text-slate-700 mb-2">Due Date</label>
                         <input
                           type="date"
-                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           id="quick-add-date-modern-form"
                         />
                       </div>
@@ -739,8 +746,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   </div>
                 </div>
 
-              {/* Items Table - Following Tasks Page Design */}
+              {/* All Pending Items Table - Clean Data List */}
               <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
+                      <span className="text-lg">📋</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900">All Pending Items</h3>
+                  </div>
+                </div>
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
