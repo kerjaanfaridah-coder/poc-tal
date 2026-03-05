@@ -171,12 +171,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
               {/* Project Information Form Card */}
               <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
-                    <span className="text-lg">📋</span>
-                  </div>
-                </div>
-                
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {/* Project Name */}
                   <div>
