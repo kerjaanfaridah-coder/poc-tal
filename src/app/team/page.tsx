@@ -57,16 +57,16 @@ export default function TeamPage() {
 
   // Real-time team workload data
   const [teamWorkload, setTeamWorkload] = useState([
-    { id: '1', name: 'Jovan', role: 'Senior Engineer', tasks: 8, completed: 5, avatar: '👨‍💻', status: 'active' },
-    { id: '2', name: 'Alwan', role: 'Lighting Engineer', tasks: 6, completed: 4, avatar: '💡', status: 'active' },
-    { id: '3', name: 'Robi', role: 'Audio Visual Engineer', tasks: 7, completed: 3, avatar: '�', status: 'active' },
-    { id: '4', name: 'Sujadi', role: 'Site Coordinator', tasks: 12, completed: 9, avatar: '�', status: 'active' },
-    { id: '5', name: 'Andry', role: 'Technician', tasks: 10, completed: 7, avatar: '🔧', status: 'active' },
-    { id: '6', name: 'Eka', role: 'Technician', tasks: 9, completed: 6, avatar: '🔧', status: 'active' },
-    { id: '7', name: 'Sopian', role: 'Technician', tasks: 8, completed: 5, avatar: '🔧', status: 'active' },
-    { id: '8', name: 'Sobirin', role: 'Technician', tasks: 7, completed: 4, avatar: '🔧', status: 'active' },
-    { id: '9', name: 'Puji', role: 'Technician', tasks: 6, completed: 3, avatar: '🔧', status: 'active' },
-    { id: '10', name: 'Dany', role: 'Maintenance', tasks: 5, completed: 2, avatar: '🛠️', status: 'active' }
+    { id: '1', name: 'Jovan', role: 'Senior Engineer', tasks: 8, completed: 5, avatar: 'J', status: 'active' },
+    { id: '2', name: 'Alwan', role: 'Lighting Engineer', tasks: 6, completed: 4, avatar: 'A', status: 'active' },
+    { id: '3', name: 'Robi', role: 'Audio Visual Engineer', tasks: 7, completed: 3, avatar: 'R', status: 'active' },
+    { id: '4', name: 'Sujadi', role: 'Site Coordinator', tasks: 12, completed: 9, avatar: 'S', status: 'active' },
+    { id: '5', name: 'Andry', role: 'Technician', tasks: 10, completed: 7, avatar: 'A', status: 'active' },
+    { id: '6', name: 'Eka', role: 'Technician', tasks: 9, completed: 6, avatar: 'E', status: 'active' },
+    { id: '7', name: 'Sopian', role: 'Technician', tasks: 8, completed: 5, avatar: 'S', status: 'active' },
+    { id: '8', name: 'Sobirin', role: 'Technician', tasks: 7, completed: 4, avatar: 'S', status: 'active' },
+    { id: '9', name: 'Puji', role: 'Technician', tasks: 6, completed: 3, avatar: 'P', status: 'active' },
+    { id: '10', name: 'Dany', role: 'Maintenance', tasks: 5, completed: 2, avatar: 'D', status: 'active' }
   ]);
 
   // Calculate summary stats
@@ -386,8 +386,8 @@ export default function TeamPage() {
               <div key={member.id} className="group">
                 <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 p-4 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                      <span className="text-xl">{member.avatar}</span>
+                    <div className="w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shadow-sm">
+                      <span className="text-white font-bold text-sm">{member.avatar}</span>
                     </div>
                     <div className="flex-1">
                       <div className="font-semibold text-slate-900 text-sm">{member.name}</div>
