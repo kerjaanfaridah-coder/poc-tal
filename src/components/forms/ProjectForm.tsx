@@ -290,15 +290,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   <table className="w-full">
                     <thead>
                       <tr className="bg-slate-50 border-b border-slate-200">
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Task</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Assigned To</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Start Date</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">End Date</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Days</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Status</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Achievement %</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Notes</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Evidence / Link</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Task</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Assigned To</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Start Date</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">End Date</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Days</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Status</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Achievement %</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Notes</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Evidence / Link</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
@@ -309,58 +309,58 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Kick Off Meeting</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Project Manager</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">01 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">02 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">1</td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">COMPLETE</span>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Kick Off Meeting</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Project Manager</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">01 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">02 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">1</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
                         </td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">100%</span>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Initial project kickoff with stakeholders</td>
-                        <td className="px-4 py-3">
-                          <a href="https://drive.google.com/meeting-notes" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline">
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Initial project kickoff with stakeholders</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <a href="https://drive.google.com/meeting-notes" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline whitespace-nowrap">
                             View Document
                           </a>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Produce Shop Drawing</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Design Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">03 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">10 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">7</td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">COMPLETE</span>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Produce Shop Drawing</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Design Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">03 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">10 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">7</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
                         </td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">100%</span>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Technical drawings and specifications</td>
-                        <td className="px-4 py-3">
-                          <a href="https://drive.google.com/shop-drawings" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline">
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Technical drawings and specifications</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <a href="https://drive.google.com/shop-drawings" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline whitespace-nowrap">
                             View Document
                           </a>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Project On DP1</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Finance Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">11 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">15 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">4</td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">IN PROGRESS</span>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Project On DP1</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Finance Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">11 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">15 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">4</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">IN PROGRESS</span>
                         </td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">50%</span>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">50%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Down payment processing</td>
-                        <td className="px-4 py-3">
-                          <a href="https://drive.google.com/dp1-docs" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline">
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Down payment processing</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <a href="https://drive.google.com/dp1-docs" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline whitespace-nowrap">
                             View Document
                           </a>
                         </td>
@@ -373,107 +373,107 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Survey</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Survey Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">16 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">18 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">2</td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">COMPLETE</span>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Survey</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Survey Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">16 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">18 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
                         </td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">100%</span>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Site survey and measurement</td>
-                        <td className="px-4 py-3">
-                          <a href="https://drive.google.com/survey-report" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline">
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Site survey and measurement</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <a href="https://drive.google.com/survey-report" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline whitespace-nowrap">
                             View Document
                           </a>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Material Approval</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Procurement</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">19 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">25 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">6</td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">IN PROGRESS</span>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Material Approval</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Procurement</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">19 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">25 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">6</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">IN PROGRESS</span>
                         </td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">75%</span>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">75%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Material specification approval</td>
-                        <td className="px-4 py-3">
-                          <a href="https://drive.google.com/material-approval" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline">
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Material specification approval</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <a href="https://drive.google.com/material-approval" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-sm underline whitespace-nowrap">
                             View Document
                           </a>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Cable Delivery</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Logistics</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">26 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">30 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">4</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Cable Delivery</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Logistics</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">26 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">30 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">4</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">NOT STARTED</span>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Cable and equipment delivery</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm whitespace-nowrap">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Cable Installation</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Installation Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">31 Jan 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">05 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">5</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Cable and equipment delivery</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Cable pulling and termination</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Cable Installation</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Installation Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">31 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">05 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">5</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Marking Device</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Technical Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">06 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">08 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">2</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Cable pulling and termination</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Device placement and marking</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Marking Device</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Technical Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">06 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">08 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">2</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Report Progress to Owner</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Project Manager</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">09 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">10 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">1</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Device placement and marking</td>
-                        <td className="px-4 py-3">
-                          <span className="text-gray-400 text-sm">No document</span>
-                        </td>
-                      </tr>
-                      <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Report Progress to Owner</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Project Manager</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">09 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">10 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">1</td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
-                        </td>
-                        <td className="px-4 py-3">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Progress report submission</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Progress report submission</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -486,86 +486,86 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Device Delivery</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Vendor</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">11 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">15 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">4</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Device Delivery</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Vendor</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">11 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">15 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">4</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Equipment delivery to site</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Equipment delivery to site</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Device Installation</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Installation Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">16 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">20 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">4</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Device Installation</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Installation Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">16 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">20 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">4</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Device mounting and setup</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Device mounting and setup</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">QC Installation & Racking</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">QC Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">21 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">23 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">2</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">QC Installation & Racking</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">QC Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">21 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">23 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">2</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Quality control inspection</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Quality control inspection</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Integration & Configuration</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Technical Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">24 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">26 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">2</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Integration & Configuration</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Technical Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">24 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">26 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">2</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">System integration and setup</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">System integration and setup</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Testing Function</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Testing Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">27 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">29 Feb 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">2</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Testing Function</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Testing Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">27 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">29 Feb 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">2</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Functional testing</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Functional testing</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -578,103 +578,103 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Handover Document</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Documentation Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">01 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">03 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">2</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Handover Document</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Documentation Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">01 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">03 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">2</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Documentation preparation</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Documentation preparation</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Test Commissioning</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Commissioning Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">04 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">06 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">2</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Test Commissioning</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Commissioning Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">04 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">06 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">2</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">System commissioning</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">System commissioning</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Final QC</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">QC Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">07 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">08 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">1</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Final QC</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">QC Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">07 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">08 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">1</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Final quality control</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Final quality control</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Function Defect Checklist</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Testing Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">09 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">10 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">1</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Function Defect Checklist</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Testing Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">09 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">10 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">1</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Defect identification</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Defect identification</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">Training</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Training Team</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">11 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">12 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">1</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Training</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Training Team</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">11 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">12 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">1</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">User training session</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">User training session</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900">BAST</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Project Manager</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">13 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">15 Mar 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600">2</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">BAST</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Project Manager</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">13 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">15 Mar 2024</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">2</td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">NOT STARTED</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600">Berita Acara Serah Terima</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Berita Acara Serah Terima</td>
                         <td className="px-4 py-3">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
