@@ -52,8 +52,7 @@ export default function TeamPage() {
     location: '',
     assigned: '',
     date: '',
-    time: '',
-    day: 'Monday'
+    time: ''
   });
 
   // Real-time team workload data
@@ -119,8 +118,7 @@ export default function TeamPage() {
         location: '',
         assigned: '',
         date: '',
-        time: '',
-        day: 'Monday'
+        time: ''
       });
       setShowAddScheduleModal(false);
     }
