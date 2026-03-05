@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Search, Filter, Plus, FileText, Eye, Download, Edit, Upload, Calendar, Tag } from 'lucide-react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
+import jsPDF from 'jspdf';
 
 export default function DocumentsPage() {
   // Template data
@@ -153,65 +154,171 @@ export default function DocumentsPage() {
 
   // Generate BAST function
   const handleGenerateBast = () => {
-    const fileName = `BAST - ${bastData.projectName.replace(/\s+/g, ' ')} - ${bastData.completionDate}.docx`;
+    const fileName = `BAST - ${bastData.projectName.replace(/\s+/g, ' ')} - ${bastData.completionDate}.pdf`;
     
-    // Create BAST document content
-    const bastContent = `
-BERITA ACARA SERAH TERIMA
-
-Pada hari ini telah dilakukan serah terima pekerjaan instalasi sistem sesuai dengan spesifikasi yang telah disepakati antara pihak penyedia jasa dan pihak klien.
-
-PROJECT DETAILS
-================
-
-Project Name: ${bastData.projectName}
-Client: ${bastData.clientName}
-Location: ${bastData.location}
-Completion Date: ${bastData.completionDate}
-PIC: ${bastData.companyPIC}
-Technician Team: ${bastData.technicianTeam}
-
-SYSTEM INSTALLED
-================
-
-${bastData.systemInstalled}
-
-PROJECT DESCRIPTION
-==================
-
-${bastData.projectDescription}
-
-STATEMENT
-=========
-
-Pekerjaan telah diselesaikan dengan baik dan sistem telah diuji serta berfungsi sesuai spesifikasi.
-
-NOTES
-=====
-
-${bastData.notes}
-
-SIGNATURE SECTION
-=================
-
-Client Representative: ${bastData.clientRepresentative || '_________________'}
-Company Representative: ${bastData.companyPIC}
-
-Generated on: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-`;
-
-    // Create and download the file
-    const blob = new Blob([bastContent], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-
-    alert(`BAST document generated: ${fileName}`);
+    // Create PDF document
+    const doc = new jsPDF();
+    
+    // Set font sizes and positions
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    let yPosition = margin;
+    
+    // Title
+    doc.setFontSize(20);
+    doc.setFont('helvetica', 'bold');
+    doc.text('BERITA ACARA SERAH TERIMA', pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 20;
+    
+    // Opening paragraph
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    const openingText = 'Pada hari ini telah dilakukan serah terima pekerjaan instalasi sistem sesuai dengan spesifikasi yang telah disepakati antara pihak penyedia jasa dan pihak klien.';
+    const splitOpening = doc.splitTextToSize(openingText, pageWidth - 2 * margin);
+    doc.text(splitOpening, margin, yPosition);
+    yPosition += splitOpening.length * 7 + 10;
+    
+    // Project Details Section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('PROJECT DETAILS', margin, yPosition);
+    yPosition += 10;
+    
+    // Draw line under section title
+    doc.setLineWidth(0.5);
+    doc.line(margin, yPosition, pageWidth - margin, yPosition);
+    yPosition += 10;
+    
+    // Project details table
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    
+    const details = [
+      ['Project Name:', bastData.projectName],
+      ['Client:', bastData.clientName],
+      ['Location:', bastData.location],
+      ['Completion Date:', bastData.completionDate],
+      ['PIC:', bastData.companyPIC],
+      ['Technician Team:', bastData.technicianTeam]
+    ];
+    
+    details.forEach(([label, value]) => {
+      doc.setFont('helvetica', 'bold');
+      doc.text(label, margin, yPosition);
+      doc.setFont('helvetica', 'normal');
+      doc.text(value, margin + 60, yPosition);
+      yPosition += 8;
+    });
+    
+    yPosition += 10;
+    
+    // System Installed Section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('SYSTEM INSTALLED', margin, yPosition);
+    yPosition += 10;
+    
+    doc.setLineWidth(0.5);
+    doc.line(margin, yPosition, pageWidth - margin, yPosition);
+    yPosition += 10;
+    
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    const splitSystem = doc.splitTextToSize(bastData.systemInstalled, pageWidth - 2 * margin);
+    doc.text(splitSystem, margin, yPosition);
+    yPosition += splitSystem.length * 7 + 10;
+    
+    // Project Description Section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('PROJECT DESCRIPTION', margin, yPosition);
+    yPosition += 10;
+    
+    doc.setLineWidth(0.5);
+    doc.line(margin, yPosition, pageWidth - margin, yPosition);
+    yPosition += 10;
+    
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    const splitDescription = doc.splitTextToSize(bastData.projectDescription, pageWidth - 2 * margin);
+    doc.text(splitDescription, margin, yPosition);
+    yPosition += splitDescription.length * 7 + 10;
+    
+    // Statement Section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('STATEMENT', margin, yPosition);
+    yPosition += 10;
+    
+    doc.setLineWidth(0.5);
+    doc.line(margin, yPosition, pageWidth - margin, yPosition);
+    yPosition += 10;
+    
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    const statementText = 'Pekerjaan telah diselesaikan dengan baik dan sistem telah diuji serta berfungsi sesuai spesifikasi.';
+    const splitStatement = doc.splitTextToSize(statementText, pageWidth - 2 * margin);
+    doc.text(splitStatement, margin, yPosition);
+    yPosition += splitStatement.length * 7 + 10;
+    
+    // Notes Section
+    if (bastData.notes) {
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('NOTES', margin, yPosition);
+      yPosition += 10;
+      
+      doc.setLineWidth(0.5);
+      doc.line(margin, yPosition, pageWidth - margin, yPosition);
+      yPosition += 10;
+      
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'normal');
+      const splitNotes = doc.splitTextToSize(bastData.notes, pageWidth - 2 * margin);
+      doc.text(splitNotes, margin, yPosition);
+      yPosition += splitNotes.length * 7 + 10;
+    }
+    
+    // Signature Section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('SIGNATURE SECTION', margin, yPosition);
+    yPosition += 10;
+    
+    doc.setLineWidth(0.5);
+    doc.line(margin, yPosition, pageWidth - margin, yPosition);
+    yPosition += 20;
+    
+    // Signature boxes
+    const signatureWidth = 80;
+    const signatureHeight = 40;
+    const signatureY = yPosition;
+    
+    // Client Representative
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Client Representative:', margin, signatureY - 10);
+    doc.rect(margin, signatureY, signatureWidth, signatureHeight);
+    doc.setFont('helvetica', 'normal');
+    doc.text(bastData.clientRepresentative || '_________________', margin, signatureY + signatureHeight + 10);
+    
+    // Company Representative
+    const companyX = pageWidth - margin - signatureWidth;
+    doc.setFont('helvetica', 'bold');
+    doc.text('Company Representative:', companyX, signatureY - 10);
+    doc.rect(companyX, signatureY, signatureWidth, signatureHeight);
+    doc.setFont('helvetica', 'normal');
+    doc.text(bastData.companyPIC, companyX, signatureY + signatureHeight + 10);
+    
+    // Generated date at bottom
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'italic');
+    doc.text(`Generated on: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`, pageWidth / 2, doc.internal.pageSize.getHeight() - 20, { align: 'center' });
+    
+    // Save the PDF
+    doc.save(fileName);
+    
+    alert(`BAST PDF document generated: ${fileName}`);
     setShowBastModal(false);
   };
 
