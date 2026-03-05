@@ -377,7 +377,7 @@ export default function TeamPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {teamWorkload.map((member) => {
-            const workloadPercentage = (member.tasks / WEEKLY_CAPACITY) * 100;
+            const workloadPercentage = Math.min((member.tasks / WEEKLY_CAPACITY) * 100, 100);
             const progressColor = workloadPercentage <= 40 ? 'from-green-400 to-green-600' : 
                                workloadPercentage <= 80 ? 'from-orange-400 to-orange-600' : 
                                'from-red-400 to-red-600';
@@ -408,7 +408,7 @@ export default function TeamPage() {
                     <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                       <div 
                         className={`h-full bg-gradient-to-r ${progressColor} rounded-full transition-all duration-500`} 
-                        style={{ width: `${Math.min(workloadPercentage, 100)}%` }}
+                        style={{ width: `${workloadPercentage}%` }}
                       ></div>
                     </div>
                     <div className="text-xs text-slate-600 mt-1 text-center">{workloadPercentage.toFixed(0)}% workload</div>
