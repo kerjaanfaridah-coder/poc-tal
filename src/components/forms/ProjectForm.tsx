@@ -870,7 +870,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          {renderEvidenceLink('cable-delivery')}
+                          {renderEvidenceLink('cabling-installation')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -927,7 +927,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          {renderEvidenceLink('cable-delivery')}
+                          {renderEvidenceLink('marking-device')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
