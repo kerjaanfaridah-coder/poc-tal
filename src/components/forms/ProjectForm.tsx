@@ -760,13 +760,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   <table className="w-full">
                     <thead>
                       <tr className="bg-slate-50 border-b border-slate-200">
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Type</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Description</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Assignee</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Priority</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Due</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Status</th>
-                        <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider">Actions</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Type</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ minWidth: '200px' }}>Description</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '180px' }}>Assignee</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Priority</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '140px' }}>Due</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '140px' }}>Status</th>
+                        <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
@@ -825,13 +825,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           
                           return (
                             <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-4" style={{ width: '120px' }}>
                                 <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${config.color}`}>
                                   <span>{config.icon}</span>
                                   {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
                                 </span>
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-4" style={{ minWidth: '200px' }}>
                                 <div>
                                   <input
                                     type="text"
@@ -848,7 +848,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                   />
                                 </div>
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-4" style={{ width: '180px' }}>
                                 <input
                                   type="text"
                                   value={item.assignedPerson}
@@ -861,13 +861,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                   placeholder="Assignee..."
                                 />
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-4" style={{ width: '120px' }}>
                                 <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${priorityConfigItem.color}`}>
                                   <span>{priorityConfigItem.icon}</span>
                                   {item.priority.charAt(0).toUpperCase() + item.priority.slice(1)}
                                 </span>
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-4" style={{ width: '140px' }}>
                                 <input
                                   type="date"
                                   value={item.dueDate}
@@ -876,15 +876,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                     updatedItems[index].dueDate = e.target.value;
                                     setNewProject({...newProject, pendingItems: updatedItems});
                                   }}
-                                  className="text-sm text-slate-600 bg-transparent border-0 focus:outline-none focus:ring-2 focus:ring-red-500 rounded px-2 py-1"
+                                  className="text-sm text-slate-600 bg-transparent border-0 focus:outline-none focus:ring-2 focus:ring-red-500 rounded px-2 py-1 w-full"
                                 />
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-4" style={{ width: '140px' }}>
                                 <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${statusColor}`}>
                                   {status}
                                 </span>
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-4 text-center" style={{ width: '120px' }}>
                                 <div className="flex items-center justify-center gap-2">
                                   <button
                                     type="button"
