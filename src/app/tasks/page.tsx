@@ -1,81 +1,136 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Search, Filter, Calendar, Users, CheckCircle, Trash2, AlertTriangle, Clock, ArrowUpRight, TrendingUp, CheckSquare, Circle, MoreHorizontal, Star, Flag } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
+
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: 'todo' | 'in-progress' | 'completed';
+  priority: 'low' | 'medium' | 'high';
+  assignee: string;
+  dueDate: string;
+  project: string;
+  progress: number;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default function TasksPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const router = useRouter();
 
-  // Sample tasks data
-  const tasks = [
-    {
-      id: '1',
-      title: 'Design new landing page',
-      description: 'Create modern landing page design with hero section and features',
-      status: 'in-progress',
-      priority: 'high',
-      assignee: 'Sarah Johnson',
-      dueDate: '2024-03-10',
-      project: 'E-commerce Platform',
-      progress: 75
-    },
-    {
-      id: '2',
-      title: 'Implement user authentication',
-      description: 'Add login and registration functionality with JWT',
-      status: 'todo',
-      priority: 'high',
-      assignee: 'Mike Kim',
-      dueDate: '2024-03-12',
-      project: 'Mobile App',
-      progress: 0
-    },
-    {
-      id: '3',
-      title: 'Database optimization',
-      description: 'Optimize database queries and add indexing',
-      status: 'completed',
-      priority: 'medium',
-      assignee: 'John Doe',
-      dueDate: '2024-03-08',
-      project: 'Analytics Dashboard',
-      progress: 100
-    },
-    {
-      id: '4',
-      title: 'API documentation',
-      description: 'Write comprehensive API documentation',
-      status: 'in-progress',
-      priority: 'low',
-      assignee: 'Emily Davis',
-      dueDate: '2024-03-15',
-      project: 'Backend API',
-      progress: 40
-    },
-    {
-      id: '5',
-      title: 'Performance testing',
-      description: 'Conduct load testing and performance optimization',
-      status: 'todo',
-      priority: 'medium',
-      assignee: 'Tom Wilson',
-      dueDate: '2024-03-18',
-      project: 'Customer Portal',
-      progress: 0
+  // Real-time tasks data with localStorage persistence
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  // Load tasks from localStorage on mount
+  useEffect(() => {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    } else {
+      // Initial sample data if no saved tasks
+      const initialTasks: Task[] = [
+        {
+          id: '1',
+          title: 'Fix critical bug in payment gateway',
+          description: 'Resolve payment processing timeout issue affecting production',
+          status: 'in-progress' as const,
+          priority: 'high' as const,
+          assignee: 'Sarah Johnson',
+          dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          project: 'E-commerce Platform',
+          progress: 65,
+          createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+          updatedAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: '2',
+          title: 'Update user dashboard analytics',
+          description: 'Add real-time charts and performance metrics',
+          status: 'todo' as const,
+          priority: 'medium' as const,
+          assignee: 'Mike Kim',
+          dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          project: 'Analytics Dashboard',
+          progress: 0,
+          createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+          updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: '3',
+          title: 'Code review for mobile app update',
+          description: 'Review pull requests for iOS and Android updates',
+          status: 'completed' as const,
+          priority: 'low' as const,
+          assignee: 'John Doe',
+          dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          project: 'Mobile App',
+          progress: 100,
+          createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+          updatedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: '4',
+          title: 'Database migration to new server',
+          description: 'Migrate production database to AWS RDS instance',
+          status: 'in-progress' as const,
+          priority: 'high' as const,
+          assignee: 'Emily Davis',
+          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          project: 'Infrastructure',
+          progress: 35,
+          createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+          updatedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+        },
+        {
+          id: '5',
+          title: 'Customer feedback analysis',
+          description: 'Analyze Q1 customer feedback and create action items',
+          status: 'todo' as const,
+          priority: 'medium' as const,
+          assignee: 'Tom Wilson',
+          dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          project: 'Customer Experience',
+          progress: 0,
+          createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+          updatedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString()
+        }
+      ];
+      setTasks(initialTasks);
+      localStorage.setItem('tasks', JSON.stringify(initialTasks));
     }
-  ];
+  }, []);
+
+  // Save tasks to localStorage whenever they change
+  useEffect(() => {
+    if (tasks.length > 0) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+  }, [tasks]);
 
   const handleNewTask = () => {
     router.push('/tasks/new');
   };
 
+  // Function to add new task (called from New Task page)
+  const addTask = (newTaskData: any) => {
+    const newTask = {
+      ...newTaskData,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    setTasks(prevTasks => [newTask, ...prevTasks]);
+  };
+
   const handleDeleteTask = (taskId: string, taskTitle: string) => {
     if (confirm(`Are you sure you want to delete "${taskTitle}"? This action cannot be undone.`)) {
-      // Handle delete logic here
+      setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
     }
   };
 

@@ -27,8 +27,31 @@ export default function NewTaskPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('New task created:', formData);
+    
+    // Create task data object
+    const taskData = {
+      title: formData.taskName,
+      description: formData.description,
+      project: formData.project,
+      assignee: formData.assignee,
+      priority: formData.priority,
+      status: formData.status,
+      dueDate: formData.dueDate,
+      progress: formData.progress
+    };
+    
+    // Store in localStorage for now (in real app, this would be an API call)
+    const existingTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    const newTask = {
+      ...taskData,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    existingTasks.unshift(newTask);
+    localStorage.setItem('tasks', JSON.stringify(existingTasks));
+    
+    console.log('New task created:', taskData);
     router.push('/tasks');
   };
 
