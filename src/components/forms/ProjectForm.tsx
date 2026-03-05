@@ -291,13 +291,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
           >
             {/* Modern Budget Header */}
             <div className="mb-8">
-              <div className="mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">💰 Budget</h2>
-                  <p className="text-gray-600">Manage and track your project budget allocation</p>
-                </div>
-              </div>
-
               {/* Stats Cards - Following Projects Page Design */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <div className="group relative">
@@ -326,15 +319,20 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
                         <span className="text-2xl">💸</span>
                       </div>
-                      <p className="text-3xl font-bold text-slate-900">
-                        {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}%
-                      </p>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-slate-900">
+                          IDR {((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)).toLocaleString('id-ID')}
+                        </p>
+                        <p className="text-sm text-slate-600">
+                          {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}%
+                        </p>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm font-bold text-slate-600 font-semibold">Amount Spent</p>
                       <div className="flex items-center justify-between">
                         <p className="text-xs text-slate-500">vs budget</p>
-                        <p className="text-sm font-bold text-red-600">IDR {((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)).toLocaleString('id-ID')}</p>
+                        <p className="text-sm font-bold text-red-600">Active</p>
                       </div>
                     </div>
                   </div>
@@ -347,15 +345,20 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
                         <span className="text-2xl">💵</span>
                       </div>
-                      <p className="text-3xl font-bold text-slate-900">
-                        {newProject.budget > 0 ? Math.round(((newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))) / newProject.budget) * 100) : 0}%
-                      </p>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-slate-900">
+                          IDR {(newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))).toLocaleString('id-ID')}
+                        </p>
+                        <p className="text-sm text-slate-600">
+                          {newProject.budget > 0 ? Math.round(((newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))) / newProject.budget) * 100) : 0}%
+                        </p>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm font-bold text-slate-600 font-semibold">Remaining</p>
                       <div className="flex items-center justify-between">
                         <p className="text-xs text-slate-500">vs budget</p>
-                        <p className="text-sm font-bold text-green-600">IDR {(newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))).toLocaleString('id-ID')}</p>
+                        <p className="text-sm font-bold text-green-600">Available</p>
                       </div>
                     </div>
                   </div>
@@ -368,9 +371,12 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
                         <span className="text-2xl">📊</span>
                       </div>
-                      <p className="text-3xl font-bold text-slate-900">
-                        {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}%
-                      </p>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-slate-900">
+                          {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}%
+                        </p>
+                        <p className="text-sm text-slate-600">Usage</p>
+                      </div>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm font-bold text-slate-600 font-semibold">Budget Usage</p>
