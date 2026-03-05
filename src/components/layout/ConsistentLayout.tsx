@@ -54,47 +54,10 @@ export default function ConsistentLayout({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
-      {/* Modern Navigation Bar */}
+      {/* Secondary Header */}
       <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-indigo-100/60 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-8">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/25">
-                    <BarChart3 className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
-                </div>
-                <div>
-                  <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Dashboard</span>
-                  <p className="text-xs text-indigo-600 font-medium">PRO</p>
-                </div>
-              </div>
-              
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-6">
-                {navigation.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = currentPage === item.id;
-                  return (
-                    <a
-                      key={item.id}
-                      href={item.href}
-                      className={`text-sm font-medium transition-colors relative group ${
-                        isActive ? 'text-indigo-600' : 'text-slate-600 hover:text-indigo-600'
-                      }`}
-                    >
-                      {item.name}
-                      <div className={`absolute bottom-0 left-0 h-0.5 bg-indigo-600 transform transition-transform ${
-                        isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                      }`}></div>
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-
             <div className="flex items-center gap-3">
               <div className="relative">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -106,7 +69,9 @@ export default function ConsistentLayout({
                   className="pl-10 pr-4 py-2 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent w-80 transition-all duration-200"
                 />
               </div>
-              
+            </div>
+
+            <div className="flex items-center gap-3">
               <button className="relative p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all duration-200">
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
@@ -138,37 +103,42 @@ export default function ConsistentLayout({
           <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)}></div>
           <div className="fixed left-0 top-0 h-full w-64 bg-white shadow-xl">
             <div className="p-6 border-b border-indigo-100">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <BarChart3 className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Dashboard</span>
-                  <p className="text-xs text-indigo-600 font-medium">PRO</p>
-                </div>
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold text-slate-900">Menu</h2>
+                <button
+                  onClick={() => setSidebarOpen(false)}
+                  className="p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
             </div>
             <nav className="p-4">
               <div className="space-y-2">
-                {navigation.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = currentPage === item.id;
-                  return (
-                    <a
-                      key={item.id}
-                      href={item.href}
-                      onClick={() => setSidebarOpen(false)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                        isActive
-                          ? 'bg-indigo-50 text-indigo-600 border border-indigo-200'
-                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                      }`}
-                    >
-                      <Icon className="w-5 h-5 flex-shrink-0" />
-                      <span className="font-medium">{item.name}</span>
-                    </a>
-                  );
-                })}
+                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                  <Home className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium">Overview</span>
+                </div>
+                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                  <FolderKanban className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium">Projects</span>
+                </div>
+                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                  <CheckSquare className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium">Tasks</span>
+                </div>
+                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                  <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium">Issues</span>
+                </div>
+                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                  <FileText className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium">Reports</span>
+                </div>
+                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
+                  <Users className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium">Team</span>
+                </div>
               </div>
             </nav>
             <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-indigo-100">
