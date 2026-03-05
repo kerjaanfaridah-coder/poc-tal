@@ -215,7 +215,7 @@ export default function TasksPage() {
               <p className="text-3xl font-bold text-slate-900">{tasks.length}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">Total Tasks</p>
+              <p className="text-sm font-bold text-slate-600 font-medium">Total Tasks</p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last week</p>
                 <p className="text-sm font-bold text-green-600">+15%</p>
@@ -236,7 +236,7 @@ export default function TasksPage() {
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">Completed</p>
+              <p className="text-sm font-bold text-slate-600 font-medium">Completed</p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last week</p>
                 <p className="text-sm font-bold text-green-600">+8%</p>
@@ -257,7 +257,7 @@ export default function TasksPage() {
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">In Progress</p>
+              <p className="text-sm font-bold text-slate-600 font-medium">In Progress</p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last week</p>
                 <p className="text-sm font-bold text-green-600">+12%</p>
@@ -278,7 +278,7 @@ export default function TasksPage() {
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">To Do</p>
+              <p className="text-sm font-bold text-slate-600 font-medium">To Do</p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last week</p>
                 <p className="text-sm font-bold text-orange-600">+5%</p>
