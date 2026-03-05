@@ -198,28 +198,109 @@ export default function NewTaskPage() {
               <label className="block text-sm font-bold text-slate-700 mb-2">
                 Progress <span className="text-xs text-slate-500">(optional)</span>
               </label>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600">Progress</span>
-                  <span className="font-medium text-slate-900">{formData.progress}%</span>
+              <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-xl p-4 border border-slate-200">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full ${
+                      formData.progress === 0 ? 'bg-slate-300' :
+                      formData.progress <= 25 ? 'bg-red-400' :
+                      formData.progress <= 50 ? 'bg-orange-400' :
+                      formData.progress <= 75 ? 'bg-yellow-400' :
+                      formData.progress < 100 ? 'bg-green-400' : 'bg-green-500'
+                    }`}></div>
+                    <span className="text-sm font-medium text-slate-700">Task Progress</span>
+                  </div>
+                  <span className="text-2xl font-bold text-slate-900">{formData.progress}%</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={formData.progress}
-                    onChange={(e) => handleInputChange('progress', parseInt(e.target.value))}
-                    className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider"
-                  />
-                  <input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={formData.progress}
-                    onChange={(e) => handleInputChange('progress', Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
-                    className="w-16 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  />
+                
+                {/* Progress Bar */}
+                <div className="relative">
+                  <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                    <div 
+                      className={`h-full rounded-full transition-all duration-500 ease-out ${
+                        formData.progress === 0 ? 'bg-slate-300' :
+                        formData.progress <= 25 ? 'bg-gradient-to-r from-red-400 to-red-500' :
+                        formData.progress <= 50 ? 'bg-gradient-to-r from-orange-400 to-orange-500' :
+                        formData.progress <= 75 ? 'bg-gradient-to-r from-yellow-400 to-yellow-500' :
+                        formData.progress < 100 ? 'bg-gradient-to-r from-green-400 to-green-500' : 'bg-gradient-to-r from-green-500 to-green-600'
+                      }`}
+                      style={{ width: `${formData.progress}%` }}
+                    ></div>
+                  </div>
+                  {/* Progress markers */}
+                  <div className="absolute top-0 left-0 right-0 flex justify-between px-1 -mt-3">
+                    {[0, 25, 50, 75, 100].map((marker) => (
+                      <div key={marker} className="relative">
+                        <div className={`w-2 h-2 rounded-full border-2 border-white ${
+                          formData.progress >= marker ? 'bg-slate-600' : 'bg-slate-300'
+                        }`}></div>
+                        <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-xs text-slate-500">
+                          {marker}%
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Progress Controls */}
+                <div className="flex items-center gap-3 mt-4">
+                  <div className="flex-1 relative">
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={formData.progress}
+                      onChange={(e) => handleInputChange('progress', parseInt(e.target.value))}
+                      className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider"
+                    />
+                    {/* Custom thumb */}
+                    <div 
+                      className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-gradient-to-r from-red-500 to-orange-500 rounded-full shadow-lg cursor-pointer pointer-events-none"
+                      style={{ left: `${formData.progress}%`, transform: 'translateX(-50%)' }}
+                    ></div>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white rounded-lg border border-slate-200 px-3 py-2">
+                    <button
+                      type="button"
+                      onClick={() => handleInputChange('progress', Math.max(0, formData.progress - 10))}
+                      className="w-6 h-6 rounded bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"
+                    >
+                      <span className="text-slate-600 text-xs">-</span>
+                    </button>
+                    <input
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={formData.progress}
+                      onChange={(e) => handleInputChange('progress', Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
+                      className="w-12 text-center bg-transparent border-0 text-sm font-medium text-slate-900 focus:outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleInputChange('progress', Math.min(100, formData.progress + 10))}
+                      className="w-6 h-6 rounded bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"
+                    >
+                      <span className="text-slate-600 text-xs">+</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Quick Progress Options */}
+                <div className="flex gap-2 mt-3">
+                  {[0, 25, 50, 75, 100].map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => handleInputChange('progress', value)}
+                      className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-200 ${
+                        formData.progress === value
+                          ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-md'
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      }`}
+                    >
+                      {value === 0 ? 'Not Started' : `${value}%`}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -249,19 +330,29 @@ export default function NewTaskPage() {
       <style jsx>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
-          width: 16px;
-          height: 16px;
+          width: 20px;
+          height: 20px;
           background: linear-gradient(to right, #ef4444, #f97316);
           border-radius: 50%;
           cursor: pointer;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         .slider::-moz-range-thumb {
-          width: 16px;
-          height: 16px;
+          width: 20px;
+          height: 20px;
           background: linear-gradient(to right, #ef4444, #f97316);
           border-radius: 50%;
           cursor: pointer;
           border: none;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .slider::-webkit-slider-track {
+          background: #e2e8f0;
+          border-radius: 9999px;
+        }
+        .slider::-moz-range-track {
+          background: #e2e8f0;
+          border-radius: 9999px;
         }
       `}</style>
     </ConsistentLayout>
