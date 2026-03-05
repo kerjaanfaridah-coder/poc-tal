@@ -160,99 +160,113 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <div className="mt-6">
-              <div className="grid grid-cols-2 gap-6">
-                {/* LEFT COLUMN */}
+            {/* Modern Project Information Header */}
+            <div className="mb-8">
+              <div className="mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">📋 Project Information</h2>
+                  <p className="text-gray-600">Basic details about the project</p>
+                </div>
+              </div>
+
+              {/* Project Information Form Card */}
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-lg">📋</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900">Project Details</h3>
+                </div>
                 
-                {/* Project Name */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Project Name <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.name}
-                    onChange={(e) => setNewProject({...newProject, name: e.target.value})}
-                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                    placeholder="Enter project name"
-                    required
-                  />
-                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Project Name */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Project Name <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.name}
+                      onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Enter project name"
+                      required
+                    />
+                  </div>
 
-                {/* Location */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Location <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.location || ''}
-                    onChange={(e) => setNewProject({...newProject, location: e.target.value})}
-                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                    placeholder="Enter project location"
-                    required
-                  />
-                </div>
+                  {/* Location */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Location <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.location || ''}
+                      onChange={(e) => setNewProject({...newProject, location: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Enter project location"
+                      required
+                    />
+                  </div>
 
-                {/* PIC Internal */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">PIC Internal <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.pic || ''}
-                    onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
-                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                    placeholder="Internal person in charge"
-                    required
-                  />
-                </div>
+                  {/* PIC Internal */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">PIC Internal <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.pic || ''}
+                      onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Internal person in charge"
+                      required
+                    />
+                  </div>
 
-                {/* PIC Site */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">PIC Site <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.picSite || ''}
-                    onChange={(e) => setNewProject({...newProject, picSite: e.target.value})}
-                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                    placeholder="Site PIC name"
-                    required
-                  />
-                </div>
+                  {/* PIC Site */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">PIC Site <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.picSite || ''}
+                      onChange={(e) => setNewProject({...newProject, picSite: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Site PIC name"
+                      required
+                    />
+                  </div>
 
-                {/* RIGHT COLUMN */}
+                  {/* PIC Site (Role) */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">PIC Site (Role) <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.picRole || ''}
+                      onChange={(e) => setNewProject({...newProject, picRole: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Role or position"
+                      required
+                    />
+                  </div>
 
-                {/* PIC Site (Role) */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">PIC Site (Role) <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.picRole || ''}
-                    onChange={(e) => setNewProject({...newProject, picRole: e.target.value})}
-                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                    placeholder="Role or position"
-                    required
-                  />
-                </div>
+                  {/* Due Date */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Due Date <span className="text-red-500">*</span></label>
+                    <input
+                      type="date"
+                      value={newProject.dueDate || ''}
+                      onChange={(e) => setNewProject({...newProject, dueDate: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
 
-                {/* Due Date */}
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Due Date <span className="text-red-500">*</span></label>
-                  <input
-                    type="date"
-                    value={newProject.dueDate || ''}
-                    onChange={(e) => setNewProject({...newProject, dueDate: e.target.value})}
-                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                    required
-                  />
-                </div>
-
-                {/* Notes - Full Width */}
-                <div className="col-span-2">
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Notes</label>
-                  <textarea
-                    rows={4}
-                    value={newProject.notes || ''}
-                    onChange={(e) => setNewProject({...newProject, notes: e.target.value})}
-                    className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400 resize-none"
-                    placeholder="Additional project notes..."
-                  />
+                  {/* Notes - Full Width */}
+                  <div className="lg:col-span-2">
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Notes</label>
+                    <textarea
+                      rows={4}
+                      value={newProject.notes || ''}
+                      onChange={(e) => setNewProject({...newProject, notes: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      placeholder="Additional project notes..."
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -268,12 +282,129 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <div className="mt-6">
-              {/* Placeholder for Phase Progress */}
-              <div className="border border-gray-300 rounded-lg p-8 text-center">
-                <div className="text-gray-500">
-                  <p className="text-lg mb-2">Phase Progress Configuration</p>
-                  <p className="text-sm">This section will be redesigned</p>
+            {/* Modern Phase Progress Header */}
+            <div className="mb-8">
+              <div className="mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">📊 Phase Progress</h2>
+                  <p className="text-gray-600">Track the completion of each project phase</p>
+                </div>
+              </div>
+
+              {/* Phase Progress Card */}
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
+                      <span className="text-lg">📊</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900">Project Phases</h3>
+                  </div>
+                </div>
+                <div className="p-6 space-y-4">
+                  {/* Phase 1 */}
+                  <div className="group">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                          <span className="text-lg">🎯</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-slate-900">Phase 1: Planning</div>
+                          <div className="text-sm text-slate-500">Initial setup and requirements</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-32">
+                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-500" style={{ width: '75%' }}></div>
+                          </div>
+                        </div>
+                        <span className="text-sm font-bold text-blue-600">75%</span>
+                        <button className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 text-xs font-semibold transition-all duration-200">
+                          ⚙️
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Phase 2 */}
+                  <div className="group">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                          <span className="text-lg">🚀</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-slate-900">Phase 2: Development</div>
+                          <div className="text-sm text-slate-500">Core implementation and coding</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-32">
+                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-500" style={{ width: '45%' }}></div>
+                          </div>
+                        </div>
+                        <span className="text-sm font-bold text-green-600">45%</span>
+                        <button className="p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 text-xs font-semibold transition-all duration-200">
+                          ⚙️
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Phase 3 */}
+                  <div className="group">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-orange-300 hover:bg-orange-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                          <span className="text-lg">🧪</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-slate-900">Phase 3: Testing</div>
+                          <div className="text-sm text-slate-500">Quality assurance and validation</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-32">
+                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-orange-400 to-orange-600 rounded-full transition-all duration-500" style={{ width: '20%' }}></div>
+                          </div>
+                        </div>
+                        <span className="text-sm font-bold text-orange-600">20%</span>
+                        <button className="p-2 bg-orange-100 text-orange-600 rounded-lg hover:bg-orange-200 text-xs font-semibold transition-all duration-200">
+                          ⚙️
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Phase 4 */}
+                  <div className="group">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                          <span className="text-lg">🎉</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-slate-900">Phase 4: Deployment</div>
+                          <div className="text-sm text-slate-500">Launch and final delivery</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-32">
+                          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-purple-400 to-purple-600 rounded-full transition-all duration-500" style={{ width: '0%' }}></div>
+                          </div>
+                        </div>
+                        <span className="text-sm font-bold text-purple-600">0%</span>
+                        <button className="p-2 bg-purple-100 text-purple-600 rounded-lg hover:bg-purple-200 text-xs font-semibold transition-all duration-200">
+                          ⚙️
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
