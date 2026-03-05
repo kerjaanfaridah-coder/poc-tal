@@ -286,15 +286,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
               {/* Project Progress Table */}
               <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-                <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
-                      <span className="text-lg">📊</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-900">Project Execution Tracker</h3>
-                  </div>
-                </div>
-                
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
