@@ -318,38 +318,33 @@ export default function TeamPage() {
                         🗑️
                       </button>
                       
+                      {/* Project Name */}
+                      <h4 className="font-bold text-slate-900 text-base mb-1 pr-8">
+                        {schedule.project}
+                      </h4>
+                      
                       {/* Task Title */}
-                      <h5 className="font-semibold text-slate-900 text-sm mb-2 line-clamp-2 pr-8">
+                      <h5 className="font-medium text-slate-800 text-sm mb-3 line-clamp-2 pr-8">
                         {schedule.title}
                       </h5>
                       
-                      {/* Project Name */}
-                      <p className="text-xs text-slate-600 mb-1 font-medium">
-                        {schedule.project}
-                      </p>
-                      
                       {/* Location */}
-                      <p className="text-xs text-slate-600 mb-2 line-clamp-2">
-                        📍 {schedule.location}
-                      </p>
-                      
-                      {/* Date */}
                       <div className="flex items-center gap-1 mb-2">
-                        <Calendar className="w-3 h-3 text-slate-400" />
-                        <span className="text-xs text-slate-600">{schedule.date}</span>
+                        <span className="text-xs text-slate-500">📍</span>
+                        <span className="text-xs text-slate-600">{schedule.location}</span>
                       </div>
                       
                       {/* Assigned Person */}
                       <div className="flex items-center gap-1 mb-2">
-                        <User className="w-3 h-3 text-slate-400" />
+                        <span className="text-xs text-slate-500">👤</span>
                         <span className="text-xs text-slate-600">{schedule.assigned}</span>
                       </div>
                       
                       {/* Time */}
                       {schedule.time && (
                         <div className="flex items-center gap-1">
-                          <Clock className="w-3 h-3 text-slate-400" />
-                          <span className="text-xs text-slate-500">{schedule.time}</span>
+                          <span className="text-xs text-slate-500">🕒</span>
+                          <span className="text-xs text-slate-600">{schedule.time}</span>
                         </div>
                       )}
                     </div>
