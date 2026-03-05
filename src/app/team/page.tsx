@@ -319,12 +319,12 @@ export default function TeamPage() {
                       </button>
                       
                       {/* Project Name */}
-                      <h4 className="font-bold text-slate-900 text-base mb-1 pr-8">
+                      <h4 className="font-bold text-slate-900 text-xs mb-1 pr-8">
                         {schedule.project}
                       </h4>
                       
                       {/* Task Title */}
-                      <h5 className="font-medium text-slate-800 text-sm mb-3 line-clamp-2 pr-8">
+                      <h5 className="font-medium text-slate-800 text-xs mb-3 line-clamp-2 pr-8">
                         {schedule.title}
                       </h5>
                       
