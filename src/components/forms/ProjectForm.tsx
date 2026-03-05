@@ -98,6 +98,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   // Add task assignment state
   const [taskAssignments, setTaskAssignments] = useState<{[key: string]: string}>({});
 
+  // Add task dates state
+  const [taskDates, setTaskDates] = useState<{[key: string]: {start: string, end: string}}>({});
+
   const assignmentOptions = [
     'Designed',
     'Drafter', 
@@ -116,6 +119,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     setTaskAssignments(prev => ({
       ...prev,
       [taskId]: assignedTo
+    }));
+  };
+
+  const handleDateChange = (taskId: string, dateType: 'start' | 'end', value: string) => {
+    setTaskDates(prev => ({
+      ...prev,
+      [taskId]: {
+        ...prev[taskId],
+        [dateType]: value
+      }
     }));
   };
 
@@ -345,8 +358,22 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">01 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">02 Jan 2024</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['kick-off']?.start || '2024-01-01'}
+                            onChange={(e) => handleDateChange('kick-off', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['kick-off']?.end || '2024-01-02'}
+                            onChange={(e) => handleDateChange('kick-off', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">1</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
@@ -374,8 +401,22 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">03 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">10 Jan 2024</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['shop-drawing']?.start || '2024-01-03'}
+                            onChange={(e) => handleDateChange('shop-drawing', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['shop-drawing']?.end || '2024-01-10'}
+                            onChange={(e) => handleDateChange('shop-drawing', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">7</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
@@ -403,8 +444,22 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">11 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">15 Jan 2024</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['dp1']?.start || '2024-01-11'}
+                            onChange={(e) => handleDateChange('dp1', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['dp1']?.end || '2024-01-15'}
+                            onChange={(e) => handleDateChange('dp1', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">4</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">IN PROGRESS</span>
@@ -439,8 +494,22 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">16 Jan 2024</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">18 Jan 2024</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['survey']?.start || '2024-01-16'}
+                            onChange={(e) => handleDateChange('survey', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['survey']?.end || '2024-01-18'}
+                            onChange={(e) => handleDateChange('survey', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
