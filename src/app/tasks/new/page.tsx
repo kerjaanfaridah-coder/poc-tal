@@ -210,7 +210,11 @@ export default function NewTaskPage() {
                     }`}></div>
                     <span className="text-sm font-medium text-slate-700">Task Progress</span>
                   </div>
-                  <span className="text-2xl font-bold text-slate-900">{formData.progress}%</span>
+                  <div className="relative">
+                    <span className="text-2xl font-bold text-slate-900">{formData.progress}%</span>
+                    {/* Spacer to prevent overlap */}
+                    <div className="absolute -top-6 left-0 w-full h-6"></div>
+                  </div>
                 </div>
                 
                 {/* Progress Bar */}
@@ -228,7 +232,7 @@ export default function NewTaskPage() {
                     ></div>
                   </div>
                   {/* Progress markers */}
-                  <div className="absolute top-0 left-0 right-0 flex justify-between px-1 -mt-3">
+                  <div className="absolute top-0 left-0 right-0 flex justify-between px-1 -mt-6">
                     {[0, 25, 50, 75, 100].map((marker) => (
                       <div key={marker} className="relative">
                         <div className={`w-2 h-2 rounded-full border-2 border-white ${
