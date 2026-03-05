@@ -389,10 +389,7 @@ export default function TasksPage() {
                     <span className="text-sm text-slate-900">{task.assignee}</span>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-2 text-sm text-slate-600">
-                      <Calendar className="w-4 h-4" />
-                      <span>{task.dueDate}</span>
-                    </div>
+                    <span className="text-sm text-slate-600">{task.dueDate}</span>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
