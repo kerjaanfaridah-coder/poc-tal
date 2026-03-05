@@ -1104,29 +1104,29 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
               </div>
 
               {/* Issue Table - Clean Data List */}
-              {newProject.issues.length > 0 && (
-                <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
-                  <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
-                        <span className="text-lg">🚨</span>
-                      </div>
-                      <h3 className="text-lg font-bold text-slate-900">All Issues</h3>
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
+                      <span className="text-lg">🚨</span>
                     </div>
+                    <h3 className="text-lg font-bold text-slate-900">All Issues</h3>
                   </div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-slate-50 border-b border-slate-200">
-                          <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ minWidth: '200px' }}>Title</th>
-                          <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Severity</th>
-                          <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '180px' }}>Assignee</th>
-                          <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '140px' }}>Status</th>
-                          <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-200">
-                        {newProject.issues.map((issue, index) => {
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ minWidth: '200px' }}>Title</th>
+                        <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Severity</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '180px' }}>Assignee</th>
+                        <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '140px' }}>Status</th>
+                        <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200">
+                      {newProject.issues.length > 0 ? (
+                        newProject.issues.map((issue, index) => {
                           const severityColor = issue.severity === 'high' ? 'bg-red-100 text-red-800 border-red-200' :
                                              issue.severity === 'medium' ? 'bg-orange-100 text-orange-800 border-orange-200' :
                                              'bg-gray-100 text-gray-800 border-gray-200';
@@ -1190,12 +1190,26 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </td>
                             </tr>
                           );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
+                        })
+                      ) : (
+                        <tr>
+                          <td colSpan={5} className="px-6 py-12 text-center">
+                            <div className="flex flex-col items-center gap-4">
+                              <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center">
+                                <span className="text-2xl">🚨</span>
+                              </div>
+                              <div>
+                                <p className="text-lg font-semibold text-slate-900 mb-1">No issues yet</p>
+                                <p className="text-sm text-slate-500">Add your first issue to get started</p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
-              )}
+              </div>
             </div>
           </motion.div>
         )
