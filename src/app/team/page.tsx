@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp, Plus, Search, Filter } from 'lucide-react';
+import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp, Plus, Search, Filter, X } from 'lucide-react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
 export default function TeamPage() {
   // Simple team schedule data
-  const teamScheduleData = {
+  const [teamScheduleData, setTeamScheduleData] = useState({
     Monday: [
       { id: '1', title: 'Install Speaker', project: 'Home Theater – Thrishna Lounge', assigned: 'Technician', time: '08:00 – 10:00' },
       { id: '2', title: 'Testing System', project: 'Conference Room', assigned: 'Engineer', time: '14:00 – 16:00' }
@@ -29,7 +29,17 @@ export default function TeamPage() {
       { id: '11', title: 'Report Preparation', project: 'Office', assigned: 'Admin', time: '14:00 – 16:00' },
       { id: '12', title: 'Team Review', project: 'Meeting Room', assigned: 'Team Lead', time: '16:00 – 18:00' }
     ]
-  };
+  });
+
+  // Add schedule modal state
+  const [showAddScheduleModal, setShowAddScheduleModal] = useState(false);
+  const [newSchedule, setNewSchedule] = useState({
+    title: '',
+    project: '',
+    assigned: '',
+    time: '',
+    day: 'Monday'
+  });
 
   // Simple team workload data
   const teamWorkload = [
@@ -44,6 +54,35 @@ export default function TeamPage() {
   const totalActivities = Object.values(teamScheduleData).reduce((sum, day) => sum + day.length, 0);
   const totalTasksAssigned = teamWorkload.reduce((sum, member) => sum + member.tasks, 0);
   const totalTasksCompleted = teamWorkload.reduce((sum, member) => sum + member.completed, 0);
+
+  // Add new schedule function
+  const handleAddSchedule = () => {
+    if (newSchedule.title && newSchedule.project && newSchedule.assigned) {
+      const scheduleId = `schedule-${Date.now()}`;
+      const scheduleToAdd = {
+        id: scheduleId,
+        title: newSchedule.title,
+        project: newSchedule.project,
+        assigned: newSchedule.assigned,
+        time: newSchedule.time || 'TBD'
+      };
+
+      setTeamScheduleData(prev => ({
+        ...prev,
+        [newSchedule.day]: [...prev[newSchedule.day], scheduleToAdd]
+      }));
+
+      // Reset form and close modal
+      setNewSchedule({
+        title: '',
+        project: '',
+        assigned: '',
+        time: '',
+        day: 'Monday'
+      });
+      setShowAddScheduleModal(false);
+    }
+  };
 
   return (
     <ConsistentLayout title="Team" subtitle="Team schedule and workload overview">
@@ -154,7 +193,10 @@ export default function TeamPage() {
               <Filter className="w-4 h-4" />
               Filter
             </button>
-            <button className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2 whitespace-nowrap">
+            <button 
+              onClick={() => setShowAddScheduleModal(true)}
+              className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2 whitespace-nowrap"
+            >
               <Plus className="w-5 h-5" />
               Add Schedule
             </button>
@@ -259,6 +301,99 @@ export default function TeamPage() {
           })}
         </div>
       </div>
+
+      {/* Add Schedule Modal */}
+      {showAddScheduleModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-slate-900">Add New Schedule</h3>
+              <button
+                onClick={() => setShowAddScheduleModal(false)}
+                className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5 text-slate-500" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Task Title</label>
+                <input
+                  type="text"
+                  value={newSchedule.title}
+                  onChange={(e) => setNewSchedule({...newSchedule, title: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter task title..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Project/Location</label>
+                <input
+                  type="text"
+                  value={newSchedule.project}
+                  onChange={(e) => setNewSchedule({...newSchedule, project: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter project or location..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Assigned To</label>
+                <input
+                  type="text"
+                  value={newSchedule.assigned}
+                  onChange={(e) => setNewSchedule({...newSchedule, assigned: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter assignee name..."
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Time (Optional)</label>
+                <input
+                  type="text"
+                  value={newSchedule.time}
+                  onChange={(e) => setNewSchedule({...newSchedule, time: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="e.g., 09:00 – 11:00"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Day</label>
+                <select
+                  value={newSchedule.day}
+                  onChange={(e) => setNewSchedule({...newSchedule, day: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="Monday">Monday</option>
+                  <option value="Tuesday">Tuesday</option>
+                  <option value="Wednesday">Wednesday</option>
+                  <option value="Thursday">Thursday</option>
+                  <option value="Friday">Friday</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setShowAddScheduleModal(false)}
+                className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-medium hover:bg-slate-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAddSchedule}
+                className="flex-1 px-4 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg"
+              >
+                Add Schedule
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </ConsistentLayout>
   );
 }
