@@ -83,6 +83,7 @@ export default function DocumentsPage() {
 
   // Modal state
   const [showAddTemplateModal, setShowAddTemplateModal] = useState(false);
+  const [showBastModal, setShowBastModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [newTemplate, setNewTemplate] = useState({
@@ -90,6 +91,18 @@ export default function DocumentsPage() {
     category: 'Handover',
     description: '',
     fileName: ''
+  });
+  const [bastData, setBastData] = useState({
+    projectName: 'Home Theater Installation',
+    clientName: 'Thrisna Private Lounge',
+    location: 'Jakarta',
+    completionDate: '20 Mar 2026',
+    projectDescription: 'Instalasi sistem home theater lengkap dengan audio visual dan lighting',
+    technicianTeam: 'Alwan, Robi, Andry',
+    systemInstalled: 'Audio System, Visual Display, Lighting Control',
+    notes: 'Sistem telah diuji dan berfungsi dengan baik',
+    clientRepresentative: '',
+    companyPIC: 'Jovan'
   });
 
   // Categories
@@ -129,9 +142,77 @@ export default function DocumentsPage() {
 
   // Use template function
   const handleUseTemplate = (template) => {
-    // Generate document based on template
-    const generatedFileName = `${template.name.replace(' Template', '')} - Project Home Theater - ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'})}.docx`;
-    alert(`Generating document: ${generatedFileName}`);
+    if (template.name === 'BAST Template') {
+      setShowBastModal(true);
+    } else {
+      // Generate document based on template
+      const generatedFileName = `${template.name.replace(' Template', '')} - Project Home Theater - ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'})}.docx`;
+      alert(`Generating document: ${generatedFileName}`);
+    }
+  };
+
+  // Generate BAST function
+  const handleGenerateBast = () => {
+    const fileName = `BAST - ${bastData.projectName.replace(/\s+/g, ' ')} - ${bastData.completionDate}.docx`;
+    
+    // Create BAST document content
+    const bastContent = `
+BERITA ACARA SERAH TERIMA
+
+Pada hari ini telah dilakukan serah terima pekerjaan instalasi sistem sesuai dengan spesifikasi yang telah disepakati antara pihak penyedia jasa dan pihak klien.
+
+PROJECT DETAILS
+================
+
+Project Name: ${bastData.projectName}
+Client: ${bastData.clientName}
+Location: ${bastData.location}
+Completion Date: ${bastData.completionDate}
+PIC: ${bastData.companyPIC}
+Technician Team: ${bastData.technicianTeam}
+
+SYSTEM INSTALLED
+================
+
+${bastData.systemInstalled}
+
+PROJECT DESCRIPTION
+==================
+
+${bastData.projectDescription}
+
+STATEMENT
+=========
+
+Pekerjaan telah diselesaikan dengan baik dan sistem telah diuji serta berfungsi sesuai spesifikasi.
+
+NOTES
+=====
+
+${bastData.notes}
+
+SIGNATURE SECTION
+=================
+
+Client Representative: ${bastData.clientRepresentative || '_________________'}
+Company Representative: ${bastData.companyPIC}
+
+Generated on: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+`;
+
+    // Create and download the file
+    const blob = new Blob([bastContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+
+    alert(`BAST document generated: ${fileName}`);
+    setShowBastModal(false);
   };
 
   // Get category color
@@ -340,6 +421,144 @@ export default function DocumentsPage() {
                 className="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm"
               >
                 Add Template
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* BAST Generation Modal */}
+      {showBastModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">Generate BAST Document</h3>
+            
+            <div className="space-y-4">
+              {/* Project Name */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Project Name</label>
+                <input
+                  type="text"
+                  value={bastData.projectName}
+                  onChange={(e) => setBastData({...bastData, projectName: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Client Name */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Client Name</label>
+                <input
+                  type="text"
+                  value={bastData.clientName}
+                  onChange={(e) => setBastData({...bastData, clientName: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Location */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Location</label>
+                <input
+                  type="text"
+                  value={bastData.location}
+                  onChange={(e) => setBastData({...bastData, location: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Completion Date */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Completion Date</label>
+                <input
+                  type="text"
+                  value={bastData.completionDate}
+                  onChange={(e) => setBastData({...bastData, completionDate: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* Project Description */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Project Description</label>
+                <textarea
+                  value={bastData.projectDescription}
+                  onChange={(e) => setBastData({...bastData, projectDescription: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  rows={3}
+                />
+              </div>
+
+              {/* Technician Team */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Technician Team</label>
+                <input
+                  type="text"
+                  value={bastData.technicianTeam}
+                  onChange={(e) => setBastData({...bastData, technicianTeam: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* System Installed */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">System Installed</label>
+                <textarea
+                  value={bastData.systemInstalled}
+                  onChange={(e) => setBastData({...bastData, systemInstalled: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  rows={2}
+                />
+              </div>
+
+              {/* Notes */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Notes / Remarks</label>
+                <textarea
+                  value={bastData.notes}
+                  onChange={(e) => setBastData({...bastData, notes: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  rows={2}
+                />
+              </div>
+
+              {/* Signature Fields */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-2">Client Representative</label>
+                  <input
+                    type="text"
+                    value={bastData.clientRepresentative}
+                    onChange={(e) => setBastData({...bastData, clientRepresentative: e.target.value})}
+                    placeholder="Enter client representative name"
+                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-2">Company PIC</label>
+                  <input
+                    type="text"
+                    value={bastData.companyPIC}
+                    onChange={(e) => setBastData({...bastData, companyPIC: e.target.value})}
+                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="flex items-center gap-3 mt-6">
+              <button
+                onClick={() => setShowBastModal(false)}
+                className="flex-1 px-4 py-2 text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors font-medium text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleGenerateBast}
+                className="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm"
+              >
+                Generate BAST
               </button>
             </div>
           </div>
