@@ -299,6 +299,60 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     }
   };
 
+  const calculatePhaseSummary = (taskIds: string[]) => {
+    const totalTasks = taskIds.length;
+    if (totalTasks === 0) {
+      return { C: 0, O: 0, I: 0, N: 0 };
+    }
+
+    const statusCounts = {
+      Complete: 0,
+      Overdue: 0,
+      InProgress: 0,
+      NotStarted: 0
+    };
+
+    taskIds.forEach(taskId => {
+      const status = taskStatuses[taskId] || 'Not Started';
+      if (status === 'Complete') statusCounts.Complete++;
+      else if (status === 'Overdue') statusCounts.Overdue++;
+      else if (status === 'In Progress') statusCounts.InProgress++;
+      else statusCounts.NotStarted++;
+    });
+
+    return {
+      C: Math.round((statusCounts.Complete / totalTasks) * 100),
+      O: Math.round((statusCounts.Overdue / totalTasks) * 100),
+      I: Math.round((statusCounts.InProgress / totalTasks) * 100),
+      N: Math.round((statusCounts.NotStarted / totalTasks) * 100)
+    };
+  };
+
+  const renderPhaseSummary = (taskIds: string[]) => {
+    const summary = calculatePhaseSummary(taskIds);
+    
+    return (
+      <tr className="bg-yellow-50 border-t-2 border-yellow-200">
+        <td colSpan={6} className="px-4 py-3 text-sm font-bold text-yellow-900">
+          PHASE SUMMARY
+        </td>
+        <td className="px-2 py-3 text-center whitespace-nowrap">
+          <span className="text-green-700 font-bold">{summary.C}%</span>
+        </td>
+        <td className="px-2 py-3 text-center whitespace-nowrap">
+          <span className="text-red-700 font-bold">{summary.O}%</span>
+        </td>
+        <td className="px-2 py-3 text-center whitespace-nowrap">
+          <span className="text-blue-700 font-bold">{summary.I}%</span>
+        </td>
+        <td className="px-2 py-3 text-center whitespace-nowrap">
+          <span className="text-gray-700 font-bold">{summary.N}%</span>
+        </td>
+        <td colSpan={2} className="px-4 py-3"></td>
+      </tr>
+    );
+  };
+
   const getStatusBadgeColor = (status: string): string => {
     switch(status) {
       case 'Complete':
@@ -777,6 +831,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                       </tr>
+
+                      {/* Phase 1 Summary */}
+                      {renderPhaseSummary(['kick-off', 'shop-drawing', 'dp1', 'survey', 'material-approval'])}
 
                       {/* PHASE 2 */}
                       <tr className="bg-gradient-to-r from-green-50 to-emerald-50">
@@ -1258,6 +1315,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
+
+                      {/* Phase 2 Summary */}
+                      {renderPhaseSummary(['cable-delivery', 'cabling-installation', 'marking-device', 'report-progress-2', 'qc-cabling'])}
 
                       {/* PHASE 3 */}
                       <tr className="bg-gradient-to-r from-purple-50 to-pink-50">
@@ -1794,6 +1854,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
 
+                      {/* Phase 3 Summary */}
+                      {renderPhaseSummary(['payment-dp2', 'device-delivery', 'device-installation', 'qc-installation', 'report-progress-3', 'integration', 'testing', 'qc-integration'])}
+
                       {/* PHASE 4 */}
                       <tr className="bg-gradient-to-r from-orange-50 to-yellow-50">
                         <td colSpan={13} className="px-4 py-4 font-bold text-orange-900 border-b-2 border-orange-200">
@@ -2328,6 +2391,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
+
+                      {/* Phase 4 Summary */}
+                      {renderPhaseSummary(['handover-doc', 'test-commissioning', 'final-qc', 'defect-checklist', 'repair-defect', 'training', 'bast', 'maintenance'])}
                     </tbody>
                   </table>
                 </div>
