@@ -1,23 +1,5 @@
 'use client';
 
-import { 
-  BarChart3, 
-  Bell, 
-  Search, 
-  Settings, 
-  LogOut,
-  Home,
-  FolderKanban,
-  CheckSquare,
-  AlertTriangle,
-  FileText,
-  Users,
-  HelpCircle,
-  Menu,
-  X
-} from 'lucide-react';
-import { useState } from 'react';
-
 interface ConsistentLayoutProps {
   children: React.ReactNode;
   title: string;
@@ -26,15 +8,6 @@ interface ConsistentLayoutProps {
   currentPage?: string;
 }
 
-const navigation = [
-  { name: 'Overview', icon: Home, id: 'overview', href: '/' },
-  { name: 'Projects', icon: FolderKanban, id: 'projects', href: '/projects' },
-  { name: 'Tasks', icon: CheckSquare, id: 'tasks', href: '/tasks' },
-  { name: 'Issues', icon: AlertTriangle, id: 'issues', href: '/issues' },
-  { name: 'Reports', icon: FileText, id: 'reports', href: '/reports' },
-  { name: 'Team', icon: Users, id: 'team', href: '/team' },
-];
-
 export default function ConsistentLayout({ 
   children, 
   title, 
@@ -42,9 +15,6 @@ export default function ConsistentLayout({
   showSidebar = true, 
   currentPage = 'overview' 
 }: ConsistentLayoutProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -54,109 +24,8 @@ export default function ConsistentLayout({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
-      {/* Secondary Header */}
-      <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-indigo-100/60 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  placeholder="Search anything..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent w-80 transition-all duration-200"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button className="relative p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all duration-200">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-              </button>
-              
-              <button className="p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all duration-200">
-                <Settings className="w-5 h-5" />
-              </button>
-              
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-purple-500/25">
-                JD
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="md:hidden p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all duration-200"
-              >
-                {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Sidebar */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
-          <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)}></div>
-          <div className="fixed left-0 top-0 h-full w-64 bg-white shadow-xl">
-            <div className="p-6 border-b border-indigo-100">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-bold text-slate-900">Menu</h2>
-                <button
-                  onClick={() => setSidebarOpen(false)}
-                  className="p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-            <nav className="p-4">
-              <div className="space-y-2">
-                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                  <Home className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Overview</span>
-                </div>
-                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                  <FolderKanban className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Projects</span>
-                </div>
-                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                  <CheckSquare className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Tasks</span>
-                </div>
-                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                  <AlertTriangle className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Issues</span>
-                </div>
-                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                  <FileText className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Reports</span>
-                </div>
-                <div className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                  <Users className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Team</span>
-                </div>
-              </div>
-            </nav>
-            <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-indigo-100">
-              <div className="space-y-2">
-                <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200">
-                  <HelpCircle className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Help & Support</span>
-                </button>
-                <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all duration-200">
-                  <LogOut className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-medium">Logout</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
+      
+      
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
         {/* Page Header */}
