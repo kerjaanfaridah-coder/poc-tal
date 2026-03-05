@@ -1,437 +1,278 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Search, Filter, Users, Mail, Phone, MapPin, Calendar, Star, Trophy, ArrowUpRight, TrendingUp, MoreHorizontal, Crown, Shield, Zap, Target } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { Calendar, Users, BarChart3, Clock, CheckCircle, AlertCircle, TrendingUp, User, Activity } from 'lucide-react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
 export default function TeamPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRole, setSelectedRole] = useState('all');
-  const router = useRouter();
+  const [selectedWeek, setSelectedWeek] = useState('current');
 
-  // Sample team members data
-  const teamMembers = [
+  // Sample team schedule data
+  const teamSchedule = [
+    {
+      id: '1',
+      date: '2024-03-11',
+      day: 'Monday',
+      activities: [
+        { time: '09:00', member: 'John Doe', activity: 'Project Planning Meeting', type: 'meeting' },
+        { time: '11:00', member: 'Sarah Johnson', activity: 'Code Review Session', type: 'review' },
+        { time: '14:00', member: 'Mike Chen', activity: 'Client Presentation', type: 'presentation' },
+        { time: '16:00', member: 'Emily Davis', activity: 'Sprint Retrospective', type: 'meeting' }
+      ]
+    },
+    {
+      id: '2',
+      date: '2024-03-12',
+      day: 'Tuesday',
+      activities: [
+        { time: '10:00', member: 'John Doe', activity: 'Development Work', type: 'development' },
+        { time: '13:00', member: 'Sarah Johnson', activity: 'Team Standup', type: 'meeting' },
+        { time: '15:00', member: 'Mike Chen', activity: 'Design Review', type: 'review' },
+        { time: '17:00', member: 'Emily Davis', activity: 'Documentation Update', type: 'documentation' }
+      ]
+    },
+    {
+      id: '3',
+      date: '2024-03-13',
+      day: 'Wednesday',
+      activities: [
+        { time: '09:30', member: 'Sarah Johnson', activity: 'Feature Development', type: 'development' },
+        { time: '11:30', member: 'Mike Chen', activity: 'Stakeholder Meeting', type: 'meeting' },
+        { time: '14:30', member: 'Emily Davis', activity: 'Testing Phase', type: 'testing' },
+        { time: '16:30', member: 'John Doe', activity: 'Performance Review', type: 'review' }
+      ]
+    },
+    {
+      id: '4',
+      date: '2024-03-14',
+      day: 'Thursday',
+      activities: [
+        { time: '10:00', member: 'Emily Davis', activity: 'Bug Fixing', type: 'development' },
+        { time: '12:00', member: 'John Doe', activity: 'Lunch & Learn', type: 'learning' },
+        { time: '14:00', member: 'Sarah Johnson', activity: 'API Integration', type: 'development' },
+        { time: '16:00', member: 'Mike Chen', activity: 'Project Demo', type: 'presentation' }
+      ]
+    },
+    {
+      id: '5',
+      date: '2024-03-15',
+      day: 'Friday',
+      activities: [
+        { time: '09:00', member: 'Mike Chen', activity: 'Weekly Planning', type: 'meeting' },
+        { time: '11:00', member: 'Emily Davis', activity: 'Code Deployment', type: 'deployment' },
+        { time: '14:00', member: 'John Doe', activity: 'Team Building', type: 'team' },
+        { time: '16:00', member: 'Sarah Johnson', activity: 'Sprint Planning', type: 'planning' }
+      ]
+    }
+  ];
+
+  // Sample team workload data
+  const teamWorkload = [
     {
       id: '1',
       name: 'John Doe',
-      email: 'john.doe@company.com',
       role: 'Project Manager',
-      department: 'Management',
-      avatar: 'JD',
-      joinDate: '2023-01-15',
-      status: 'active',
-      projects: 8,
-      tasksCompleted: 142,
-      performance: 98,
-      location: 'New York, USA',
-      phone: '+1 (555) 123-4567',
-      skills: ['Leadership', 'Planning', 'Communication'],
-      availability: 'available'
+      totalTasks: 12,
+      completedTasks: 8,
+      inProgressTasks: 3,
+      pendingTasks: 1,
+      workloadPercentage: 75,
+      efficiency: 92
     },
     {
       id: '2',
       name: 'Sarah Johnson',
-      email: 'sarah.johnson@company.com',
       role: 'Senior Developer',
-      department: 'Engineering',
-      avatar: 'SJ',
-      joinDate: '2023-03-20',
-      status: 'active',
-      projects: 6,
-      tasksCompleted: 189,
-      performance: 95,
-      location: 'San Francisco, USA',
-      phone: '+1 (555) 234-5678',
-      skills: ['React', 'Node.js', 'TypeScript', 'Python'],
-      availability: 'busy'
+      totalTasks: 18,
+      completedTasks: 12,
+      inProgressTasks: 4,
+      pendingTasks: 2,
+      workloadPercentage: 89,
+      efficiency: 88
     },
     {
       id: '3',
-      name: 'Mike Kim',
-      email: 'mike.kim@company.com',
-      role: 'UX Designer',
-      department: 'Design',
-      avatar: 'MK',
-      joinDate: '2023-02-10',
-      status: 'active',
-      projects: 5,
-      tasksCompleted: 156,
-      performance: 92,
-      location: 'Los Angeles, USA',
-      phone: '+1 (555) 345-6789',
-      skills: ['Figma', 'Adobe XD', 'Sketch', 'Prototyping'],
-      availability: 'available'
+      name: 'Mike Chen',
+      role: 'UI/UX Designer',
+      totalTasks: 15,
+      completedTasks: 10,
+      inProgressTasks: 3,
+      pendingTasks: 2,
+      workloadPercentage: 83,
+      efficiency: 90
     },
     {
       id: '4',
       name: 'Emily Davis',
-      email: 'emily.davis@company.com',
-      role: 'Marketing Manager',
-      department: 'Marketing',
-      avatar: 'ED',
-      joinDate: '2023-04-05',
-      status: 'active',
-      projects: 4,
-      tasksCompleted: 134,
-      performance: 88,
-      location: 'Chicago, USA',
-      phone: '+1 (555) 456-7890',
-      skills: ['SEO', 'Content Strategy', 'Analytics', 'Social Media'],
-      availability: 'available'
-    },
-    {
-      id: '5',
-      name: 'Tom Wilson',
-      email: 'tom.wilson@company.com',
-      role: 'DevOps Engineer',
-      department: 'Engineering',
-      avatar: 'TW',
-      joinDate: '2023-05-12',
-      status: 'active',
-      projects: 7,
-      tasksCompleted: 167,
-      performance: 91,
-      location: 'Seattle, USA',
-      phone: '+1 (555) 567-8901',
-      skills: ['Docker', 'Kubernetes', 'AWS', 'CI/CD'],
-      availability: 'busy'
-    },
-    {
-      id: '6',
-      name: 'Lisa Chen',
-      email: 'lisa.chen@company.com',
-      role: 'Product Designer',
-      department: 'Design',
-      avatar: 'LC',
-      joinDate: '2023-06-18',
-      status: 'away',
-      projects: 3,
-      tasksCompleted: 98,
-      performance: 87,
-      location: 'Boston, USA',
-      phone: '+1 (555) 678-9012',
-      skills: ['UI Design', 'User Research', 'Wireframing', 'Design Systems'],
-      availability: 'away'
+      role: 'QA Engineer',
+      totalTasks: 20,
+      completedTasks: 15,
+      inProgressTasks: 3,
+      pendingTasks: 2,
+      workloadPercentage: 90,
+      efficiency: 95
     }
   ];
 
-  const handleNewMember = () => {
-    router.push('/team/new');
-  };
-
-  const handleDeleteMember = (memberId: string, memberName: string) => {
-    if (confirm(`Are you sure you want to remove "${memberName}" from the team? This action cannot be undone.`)) {
-      // Handle delete logic here
-    }
-  };
-
-  const filteredMembers = teamMembers.filter(member => {
-    const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         member.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         member.role.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = selectedRole === 'all' || member.role.toLowerCase().includes(selectedRole.toLowerCase());
-    return matchesSearch && matchesRole;
-  });
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active': return 'bg-green-100 text-green-800 border-green-200';
-      case 'busy': return 'bg-red-100 text-red-800 border-red-200';
-      case 'away': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+  const getActivityColor = (type: string) => {
+    switch (type) {
+      case 'meeting': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'development': return 'bg-green-100 text-green-800 border-green-200';
+      case 'review': return 'bg-purple-100 text-purple-800 border-purple-200';
+      case 'presentation': return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'testing': return 'bg-red-100 text-red-800 border-red-200';
+      case 'documentation': return 'bg-slate-100 text-slate-800 border-slate-200';
+      case 'learning': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'deployment': return 'bg-indigo-100 text-indigo-800 border-indigo-200';
+      case 'team': return 'bg-pink-100 text-pink-800 border-pink-200';
+      case 'planning': return 'bg-teal-100 text-teal-800 border-teal-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'active': return <div className="w-2 h-2 bg-green-500 rounded-full"></div>;
-      case 'busy': return <div className="w-2 h-2 bg-red-500 rounded-full"></div>;
-      case 'away': return <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>;
-      default: return <div className="w-2 h-2 bg-gray-500 rounded-full"></div>;
-    }
-  };
-
-  const getAvailabilityColor = (availability: string) => {
-    switch (availability) {
-      case 'available': return 'bg-green-100 text-green-800 border-green-200';
-      case 'busy': return 'bg-red-100 text-red-800 border-red-200';
-      case 'away': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
-  };
-
-  const getPerformanceBadge = (performance: number) => {
-    if (performance >= 95) return { color: 'bg-red-100 text-red-800 border-red-200', icon: <Crown className="w-3 h-3" />, text: 'Top Performer' };
-    if (performance >= 90) return { color: 'bg-blue-100 text-blue-800 border-blue-200', icon: <Star className="w-3 h-3" />, text: 'Excellent' };
-    if (performance >= 85) return { color: 'bg-green-100 text-green-800 border-green-200', icon: <Trophy className="w-3 h-3" />, text: 'Great' };
-    return { color: 'bg-orange-100 text-orange-800 border-orange-200', icon: <Target className="w-3 h-3" />, text: 'Good' };
+  const getWorkloadColor = (percentage: number) => {
+    if (percentage >= 90) return 'bg-red-500';
+    if (percentage >= 75) return 'bg-orange-500';
+    if (percentage >= 50) return 'bg-yellow-500';
+    return 'bg-green-500';
   };
 
   return (
-    <ConsistentLayout 
-      title="Team" 
-      subtitle="Manage your team members and track their performance"
-      currentPage="team"
-    >
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-3xl font-bold text-slate-900">{teamMembers.length}</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">Total Members</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">this month</p>
-                <p className="text-sm font-bold text-green-600">+3</p>
-              </div>
-            </div>
+    <ConsistentLayout title="Team" subtitle="Manage team schedule and workload">
+      {/* Team Schedule Section */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Team Schedule</h2>
+            <p className="text-slate-600">Weekly team activities and assignments</p>
           </div>
-        </div>
-
-        <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-3xl font-bold text-slate-900">
-                {teamMembers.filter(m => m.status === 'active').length}
-              </p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">Active Now</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">vs yesterday</p>
-                <p className="text-sm font-bold text-green-600">+2</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Zap className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-3xl font-bold text-slate-900">
-                {teamMembers.filter(m => m.performance >= 90).length}
-              </p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">Top Performers</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">vs last month</p>
-                <p className="text-sm font-bold text-green-600">+15%</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Trophy className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-3xl font-bold text-slate-900">
-                {Math.round(teamMembers.reduce((sum, m) => sum + m.performance, 0) / teamMembers.length)}%
-              </p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">Avg Performance</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">vs last month</p>
-                <p className="text-sm font-bold text-green-600">+5%</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Search and Actions */}
-      <div className="bg-white rounded-2xl shadow-lg border border-red-100 p-6 mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search team members..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent w-80"
-              />
-            </div>
-            <button className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 transition-all duration-200 flex items-center gap-2">
-              <Filter className="w-4 h-4" />
-              Filter
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSelectedWeek('previous')}
+              className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+            >
+              <Calendar className="w-5 h-5" />
             </button>
-            
-            <div className="flex items-center bg-slate-100 rounded-xl p-1">
-              {['all', 'management', 'engineering', 'design', 'marketing'].map((role) => (
-                <button
-                  key={role}
-                  onClick={() => setSelectedRole(role)}
-                  className={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    selectedRole === role
-                      ? 'bg-white text-red-600 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  {role === 'all' ? 'All Roles' : role.charAt(0).toUpperCase() + role.slice(1)}
-                </button>
+            <span className="px-4 py-2 bg-slate-100 rounded-lg text-sm font-medium text-slate-700">
+              This Week
+            </span>
+            <button
+              onClick={() => setSelectedWeek('next')}
+              className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+            >
+              <Calendar className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+          <div className="p-6">
+            <div className="space-y-4">
+              {teamSchedule.map((day) => (
+                <div key={day.id} className="border-l-4 border-red-500 pl-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                    <h3 className="font-semibold text-slate-900">{day.day}</h3>
+                    <span className="text-sm text-slate-600">{day.date}</span>
+                  </div>
+                  <div className="space-y-2">
+                    {day.activities.map((activity, index) => (
+                      <div key={index} className="flex items-center gap-4 p-3 bg-slate-50 rounded-lg">
+                        <div className="flex items-center gap-2 text-sm text-slate-600 w-20">
+                          <Clock className="w-4 h-4" />
+                          {activity.time}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm font-medium text-slate-900 w-32">
+                          <User className="w-4 h-4" />
+                          {activity.member}
+                        </div>
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getActivityColor(activity.type)}`}>
+                          {activity.activity}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
-          
-          <button
-            onClick={handleNewMember}
-            className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2"
-          >
-            <Plus className="w-5 h-5" />
-            Add Member
-          </button>
         </div>
       </div>
 
-      {/* Team Members Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredMembers.map((member) => {
-          const performanceBadge = getPerformanceBadge(member.performance);
-          return (
-            <div key={member.id} className="group bg-white rounded-2xl shadow-lg border border-slate-100 p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                      {member.avatar}
-                    </div>
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-md">
-                      {getStatusIcon(member.status)}
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-slate-900">{member.name}</h3>
-                    <p className="text-sm text-slate-600">{member.role}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getAvailabilityColor(member.availability)}`}>
-                    {member.availability.charAt(0).toUpperCase() + member.availability.slice(1)}
-                  </span>
-                  <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${performanceBadge.color}`}>
-                    {performanceBadge.icon}
-                    {performanceBadge.text}
-                  </span>
-                </div>
-              </div>
-              
-              <div className="space-y-3 mb-4">
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <Mail className="w-4 h-4" />
-                  <span>{member.email}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <Phone className="w-4 h-4" />
-                  <span>{member.phone}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <MapPin className="w-4 h-4" />
-                  <span>{member.location}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <Calendar className="w-4 h-4" />
-                  <span>Joined {member.joinDate}</span>
-                </div>
-              </div>
+      {/* Team Workload Section */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-900 mb-2">Team Workload</h2>
+            <p className="text-slate-600">Task distribution and workload analysis</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Activity className="w-5 h-5 text-slate-600" />
+            <span className="text-sm text-slate-600">Live Updates</span>
+          </div>
+        </div>
 
-              <div className="space-y-3 mb-4">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600">Projects</span>
-                  <span className="font-medium text-slate-900">{member.projects}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600">Tasks Completed</span>
-                  <span className="font-medium text-slate-900">{member.tasksCompleted}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600">Performance</span>
-                  <div className="flex items-center gap-2">
-                    <div className="flex-1 bg-slate-200 rounded-full h-2">
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+          <div className="p-6">
+            <div className="space-y-6">
+              {teamWorkload.map((member) => (
+                <div key={member.id} className="border-b border-slate-100 last:border-0 pb-6 last:pb-0">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="font-semibold text-slate-900">{member.name}</h3>
+                      <p className="text-sm text-slate-600">{member.role}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <p className="text-sm text-slate-600">Efficiency</p>
+                        <p className="text-lg font-bold text-green-600">{member.efficiency}%</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-slate-600">Workload</p>
+                        <p className="text-lg font-bold text-slate-900">{member.workloadPercentage}%</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Workload Bar */}
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-slate-600">Task Distribution</span>
+                      <span className="text-sm text-slate-600">{member.totalTasks} tasks</span>
+                    </div>
+                    <div className="w-full bg-slate-200 rounded-full h-3">
                       <div 
-                        className="bg-gradient-to-r from-red-500 to-orange-600 h-2 rounded-full transition-all duration-300" 
-                        style={{ width: `${member.performance}%` }}
+                        className={`h-3 rounded-full transition-all duration-300 ${getWorkloadColor(member.workloadPercentage)}`}
+                        style={{ width: `${member.workloadPercentage}%` }}
                       ></div>
                     </div>
-                    <span className="font-medium text-slate-900">{member.performance}%</span>
+                  </div>
+
+                  {/* Task Breakdown */}
+                  <div className="grid grid-cols-4 gap-4">
+                    <div className="text-center p-3 bg-slate-50 rounded-lg">
+                      <div className="text-2xl font-bold text-slate-900">{member.totalTasks}</div>
+                      <div className="text-xs text-slate-600">Total Tasks</div>
+                    </div>
+                    <div className="text-center p-3 bg-green-50 rounded-lg">
+                      <div className="text-2xl font-bold text-green-600">{member.completedTasks}</div>
+                      <div className="text-xs text-slate-600">Completed</div>
+                    </div>
+                    <div className="text-center p-3 bg-blue-50 rounded-lg">
+                      <div className="text-2xl font-bold text-blue-600">{member.inProgressTasks}</div>
+                      <div className="text-xs text-slate-600">In Progress</div>
+                    </div>
+                    <div className="text-center p-3 bg-orange-50 rounded-lg">
+                      <div className="text-2xl font-bold text-orange-600">{member.pendingTasks}</div>
+                      <div className="text-xs text-slate-600">Pending</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="mb-4">
-                <p className="text-sm font-medium text-slate-700 mb-2">Skills</p>
-                <div className="flex flex-wrap gap-2">
-                  {member.skills.map((skill, index) => (
-                    <span key={index} className="px-2 py-1 bg-red-100 text-red-800 rounded-lg text-xs font-medium">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between pt-4 border-t border-slate-200">
-                <div className="flex items-center gap-2 text-xs text-slate-500">
-                  <span>Department:</span>
-                  <span className="font-medium text-slate-700">{member.department}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <button className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
-                    <Mail className="w-4 h-4" />
-                  </button>
-                  <button className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
-                    <Phone className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteMember(member.id, member.name)}
-                    className="p-2 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    <MoreHorizontal className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
-          );
-        })}
-      </div>
-
-      {/* Empty State */}
-      {filteredMembers.length === 0 && (
-        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-12 text-center">
-          <div className="w-16 h-16 bg-gradient-to-br from-slate-200 to-slate-300 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Users className="w-8 h-8 text-slate-400" />
           </div>
-          <h3 className="text-lg font-bold text-slate-900 mb-2">No team members found</h3>
-          <p className="text-slate-600 mb-6">Get started by adding your first team member</p>
-          <button
-            onClick={handleNewMember}
-            className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2 mx-auto"
-          >
-            <Plus className="w-5 h-5" />
-            Add Member
-          </button>
         </div>
-      )}
+      </div>
     </ConsistentLayout>
   );
 }
