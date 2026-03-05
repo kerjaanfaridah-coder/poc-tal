@@ -306,9 +306,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 const amountSpentPercentage = totalBudget > 0 ? Math.round((amountSpent / totalBudget) * 100) : 0;
                 const remainingPercentage = totalBudget > 0 ? Math.round((remaining / totalBudget) * 100) : 0;
 
-                // Helper function to format Indonesian currency
-                const formatIDR = (value: number) => {
-                  return value.toLocaleString('id-ID');
+                // Helper function to format Indonesian currency with dots
+                const formatIDR = (value: number | string) => {
+                  const numValue = typeof value === 'string' ? parseInt(value.replace(/\./g, '')) || 0 : value;
+                  return numValue.toLocaleString('id-ID');
+                };
+
+                // Helper function to format input value while typing
+                const formatInputValue = (value: string) => {
+                  // Remove all non-digit characters
+                  const cleanValue = value.replace(/\D/g, '');
+                  // Add dots as thousands separators
+                  return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
                 };
 
                 return (
@@ -388,14 +397,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <div className="relative">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">IDR</span>
                             <input
-                              type="number"
-                              value={newProject.budget}
-                              onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value) || 0})}
+                              type="text"
+                              value={formatInputValue(newProject.budget?.toString() || '')}
+                              onChange={(e) => {
+                                const cleanValue = e.target.value.replace(/\D/g, '');
+                                setNewProject({...newProject, budget: parseInt(cleanValue) || 0});
+                              }}
                               className="w-full pl-16 pr-4 py-3 text-xl font-bold bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                               placeholder="0"
                             />
                             <div className="absolute -top-8 left-0 text-xs text-slate-500">
-                              {newProject.budget ? formatIDR(newProject.budget) : '0'}
+                              IDR {formatInputValue(newProject.budget?.toString() || '0')}
                             </div>
                           </div>
                         </div>
@@ -431,14 +443,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <span className="text-sm text-slate-500">IDR</span>
                               <div className="relative">
                                 <input
-                                  type="number"
-                                  value={newProject.outsource || 0}
-                                  onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
+                                  type="text"
+                                  value={formatInputValue(newProject.outsource?.toString() || '')}
+                                  onChange={(e) => {
+                                    const cleanValue = e.target.value.replace(/\D/g, '');
+                                    setNewProject({...newProject, outsource: parseInt(cleanValue) || 0});
+                                  }}
                                   className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                   placeholder="0"
                                 />
                                 <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  {newProject.outsource ? formatIDR(newProject.outsource) : '0'}
+                                  IDR {formatInputValue(newProject.outsource?.toString() || '0')}
                                 </div>
                               </div>
                             </div>
@@ -463,14 +478,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <span className="text-sm text-slate-500">IDR</span>
                               <div className="relative">
                                 <input
-                                  type="number"
-                                  value={newProject.costOther || 0}
-                                  onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
+                                  type="text"
+                                  value={formatInputValue(newProject.costOther?.toString() || '')}
+                                  onChange={(e) => {
+                                    const cleanValue = e.target.value.replace(/\D/g, '');
+                                    setNewProject({...newProject, costOther: parseInt(cleanValue) || 0});
+                                  }}
                                   className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                   placeholder="0"
                                 />
                                 <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  {newProject.costOther ? formatIDR(newProject.costOther) : '0'}
+                                  IDR {formatInputValue(newProject.costOther?.toString() || '0')}
                                 </div>
                               </div>
                             </div>
@@ -495,14 +513,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <span className="text-sm text-slate-500">IDR</span>
                               <div className="relative">
                                 <input
-                                  type="number"
-                                  value={newProject.costOvertime || 0}
-                                  onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
+                                  type="text"
+                                  value={formatInputValue(newProject.costOvertime?.toString() || '')}
+                                  onChange={(e) => {
+                                    const cleanValue = e.target.value.replace(/\D/g, '');
+                                    setNewProject({...newProject, costOvertime: parseInt(cleanValue) || 0});
+                                  }}
                                   className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                   placeholder="0"
                                 />
                                 <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  {newProject.costOvertime ? formatIDR(newProject.costOvertime) : '0'}
+                                  IDR {formatInputValue(newProject.costOvertime?.toString() || '0')}
                                 </div>
                               </div>
                             </div>
@@ -527,14 +548,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <span className="text-sm text-slate-500">IDR</span>
                               <div className="relative">
                                 <input
-                                  type="number"
-                                  value={newProject.costManPower || 0}
-                                  onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
+                                  type="text"
+                                  value={formatInputValue(newProject.costManPower?.toString() || '')}
+                                  onChange={(e) => {
+                                    const cleanValue = e.target.value.replace(/\D/g, '');
+                                    setNewProject({...newProject, costManPower: parseInt(cleanValue) || 0});
+                                  }}
                                   className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                                   placeholder="0"
                                 />
                                 <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  {newProject.costManPower ? formatIDR(newProject.costManPower) : '0'}
+                                  IDR {formatInputValue(newProject.costManPower?.toString() || '0')}
                                 </div>
                               </div>
                             </div>
