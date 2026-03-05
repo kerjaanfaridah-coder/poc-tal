@@ -33,36 +33,36 @@ export default function TeamPage() {
 
   const currentWeekDates = getWeekDates(currentWeekOffset);
 
-  // Simple team schedule data with dates
+  // Real-time team schedule data
   const [teamScheduleData, setTeamScheduleData] = useState({
     Monday: [
-      { id: '1', title: 'Install Speaker', project: 'Home Theater – Thrishna Lounge', assigned: 'Technician', time: '08:00 – 10:00', date: 'Mar 11' },
-      { id: '2', title: 'Testing System', project: 'Conference Room', assigned: 'Engineer', time: '14:00 – 16:00', date: 'Mar 11' }
+      { id: '1', title: 'Morning Standup', project: 'Conference Room A', assigned: 'Sarah Johnson', time: '09:00 – 09:30', date: 'Mar 11' },
+      { id: '2', title: 'Client Presentation', project: 'Board Room', assigned: 'John Doe', time: '10:00 – 11:30', date: 'Mar 11' },
+      { id: '3', title: 'Code Review', project: 'Development Team', assigned: 'Mike Chen', time: '14:00 – 15:00', date: 'Mar 11' }
     ],
     Tuesday: [
-      { id: '3', title: 'Network Setup', project: 'Office Building', assigned: 'IT Specialist', time: '09:00 – 12:00', date: 'Mar 12' },
-      { id: '4', title: 'Equipment Check', project: 'Main Hall', assigned: 'Technician', time: '13:00 – 15:00', date: 'Mar 12' },
-      { id: '5', title: 'Client Meeting', project: 'Board Room', assigned: 'Project Manager', time: '16:00 – 17:00', date: 'Mar 12' }
+      { id: '4', title: 'Design Review', project: 'Design Lab', assigned: 'Emily Davis', time: '10:00 – 11:00', date: 'Mar 12' },
+      { id: '5', title: 'Sprint Planning', project: 'Meeting Room B', assigned: 'John Doe', time: '13:00 – 14:30', date: 'Mar 12' },
+      { id: '6', title: 'Security Audit', project: 'Server Room', assigned: 'IT Team', time: '15:00 – 17:00', date: 'Mar 12' }
     ],
     Wednesday: [
-      { id: '6', title: 'Security Installation', project: 'Entrance', assigned: 'Security Team', time: '10:00 – 14:00', date: 'Mar 13' },
-      { id: '7', title: 'Sound Calibration', project: 'Auditorium', assigned: 'Audio Engineer', time: '15:00 – 18:00', date: 'Mar 13' }
+      { id: '7', title: 'Product Demo', project: 'Client Office', assigned: 'Sarah Johnson', time: '11:00 – 12:00', date: 'Mar 13' },
+      { id: '8', title: 'Team Building', project: 'Activity Center', assigned: 'All Team', time: '14:00 – 16:00', date: 'Mar 13' }
     ],
     Thursday: [
-      { id: '8', title: 'Maintenance Check', project: 'All Rooms', assigned: 'Maintenance', time: '08:00 – 12:00', date: 'Mar 14' },
-      { id: '9', title: 'Training Session', project: 'Training Room', assigned: 'Trainer', time: '13:00 – 17:00', date: 'Mar 14' }
+      { id: '9', title: 'Stakeholder Meeting', project: 'Executive Office', assigned: 'John Doe', time: '09:00 – 10:30', date: 'Mar 14' },
+      { id: '10', title: 'Performance Review', project: 'HR Department', assigned: 'Emily Davis', time: '13:00 – 15:00', date: 'Mar 14' },
+      { id: '11', title: 'Infrastructure Update', project: 'Data Center', assigned: 'IT Team', time: '16:00 – 18:00', date: 'Mar 14' }
     ],
     Friday: [
-      { id: '10', title: 'Final Inspection', project: 'Project Site', assigned: 'Inspector', time: '09:00 – 11:00', date: 'Mar 15' },
-      { id: '11', title: 'Report Preparation', project: 'Office', assigned: 'Admin', time: '14:00 – 16:00', date: 'Mar 15' },
-      { id: '12', title: 'Team Review', project: 'Meeting Room', assigned: 'Team Lead', time: '16:00 – 18:00', date: 'Mar 15' }
+      { id: '12', title: 'Weekly Retrospective', project: 'Team Room', assigned: 'All Team', time: '10:00 – 11:00', date: 'Mar 15' },
+      { id: '13', title: 'Client Workshop', project: 'Training Room', assigned: 'Mike Chen', time: '13:00 – 16:00', date: 'Mar 15' },
+      { id: '14', title: 'Deploy Production', project: 'Production Server', assigned: 'DevOps Team', time: '17:00 – 19:00', date: 'Mar 15' }
     ],
     Saturday: [
-      { id: '13', title: 'Weekend Setup', project: 'Event Hall', assigned: 'Setup Team', time: '10:00 – 14:00', date: 'Mar 16' }
+      { id: '15', title: 'System Maintenance', project: 'Server Room', assigned: 'IT Team', time: '08:00 – 12:00', date: 'Mar 16' }
     ],
-    Sunday: [
-      { id: '14', title: 'System Backup', project: 'Server Room', assigned: 'IT Admin', time: '08:00 – 10:00', date: 'Mar 17' }
-    ]
+    Sunday: []
   });
 
   // Add schedule modal state
@@ -75,13 +75,15 @@ export default function TeamPage() {
     day: 'Monday'
   });
 
-  // Simple team workload data
-  const teamWorkload = [
-    { id: '1', name: 'John Doe', role: 'Project Manager', tasks: 12, completed: 8, avatar: '👨‍💼' },
-    { id: '2', name: 'Sarah Johnson', role: 'Senior Developer', tasks: 18, completed: 12, avatar: '👩‍💻' },
-    { id: '3', name: 'Mike Chen', role: 'UI/UX Designer', tasks: 15, completed: 10, avatar: '🎨' },
-    { id: '4', name: 'Emily Davis', role: 'QA Engineer', tasks: 20, completed: 15, avatar: '🔍' }
-  ];
+  // Real-time team workload data
+  const [teamWorkload, setTeamWorkload] = useState([
+    { id: '1', name: 'Sarah Johnson', role: 'Senior Developer', tasks: 8, completed: 5, avatar: '�‍�', status: 'active' },
+    { id: '2', name: 'John Doe', role: 'Project Manager', tasks: 12, completed: 9, avatar: '�‍�', status: 'active' },
+    { id: '3', name: 'Mike Chen', role: 'UI/UX Designer', tasks: 6, completed: 4, avatar: '🎨', status: 'active' },
+    { id: '4', name: 'Emily Davis', role: 'QA Engineer', tasks: 10, completed: 7, avatar: '🔍', status: 'active' },
+    { id: '5', name: 'Alex Turner', role: 'DevOps Engineer', tasks: 15, completed: 12, avatar: '🔧', status: 'active' },
+    { id: '6', name: 'Lisa Wang', role: 'Product Owner', tasks: 5, completed: 3, avatar: '�', status: 'active' }
+  ]);
 
   // Calculate summary stats
   const totalMembers = teamWorkload.length;
@@ -123,6 +125,20 @@ export default function TeamPage() {
         };
       });
 
+      // Update workload for assigned person
+      const assignedMember = teamWorkload.find(member => 
+        member.name.toLowerCase().includes(newSchedule.assigned.toLowerCase()) ||
+        newSchedule.assigned.toLowerCase().includes(member.name.toLowerCase())
+      );
+      
+      if (assignedMember) {
+        setTeamWorkload(prev => prev.map(member => 
+          member.id === assignedMember.id 
+            ? { ...member, tasks: member.tasks + 1 }
+            : member
+        ));
+      }
+
       // Reset form and close modal
       setNewSchedule({
         title: '',
@@ -133,6 +149,35 @@ export default function TeamPage() {
       });
       setShowAddScheduleModal(false);
     }
+  };
+
+  // Delete schedule function
+  const handleDeleteSchedule = (day: string, scheduleId: string) => {
+    setTeamScheduleData(prev => {
+      const daySchedules = prev[day as keyof typeof prev] || [];
+      const scheduleToDelete = daySchedules.find(s => s.id === scheduleId);
+      
+      // Update workload for assigned person
+      if (scheduleToDelete) {
+        const assignedMember = teamWorkload.find(member => 
+          member.name.toLowerCase().includes(scheduleToDelete.assigned.toLowerCase()) ||
+          scheduleToDelete.assigned.toLowerCase().includes(member.name.toLowerCase())
+        );
+        
+        if (assignedMember) {
+          setTeamWorkload(prev => prev.map(member => 
+            member.id === assignedMember.id 
+              ? { ...member, tasks: Math.max(0, member.tasks - 1) }
+              : member
+          ));
+        }
+      }
+      
+      return {
+        ...prev,
+        [day]: daySchedules.filter(s => s.id !== scheduleId)
+      };
+    });
   };
 
   // Navigation functions
@@ -312,9 +357,17 @@ export default function TeamPage() {
               <div className="space-y-3">
                 {(teamScheduleData[weekDay.day as keyof typeof teamScheduleData] || []).map((schedule) => (
                   <div key={schedule.id} className="group">
-                    <div className="bg-white border border-slate-200 rounded-xl p-3 hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer">
+                    <div className="bg-white border border-slate-200 rounded-xl p-3 hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer relative">
+                      {/* Delete Button */}
+                      <button
+                        onClick={() => handleDeleteSchedule(weekDay.day, schedule.id)}
+                        className="absolute top-2 right-2 p-1 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 opacity-0 group-hover:opacity-100 transition-all duration-200"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                      
                       {/* Task Title */}
-                      <h5 className="font-semibold text-slate-900 text-sm mb-2 line-clamp-2">
+                      <h5 className="font-semibold text-slate-900 text-sm mb-2 line-clamp-2 pr-8">
                         {schedule.title}
                       </h5>
                       
@@ -365,7 +418,7 @@ export default function TeamPage() {
 
         <div className="space-y-4">
           {teamWorkload.map((member) => {
-            const completionPercentage = (member.completed / member.tasks) * 100;
+            const completionPercentage = member.tasks > 0 ? (member.completed / member.tasks) * 100 : 0;
             return (
               <div key={member.id} className="group">
                 <div className="flex items-center justify-between p-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
@@ -376,6 +429,10 @@ export default function TeamPage() {
                     <div>
                       <div className="font-semibold text-slate-900">{member.name}</div>
                       <div className="text-sm text-slate-600">{member.role}</div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className={`w-2 h-2 rounded-full ${member.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                        <span className="text-xs text-slate-600 capitalize">{member.status}</span>
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-6">
@@ -394,6 +451,7 @@ export default function TeamPage() {
                           style={{ width: `${completionPercentage}%` }}
                         ></div>
                       </div>
+                      <div className="text-xs text-slate-600 mt-1 text-center">{completionPercentage.toFixed(0)}%</div>
                     </div>
                   </div>
                 </div>
