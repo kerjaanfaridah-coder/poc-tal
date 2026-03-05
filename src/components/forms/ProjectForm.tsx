@@ -524,28 +524,11 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
           >
             {/* Modern Pending Items Header */}
               <div className="mb-8">
-                <div className="flex items-center justify-between mb-6">
+                <div className="mb-6">
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">📋 Pending Items</h2>
                     <p className="text-gray-600">Track decisions, actions, and tasks for your project</p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newItem = {
-                        id: `pending-${Date.now()}`,
-                        itemName: '',
-                        dueDate: '',
-                        assignedPerson: '',
-                        completed: false
-                      }
-                      setNewProject({...newProject, pendingItems: [...newProject.pendingItems, newItem]})
-                    }}
-                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-                  >
-                    <Plus className="w-5 h-5" />
-                    <span className="font-semibold">Add Item</span>
-                  </button>
                 </div>
 
                 {/* Modern Stats Cards */}
