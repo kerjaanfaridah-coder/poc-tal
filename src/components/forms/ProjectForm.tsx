@@ -636,45 +636,69 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                 {/* Add Item Section - Following Projects Page Search/Actions Style */}
                 <div className="bg-white rounded-2xl shadow-lg border border-red-100 p-6 mb-8">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
-                      <select
-                        id="quick-add-type-modern-form"
-                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                        defaultValue="decision"
-                      >
-                        <option value="decision">🤔 Decision</option>
-                        <option value="action">⚡ Action</option>
-                        <option value="issue">🚨 Issue</option>
-                        <option value="risk">⚠️ Risk</option>
-                        <option value="followup">📝 Follow Up</option>
-                      </select>
-                      <input
-                        type="text"
-                        placeholder="Description..."
-                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent flex-1"
-                        id="quick-add-description-modern-form"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Assignee..."
-                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent w-32"
-                        id="quick-add-assignee-modern-form"
-                      />
-                      <select
-                        id="quick-add-priority-modern-form"
-                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                        defaultValue="medium"
-                      >
-                        <option value="low">🟢 Low</option>
-                        <option value="medium">🟡 Medium</option>
-                        <option value="high">🔴 High</option>
-                      </select>
-                      <input
-                        type="date"
-                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                        id="quick-add-date-modern-form"
-                      />
+                  <div className="flex flex-col lg:flex-row lg:items-end gap-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 flex-1">
+                      {/* Type Field */}
+                      <div className="flex-1 min-w-[120px]">
+                        <label className="block text-xs font-bold text-slate-700 mb-2">Type</label>
+                        <select
+                          id="quick-add-type-modern-form"
+                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          defaultValue="decision"
+                        >
+                          <option value="decision">🤔 Decision</option>
+                          <option value="action">⚡ Action</option>
+                          <option value="issue">🚨 Issue</option>
+                          <option value="risk">⚠️ Risk</option>
+                          <option value="followup">📝 Follow Up</option>
+                        </select>
+                      </div>
+
+                      {/* Description Field */}
+                      <div className="flex-2 min-w-[200px]">
+                        <label className="block text-xs font-bold text-slate-700 mb-2">Description</label>
+                        <input
+                          type="text"
+                          placeholder="Enter description..."
+                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          id="quick-add-description-modern-form"
+                        />
+                      </div>
+
+                      {/* Assignee Field */}
+                      <div className="flex-1 min-w-[120px]">
+                        <label className="block text-xs font-bold text-slate-700 mb-2">Assignee</label>
+                        <input
+                          type="text"
+                          placeholder="Enter assignee..."
+                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          id="quick-add-assignee-modern-form"
+                        />
+                      </div>
+
+                      {/* Priority Field */}
+                      <div className="flex-1 min-w-[100px]">
+                        <label className="block text-xs font-bold text-slate-700 mb-2">Priority</label>
+                        <select
+                          id="quick-add-priority-modern-form"
+                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          defaultValue="medium"
+                        >
+                          <option value="low">🟢 Low</option>
+                          <option value="medium">🟡 Medium</option>
+                          <option value="high">🔴 High</option>
+                        </select>
+                      </div>
+
+                      {/* Due Date Field */}
+                      <div className="flex-1 min-w-[120px]">
+                        <label className="block text-xs font-bold text-slate-700 mb-2">Due Date</label>
+                        <input
+                          type="date"
+                          className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                          id="quick-add-date-modern-form"
+                        />
+                      </div>
                     </div>
                     
                     <button
