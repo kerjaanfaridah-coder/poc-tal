@@ -177,10 +177,9 @@ export default function ModernProjectForm({ onSubmit, onCancel, initialData }: M
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Project Name <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Project Name</label>
                   <input
                     type="text"
-                    required
                     value={newProject.name}
                     onChange={(e) => setNewProject({...newProject, name: e.target.value})}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -188,9 +187,8 @@ export default function ModernProjectForm({ onSubmit, onCancel, initialData }: M
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Status <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Status</label>
                   <select
-                    required
                     value={newProject.status}
                     onChange={(e) => setNewProject({...newProject, status: e.target.value as Project['status']})}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -201,9 +199,8 @@ export default function ModernProjectForm({ onSubmit, onCancel, initialData }: M
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Priority <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Priority</label>
                   <select
-                    required
                     value={newProject.priority}
                     onChange={(e) => setNewProject({...newProject, priority: e.target.value as Project['priority']})}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -214,10 +211,9 @@ export default function ModernProjectForm({ onSubmit, onCancel, initialData }: M
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Location <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Location</label>
                   <input
                     type="text"
-                    required
                     value={newProject.location}
                     onChange={(e) => setNewProject({...newProject, location: e.target.value})}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -225,20 +221,18 @@ export default function ModernProjectForm({ onSubmit, onCancel, initialData }: M
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Start Date <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Start Date</label>
                   <input
                     type="date"
-                    required
                     value={newProject.startDate}
                     onChange={(e) => setNewProject({...newProject, startDate: e.target.value})}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">Deadline <span className="text-red-500">*</span></label>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Deadline</label>
                   <input
                     type="date"
-                    required
                     value={newProject.deadline}
                     onChange={(e) => setNewProject({...newProject, deadline: e.target.value})}
                     className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -247,9 +241,8 @@ export default function ModernProjectForm({ onSubmit, onCancel, initialData }: M
               </div>
 
               <div className="mt-6">
-                <label className="block text-sm font-medium text-slate-700 mb-2">Description <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Description</label>
                 <textarea
-                  required
                   value={newProject.description}
                   onChange={(e) => setNewProject({...newProject, description: e.target.value})}
                   className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"

@@ -160,106 +160,113 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            {/* Project Information Form Card */}
-            <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-lg">📋</span>
-                </div>
+            {/* Modern Project Information Header */}
+            <div className="mb-8">
+              <div className="mb-6">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">Project Information</h3>
-                  <p className="text-sm text-slate-600">Basic details about the project</p>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">📋 Project Information</h2>
+                  <p className="text-gray-600">Basic details about the project</p>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {/* Project Name */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-2">Project Name <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.name}
-                    onChange={(e) => setNewProject({...newProject, name: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter project name"
-                    required
-                  />
-                </div>
 
-                {/* Location */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-2">Location <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.location || ''}
-                    onChange={(e) => setNewProject({...newProject, location: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter project location"
-                    required
-                  />
+              {/* Project Information Form Card */}
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-lg">📋</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900">Project Details</h3>
                 </div>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Project Name */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Project Name <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.name}
+                      onChange={(e) => setNewProject({...newProject, name: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Enter project name"
+                      required
+                    />
+                  </div>
 
-                {/* PIC Internal */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-2">PIC Internal <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.pic || ''}
-                    onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Internal person in charge"
-                    required
-                  />
-                </div>
+                  {/* Location */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Location <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.location || ''}
+                      onChange={(e) => setNewProject({...newProject, location: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Enter project location"
+                      required
+                    />
+                  </div>
 
-                {/* PIC Site */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-2">PIC Site <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.picSite || ''}
-                    onChange={(e) => setNewProject({...newProject, picSite: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Site PIC name"
-                    required
-                  />
-                </div>
+                  {/* PIC Internal */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">PIC Internal <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.pic || ''}
+                      onChange={(e) => setNewProject({...newProject, pic: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Internal person in charge"
+                      required
+                    />
+                  </div>
 
-                {/* PIC Site (Role) */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-2">PIC Site (Role) <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    value={newProject.picRole || ''}
-                    onChange={(e) => setNewProject({...newProject, picRole: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Role or position"
-                    required
-                  />
-                </div>
+                  {/* PIC Site */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">PIC Site <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.picSite || ''}
+                      onChange={(e) => setNewProject({...newProject, picSite: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Site PIC name"
+                      required
+                    />
+                  </div>
 
-                {/* Due Date */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-2">Due Date <span className="text-red-500">*</span></label>
-                  <input
-                    type="date"
-                    value={newProject.dueDate || ''}
-                    onChange={(e) => setNewProject({...newProject, dueDate: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
+                  {/* PIC Site (Role) */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">PIC Site (Role) <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={newProject.picRole || ''}
+                      onChange={(e) => setNewProject({...newProject, picRole: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Role or position"
+                      required
+                    />
+                  </div>
 
-                {/* Notes - Full Width */}
-                <div className="lg:col-span-2">
-                  <label className="block text-xs font-bold text-slate-700 mb-2">Notes</label>
-                  <textarea
-                    rows={4}
-                    value={newProject.notes || ''}
-                    onChange={(e) => setNewProject({...newProject, notes: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                    placeholder="Additional project notes..."
-                  />
+                  {/* Due Date */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Due Date <span className="text-red-500">*</span></label>
+                    <input
+                      type="date"
+                      value={newProject.dueDate || ''}
+                      onChange={(e) => setNewProject({...newProject, dueDate: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+
+                  {/* Notes - Full Width */}
+                  <div className="lg:col-span-2">
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Notes</label>
+                    <textarea
+                      rows={4}
+                      value={newProject.notes || ''}
+                      onChange={(e) => setNewProject({...newProject, notes: e.target.value})}
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      placeholder="Additional project notes..."
+                    />
+                  </div>
                 </div>
               </div>
             </div>
