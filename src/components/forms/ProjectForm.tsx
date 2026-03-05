@@ -132,6 +132,21 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     }));
   };
 
+  const calculateDays = (taskId: string): number => {
+    const taskDate = taskDates[taskId];
+    if (!taskDate?.start || !taskDate?.end) return 0;
+    
+    const startDate = new Date(taskDate.start);
+    const endDate = new Date(taskDate.end);
+    
+    // Calculate difference in days
+    const timeDiff = endDate.getTime() - startDate.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    
+    // Return at least 1 day if dates are the same or positive
+    return Math.max(1, daysDiff);
+  };
+
   const totalSteps: number = 5
 
   const nextStep = () => {
@@ -374,7 +389,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">1</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('kick-off')}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
                         </td>
@@ -417,7 +432,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">7</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('shop-drawing')}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
                         </td>
@@ -460,7 +475,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">4</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('dp1')}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">IN PROGRESS</span>
                         </td>
@@ -510,7 +525,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           />
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('survey')}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
                         </td>
