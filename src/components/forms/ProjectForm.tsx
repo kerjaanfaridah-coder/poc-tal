@@ -101,6 +101,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   // Add task dates state
   const [taskDates, setTaskDates] = useState<{[key: string]: {start: string, end: string}}>({});
 
+  // Add task status state
+  const [taskStatuses, setTaskStatuses] = useState<{[key: string]: string}>({});
+
   const assignmentOptions = [
     'Designed',
     'Drafter', 
@@ -113,6 +116,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     'QC',
     'Engineer',
     'Maintenance'
+  ];
+
+  const statusOptions = [
+    'Complete',
+    'Overdue',
+    'In Progress',
+    'Not Started'
   ];
 
   const handleAssignmentChange = (taskId: string, assignedTo: string) => {
@@ -130,6 +140,28 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         [dateType]: value
       }
     }));
+  };
+
+  const handleStatusChange = (taskId: string, status: string) => {
+    setTaskStatuses(prev => ({
+      ...prev,
+      [taskId]: status
+    }));
+  };
+
+  const getStatusBadgeColor = (status: string): string => {
+    switch(status) {
+      case 'Complete':
+        return 'bg-green-100 text-green-800';
+      case 'Overdue':
+        return 'bg-red-100 text-red-800';
+      case 'In Progress':
+        return 'bg-blue-100 text-blue-800';
+      case 'Not Started':
+        return 'bg-gray-100 text-gray-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
   };
 
   const calculateDays = (taskId: string): number => {
@@ -391,7 +423,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('kick-off')}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
+                          <select 
+                            value={taskStatuses['kick-off'] || 'Complete'}
+                            onChange={(e) => handleStatusChange('kick-off', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
@@ -434,7 +474,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('shop-drawing')}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
+                          <select 
+                            value={taskStatuses['shop-drawing'] || 'Complete'}
+                            onChange={(e) => handleStatusChange('shop-drawing', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
@@ -477,7 +525,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('dp1')}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">IN PROGRESS</span>
+                          <select 
+                            value={taskStatuses['dp1'] || 'In Progress'}
+                            onChange={(e) => handleStatusChange('dp1', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">50%</span>
@@ -527,7 +583,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('survey')}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">COMPLETE</span>
+                          <select 
+                            value={taskStatuses['survey'] || 'Complete'}
+                            onChange={(e) => handleStatusChange('survey', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
