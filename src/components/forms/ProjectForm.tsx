@@ -306,6 +306,11 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 const amountSpentPercentage = totalBudget > 0 ? Math.round((amountSpent / totalBudget) * 100) : 0;
                 const remainingPercentage = totalBudget > 0 ? Math.round((remaining / totalBudget) * 100) : 0;
 
+                // Helper function to format Indonesian currency
+                const formatIDR = (value: number) => {
+                  return value.toLocaleString('id-ID');
+                };
+
                 return (
                   <>
                     {/* Stats Cards - Following Projects Page Design */}
@@ -323,7 +328,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <p className="text-sm font-bold text-slate-600 font-semibold">Budget Planned</p>
                             <div className="flex items-center justify-between">
                               <p className="text-xs text-slate-500">Total allocation</p>
-                              <p className="text-sm font-bold text-blue-600">IDR {totalBudget.toLocaleString('id-ID')}</p>
+                              <p className="text-sm font-bold text-blue-600">IDR {formatIDR(totalBudget)}</p>
                             </div>
                           </div>
                         </div>
@@ -342,7 +347,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <p className="text-sm font-bold text-slate-600 font-semibold">Amount Spent</p>
                             <div className="flex items-center justify-between">
                               <p className="text-xs text-slate-500">vs budget</p>
-                              <p className="text-sm font-bold text-red-600">IDR {amountSpent.toLocaleString('id-ID')}</p>
+                              <p className="text-sm font-bold text-red-600">IDR {formatIDR(amountSpent)}</p>
                             </div>
                           </div>
                         </div>
@@ -361,7 +366,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <p className="text-sm font-bold text-slate-600 font-semibold">Remaining</p>
                             <div className="flex items-center justify-between">
                               <p className="text-xs text-slate-500">vs budget</p>
-                              <p className="text-sm font-bold text-green-600">IDR {remaining.toLocaleString('id-ID')}</p>
+                              <p className="text-sm font-bold text-green-600">IDR {formatIDR(remaining)}</p>
                             </div>
                           </div>
                         </div>
@@ -389,6 +394,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               className="w-full pl-16 pr-4 py-3 text-xl font-bold bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                               placeholder="0"
                             />
+                            <div className="absolute -top-8 left-0 text-xs text-slate-500">
+                              {newProject.budget ? formatIDR(newProject.budget) : '0'}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -421,13 +429,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             </div>
                             <div className="flex items-center gap-3">
                               <span className="text-sm text-slate-500">IDR</span>
-                              <input
-                                type="number"
-                                value={newProject.outsource || 0}
-                                onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
-                                className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                placeholder="0"
-                              />
+                              <div className="relative">
+                                <input
+                                  type="number"
+                                  value={newProject.outsource || 0}
+                                  onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
+                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                  placeholder="0"
+                                />
+                                <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
+                                  {newProject.outsource ? formatIDR(newProject.outsource) : '0'}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -448,13 +461,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             </div>
                             <div className="flex items-center gap-3">
                               <span className="text-sm text-slate-500">IDR</span>
-                              <input
-                                type="number"
-                                value={newProject.costOther || 0}
-                                onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
-                                className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                placeholder="0"
-                              />
+                              <div className="relative">
+                                <input
+                                  type="number"
+                                  value={newProject.costOther || 0}
+                                  onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
+                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                  placeholder="0"
+                                />
+                                <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
+                                  {newProject.costOther ? formatIDR(newProject.costOther) : '0'}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -475,13 +493,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             </div>
                             <div className="flex items-center gap-3">
                               <span className="text-sm text-slate-500">IDR</span>
-                              <input
-                                type="number"
-                                value={newProject.costOvertime || 0}
-                                onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
-                                className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                placeholder="0"
-                              />
+                              <div className="relative">
+                                <input
+                                  type="number"
+                                  value={newProject.costOvertime || 0}
+                                  onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
+                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                  placeholder="0"
+                                />
+                                <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
+                                  {newProject.costOvertime ? formatIDR(newProject.costOvertime) : '0'}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -502,13 +525,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             </div>
                             <div className="flex items-center gap-3">
                               <span className="text-sm text-slate-500">IDR</span>
-                              <input
-                                type="number"
-                                value={newProject.costManPower || 0}
-                                onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
-                                className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                placeholder="0"
-                              />
+                              <div className="relative">
+                                <input
+                                  type="number"
+                                  value={newProject.costManPower || 0}
+                                  onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
+                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                  placeholder="0"
+                                />
+                                <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
+                                  {newProject.costManPower ? formatIDR(newProject.costManPower) : '0'}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
