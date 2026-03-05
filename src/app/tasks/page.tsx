@@ -135,19 +135,23 @@ export default function TasksPage() {
   };
 
   const handleStatusChange = (taskId: string, newStatus: string) => {
-    setTasks(prevTasks => prevTasks.map(task => 
-      task.id === taskId 
-        ? { ...task, status: newStatus as Task['status'], updatedAt: new Date().toISOString() }
-        : task
-    ));
+    setTasks(prevTasks => 
+      prevTasks.map(task => 
+        task.id === taskId 
+          ? { ...task, status: newStatus as Task['status'], updatedAt: new Date().toISOString() }
+          : task
+      )
+    );
   };
 
-  const handlePriorityChange = (taskId: string, newPriority: string) => {
-    setTasks(prevTasks => prevTasks.map(task => 
-      task.id === taskId 
-        ? { ...task, priority: newPriority as Task['priority'], updatedAt: new Date().toISOString() }
-        : task
-    ));
+  const handleProgressChange = (taskId: string, newProgress: number) => {
+    setTasks(prevTasks => 
+      prevTasks.map(task => 
+        task.id === taskId 
+          ? { ...task, progress: newProgress, updatedAt: new Date().toISOString() }
+          : task
+      )
+    );
   };
 
   const filteredTasks = tasks.filter(task => {
@@ -338,77 +342,76 @@ export default function TasksPage() {
           <table className="w-full">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Task</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Priority</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Assignee</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Due Date</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Progress</th>
-                <th className="px-4 py-3 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider w-80">Task</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider w-32">Status</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider w-28">Priority</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider w-40">Assignee</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider w-32">Due Date</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider w-40">Progress</th>
+                <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider w-24">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
               {filteredTasks.map((task) => (
                 <tr key={task.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-4 py-3">
+                  <td className="px-6 py-4">
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-medium text-slate-900 text-sm">{task.title}</h3>
+                      <div className="flex items-center gap-3 mb-1">
+                        {getPriorityIcon(task.priority)}
+                        <h3 className="font-medium text-slate-900">{task.title}</h3>
                       </div>
-                      <p className="text-xs text-slate-600 line-clamp-2 mb-1">{task.description}</p>
-                      <p className="text-xs text-slate-500">{task.project}</p>
+                      <p className="text-sm text-slate-600 line-clamp-2">{task.description}</p>
+                      <p className="text-xs text-slate-500 mt-1">{task.project}</p>
                     </div>
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="relative">
-                      <select
-                        value={task.status}
-                        onChange={(e) => handleStatusChange(task.id, e.target.value)}
-                        className={`px-2 py-1 rounded-full text-xs font-medium border cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500 ${getStatusColor(task.status)}`}
-                      >
-                        <option value="todo">To Do</option>
-                        <option value="in-progress">In Progress</option>
-                        <option value="completed">Completed</option>
-                      </select>
-                    </div>
+                  <td className="px-6 py-4">
+                    <select
+                      value={task.status}
+                      onChange={(e) => handleStatusChange(task.id, e.target.value)}
+                      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200 ${getStatusColor(task.status)}`}
+                    >
+                      <option value="todo">To Do</option>
+                      <option value="in-progress">In Progress</option>
+                      <option value="completed">Completed</option>
+                    </select>
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="relative">
-                      <select
-                        value={task.priority}
-                        onChange={(e) => handlePriorityChange(task.id, e.target.value)}
-                        className={`px-2 py-1 rounded-full text-xs font-medium border cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500 ${getPriorityColor(task.priority)}`}
-                      >
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                      </select>
-                    </div>
+                  <td className="px-6 py-4">
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getPriorityColor(task.priority)}`}>
+                      {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                    </span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-6 py-4">
                     <span className="text-sm text-slate-900">{task.assignee}</span>
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-1 text-xs text-slate-600">
-                      <Calendar className="w-3 h-3" />
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-2 text-sm text-slate-600">
+                      <Calendar className="w-4 h-4" />
                       <span>{task.dueDate}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <div className="flex-1 bg-slate-200 rounded-full h-1.5">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1 bg-slate-200 rounded-full h-2">
                         <div 
-                          className="bg-gradient-to-r from-red-500 to-orange-600 h-1.5 rounded-full transition-all duration-300" 
+                          className="bg-gradient-to-r from-red-500 to-orange-600 h-2 rounded-full transition-all duration-300" 
                           style={{ width: `${task.progress}%` }}
                         ></div>
                       </div>
-                      <span className="text-xs font-medium text-slate-900 min-w-[30px]">{task.progress}%</span>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={task.progress}
+                        onChange={(e) => handleProgressChange(task.id, Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
+                        className="w-12 text-sm font-medium text-slate-900 bg-transparent border-0 text-center focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+                      />
+                      <span className="text-sm font-medium text-slate-900">%</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-center">
+                  <td className="px-6 py-4 text-center">
                     <button
                       onClick={() => handleDeleteTask(task.id, task.title)}
-                      className="p-1.5 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="p-2 text-red-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
