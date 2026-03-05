@@ -445,6 +445,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">End Date</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Days</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Status</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Achievement %</th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-green-700 uppercase tracking-wider whitespace-nowrap">C</th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-red-700 uppercase tracking-wider whitespace-nowrap">O</th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">I</th>
@@ -456,7 +457,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     <tbody className="divide-y divide-slate-200">
                       {/* PHASE 1 */}
                       <tr className="bg-gradient-to-r from-blue-50 to-indigo-50">
-                        <td colSpan={12} className="px-4 py-4 font-bold text-blue-900 border-b-2 border-blue-200">
+                        <td colSpan={13} className="px-4 py-4 font-bold text-blue-900 border-b-2 border-blue-200">
                           PHASE 1
                         </td>
                       </tr>
@@ -679,7 +680,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                       {/* PHASE 2 */}
                       <tr className="bg-gradient-to-r from-green-50 to-emerald-50">
-                        <td colSpan={12} className="px-4 py-4 font-bold text-green-900 border-b-2 border-green-200">
+                        <td colSpan={13} className="px-4 py-4 font-bold text-green-900 border-b-2 border-green-200">
                           PHASE 2
                         </td>
                       </tr>
@@ -1160,7 +1161,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                       {/* PHASE 3 */}
                       <tr className="bg-gradient-to-r from-purple-50 to-pink-50">
-                        <td colSpan={12} className="px-4 py-4 font-bold text-purple-900 border-b-2 border-purple-200">
+                        <td colSpan={13} className="px-4 py-4 font-bold text-purple-900 border-b-2 border-purple-200">
                           PHASE 3
                         </td>
                       </tr>
@@ -1695,7 +1696,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                       {/* PHASE 4 */}
                       <tr className="bg-gradient-to-r from-orange-50 to-yellow-50">
-                        <td colSpan={12} className="px-4 py-4 font-bold text-orange-900 border-b-2 border-orange-200">
+                        <td colSpan={13} className="px-4 py-4 font-bold text-orange-900 border-b-2 border-orange-200">
                           PHASE 4
                         </td>
                       </tr>
