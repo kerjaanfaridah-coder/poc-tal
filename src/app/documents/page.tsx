@@ -86,7 +86,15 @@ export default function DocumentsPage() {
     }
   };
 
-  // Use template function
+  // Preview template function
+  const handlePreviewTemplate = (template) => {
+    alert(`Preview functionality for ${template.name}\n\nThis will show a preview of the template layout and content structure.`);
+  };
+
+  // Edit template function
+  const handleEditTemplate = (template) => {
+    alert(`Edit functionality for ${template.name}\n\nThis will open an editor to modify the template content and structure.`);
+  };
   const handleUseTemplate = (template) => {
     setSelectedTemplate(template);
     setShowDocumentModal(true);
@@ -349,7 +357,10 @@ ${documentData.notes}
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-2">
-                      <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                      <button 
+                        onClick={() => handlePreviewTemplate(template)}
+                        className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                      >
                         <Eye className="w-3 h-3" />
                         Preview
                       </button>
@@ -360,7 +371,10 @@ ${documentData.notes}
                         <Download className="w-3 h-3" />
                         Use Template
                       </button>
-                      <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-slate-600 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                      <button 
+                        onClick={() => handleEditTemplate(template)}
+                        className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-slate-600 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
+                      >
                         <Edit className="w-3 h-3" />
                         Edit
                       </button>
