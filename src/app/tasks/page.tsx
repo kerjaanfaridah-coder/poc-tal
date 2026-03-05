@@ -137,10 +137,6 @@ export default function TasksPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
                 <CheckSquare className="w-6 h-6 text-white" />
               </div>
-              <div className="flex items-center gap-1 bg-green-100 text-green-700 px-2 py-1 rounded-lg text-xs font-bold">
-                <ArrowUpRight className="w-3 h-3" />
-                LIVE
-              </div>
             </div>
             <div className="flex items-end justify-between">
               <div>
@@ -161,10 +157,6 @@ export default function TasksPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
                 <CheckCircle className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-lg text-xs font-bold">
-                <TrendingUp className="w-3 h-3" />
-                TRENDING
               </div>
             </div>
             <div className="flex items-end justify-between">
@@ -189,10 +181,6 @@ export default function TasksPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Clock className="w-6 h-6 text-white" />
               </div>
-              <div className="flex items-center gap-1 bg-red-100 text-red-700 px-2 py-1 rounded-lg text-xs font-bold">
-                <ArrowUpRight className="w-3 h-3" />
-                PRO
-              </div>
             </div>
             <div className="flex items-end justify-between">
               <div>
@@ -215,10 +203,6 @@ export default function TasksPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
                 <AlertTriangle className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex items-center gap-1 bg-orange-100 text-orange-700 px-2 py-1 rounded-lg text-xs font-bold">
-                <ArrowUpRight className="w-3 h-3" />
-                HOT
               </div>
             </div>
             <div className="flex items-end justify-between">
