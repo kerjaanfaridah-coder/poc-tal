@@ -57,12 +57,16 @@ export default function TeamPage() {
 
   // Real-time team workload data
   const [teamWorkload, setTeamWorkload] = useState([
-    { id: '1', name: 'Sarah Johnson', role: 'Senior Developer', tasks: 8, completed: 5, avatar: '�‍�', status: 'active' },
-    { id: '2', name: 'John Doe', role: 'Project Manager', tasks: 12, completed: 9, avatar: '�‍�', status: 'active' },
-    { id: '3', name: 'Mike Chen', role: 'UI/UX Designer', tasks: 6, completed: 4, avatar: '🎨', status: 'active' },
-    { id: '4', name: 'Emily Davis', role: 'QA Engineer', tasks: 10, completed: 7, avatar: '🔍', status: 'active' },
-    { id: '5', name: 'Alex Turner', role: 'DevOps Engineer', tasks: 15, completed: 12, avatar: '🔧', status: 'active' },
-    { id: '6', name: 'Lisa Wang', role: 'Product Owner', tasks: 5, completed: 3, avatar: '�', status: 'active' }
+    { id: '1', name: 'Jovan', role: 'Senior Engineer', tasks: 8, completed: 5, avatar: '👨‍💻', status: 'active' },
+    { id: '2', name: 'Alwan', role: 'Lighting Engineer', tasks: 6, completed: 4, avatar: '💡', status: 'active' },
+    { id: '3', name: 'Robi', role: 'Audio Visual Engineer', tasks: 7, completed: 3, avatar: '�', status: 'active' },
+    { id: '4', name: 'Sujadi', role: 'Site Coordinator', tasks: 12, completed: 9, avatar: '�', status: 'active' },
+    { id: '5', name: 'Andry', role: 'Technician', tasks: 10, completed: 7, avatar: '🔧', status: 'active' },
+    { id: '6', name: 'Eka', role: 'Technician', tasks: 9, completed: 6, avatar: '🔧', status: 'active' },
+    { id: '7', name: 'Sopian', role: 'Technician', tasks: 8, completed: 5, avatar: '🔧', status: 'active' },
+    { id: '8', name: 'Sobirin', role: 'Technician', tasks: 7, completed: 4, avatar: '🔧', status: 'active' },
+    { id: '9', name: 'Puji', role: 'Technician', tasks: 6, completed: 3, avatar: '🔧', status: 'active' },
+    { id: '10', name: 'Dany', role: 'Maintenance', tasks: 5, completed: 2, avatar: '🛠️', status: 'active' }
   ]);
 
   // Calculate summary stats
@@ -356,7 +360,63 @@ export default function TeamPage() {
         </div>
       </div>
 
-      
+      {/* Team Workload Section */}
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+            <Users className="w-4 h-4 text-white" />
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold text-slate-900">Team Members</h3>
+            <p className="text-sm text-slate-500">Team workload and task distribution</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {teamWorkload.map((member) => {
+            const completionPercentage = member.tasks > 0 ? (member.completed / member.tasks) * 100 : 0;
+            return (
+              <div key={member.id} className="group">
+                <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 p-4 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                      <span className="text-xl">{member.avatar}</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-slate-900 text-sm">{member.name}</div>
+                      <div className="text-xs text-slate-600">{member.role}</div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className={`w-2 h-2 rounded-full ${member.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                        <span className="text-xs text-slate-600 capitalize">{member.status}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-slate-900">{member.tasks}</div>
+                      <div className="text-xs text-slate-600">tasks</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg font-bold text-green-600">{member.completed}</div>
+                      <div className="text-xs text-slate-600">done</div>
+                    </div>
+                  </div>
+                  <div className="w-full">
+                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-500" 
+                        style={{ width: `${completionPercentage}%` }}
+                      ></div>
+                    </div>
+                    <div className="text-xs text-slate-600 mt-1 text-center">{completionPercentage.toFixed(0)}%</div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Add Schedule Modal */}
       {showAddScheduleModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
