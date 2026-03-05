@@ -372,7 +372,7 @@ export default function TeamPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {teamWorkload.map((member) => {
             const completionPercentage = member.tasks > 0 ? (member.completed / member.tasks) * 100 : 0;
             return (
