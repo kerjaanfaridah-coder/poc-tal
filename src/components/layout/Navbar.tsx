@@ -9,7 +9,7 @@ export default function Navbar() {
   const router = useRouter();
 
   return (
-    <div className="h-20 bg-white flex items-center justify-end px-6 ml-64">
+    <div className="h-20 bg-white flex items-center justify-end px-6">
       <div className="flex items-center gap-4">
         {/* Search Bar - Reduced width */}
         <div className="relative">
