@@ -117,7 +117,22 @@ export default function NewTaskPage() {
               />
             </div>
 
-            {/* Two Column Layout */}
+            {/* Description (full width) */}
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">
+                Description <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                required
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
+                rows={4}
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 resize-none"
+                placeholder="Enter task description..."
+              />
+            </div>
+
+            {/* Two Column Layout: Assignee (left) - Due Date (right) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Assignee */}
               <div>
@@ -134,6 +149,26 @@ export default function NewTaskPage() {
                 />
               </div>
 
+              {/* Due Date */}
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">
+                  Due Date <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                  <input
+                    type="date"
+                    required
+                    value={formData.dueDate}
+                    onChange={(e) => handleInputChange('dueDate', e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Two Column Layout: Priority (left) - Status (right) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Priority */}
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">
@@ -156,10 +191,7 @@ export default function NewTaskPage() {
                   ))}
                 </div>
               </div>
-            </div>
 
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Status */}
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">
@@ -182,38 +214,6 @@ export default function NewTaskPage() {
                   ))}
                 </div>
               </div>
-
-              {/* Due Date */}
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">
-                  Due Date <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-                  <input
-                    type="date"
-                    required
-                    value={formData.dueDate}
-                    onChange={(e) => handleInputChange('dueDate', e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">
-                Description <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                required
-                value={formData.description}
-                onChange={(e) => handleInputChange('description', e.target.value)}
-                rows={4}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 resize-none"
-                placeholder="Enter task description..."
-              />
             </div>
 
             {/* Progress */}
