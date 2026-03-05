@@ -290,10 +290,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
               {/* Modern Budget Header */}
               <div className="mb-8">
                 <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Budget Planning</h2>
-                    <p className="text-gray-600">Set your project budget and allocate resources</p>
-                  </div>
                   <div className="text-right">
                     <div className="text-sm text-gray-500 mb-1">Total Budget</div>
                     <div className="text-3xl font-bold text-gray-900">
