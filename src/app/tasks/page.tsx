@@ -27,52 +27,11 @@ export default function TasksPage() {
   // Real-time tasks data (no localStorage persistence)
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  // Load initial sample data only on mount (no localStorage)
-  useEffect(() => {
-    // Initial sample data
-    const initialTasks: Task[] = [
-      {
-        id: '1',
-        title: 'Fix critical bug in payment gateway',
-        description: 'Resolve payment processing timeout issue affecting production',
-        status: 'in-progress' as const,
-        priority: 'high' as const,
-        assignee: 'Sarah Johnson',
-        dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        project: 'E-commerce Platform',
-        progress: 65,
-        createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-        updatedAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString()
-      },
-      {
-        id: '2',
-        title: 'Update user dashboard analytics',
-        description: 'Add real-time charts and performance metrics',
-        status: 'todo' as const,
-        priority: 'medium' as const,
-        assignee: 'Mike Kim',
-        dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        project: 'Analytics Dashboard',
-        progress: 0,
-        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-        updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-      },
-      {
-        id: '3',
-        title: 'Code review for mobile app update',
-        description: 'Review pull requests for iOS and Android updates',
-        status: 'completed' as const,
-        priority: 'low' as const,
-        assignee: 'John Doe',
-        dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        project: 'Mobile App',
-        progress: 100,
-        createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-        updatedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
-      }
-    ];
-    setTasks(initialTasks);
-  }, []);
+  // Start with empty data (no initial sample data)
+  // useEffect(() => {
+  //   // Start with empty tasks array
+  //   setTasks([]);
+  // }, []);
 
   const handleNewTask = () => {
     router.push('/tasks/new');
