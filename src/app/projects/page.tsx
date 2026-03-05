@@ -62,7 +62,7 @@ export default function ProjectsPage() {
               <p className="text-3xl font-bold text-slate-900">{projects.length}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">Total Projects</p>
+              <p className="text-sm font-bold text-slate-600 font-medium">Total Projects</p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
                 <p className="text-sm font-bold text-green-600">+12%</p>
@@ -83,7 +83,7 @@ export default function ProjectsPage() {
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">Completed</p>
+              <p className="text-sm font-bold text-slate-600 font-medium">Completed</p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
                 <p className="text-sm font-bold text-green-600">+8%</p>
@@ -104,7 +104,7 @@ export default function ProjectsPage() {
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">In Progress</p>
+              <p className="text-sm font-bold text-slate-600 font-medium">In Progress</p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
                 <p className="text-sm font-bold text-green-600">+2%</p>
@@ -125,7 +125,7 @@ export default function ProjectsPage() {
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-slate-600 font-medium">On Hold</p>
+              <p className="text-sm font-bold text-slate-600 font-medium">On Hold</p>
               <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
                 <p className="text-sm font-bold text-orange-600">+5%</p>
