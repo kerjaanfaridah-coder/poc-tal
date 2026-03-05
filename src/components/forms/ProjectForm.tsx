@@ -445,13 +445,24 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">End Date</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Days</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Status</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Achievement %</th>
+                        <th className="px-2 py-3 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap" colSpan={4}>ACHIEVEMENT %</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Notes</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Evidence / Link</th>
+                      </tr>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-green-700 uppercase tracking-wider whitespace-nowrap">C</th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-red-700 uppercase tracking-wider whitespace-nowrap">O</th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">I</th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider whitespace-nowrap">N</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Notes</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Evidence / Link</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
