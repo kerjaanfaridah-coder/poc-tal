@@ -456,7 +456,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap"></th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-green-700 uppercase tracking-wider whitespace-nowrap">C</th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-red-700 uppercase tracking-wider whitespace-nowrap">O</th>
                         <th className="px-2 py-3 text-center text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">I</th>
