@@ -37,9 +37,12 @@ export interface Project {
   pendingItems: Array<{
     id: string
     itemName: string
+    itemType: 'decision' | 'action' | 'issue' | 'risk' | 'followup'
     dueDate: string
     assignedPerson: string
+    priority: 'low' | 'medium' | 'high'
     completed: boolean
+    status: 'open' | 'in-progress' | 'due-soon' | 'overdue' | 'completed'
   }>
   issues: Array<{
     id: string
@@ -611,7 +614,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900">Add Item</h3>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <select
                       id="quick-add-type-modern-form"
                       className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
@@ -619,33 +622,56 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     >
                       <option value="decision">🤔 Decision</option>
                       <option value="action">⚡ Action</option>
-                      <option value="change">🔄 Change</option>
-                      <option value="task">📝 Task</option>
+                      <option value="issue">� Issue</option>
+                      <option value="risk">⚠️ Risk</option>
+                      <option value="followup">📝 Follow Up</option>
                     </select>
                     <input
                       type="text"
-                      placeholder="What needs to be done?"
+                      placeholder="Description..."
                       className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
                       id="quick-add-description-modern-form"
                     />
+                    <input
+                      type="text"
+                      placeholder="Assignee..."
+                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
+                      id="quick-add-assignee-modern-form"
+                    />
+                    <select
+                      id="quick-add-priority-modern-form"
+                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
+                      defaultValue="medium"
+                    >
+                      <option value="low">🟢 Low</option>
+                      <option value="medium">🟡 Medium</option>
+                      <option value="high">🔴 High</option>
+                    </select>
                     <input
                       type="date"
                       className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
                       id="quick-add-date-modern-form"
                     />
+                  </div>
+                  <div className="mt-4">
                     <button
                       type="button"
                       onClick={() => {
                         const type = (document.getElementById('quick-add-type-modern-form') as HTMLSelectElement)?.value || 'decision';
                         const description = (document.getElementById('quick-add-description-modern-form') as HTMLInputElement)?.value || 'New Item';
+                        const assignee = (document.getElementById('quick-add-assignee-modern-form') as HTMLInputElement)?.value || '';
+                        const priority = (document.getElementById('quick-add-priority-modern-form') as HTMLSelectElement)?.value || 'medium';
                         const dueDate = (document.getElementById('quick-add-date-modern-form') as HTMLInputElement)?.value || '';
                         
                         const newItem = {
                           id: `pending-${Date.now()}`,
                           itemName: description,
+                          itemType: type as 'decision' | 'action' | 'issue' | 'risk' | 'followup',
+                          assignedPerson: assignee,
+                          priority: priority as 'low' | 'medium' | 'high',
                           dueDate: dueDate,
-                          assignedPerson: '',
-                          completed: false
+                          completed: false,
+                          status: 'open' as 'open' | 'in-progress' | 'due-soon' | 'overdue' | 'completed'
                         };
                         
                         setNewProject({
@@ -655,6 +681,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         
                         // Clear form
                         (document.getElementById('quick-add-description-modern-form') as HTMLInputElement).value = '';
+                        (document.getElementById('quick-add-assignee-modern-form') as HTMLInputElement).value = '';
                         (document.getElementById('quick-add-date-modern-form') as HTMLInputElement).value = '';
                       }}
                       className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
@@ -664,146 +691,181 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   </div>
                 </div>
 
-              {/* Simplified Table */}
-              <div className="border border-gray-200 rounded-lg overflow-hidden mb-8">
-                <table className="w-full">
-                  <thead>
-                    <tr className="bg-gray-50 border-b border-gray-200">
-                      <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {newProject.pendingItems?.map((item, index) => {
-                      const today = new Date();
-                      const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
-                      const dueDate = item.dueDate ? new Date(item.dueDate) : null;
-                      const isOverdue = dueDate && dueDate < today && !item.completed;
-                      const isDueSoon = dueDate && dueDate <= threeDaysFromNow && dueDate >= today && !item.completed;
-                      const itemType = item.itemName.toLowerCase().includes('decision') ? 'decision' : 
-                                     item.itemName.toLowerCase().includes('action') ? 'action' : 
-                                     item.itemName.toLowerCase().includes('change') ? 'change' : 'task';
-                      
-                      // Auto status
-                      let status = 'Normal';
-                      let statusColor = 'bg-gray-100 text-gray-800';
-                      if (item.completed) {
-                        status = 'Completed';
-                        statusColor = 'bg-green-100 text-green-800';
-                      } else if (isOverdue) {
-                        status = 'Overdue';
-                        statusColor = 'bg-red-100 text-red-800';
-                      } else if (isDueSoon) {
-                        status = 'Due Soon';
-                        statusColor = 'bg-orange-100 text-orange-800';
-                      }
-                      
-                      return (
-                        <tr 
-                          key={item.id} 
-                          className="hover:bg-gray-50 transition-colors"
-                        >
-                          <td className="px-3 py-2">
-                            <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                              itemType === 'decision' ? 'bg-blue-100 text-blue-800' :
-                              itemType === 'action' ? 'bg-orange-100 text-orange-800' :
-                              itemType === 'change' ? 'bg-purple-100 text-purple-800' :
-                              'bg-gray-100 text-gray-800'
-                            }`}>
-                              {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
-                            </span>
-                          </td>
-                          <td className="px-3 py-2">
-                            <select
-                              value={item.itemName}
-                              onChange={(e) => {
-                                const updatedItems = [...newProject.pendingItems];
-                                updatedItems[index].itemName = e.target.value;
-                                setNewProject({...newProject, pendingItems: updatedItems});
-                              }}
-                              className={`font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full text-sm ${
-                                item.completed ? 'line-through opacity-60' : ''
-                              }`}
-                            >
-                              <option value="">Select type...</option>
-                              <option value="Decision">Decision</option>
-                              <option value="Actions">Actions</option>
-                              <option value="Change Request">Change Request</option>
-                            </select>
-                          </td>
-                          <td className="px-3 py-2">
-                            <input
-                              type="text"
-                              value={item.assignedPerson}
-                              onChange={(e) => {
-                                const updatedItems = [...newProject.pendingItems];
-                                updatedItems[index].assignedPerson = e.target.value;
-                                setNewProject({...newProject, pendingItems: updatedItems});
-                              }}
-                              className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                              placeholder="Assignee..."
-                            />
-                          </td>
-                          <td className="px-3 py-2">
-                            <input
-                              type="date"
-                              value={item.dueDate}
-                              onChange={(e) => {
-                                const updatedItems = [...newProject.pendingItems];
-                                updatedItems[index].dueDate = e.target.value;
-                                setNewProject({...newProject, pendingItems: updatedItems});
-                              }}
-                              className="px-2 py-1 border border-gray-300 rounded text-sm"
-                            />
-                          </td>
-                          <td className="px-3 py-2">
-                            <select
-                              value={item.completed ? 'completed' : isOverdue ? 'overdue' : isDueSoon ? 'due-soon' : 'normal'}
-                              onChange={(e) => {
-                                const updatedItems = [...newProject.pendingItems];
-                                const newStatus = e.target.value;
-                                if (newStatus === 'completed') {
-                                  updatedItems[index].completed = true;
-                                } else {
-                                  updatedItems[index].completed = false;
-                                }
-                                setNewProject({...newProject, pendingItems: updatedItems});
-                              }}
-                              className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border cursor-pointer ${
-                                item.completed ? 'bg-green-100 text-green-800 border-green-200' :
-                                isOverdue ? 'bg-red-100 text-red-800 border-red-200' :
-                                isDueSoon ? 'bg-orange-100 text-orange-800 border-orange-200' :
-                                'bg-gray-100 text-gray-800 border-gray-200'
-                              }`}
-                            >
-                              <option value="normal">📋 Normal</option>
-                              <option value="due-soon">⏰ Due Soon</option>
-                              <option value="overdue">🚨 Overdue</option>
-                              <option value="completed">✅ Completed</option>
-                            </select>
-                          </td>
-                          <td className="px-3 py-2 text-right">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const updatedItems = newProject.pendingItems.filter((_, itemIndex) => itemIndex !== index);
-                                setNewProject({...newProject, pendingItems: updatedItems});
-                              }}
-                              className="text-red-500 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors"
-                              title="Delete item"
-                            >
-                              🗑️
-                            </button>
-                          </td>
+              {/* Modern Items Table */}
+              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900">📝 All Items</h3>
+                </div>
+                
+                {newProject.pendingItems?.length === 0 ? (
+                  <div className="p-12 text-center">
+                    <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl">📋</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No items yet</h3>
+                    <p className="text-gray-600">Add your first item to get started</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-gray-50 border-b border-gray-200">
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due</th>
+                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                         </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200">
+                        {newProject.pendingItems?.map((item, index) => {
+                          const today = new Date();
+                          const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+                          const dueDate = item.dueDate ? new Date(item.dueDate) : null;
+                          const isOverdue = dueDate && dueDate < today && !item.completed;
+                          const isDueSoon = dueDate && dueDate <= threeDaysFromNow && dueDate >= today && !item.completed;
+                          
+                          // Auto status calculation
+                          let status = 'Open';
+                          let statusColor = 'bg-gray-100 text-gray-800';
+                          if (item.completed) {
+                            status = 'Completed';
+                            statusColor = 'bg-green-100 text-green-800';
+                          } else if (isOverdue) {
+                            status = 'Overdue';
+                            statusColor = 'bg-red-100 text-red-800';
+                          } else if (isDueSoon) {
+                            status = 'Due Soon';
+                            statusColor = 'bg-orange-100 text-orange-800';
+                          } else if (item.status === 'in-progress') {
+                            status = 'In Progress';
+                            statusColor = 'bg-blue-100 text-blue-800';
+                          }
+                          
+                          const itemType = item.itemType || 'decision';
+                          const typeConfig = {
+                            decision: { icon: '🤔', color: 'bg-blue-100 text-blue-800 border-blue-200' },
+                            action: { icon: '⚡', color: 'bg-orange-100 text-orange-800 border-orange-200' },
+                            issue: { icon: '🚨', color: 'bg-red-100 text-red-800 border-red-200' },
+                            risk: { icon: '⚠️', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
+                            followup: { icon: '📝', color: 'bg-purple-100 text-purple-800 border-purple-200' }
+                          };
+                          
+                          const priorityConfig = {
+                            low: { icon: '🟢', color: 'bg-green-100 text-green-800' },
+                            medium: { icon: '🟡', color: 'bg-yellow-100 text-yellow-800' },
+                            high: { icon: '🔴', color: 'bg-red-100 text-red-800' }
+                          };
+                          
+                          const config = typeConfig[itemType] || typeConfig.decision;
+                          const priorityConfigItem = priorityConfig[item.priority] || priorityConfig.medium;
+                          
+                          return (
+                            <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                              <td className="px-4 py-3">
+                                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${config.color}`}>
+                                  <span>{config.icon}</span>
+                                  {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
+                                </span>
+                              </td>
+                              <td className="px-4 py-3">
+                                <input
+                                  type="text"
+                                  value={item.itemName}
+                                  onChange={(e) => {
+                                    const updatedItems = [...newProject.pendingItems];
+                                    updatedItems[index].itemName = e.target.value;
+                                    setNewProject({...newProject, pendingItems: updatedItems});
+                                  }}
+                                  className={`font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full text-sm ${
+                                    item.completed ? 'line-through opacity-60' : ''
+                                  }`}
+                                  placeholder="Description..."
+                                />
+                              </td>
+                              <td className="px-4 py-3">
+                                <input
+                                  type="text"
+                                  value={item.assignedPerson}
+                                  onChange={(e) => {
+                                    const updatedItems = [...newProject.pendingItems];
+                                    updatedItems[index].assignedPerson = e.target.value;
+                                    setNewProject({...newProject, pendingItems: updatedItems});
+                                  }}
+                                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                                  placeholder="Assignee..."
+                                />
+                              </td>
+                              <td className="px-4 py-3">
+                                <select
+                                  value={item.priority}
+                                  onChange={(e) => {
+                                    const updatedItems = [...newProject.pendingItems];
+                                    updatedItems[index].priority = e.target.value as 'low' | 'medium' | 'high';
+                                    setNewProject({...newProject, pendingItems: updatedItems});
+                                  }}
+                                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${priorityConfigItem.color}`}
+                                >
+                                  <option value="low">🟢 Low</option>
+                                  <option value="medium">🟡 Medium</option>
+                                  <option value="high">🔴 High</option>
+                                </select>
+                              </td>
+                              <td className="px-4 py-3">
+                                <input
+                                  type="date"
+                                  value={item.dueDate}
+                                  onChange={(e) => {
+                                    const updatedItems = [...newProject.pendingItems];
+                                    updatedItems[index].dueDate = e.target.value;
+                                    setNewProject({...newProject, pendingItems: updatedItems});
+                                  }}
+                                  className="px-2 py-1 border border-gray-300 rounded text-sm"
+                                />
+                              </td>
+                              <td className="px-4 py-3">
+                                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusColor}`}>
+                                  {status}
+                                </span>
+                              </td>
+                              <td className="px-4 py-3 text-right">
+                                <div className="flex items-center justify-end gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const updatedItems = [...newProject.pendingItems];
+                                      updatedItems[index].completed = !updatedItems[index].completed;
+                                      setNewProject({...newProject, pendingItems: updatedItems});
+                                    }}
+                                    className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all duration-200 ${
+                                      item.completed 
+                                        ? 'bg-gray-100 text-gray-600 hover:bg-gray-200' 
+                                        : 'bg-green-100 text-green-600 hover:bg-green-200'
+                                    }`}
+                                  >
+                                    {item.completed ? '↩️' : '✅'}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const updatedItems = newProject.pendingItems.filter((_, itemIndex) => itemIndex !== index);
+                                      setNewProject({...newProject, pendingItems: updatedItems});
+                                    }}
+                                    className="px-3 py-1 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 text-xs font-semibold transition-all duration-200"
+                                  >
+                                    🗑️
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
