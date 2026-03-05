@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp, Plus, Search, Filter, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp, Plus, Search, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
 export default function TeamPage() {
@@ -88,8 +88,6 @@ export default function TeamPage() {
   // Calculate summary stats
   const totalMembers = teamWorkload.length;
   const totalActivities = Object.values(teamScheduleData).reduce((sum, day) => sum + day.length, 0);
-  const totalTasksAssigned = teamWorkload.reduce((sum, member) => sum + member.tasks, 0);
-  const totalTasksCompleted = teamWorkload.reduce((sum, member) => sum + member.completed, 0);
 
   // Format week range display
   const formatWeekRange = () => {
@@ -125,20 +123,6 @@ export default function TeamPage() {
         };
       });
 
-      // Update workload for assigned person
-      const assignedMember = teamWorkload.find(member => 
-        member.name.toLowerCase().includes(newSchedule.assigned.toLowerCase()) ||
-        newSchedule.assigned.toLowerCase().includes(member.name.toLowerCase())
-      );
-      
-      if (assignedMember) {
-        setTeamWorkload(prev => prev.map(member => 
-          member.id === assignedMember.id 
-            ? { ...member, tasks: member.tasks + 1 }
-            : member
-        ));
-      }
-
       // Reset form and close modal
       setNewSchedule({
         title: '',
@@ -151,35 +135,7 @@ export default function TeamPage() {
     }
   };
 
-  // Delete schedule function
-  const handleDeleteSchedule = (day: string, scheduleId: string) => {
-    setTeamScheduleData(prev => {
-      const daySchedules = prev[day as keyof typeof prev] || [];
-      const scheduleToDelete = daySchedules.find(s => s.id === scheduleId);
-      
-      // Update workload for assigned person
-      if (scheduleToDelete) {
-        const assignedMember = teamWorkload.find(member => 
-          member.name.toLowerCase().includes(scheduleToDelete.assigned.toLowerCase()) ||
-          scheduleToDelete.assigned.toLowerCase().includes(member.name.toLowerCase())
-        );
-        
-        if (assignedMember) {
-          setTeamWorkload(prev => prev.map(member => 
-            member.id === assignedMember.id 
-              ? { ...member, tasks: Math.max(0, member.tasks - 1) }
-              : member
-          ));
-        }
-      }
-      
-      return {
-        ...prev,
-        [day]: daySchedules.filter(s => s.id !== scheduleId)
-      };
-    });
-  };
-
+  
   // Navigation functions
   const goToPreviousWeek = () => {
     setCurrentWeekOffset(prev => prev - 1);
@@ -242,13 +198,13 @@ export default function TeamPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Target className="w-6 h-6 text-white" />
               </div>
-              <p className="text-3xl font-bold text-slate-900">{totalTasksAssigned}</p>
+              <p className="text-3xl font-bold text-slate-900">{totalActivities}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-600 font-semibold">Tasks Assigned</p>
+              <p className="text-sm font-bold text-slate-600 font-semibold">Total Activities</p>
               <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">total</p>
-                <p className="text-sm font-bold text-purple-600">Pending</p>
+                <p className="text-xs text-slate-500">this week</p>
+                <p className="text-sm font-bold text-purple-600">Active</p>
               </div>
             </div>
           </div>
@@ -261,13 +217,13 @@ export default function TeamPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
-              <p className="text-3xl font-bold text-slate-900">{totalTasksCompleted}</p>
+              <p className="text-3xl font-bold text-slate-900">{totalMembers}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-600 font-semibold">Tasks Completed</p>
+              <p className="text-sm font-bold text-slate-600 font-semibold">Team Members</p>
               <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">done</p>
-                <p className="text-sm font-bold text-orange-600">Success</p>
+                <p className="text-xs text-slate-500">available</p>
+                <p className="text-sm font-bold text-orange-600">Ready</p>
               </div>
             </div>
           </div>
@@ -360,10 +316,17 @@ export default function TeamPage() {
                     <div className="bg-white border border-slate-200 rounded-xl p-3 hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer relative">
                       {/* Delete Button */}
                       <button
-                        onClick={() => handleDeleteSchedule(weekDay.day, schedule.id)}
+                        onClick={() => {
+                          const daySchedules = teamScheduleData[weekDay.day as keyof typeof teamScheduleData] || [];
+                          
+                          setTeamScheduleData(prev => ({
+                            ...prev,
+                            [weekDay.day]: daySchedules.filter(s => s.id !== schedule.id)
+                          }));
+                        }}
                         className="absolute top-2 right-2 p-1 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 opacity-0 group-hover:opacity-100 transition-all duration-200"
                       >
-                        <X className="w-3 h-3" />
+                        🗑️
                       </button>
                       
                       {/* Task Title */}
@@ -404,63 +367,7 @@ export default function TeamPage() {
         </div>
       </div>
 
-      {/* Team Workload Section */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-            <Users className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-slate-900">Team Workload</h3>
-            <p className="text-sm text-slate-500">Task distribution per team member</p>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          {teamWorkload.map((member) => {
-            const completionPercentage = member.tasks > 0 ? (member.completed / member.tasks) * 100 : 0;
-            return (
-              <div key={member.id} className="group">
-                <div className="flex items-center justify-between p-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                      <span className="text-2xl">{member.avatar}</span>
-                    </div>
-                    <div>
-                      <div className="font-semibold text-slate-900">{member.name}</div>
-                      <div className="text-sm text-slate-600">{member.role}</div>
-                      <div className="flex items-center gap-2 mt-1">
-                        <div className={`w-2 h-2 rounded-full ${member.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`}></div>
-                        <span className="text-xs text-slate-600 capitalize">{member.status}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-6">
-                    <div className="text-center">
-                      <div className="text-xl font-bold text-slate-900">{member.tasks}</div>
-                      <div className="text-xs text-slate-600">total tasks</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-xl font-bold text-green-600">{member.completed}</div>
-                      <div className="text-xs text-slate-600">completed</div>
-                    </div>
-                    <div className="w-32">
-                      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-500" 
-                          style={{ width: `${completionPercentage}%` }}
-                        ></div>
-                      </div>
-                      <div className="text-xs text-slate-600 mt-1 text-center">{completionPercentage.toFixed(0)}%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
+      
       {/* Add Schedule Modal */}
       {showAddScheduleModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -471,7 +378,7 @@ export default function TeamPage() {
                 onClick={() => setShowAddScheduleModal(false)}
                 className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-slate-500" />
+                ❌
               </button>
             </div>
 
