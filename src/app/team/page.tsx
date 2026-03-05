@@ -455,7 +455,7 @@ export default function TeamPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-slate-900 text-base leading-tight">{member.name}</div>
-                      <div className="text-sm text-slate-500 leading-tight">{member.role}</div>
+                      <div className="text-xs text-slate-500 leading-tight truncate">{member.role}</div>
                       <div className="flex items-center gap-2 mt-1">
                         <div className={`w-2 h-2 rounded-full ${member.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`}></div>
                         <span className="text-xs text-slate-600 capitalize">{member.status}</span>
