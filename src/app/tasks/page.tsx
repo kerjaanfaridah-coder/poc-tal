@@ -410,16 +410,16 @@ export default function TasksPage() {
                         />
                         <span className="text-sm font-medium text-slate-900">%</span>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex flex-col gap-0">
                         <button
                           onClick={() => handleProgressChange(task.id, Math.min(100, task.progress + 5))}
-                          className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition-colors"
+                          className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-t transition-colors"
                         >
                           <ChevronUp className="w-3 h-3" />
                         </button>
                         <button
                           onClick={() => handleProgressChange(task.id, Math.max(0, task.progress - 5))}
-                          className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition-colors"
+                          className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-b transition-colors"
                         >
                           <ChevronDown className="w-3 h-3" />
                         </button>
