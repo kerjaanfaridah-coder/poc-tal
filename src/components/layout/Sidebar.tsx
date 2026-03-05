@@ -8,8 +8,7 @@ import {
   BarChart3, 
   Calendar, 
   FileText, 
-  Settings,
-  TrendingUp
+  Settings 
 } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -18,7 +17,6 @@ const menuItems = [
   { icon: FolderKanban, label: 'Projects', href: '/projects' },
   { icon: CheckSquare, label: 'Tasks', href: '/tasks' },
   { icon: Users, label: 'Team', href: '/team' },
-  { icon: TrendingUp, label: 'Phase Progress', href: '/phase-progress' },
   { icon: BarChart3, label: 'Analytics', href: '/analytics' },
   { icon: Calendar, label: 'Calendar', href: '/calendar' },
   { icon: FileText, label: 'Reports', href: '/reports' },
@@ -55,14 +53,14 @@ export default function Sidebar() {
               <li key={index}>
                 <button
                   onClick={() => handleMenuClick(item.href)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                     isActive
-                      ? 'bg-red-500 text-white shadow-sm'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                      ? 'bg-indigo-50 text-indigo-700 font-semibold border border-indigo-200'
+                      : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-medium'
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  <span className="text-left">{item.label}</span>
                 </button>
               </li>
             );
