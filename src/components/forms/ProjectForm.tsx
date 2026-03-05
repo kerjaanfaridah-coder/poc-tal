@@ -1442,9 +1442,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             </div>
           </>
         ) : (
-          // Other steps - show card title (except Budget and Issue steps)
+          // Other steps - show card title (except Budget, Issue, and Project Information steps)
           <>
-            {currentStep !== 3 && currentStep !== 5 && (
+            {currentStep !== 1 && currentStep !== 3 && currentStep !== 5 && (
               <CardHeader>
                 <CardTitle className="text-xl font-semibold text-gray-900">
                   {steps[currentStep - 1].name}
