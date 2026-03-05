@@ -393,13 +393,13 @@ export default function TasksPage() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex-1 bg-slate-200 rounded-full h-2">
+                      <div className="flex-1 bg-slate-200 rounded-full h-2 min-w-0">
                         <div 
                           className="bg-gradient-to-r from-red-500 to-orange-600 h-2 rounded-full transition-all duration-300" 
                           style={{ width: `${task.progress}%` }}
                         ></div>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 flex-shrink-0">
                         <input
                           type="number"
                           min="0"
@@ -410,7 +410,7 @@ export default function TasksPage() {
                         />
                         <span className="text-sm font-medium text-slate-900">%</span>
                       </div>
-                      <div className="flex flex-col gap-0">
+                      <div className="flex flex-col gap-0 flex-shrink-0">
                         <button
                           onClick={() => handleProgressChange(task.id, Math.min(100, task.progress + 5))}
                           className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-t transition-colors"
