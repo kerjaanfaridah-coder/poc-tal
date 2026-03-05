@@ -277,6 +277,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
           >
             {/* Modern Phase Progress Header */}
             <div className="mb-8">
+              <div className="mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">📊 Phase Progress</h2>
+                  <p className="text-gray-600">Track the completion of each project phase</p>
+                </div>
+              </div>
+
               {/* Phase Progress Card */}
               <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
                 <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
@@ -1428,7 +1435,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             </div>
           </>
         ) : (
-          // Other steps - show card title (except Budget, Issue, Project Information, and Phase Progress steps)
+          // Other steps - show card title (except Budget, Issue, and Project Information steps)
           <>
             {currentStep !== 1 && currentStep !== 2 && currentStep !== 3 && currentStep !== 5 && (
               <CardHeader>
