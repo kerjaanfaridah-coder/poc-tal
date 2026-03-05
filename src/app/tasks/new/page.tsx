@@ -18,23 +18,6 @@ export default function NewTaskPage() {
     progress: 0
   });
 
-  const projects = [
-    'Mobile App Redesign',
-    'Website Revamp', 
-    'Backend Migration',
-    'Analytics Dashboard',
-    'Customer Portal'
-  ];
-
-  const assignees = [
-    'Sarah Johnson',
-    'Mike Kim',
-    'John Doe',
-    'Emily Davis',
-    'Tom Wilson',
-    'Lisa Chen'
-  ];
-
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({
       ...prev,
@@ -117,17 +100,14 @@ export default function NewTaskPage() {
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   Project <span className="text-red-500">*</span>
                 </label>
-                <select
+                <input
+                  type="text"
                   required
                   value={formData.project}
                   onChange={(e) => handleInputChange('project', e.target.value)}
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                >
-                  <option value="">Select project...</option>
-                  {projects.map(project => (
-                    <option key={project} value={project}>{project}</option>
-                  ))}
-                </select>
+                  placeholder="Enter project name..."
+                />
               </div>
 
               {/* Assignee */}
@@ -135,16 +115,13 @@ export default function NewTaskPage() {
                 <label className="block text-sm font-medium text-slate-700 mb-2">
                   Assignee
                 </label>
-                <select
+                <input
+                  type="text"
                   value={formData.assignee}
                   onChange={(e) => handleInputChange('assignee', e.target.value)}
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                >
-                  <option value="">Select assignee...</option>
-                  {assignees.map(assignee => (
-                    <option key={assignee} value={assignee}>{assignee}</option>
-                  ))}
-                </select>
+                  placeholder="Enter assignee name..."
+                />
               </div>
             </div>
 
