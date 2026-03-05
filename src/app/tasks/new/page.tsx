@@ -199,7 +199,8 @@ export default function NewTaskPage() {
                 Progress <span className="text-xs text-slate-500">(optional)</span>
               </label>
               <div className="bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 rounded-2xl p-6 border border-slate-200 shadow-xl">
-                <div className="flex items-center justify-between mb-4">
+                {/* Progress Header */}
+                <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 rounded-full transition-all duration-300 ${
                       formData.progress === 0 ? 'bg-slate-300' :
@@ -212,11 +213,9 @@ export default function NewTaskPage() {
                     </div>
                     <span className="text-sm font-medium text-slate-700">Task Progress</span>
                   </div>
-                  <div className="relative">
+                  <div className="text-right">
                     <span className="text-3xl font-bold text-slate-900">{formData.progress}%</span>
-                    <div className="absolute -top-8 left-0 w-full h-8"></div>
-                    {/* Progress status text */}
-                    <div className="absolute -top-8 left-0 text-xs text-slate-500">
+                    <div className="text-xs text-slate-500 mt-1">
                       {formData.progress === 0 ? 'Not Started' :
                        formData.progress <= 25 ? 'Just Beginning' :
                        formData.progress <= 50 ? 'Making Progress' :
