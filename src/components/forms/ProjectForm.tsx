@@ -110,6 +110,12 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   // Add task evidence links state
   const [taskEvidence, setTaskEvidence] = useState<{[key: string]: string}>({});
 
+  // Add COIN values state
+  const [coinValues, setCoinValues] = useState<{[key: string]: {C: string, O: string, I: string, N: string}}>({});
+
+  // Add validation errors state
+  const [coinErrors, setCoinErrors] = useState<{[key: string]: string}>({});
+
   const assignmentOptions = [
     'Designed',
     'Drafter', 
@@ -191,6 +197,85 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
         className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
         placeholder="Add evidence link..."
       />
+    );
+  };
+
+  const handleCoinChange = (taskId: string, coinType: 'C' | 'O' | 'I' | 'N', value: string) => {
+    // Remove % symbol and ensure only numbers
+    const cleanValue = value.replace('%', '').replace(/[^0-9]/g, '');
+    const numValue = Math.min(100, Math.max(0, parseInt(cleanValue) || 0));
+    const finalValue = numValue.toString();
+    
+    // Update COIN values
+    setCoinValues(prev => ({
+      ...prev,
+      [taskId]: {
+        ...prev[taskId],
+        [coinType]: finalValue
+      }
+    }));
+
+    // Validate total
+    const currentValues = {
+      ...coinValues[taskId],
+      [coinType]: finalValue
+    };
+    
+    const total = Object.values(currentValues).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
+    
+    if (total > 100) {
+      setCoinErrors(prev => ({
+        ...prev,
+        [taskId]: 'Total Achievement cannot exceed 100%.'
+      }));
+    } else {
+      setCoinErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[taskId];
+        return newErrors;
+      });
+    }
+  };
+
+  const getCoinValue = (taskId: string, coinType: 'C' | 'O' | 'I' | 'N'): string => {
+    if (!coinValues[taskId]) {
+      // Initialize with default values
+      const defaultValues = { C: '0', O: '0', I: '0', N: '100' };
+      setCoinValues(prev => ({
+        ...prev,
+        [taskId]: defaultValues
+      }));
+      return defaultValues[coinType];
+    }
+    return coinValues[taskId][coinType] || '0';
+  };
+
+  const getCoinInputColor = (coinType: 'C' | 'O' | 'I' | 'N'): string => {
+    switch(coinType) {
+      case 'C': return 'border-green-300 focus:ring-green-500 focus:border-green-500 text-green-700';
+      case 'O': return 'border-red-300 focus:ring-red-500 focus:border-red-500 text-red-700';
+      case 'I': return 'border-blue-300 focus:ring-blue-500 focus:border-blue-500 text-blue-700';
+      case 'N': return 'border-gray-300 focus:ring-gray-500 focus:border-gray-500 text-gray-700';
+      default: return 'border-gray-300 focus:ring-gray-500 focus:border-gray-500 text-gray-700';
+    }
+  };
+
+  const renderCoinInput = (taskId: string, coinType: 'C' | 'O' | 'I' | 'N') => {
+    const value = getCoinValue(taskId, coinType);
+    const hasError = coinErrors[taskId];
+    
+    return (
+      <div className="flex items-center space-x-1">
+        <input
+          type="number"
+          min="0"
+          max="100"
+          value={value}
+          onChange={(e) => handleCoinChange(taskId, coinType, e.target.value)}
+          className={`w-12 px-1 py-1 text-xs font-semibold bg-white border rounded focus:outline-none focus:ring-1 ${getCoinInputColor(coinType)} ${hasError ? 'border-red-500' : ''}`}
+        />
+        <span className={`text-xs font-semibold ${getCoinInputColor(coinType).replace('border-', 'text-').split(' ')[0]}`}>%</span>
+      </div>
     );
   };
 
@@ -513,17 +598,22 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('kick-off').C}</span>
+                          {renderCoinInput('kick-off', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('kick-off').O}</span>
+                          {renderCoinInput('kick-off', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('kick-off').I}</span>
+                          {renderCoinInput('kick-off', 'I')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('kick-off').N}</span>
+                          {renderCoinInput('kick-off', 'N')}
                         </td>
+                        {coinErrors['kick-off'] && (
+                          <td colSpan={4} className="px-2 py-1 text-center">
+                            <span className="text-xs text-red-600 font-semibold">{coinErrors['kick-off']}</span>
+                          </td>
+                        )}
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -588,13 +678,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -660,13 +753,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -739,13 +835,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -811,13 +910,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -883,13 +985,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -949,13 +1054,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1015,13 +1123,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1081,13 +1192,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1147,13 +1261,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1220,13 +1337,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1286,13 +1406,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1352,13 +1475,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1418,13 +1544,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1484,13 +1613,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1550,13 +1682,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1616,13 +1751,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1682,13 +1820,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1755,13 +1896,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1821,13 +1965,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1887,13 +2034,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1953,13 +2103,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2019,13 +2172,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2085,13 +2241,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2151,13 +2310,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2217,13 +2379,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
+                          {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
+                          {renderCoinInput('shop-drawing', 'O')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
+                          {renderCoinInput('shop-drawing', 'I')}
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          {renderCoinInput('shop-drawing', 'N')}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
