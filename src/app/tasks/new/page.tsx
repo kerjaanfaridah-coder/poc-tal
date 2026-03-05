@@ -77,7 +77,7 @@ export default function NewTaskPage() {
       subtitle="Add a new task to your project"
       currentPage="tasks"
     >
-      <div className="max-w-4xl mx-auto">
+      <div>
         {/* Form Container */}
         <div className="bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
