@@ -95,6 +95,30 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     issues: initialData?.issues || []
   })
 
+  // Add task assignment state
+  const [taskAssignments, setTaskAssignments] = useState<{[key: string]: string}>({});
+
+  const assignmentOptions = [
+    'Designed',
+    'Drafter', 
+    'Finance AR',
+    'Site Manager',
+    'Project Support',
+    'Warehouse',
+    'Technician',
+    'Project Manager',
+    'QC',
+    'Engineer',
+    'Maintenance'
+  ];
+
+  const handleAssignmentChange = (taskId: string, assignedTo: string) => {
+    setTaskAssignments(prev => ({
+      ...prev,
+      [taskId]: assignedTo
+    }));
+  };
+
   const totalSteps: number = 5
 
   const nextStep = () => {
@@ -310,7 +334,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Kick Off Meeting</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Project Manager</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['kick-off'] || 'Project Manager'}
+                            onChange={(e) => handleAssignmentChange('kick-off', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">01 Jan 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">02 Jan 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">1</td>
@@ -463,7 +497,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Report Progress to Owner</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Project Manager</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['kick-off'] || 'Project Manager'}
+                            onChange={(e) => handleAssignmentChange('kick-off', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">09 Feb 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">10 Feb 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">1</td>
@@ -664,7 +708,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">BAST</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Project Manager</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['kick-off'] || 'Project Manager'}
+                            onChange={(e) => handleAssignmentChange('kick-off', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">13 Mar 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">15 Mar 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">2</td>
