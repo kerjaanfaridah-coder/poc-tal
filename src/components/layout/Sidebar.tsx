@@ -5,8 +5,6 @@ import {
   Users, 
   FolderKanban, 
   CheckSquare, 
-  BarChart3, 
-  Calendar, 
   FileText,
   LayoutDashboard
 } from 'lucide-react';
@@ -17,9 +15,7 @@ const menuItems = [
   { icon: FolderKanban, label: 'Projects', href: '/projects' },
   { icon: CheckSquare, label: 'Tasks', href: '/tasks' },
   { icon: Users, label: 'Team', href: '/team' },
-  { icon: BarChart3, label: 'Analytics', href: '/analytics' },
-  { icon: Calendar, label: 'Calendar', href: '/calendar' },
-  { icon: FileText, label: 'Reports', href: '/reports' },
+  { icon: FileText, label: 'Documents', href: '/reports' },
 ];
 
 export default function Sidebar() {
