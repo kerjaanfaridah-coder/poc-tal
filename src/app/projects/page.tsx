@@ -232,14 +232,7 @@ export default function ProjectsPage() {
             <FolderKanban className="w-8 h-8 text-slate-400" />
           </div>
           <h3 className="text-lg font-bold text-slate-900 mb-2">No projects found</h3>
-          <p className="text-slate-600 mb-6">Get started by creating your first project</p>
-          <button
-            onClick={handleNewProject}
-            className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2 mx-auto"
-          >
-            <Plus className="w-5 h-5" />
-            Create Project
-          </button>
+          <p className="text-slate-600">Get started by creating your first project</p>
         </div>
       )}
     </ConsistentLayout>
