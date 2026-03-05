@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, Calendar, Users, CheckCircle, Trash2, AlertTriangle, Clock, ArrowUpRight, TrendingUp, CheckSquare, Circle, MoreHorizontal, Star, Flag } from 'lucide-react';
+import { Plus, Search, Filter, Calendar, Users, CheckCircle, Trash2, AlertTriangle, Clock, ArrowUpRight, TrendingUp, CheckSquare, Circle, MoreHorizontal, Star, Flag, FolderKanban } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
@@ -361,7 +361,12 @@ export default function TasksPage() {
                         <h3 className="font-medium text-slate-900">{task.title}</h3>
                       </div>
                       <p className="text-sm text-slate-600 line-clamp-2">{task.description}</p>
-                      <p className="text-xs text-slate-500 mt-1">{task.project}</p>
+                      <div className="mt-2">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                          <FolderKanban className="w-3 h-3 mr-1" />
+                          {task.project}
+                        </span>
+                      </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
