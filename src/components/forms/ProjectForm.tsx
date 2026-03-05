@@ -440,7 +440,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <span className="text-sm text-slate-500">IDR</span>
                               <div className="relative">
                                 <input
                                   type="text"
@@ -449,11 +448,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                     const cleanValue = e.target.value.replace(/\D/g, '');
                                     setNewProject({...newProject, outsource: parseInt(cleanValue) || 0});
                                   }}
-                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                  placeholder="0"
+                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pl-12"
+                                  placeholder="IDR 0"
                                 />
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold pointer-events-none">
+                                  IDR
+                                </span>
                                 <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  IDR {formatInputValue(newProject.outsource?.toString() || '0')}
+                                  {formatInputValue(newProject.outsource?.toString() || '0')}
                                 </div>
                               </div>
                             </div>
@@ -475,7 +477,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <span className="text-sm text-slate-500">IDR</span>
                               <div className="relative">
                                 <input
                                   type="text"
@@ -484,11 +485,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                     const cleanValue = e.target.value.replace(/\D/g, '');
                                     setNewProject({...newProject, costOther: parseInt(cleanValue) || 0});
                                   }}
-                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                  placeholder="0"
+                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pl-12"
+                                  placeholder="IDR 0"
                                 />
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold pointer-events-none">
+                                  IDR
+                                </span>
                                 <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  IDR {formatInputValue(newProject.costOther?.toString() || '0')}
+                                  {formatInputValue(newProject.costOther?.toString() || '0')}
                                 </div>
                               </div>
                             </div>
@@ -510,7 +514,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <span className="text-sm text-slate-500">IDR</span>
                               <div className="relative">
                                 <input
                                   type="text"
@@ -519,11 +522,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                     const cleanValue = e.target.value.replace(/\D/g, '');
                                     setNewProject({...newProject, costOvertime: parseInt(cleanValue) || 0});
                                   }}
-                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                  placeholder="0"
+                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pl-12"
+                                  placeholder="IDR 0"
                                 />
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold pointer-events-none">
+                                  IDR
+                                </span>
                                 <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  IDR {formatInputValue(newProject.costOvertime?.toString() || '0')}
+                                  {formatInputValue(newProject.costOvertime?.toString() || '0')}
                                 </div>
                               </div>
                             </div>
@@ -545,7 +551,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <span className="text-sm text-slate-500">IDR</span>
                               <div className="relative">
                                 <input
                                   type="text"
@@ -554,11 +559,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                     const cleanValue = e.target.value.replace(/\D/g, '');
                                     setNewProject({...newProject, costManPower: parseInt(cleanValue) || 0});
                                   }}
-                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                                  placeholder="0"
+                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pl-12"
+                                  placeholder="IDR 0"
                                 />
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold pointer-events-none">
+                                  IDR
+                                </span>
                                 <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  IDR {formatInputValue(newProject.costManPower?.toString() || '0')}
+                                  {formatInputValue(newProject.costManPower?.toString() || '0')}
                                 </div>
                               </div>
                             </div>
