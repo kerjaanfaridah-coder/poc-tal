@@ -194,6 +194,26 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     );
   };
 
+  const getCOINValues = (taskId: string) => {
+    const status = taskStatuses[taskId] || 'Not Started';
+    return {
+      C: status === 'Complete' ? '100%' : '0%',
+      O: status === 'Overdue' ? '100%' : '0%',
+      I: status === 'In Progress' ? '100%' : '0%',
+      N: status === 'Not Started' ? '100%' : '0%'
+    };
+  };
+
+  const getCOINColor = (type: string): string => {
+    switch(type) {
+      case 'C': return 'text-green-700 font-semibold';
+      case 'O': return 'text-red-700 font-semibold';
+      case 'I': return 'text-blue-700 font-semibold';
+      case 'N': return 'text-gray-700 font-semibold';
+      default: return 'text-gray-700';
+    }
+  };
+
   const getStatusBadgeColor = (status: string): string => {
     switch(status) {
       case 'Complete':
@@ -426,6 +446,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Days</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Status</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Achievement %</th>
+                        <th className="px-2 py-3 text-center text-xs font-semibold text-green-700 uppercase tracking-wider whitespace-nowrap">C</th>
+                        <th className="px-2 py-3 text-center text-xs font-semibold text-red-700 uppercase tracking-wider whitespace-nowrap">O</th>
+                        <th className="px-2 py-3 text-center text-xs font-semibold text-blue-700 uppercase tracking-wider whitespace-nowrap">I</th>
+                        <th className="px-2 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider whitespace-nowrap">N</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Notes</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Evidence / Link</th>
                       </tr>
@@ -433,7 +457,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     <tbody className="divide-y divide-slate-200">
                       {/* PHASE 1 */}
                       <tr className="bg-gradient-to-r from-blue-50 to-indigo-50">
-                        <td colSpan={9} className="px-4 py-4 font-bold text-blue-900 border-b-2 border-blue-200">
+                        <td colSpan={13} className="px-4 py-4 font-bold text-blue-900 border-b-2 border-blue-200">
                           PHASE 1
                         </td>
                       </tr>
@@ -480,6 +504,30 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues('kick-off').C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues('kick-off').O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues('kick-off').I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues('kick-off').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -544,6 +592,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -607,6 +667,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -629,7 +701,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                       {/* PHASE 2 */}
                       <tr className="bg-gradient-to-r from-green-50 to-emerald-50">
-                        <td colSpan={9} className="px-4 py-4 font-bold text-green-900 border-b-2 border-green-200">
+                        <td colSpan={13} className="px-4 py-4 font-bold text-green-900 border-b-2 border-green-200">
                           PHASE 2
                         </td>
                       </tr>
@@ -676,6 +748,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -740,6 +824,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -803,6 +899,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -859,6 +967,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -917,6 +1037,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -974,6 +1106,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1030,6 +1174,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1095,6 +1251,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1151,6 +1319,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1209,6 +1389,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1265,6 +1457,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1323,6 +1527,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1379,6 +1595,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1437,6 +1665,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1493,6 +1733,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1558,6 +1810,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1614,6 +1878,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1672,6 +1948,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1728,6 +2016,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1786,6 +2086,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1842,6 +2154,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1900,6 +2224,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
@@ -1956,6 +2292,18 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
