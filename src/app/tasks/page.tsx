@@ -24,94 +24,55 @@ export default function TasksPage() {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const router = useRouter();
 
-  // Real-time tasks data with localStorage persistence
+  // Real-time tasks data (no localStorage persistence)
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  // Load tasks from localStorage on mount
+  // Load initial sample data only on mount (no localStorage)
   useEffect(() => {
-    const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
-    } else {
-      // Initial sample data if no saved tasks
-      const initialTasks: Task[] = [
-        {
-          id: '1',
-          title: 'Fix critical bug in payment gateway',
-          description: 'Resolve payment processing timeout issue affecting production',
-          status: 'in-progress' as const,
-          priority: 'high' as const,
-          assignee: 'Sarah Johnson',
-          dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          project: 'E-commerce Platform',
-          progress: 65,
-          createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-          updatedAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString()
-        },
-        {
-          id: '2',
-          title: 'Update user dashboard analytics',
-          description: 'Add real-time charts and performance metrics',
-          status: 'todo' as const,
-          priority: 'medium' as const,
-          assignee: 'Mike Kim',
-          dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          project: 'Analytics Dashboard',
-          progress: 0,
-          createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-          updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-        },
-        {
-          id: '3',
-          title: 'Code review for mobile app update',
-          description: 'Review pull requests for iOS and Android updates',
-          status: 'completed' as const,
-          priority: 'low' as const,
-          assignee: 'John Doe',
-          dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          project: 'Mobile App',
-          progress: 100,
-          createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-          updatedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
-        },
-        {
-          id: '4',
-          title: 'Database migration to new server',
-          description: 'Migrate production database to AWS RDS instance',
-          status: 'in-progress' as const,
-          priority: 'high' as const,
-          assignee: 'Emily Davis',
-          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          project: 'Infrastructure',
-          progress: 35,
-          createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-          updatedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString()
-        },
-        {
-          id: '5',
-          title: 'Customer feedback analysis',
-          description: 'Analyze Q1 customer feedback and create action items',
-          status: 'todo' as const,
-          priority: 'medium' as const,
-          assignee: 'Tom Wilson',
-          dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          project: 'Customer Experience',
-          progress: 0,
-          createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-          updatedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString()
-        }
-      ];
-      setTasks(initialTasks);
-      localStorage.setItem('tasks', JSON.stringify(initialTasks));
-    }
+    // Initial sample data
+    const initialTasks: Task[] = [
+      {
+        id: '1',
+        title: 'Fix critical bug in payment gateway',
+        description: 'Resolve payment processing timeout issue affecting production',
+        status: 'in-progress' as const,
+        priority: 'high' as const,
+        assignee: 'Sarah Johnson',
+        dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        project: 'E-commerce Platform',
+        progress: 65,
+        createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+        updatedAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString()
+      },
+      {
+        id: '2',
+        title: 'Update user dashboard analytics',
+        description: 'Add real-time charts and performance metrics',
+        status: 'todo' as const,
+        priority: 'medium' as const,
+        assignee: 'Mike Kim',
+        dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        project: 'Analytics Dashboard',
+        progress: 0,
+        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+        updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+      },
+      {
+        id: '3',
+        title: 'Code review for mobile app update',
+        description: 'Review pull requests for iOS and Android updates',
+        status: 'completed' as const,
+        priority: 'low' as const,
+        assignee: 'John Doe',
+        dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        project: 'Mobile App',
+        progress: 100,
+        createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        updatedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+      }
+    ];
+    setTasks(initialTasks);
   }, []);
-
-  // Save tasks to localStorage whenever they change
-  useEffect(() => {
-    if (tasks.length > 0) {
-      localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
-  }, [tasks]);
 
   const handleNewTask = () => {
     router.push('/tasks/new');
@@ -131,11 +92,6 @@ export default function TasksPage() {
   const handleDeleteTask = (taskId: string, taskTitle: string) => {
     if (confirm(`Are you sure you want to delete "${taskTitle}"? This action cannot be undone.`)) {
       setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
-      // Clear localStorage if all tasks are deleted
-      const updatedTasks = tasks.filter(task => task.id !== taskId);
-      if (updatedTasks.length === 0) {
-        localStorage.removeItem('tasks');
-      }
     }
   };
 
@@ -143,7 +99,6 @@ export default function TasksPage() {
   const handleClearAllTasks = () => {
     if (confirm('Are you sure you want to clear all tasks? This action cannot be undone.')) {
       setTasks([]);
-      localStorage.removeItem('tasks');
     }
   };
 
