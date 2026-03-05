@@ -107,6 +107,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   // Add task notes state
   const [taskNotes, setTaskNotes] = useState<{[key: string]: string}>({});
 
+  // Add task evidence links state
+  const [taskEvidence, setTaskEvidence] = useState<{[key: string]: string}>({});
+
   const assignmentOptions = [
     'Designed',
     'Drafter', 
@@ -157,6 +160,38 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
       ...prev,
       [taskId]: notes
     }));
+  };
+
+  const handleEvidenceChange = (taskId: string, evidence: string) => {
+    setTaskEvidence(prev => ({
+      ...prev,
+      [taskId]: evidence
+    }));
+  };
+
+  const renderEvidenceLink = (taskId: string) => {
+    const evidence = taskEvidence[taskId];
+    if (evidence && evidence.trim()) {
+      return (
+        <a 
+          href={evidence} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-800 underline text-sm"
+        >
+          View Evidence
+        </a>
+      );
+    }
+    return (
+      <input 
+        type="text"
+        value={evidence || ''}
+        onChange={(e) => handleEvidenceChange(taskId, e.target.value)}
+        className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+        placeholder="Add evidence link..."
+      />
+    );
   };
 
   const getStatusBadgeColor = (status: string): string => {
@@ -456,7 +491,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          <input 
+                            type="text"
+                            value={taskEvidence['kick-off'] || ''}
+                            onChange={(e) => handleEvidenceChange('kick-off', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add evidence link..."
+                          />
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -513,7 +554,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          <input 
+                            type="text"
+                            value={taskEvidence['shop-drawing'] || ''}
+                            onChange={(e) => handleEvidenceChange('shop-drawing', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add evidence link..."
+                          />
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -570,7 +617,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          <input 
+                            type="text"
+                            value={taskEvidence['dp1'] || ''}
+                            onChange={(e) => handleEvidenceChange('dp1', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add evidence link..."
+                          />
                         </td>
                       </tr>
 
@@ -634,7 +687,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          <input 
+                            type="text"
+                            value={taskEvidence['survey'] || ''}
+                            onChange={(e) => handleEvidenceChange('survey', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add evidence link..."
+                          />
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -691,7 +750,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          <input 
+                            type="text"
+                            value={taskEvidence['material-approval'] || ''}
+                            onChange={(e) => handleEvidenceChange('material-approval', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add evidence link..."
+                          />
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -748,7 +813,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -805,7 +870,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -862,7 +927,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -919,7 +984,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -976,7 +1041,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
 
@@ -1040,7 +1105,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1097,7 +1162,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1154,7 +1219,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1211,7 +1276,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1268,7 +1333,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1325,7 +1390,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1382,7 +1447,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1439,7 +1504,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
 
@@ -1503,7 +1568,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1560,7 +1625,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1617,7 +1682,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1674,7 +1739,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1731,7 +1796,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1788,7 +1853,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1845,7 +1910,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
@@ -1902,7 +1967,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           />
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-gray-400 text-sm">No document</span>
+                          {renderEvidenceLink('cable-delivery')}
                         </td>
                       </tr>
                     </tbody>
