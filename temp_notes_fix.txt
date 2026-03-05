@@ -1,0 +1,4 @@
+// Notes functionality implementation plan:
+// 1. Replace all taskNotes[''] with proper task IDs
+// 2. Use unique context for each task to avoid replace_all issues
+// 3. Task IDs needed: kick-off, shop-drawing, dp1, survey, material-approval, cable-delivery, cabling-installation, marking-device, report-progress-2, qc-cabling, payment-dp2, device-delivery, device-installation, qc-installation, report-progress-3, integration, testing, qc-integration, handover-doc, test-commissioning, final-qc, defect-checklist, repair-defect, training, bast, maintenance
