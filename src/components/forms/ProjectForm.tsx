@@ -1095,7 +1095,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         (document.getElementById('quick-add-issue-title') as HTMLInputElement).value = '';
                         (document.getElementById('quick-add-issue-assignee') as HTMLInputElement).value = '';
                       }}
-                      className="w-full px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center justify-center gap-2"
+                      className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2"
                     >
                       <Plus className="w-5 h-5" />
                       Add Issue
