@@ -1,418 +1,345 @@
 'use client';
 
 import { useState } from 'react';
+import { Search, Filter, Plus, FileText, Eye, Download, Edit, Upload, Calendar, Tag } from 'lucide-react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
-import { 
-  FileText, 
-  Search, 
-  Filter, 
-  Plus, 
-  Eye, 
-  Edit, 
-  Download,
-  Folder,
-  File,
-  Calendar,
-  User,
-  Clock,
-  BarChart3,
-  CheckCircle,
-  AlertCircle
-} from 'lucide-react';
 
 export default function DocumentsPage() {
-  const [showNewTemplateModal, setShowNewTemplateModal] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  
-  // Mock document templates data
-  const [templates] = useState([
+  // Template data
+  const [templates, setTemplates] = useState([
     {
       id: '1',
-      name: 'BAST',
-      description: 'Berita Acara Serah Terima',
-      category: 'Project Handover',
-      fields: ['Project Name', 'Client', 'Location', 'Date', 'PIC'],
-      lastUpdated: '2024-03-10',
-      usageCount: 45,
-      icon: '📋'
+      name: 'BAST Template',
+      description: 'Berita Acara Serah Terima Project',
+      category: 'Handover',
+      lastUpdated: 'Mar 12, 2026',
+      fileName: 'bast-template.docx'
     },
     {
       id: '2',
-      name: 'Service Report',
-      description: 'Laporan hasil pekerjaan service',
-      category: 'Service',
-      fields: ['Project Name', 'Client', 'Location', 'Date', 'PIC'],
-      lastUpdated: '2024-03-08',
-      usageCount: 32,
-      icon: '🔧'
+      name: 'Handover Checklist',
+      description: 'Complete project handover verification checklist',
+      category: 'Handover',
+      lastUpdated: 'Mar 10, 2026',
+      fileName: 'handover-checklist.xlsx'
     },
     {
       id: '3',
-      name: 'Inspection Report',
-      description: 'Laporan hasil inspeksi',
-      category: 'Inspection',
-      fields: ['Project Name', 'Client', 'Location', 'Date', 'PIC'],
-      lastUpdated: '2024-03-12',
-      usageCount: 28,
-      icon: '🔍'
+      name: 'Installation Completion',
+      description: 'Installation completion certificate template',
+      category: 'Handover',
+      lastUpdated: 'Mar 8, 2026',
+      fileName: 'installation-completion.pdf'
     },
     {
       id: '4',
-      name: 'Installation Report',
-      description: 'Laporan instalasi peralatan',
-      category: 'Service',
-      fields: ['Project Name', 'Client', 'Location', 'Date', 'PIC'],
-      lastUpdated: '2024-03-05',
-      usageCount: 15,
-      icon: '⚙️'
+      name: 'As Built Drawing',
+      description: 'Technical as-built drawing documentation',
+      category: 'Technical',
+      lastUpdated: 'Mar 15, 2026',
+      fileName: 'as-built-drawing.pdf'
     },
     {
       id: '5',
-      name: 'Handover Document',
-      description: 'Dokumen serah terima',
-      category: 'Project Handover',
-      fields: ['Project Name', 'Client', 'Location', 'Date', 'PIC'],
-      lastUpdated: '2024-03-09',
-      usageCount: 22,
-      icon: '📄'
+      name: 'Wiring Diagram',
+      description: 'Electrical wiring diagram template',
+      category: 'Technical',
+      lastUpdated: 'Mar 11, 2026',
+      fileName: 'wiring-diagram.docx'
     },
     {
       id: '6',
-      name: 'Maintenance Report',
-      description: 'Laporan maintenance rutin',
-      category: 'Service',
-      fields: ['Project Name', 'Client', 'Location', 'Date', 'PIC'],
-      lastUpdated: '2024-03-11',
-      usageCount: 18,
-      icon: '🛠️'
+      name: 'System Configuration',
+      description: 'System configuration documentation template',
+      category: 'Technical',
+      lastUpdated: 'Mar 9, 2026',
+      fileName: 'system-config.pdf'
     },
     {
       id: '7',
-      name: 'Safety Report',
-      description: 'Laporan keselamatan kerja',
-      category: 'Inspection',
-      fields: ['Project Name', 'Client', 'Location', 'Date', 'PIC'],
-      lastUpdated: '2024-03-07',
-      usageCount: 12,
-      icon: '⚠️'
+      name: 'Warranty Letter',
+      description: 'Product warranty certificate template',
+      category: 'Client',
+      lastUpdated: 'Mar 14, 2026',
+      fileName: 'warranty-letter.docx'
     },
     {
       id: '8',
-      name: 'Quality Control',
-      description: 'Dokumen quality control',
-      category: 'Inspection',
-      fields: ['Project Name', 'Client', 'Location', 'Date', 'PIC'],
-      lastUpdated: '2024-03-06',
-      usageCount: 20,
-      icon: '✅'
+      name: 'Maintenance Guide',
+      description: 'Equipment maintenance guide template',
+      category: 'Client',
+      lastUpdated: 'Mar 13, 2026',
+      fileName: 'maintenance-guide.pdf'
+    },
+    {
+      id: '9',
+      name: 'User Manual',
+      description: 'Product user manual documentation',
+      category: 'Client',
+      lastUpdated: 'Mar 7, 2026',
+      fileName: 'user-manual.docx'
     }
   ]);
 
-  // Mock statistics
-  const totalTemplates = templates.length;
-  const documentsGenerated = 156;
-  const mostUsedTemplate = templates.reduce((prev, current) => 
-    current.usageCount > prev.usageCount ? current : prev
-  );
-  const lastGenerated = '2024-03-15';
-
-  // Filter templates
-  const filteredTemplates = templates.filter(template => {
-    const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         template.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || template.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+  // Modal state
+  const [showAddTemplateModal, setShowAddTemplateModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [newTemplate, setNewTemplate] = useState({
+    name: '',
+    category: 'Handover',
+    description: '',
+    fileName: ''
   });
 
   // Categories
-  const categories = ['all', 'Project Handover', 'Service', 'Inspection'];
+  const categories = ['All', 'Handover', 'Technical', 'Client'];
+
+  // Filter templates
+  const filteredTemplates = templates.filter(template => {
+    const matchesSearch = template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         template.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' || template.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  // Group templates by category
+  const groupedTemplates = categories.filter(cat => cat !== 'All').map(category => ({
+    category,
+    templates: filteredTemplates.filter(template => template.category === category)
+  }));
+
+  // Add new template
+  const handleAddTemplate = () => {
+    if (newTemplate.name && newTemplate.description && newTemplate.fileName) {
+      const template = {
+        id: Date.now().toString(),
+        name: newTemplate.name,
+        description: newTemplate.description,
+        category: newTemplate.category,
+        lastUpdated: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        fileName: newTemplate.fileName
+      };
+      
+      setTemplates([...templates, template]);
+      setNewTemplate({ name: '', category: 'Handover', description: '', fileName: '' });
+      setShowAddTemplateModal(false);
+    }
+  };
+
+  // Use template function
+  const handleUseTemplate = (template) => {
+    // Generate document based on template
+    const generatedFileName = `${template.name.replace(' Template', '')} - Project Home Theater - ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'})}.docx`;
+    alert(`Generating document: ${generatedFileName}`);
+  };
+
+  // Get category color
+  const getCategoryColor = (category) => {
+    switch(category) {
+      case 'Handover': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'Technical': return 'bg-green-100 text-green-800 border-green-200';
+      case 'Client': return 'bg-purple-100 text-purple-800 border-purple-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
 
   return (
     <ConsistentLayout 
       title="Documents" 
-      subtitle="Create and manage reusable document templates for your projects."
+      subtitle="Manage document templates for project handover and technical documentation"
     >
-      {/* Page Header with Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+      {/* Header Actions */}
+      <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-            <FileText className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900">Documents</h1>
-            <p className="text-sm text-slate-600">Create and manage reusable document templates for your projects.</p>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-3">
+          {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
               type="text"
-              placeholder="Search templates..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64"
+              placeholder="Search template name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
             />
           </div>
-          
-          <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
-            <Filter className="w-4 h-4" />
-            <span>Filter</span>
-          </button>
-          
-          <button
-            onClick={() => setShowNewTemplateModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl text-sm font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg"
-          >
-            <Plus className="w-4 h-4" />
-            <span>New Template</span>
-          </button>
+
+          {/* Filter */}
+          <div className="relative">
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent appearance-none"
+            >
+              {categories.map(category => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
         </div>
+
+        {/* Add Template Button */}
+        <button
+          onClick={() => setShowAddTemplateModal(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm"
+        >
+          <Plus className="w-4 h-4" />
+          Add Template
+        </button>
       </div>
 
-      {/* Statistics Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
-                <FileText className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-3xl font-bold text-slate-900">{totalTemplates}</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-600 font-semibold">Total Templates</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">available</p>
-                <p className="text-sm font-bold text-blue-600">Active</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Template Categories */}
+      <div className="space-y-8">
+        {groupedTemplates.map(({ category, templates }) => (
+          templates.length > 0 && (
+            <div key={category}>
+              {/* Category Title */}
+              <h3 className="text-lg font-semibold text-slate-900 mb-4">{category} Documents</h3>
+              
+              {/* Template Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {templates.map((template) => (
+                  <div key={template.id} className="bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-lg transition-all duration-200">
+                    {/* Template Header */}
+                    <div className="flex items-start gap-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                        <FileText className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-slate-900 text-base leading-tight">{template.name}</h4>
+                        <p className="text-sm text-slate-600 leading-tight mt-1">{template.description}</p>
+                      </div>
+                    </div>
 
-        <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Download className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-3xl font-bold text-slate-900">{documentsGenerated}</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-600 font-semibold">Documents Generated</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">total</p>
-                <p className="text-sm font-bold text-green-600">Generated</p>
-              </div>
-            </div>
-          </div>
-        </div>
+                    {/* Category Badge */}
+                    <div className="mb-3">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getCategoryColor(template.category)}`}>
+                        <Tag className="w-3 h-3 mr-1" />
+                        {template.category}
+                      </span>
+                    </div>
 
-        <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-                <BarChart3 className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-3xl font-bold text-slate-900">{mostUsedTemplate.name}</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-600 font-semibold">Most Used Template</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">{mostUsedTemplate.usageCount} uses</p>
-                <p className="text-sm font-bold text-purple-600">Popular</p>
-              </div>
-            </div>
-          </div>
-        </div>
+                    {/* Last Updated */}
+                    <div className="flex items-center gap-2 text-xs text-slate-500 mb-4">
+                      <Calendar className="w-3 h-3" />
+                      Updated {template.lastUpdated}
+                    </div>
 
-        <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-          <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                <Calendar className="w-6 h-6 text-white" />
+                    {/* Action Buttons */}
+                    <div className="flex items-center gap-2">
+                      <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                        <Eye className="w-3 h-3" />
+                        Preview
+                      </button>
+                      <button 
+                        onClick={() => handleUseTemplate(template)}
+                        className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
+                      >
+                        <Download className="w-3 h-3" />
+                        Use Template
+                      </button>
+                      <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-slate-600 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                        <Edit className="w-3 h-3" />
+                        Edit
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <p className="text-3xl font-bold text-slate-900">{lastGenerated}</p>
             </div>
-            <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-600 font-semibold">Last Generated</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">date</p>
-                <p className="text-sm font-bold text-orange-600">Recent</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Category Filter */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-sm font-medium text-slate-700">Category:</span>
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
-              selectedCategory === category
-                ? 'bg-blue-500 text-white'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-            }`}
-          >
-            {category === 'all' ? 'All' : category}
-          </button>
+          )
         ))}
       </div>
 
-      {/* Document Templates Section */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-            <FileText className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-slate-900">Document Templates</h3>
-            <p className="text-sm text-slate-500">Reusable templates for generating project documents</p>
-          </div>
-        </div>
-
-        {/* Templates Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredTemplates.map((template) => (
-            <div key={template.id} className="group">
-              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 p-5 hover:border-blue-300 hover:shadow-lg transition-all duration-200">
-                {/* Template Header */}
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                    <span className="text-2xl">{template.icon}</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-slate-900 text-base leading-tight">{template.name}</h4>
-                    <p className="text-xs text-slate-600 leading-tight mt-1">{template.description}</p>
-                  </div>
-                </div>
-
-                {/* Category Badge */}
-                <div className="mb-4">
-                  <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs font-medium">
-                    {template.category}
-                  </span>
-                </div>
-
-                {/* Fields */}
-                <div className="mb-4">
-                  <p className="text-xs text-slate-500 mb-2">Fields:</p>
-                  <div className="flex flex-wrap gap-1">
-                    {template.fields.map((field, index) => (
-                      <span key={index} className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">
-                        {field}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
-                  <div className="flex items-center gap-1 text-xs text-slate-500">
-                    <Clock className="w-3 h-3" />
-                    <span>Updated: {template.lastUpdated}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-slate-500">
-                    <BarChart3 className="w-3 h-3" />
-                    <span>{template.usageCount} uses</span>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-2 mt-4">
-                  <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100 transition-colors">
-                    <Eye className="w-3 h-3" />
-                    <span>Preview</span>
-                  </button>
-                  <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-slate-50 text-slate-600 rounded-lg text-xs font-medium hover:bg-slate-100 transition-colors">
-                    <Edit className="w-3 h-3" />
-                    <span>Edit</span>
-                  </button>
-                  <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-50 text-green-600 rounded-lg text-xs font-medium hover:bg-green-100 transition-colors">
-                    <Download className="w-3 h-3" />
-                    <span>Generate</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* New Template Modal */}
-      {showNewTemplateModal && (
+      {/* Add Template Modal */}
+      {showAddTemplateModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold text-slate-900">New Document Template</h3>
-              <button
-                onClick={() => setShowNewTemplateModal(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
-              >
-                ❌
-              </button>
-            </div>
-
+          <div className="bg-white rounded-xl p-6 w-full max-w-md">
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">Add New Template</h3>
+            
             <div className="space-y-4">
+              {/* Template Name */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Template Name</label>
                 <input
                   type="text"
+                  placeholder="BAST Template"
+                  value={newTemplate.name}
+                  onChange={(e) => setNewTemplate({...newTemplate, name: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter template name..."
                 />
               </div>
 
+              {/* Category */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Category</label>
+                <select
+                  value={newTemplate.category}
+                  onChange={(e) => setNewTemplate({...newTemplate, category: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="Handover">Handover</option>
+                  <option value="Technical">Technical</option>
+                  <option value="Client">Client</option>
+                </select>
+              </div>
+
+              {/* Description */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Description</label>
                 <textarea
-                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter template description..."
+                  value={newTemplate.description}
+                  onChange={(e) => setNewTemplate({...newTemplate, description: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   rows={3}
                 />
               </div>
 
+              {/* Upload File */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-2">Category</label>
-                <select className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  <option value="Project Handover">Project Handover</option>
-                  <option value="Service">Service</option>
-                  <option value="Inspection">Inspection</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-2">Icon</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter emoji icon..."
-                />
+                <label className="block text-xs font-bold text-slate-700 mb-2">Upload Template File</label>
+                <div className="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center">
+                  <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                  <p className="text-sm text-slate-600 mb-1">Drop file here or click to upload</p>
+                  <p className="text-xs text-slate-500">Allowed files: .docx, .pdf, .xlsx</p>
+                  <input
+                    type="file"
+                    accept=".docx,.pdf,.xlsx"
+                    onChange={(e) => setNewTemplate({...newTemplate, fileName: e.target.files?.[0]?.name || ''})}
+                    className="hidden"
+                    id="file-upload"
+                  />
+                  <label
+                    htmlFor="file-upload"
+                    className="inline-block mt-2 px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 cursor-pointer transition-colors"
+                  >
+                    Choose File
+                  </label>
+                  {newTemplate.fileName && (
+                    <p className="text-xs text-slate-600 mt-2">Selected: {newTemplate.fileName}</p>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div className="flex gap-3 mt-6">
+            {/* Modal Actions */}
+            <div className="flex items-center gap-3 mt-6">
               <button
-                onClick={() => setShowNewTemplateModal(false)}
-                className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-medium hover:bg-slate-200 transition-colors"
+                onClick={() => {
+                  setShowAddTemplateModal(false);
+                  setNewTemplate({ name: '', category: 'Handover', description: '', fileName: '' });
+                }}
+                className="flex-1 px-4 py-2 text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors font-medium text-sm"
               >
                 Cancel
               </button>
               <button
-                onClick={() => setShowNewTemplateModal(false)}
-                className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-bold hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg"
+                onClick={handleAddTemplate}
+                className="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm"
               >
-                Create Template
+                Add Template
               </button>
             </div>
           </div>
