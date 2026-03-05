@@ -9,424 +9,395 @@ import {
   Calendar,
   Activity,
   Target,
-  Zap,
   AlertTriangle,
   Clock,
-  CheckCircle2,
+  CheckCircle,
   ArrowUpRight,
-  ArrowDownRight,
-  MoreHorizontal,
-  LayoutGrid,
-  List,
-  Filter,
-  Sparkles,
-  Flame,
-  Rocket,
-  Trophy,
-  Star,
-  Heart,
-  MessageSquare,
-  Share2,
-  Bookmark,
-  TrendingDown,
-  Eye,
-  Download,
-  RefreshCw,
-  ChevronUp,
-  ChevronDown,
   ChevronRight,
-  Layers,
-  Grid3x3,
-  ZapOff,
-  Plus
+  Plus,
+  FileText
 } from 'lucide-react';
-import StatsCard from '@/components/dashboard/StatsCard';
-import ProjectProgress from '@/components/dashboard/ProjectProgress';
-import TaskDistribution from '@/components/dashboard/TaskDistribution';
-import RecentActivity from '@/components/dashboard/RecentActivity';
-import UpcomingDeadlines from '@/components/dashboard/UpcomingDeadlines';
-import PageHeader from '@/components/ui/PageHeader';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
-export default function Dashboard() {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [selectedPeriod, setSelectedPeriod] = useState<'7d' | '30d' | '90d'>('30d');
+export default function DashboardPage() {
+  const router = useRouter();
+
+  // Sample data for dashboard overview
+  const projectsOverview = {
+    total: 24,
+    active: 8,
+    completed: 12,
+    onHold: 4
+  };
+
+  const tasksOverview = {
+    total: 156,
+    inProgress: 45,
+    completed: 89,
+    overdue: 22
+  };
+
+  const teamOverview = {
+    totalMembers: 12,
+    activeMembers: 10,
+    workloadDistribution: [
+      { name: 'John Doe', workload: 75 },
+      { name: 'Sarah Johnson', workload: 89 },
+      { name: 'Mike Chen', workload: 83 },
+      { name: 'Emily Davis', workload: 90 }
+    ]
+  };
+
+  const projectsByDeadline = [
+    { month: 'January', count: 3 },
+    { month: 'February', count: 5 },
+    { month: 'March', count: 4 },
+    { month: 'April', count: 2 },
+    { month: 'May', count: 7 }
+  ];
+
+  const upcomingSchedule = [
+    { type: 'task', title: 'Complete API Documentation', date: '2024-03-12', priority: 'high' },
+    { type: 'deadline', title: 'Website Redesign Project', date: '2024-03-15', priority: 'medium' },
+    { type: 'meeting', title: 'Team Standup Meeting', date: '2024-03-13', priority: 'low' },
+    { type: 'task', title: 'Code Review for Feature X', date: '2024-03-14', priority: 'high' }
+  ];
+
+  const analyticsSnapshot = {
+    productivity: 87,
+    efficiency: 92,
+    completionRate: 78,
+    teamSatisfaction: 85
+  };
+
+  const recentReports = [
+    { title: 'Monthly Performance Report', date: '2024-03-01', type: 'performance' },
+    { title: 'Project Status Summary', date: '2024-02-28', type: 'project' },
+    { title: 'Team Workload Analysis', date: '2024-02-25', type: 'workload' }
+  ];
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high': return 'text-red-600 bg-red-100';
+      case 'medium': return 'text-orange-600 bg-orange-100';
+      case 'low': return 'text-green-600 bg-green-100';
+      default: return 'text-slate-600 bg-slate-100';
+    }
+  };
+
+  const getScheduleIcon = (type: string) => {
+    switch (type) {
+      case 'task': return CheckSquare;
+      case 'deadline': return Clock;
+      case 'meeting': return Users;
+      default: return Calendar;
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-orange-50 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-red-400/20 to-orange-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-pink-400/20 to-red-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-red-400/10 to-pink-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
-        {/* Hero Section */}
-        <div className="mb-12">
-          <div className="bg-gradient-to-r from-red-500 via-orange-500 to-pink-500 rounded-3xl p-8 shadow-2xl shadow-red-500/25 relative overflow-hidden">
-            <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
-            <div className="relative">
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="w-6 h-6 text-yellow-300" />
-                <span className="text-yellow-300 font-bold text-sm">PREMIUM DASHBOARD</span>
+    <ConsistentLayout title="Dashboard" subtitle="Central overview of your entire system">
+      {/* Row 1: Projects Overview */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-slate-900">Projects Overview</h2>
+          <button
+            onClick={() => router.push('/projects')}
+            className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+          >
+            View all projects
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <FolderKanban className="w-6 h-6 text-blue-600" />
               </div>
-              <h1 className="text-4xl font-bold text-white mb-4">
-                Welcome back, John! 🚀
-              </h1>
-              <p className="text-xl text-white/90 mb-6 max-w-2xl">
-                Your productivity increased by <span className="font-bold text-yellow-300">47%</span> this month. Keep up the amazing work!
-              </p>
-              <div className="flex items-center gap-4">
-                <button className="px-6 py-3 bg-white text-indigo-600 rounded-xl font-bold hover:bg-indigo-50 transition-all duration-200 shadow-lg flex items-center gap-2">
-                  <Rocket className="w-5 h-5" />
-                  View Analytics
-                </button>
-                <button className="px-6 py-3 bg-white/20 backdrop-blur-sm text-white rounded-xl font-bold hover:bg-white/30 transition-all duration-200 border border-white/30 flex items-center gap-2">
-                  <Trophy className="w-5 h-5" />
-                  View Achievements
-                </button>
-              </div>
+              <span className="text-sm text-slate-600">Total</span>
             </div>
+            <div className="text-2xl font-bold text-slate-900">{projectsOverview.total}</div>
+            <div className="text-sm text-slate-600">Projects</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <Activity className="w-6 h-6 text-green-600" />
+              </div>
+              <span className="text-sm text-slate-600">Active</span>
+            </div>
+            <div className="text-2xl font-bold text-slate-900">{projectsOverview.active}</div>
+            <div className="text-sm text-slate-600">Projects</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-emerald-600" />
+              </div>
+              <span className="text-sm text-slate-600">Completed</span>
+            </div>
+            <div className="text-2xl font-bold text-slate-900">{projectsOverview.completed}</div>
+            <div className="text-sm text-slate-600">Projects</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                <AlertTriangle className="w-6 h-6 text-orange-600" />
+              </div>
+              <span className="text-sm text-slate-600">On Hold</span>
+            </div>
+            <div className="text-2xl font-bold text-slate-900">{projectsOverview.onHold}</div>
+            <div className="text-sm text-slate-600">Projects</div>
           </div>
         </div>
-        
-        {/* Quick Actions Bar */}
-        <div className="mb-8">
-          <div className="bg-white rounded-2xl shadow-lg border border-indigo-100 p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-6">
+      </div>
+
+      {/* Row 2: Tasks Overview */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-slate-900">Tasks Overview</h2>
+          <button
+            onClick={() => router.push('/tasks')}
+            className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+          >
+            View all tasks
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                <CheckSquare className="w-6 h-6 text-purple-600" />
+              </div>
+              <span className="text-sm text-slate-600">Total</span>
+            </div>
+            <div className="text-2xl font-bold text-slate-900">{tasksOverview.total}</div>
+            <div className="text-sm text-slate-600">Tasks</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <Clock className="w-6 h-6 text-blue-600" />
+              </div>
+              <span className="text-sm text-slate-600">In Progress</span>
+            </div>
+            <div className="text-2xl font-bold text-slate-900">{tasksOverview.inProgress}</div>
+            <div className="text-sm text-slate-600">Tasks</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-green-600" />
+              </div>
+              <span className="text-sm text-slate-600">Completed</span>
+            </div>
+            <div className="text-2xl font-bold text-slate-900">{tasksOverview.completed}</div>
+            <div className="text-sm text-slate-600">Tasks</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <AlertTriangle className="w-6 h-6 text-red-600" />
+              </div>
+              <span className="text-sm text-slate-600">Overdue</span>
+            </div>
+            <div className="text-2xl font-bold text-slate-900">{tasksOverview.overdue}</div>
+            <div className="text-sm text-slate-600">Tasks</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Row 3: Projects by Deadline Month */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-slate-900">Projects by Deadline</h2>
+          <button
+            onClick={() => router.push('/projects')}
+            className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+          >
+            View projects
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <div className="space-y-4">
+            {projectsByDeadline.map((month) => (
+              <div key={month.month} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                <div className="font-medium text-slate-900">{month.month}</div>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <Flame className="w-6 h-6 text-white" />
+                  <div className="w-32 bg-slate-200 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-red-500 to-orange-600 h-2 rounded-full transition-all duration-300" 
+                      style={{ width: `${(month.count / 7) * 100}%` }}
+                    ></div>
                   </div>
-                  <div>
-                    <p className="font-bold text-slate-900">Quick Actions</p>
-                    <p className="text-sm text-slate-600">Get things done faster</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg flex items-center gap-2">
-                    <Plus className="w-4 h-4" />
-                    New Project
-                  </button>
-                  <button className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-medium hover:from-green-600 hover:to-emerald-700 transition-all duration-200 shadow-lg flex items-center gap-2">
-                    <Target className="w-4 h-4" />
-                    Add Task
-                  </button>
-                  <button className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl font-medium hover:from-purple-600 hover:to-pink-700 transition-all duration-200 shadow-lg flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4" />
-                    Report Issue
-                  </button>
+                  <span className="text-sm font-medium text-slate-900 w-20 text-right">{month.count} projects</span>
                 </div>
               </div>
-              
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-                  className="p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all duration-200"
-                >
-                  {viewMode === 'grid' ? <List className="w-5 h-5" /> : <LayoutGrid className="w-5 h-5" />}
-                </button>
-                <div className="flex items-center bg-slate-100 rounded-xl p-1">
-                  {(['7d', '30d', '90d'] as const).map((period) => (
-                    <button
-                      key={period}
-                      onClick={() => setSelectedPeriod(period)}
-                      className={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
-                        selectedPeriod === period
-                          ? 'bg-white text-indigo-600 shadow-sm'
-                          : 'text-slate-600 hover:text-slate-900'
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Row 4: Team Workload */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-slate-900">Team Workload</h2>
+          <button
+            onClick={() => router.push('/team')}
+            className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+          >
+            View team details
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-slate-900">{teamOverview.totalMembers}</div>
+              <div className="text-sm text-slate-600">Total Members</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">{teamOverview.activeMembers}</div>
+              <div className="text-sm text-slate-600">Active Members</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{Math.round((teamOverview.activeMembers / teamOverview.totalMembers) * 100)}%</div>
+              <div className="text-sm text-slate-600">Active Rate</div>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {teamOverview.workloadDistribution.map((member) => (
+              <div key={member.name} className="flex items-center justify-between">
+                <span className="text-sm font-medium text-slate-900 w-32">{member.name}</span>
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="flex-1 bg-slate-200 rounded-full h-2">
+                    <div 
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        member.workload >= 90 ? 'bg-red-500' :
+                        member.workload >= 75 ? 'bg-orange-500' :
+                        member.workload >= 50 ? 'bg-yellow-500' : 'bg-green-500'
                       }`}
-                    >
-                      {period === '7d' ? '7 days' : period === '30d' ? '30 days' : '90 days'}
-                    </button>
-                  ))}
+                      style={{ width: `${member.workload}%` }}
+                    ></div>
+                  </div>
+                  <span className="text-sm font-medium text-slate-900 w-12 text-right">{member.workload}%</span>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-        
-        {/* Enhanced Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-            <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <FolderKanban className="w-6 h-6 text-white" />
+      </div>
+
+      {/* Row 5: Upcoming Schedule */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-slate-900">Upcoming Schedule</h2>
+          <button
+            onClick={() => router.push('/calendar')}
+            className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+          >
+            View calendar
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+          <div className="space-y-3">
+            {upcomingSchedule.map((item, index) => {
+              const Icon = getScheduleIcon(item.type);
+              return (
+                <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-slate-600" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-slate-900">{item.title}</div>
+                      <div className="text-sm text-slate-600">{item.date}</div>
+                    </div>
+                  </div>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(item.priority)}`}>
+                    {item.priority}
+                  </span>
                 </div>
-                <p className="text-3xl font-bold text-slate-900">24</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-600 font-medium">Active Projects</p>
-                <div className="flex items-center justify-between">
-                  <p className="text-xs text-slate-500">vs last month</p>
-                  <p className="text-sm font-bold text-green-600">+12%</p>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
-          
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-            <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <CheckSquare className="w-6 h-6 text-white" />
-                </div>
-                <p className="text-3xl font-bold text-slate-900">142</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-600 font-medium">Tasks Completed</p>
-                <div className="flex items-center justify-between">
-                  <p className="text-xs text-slate-500">vs last month</p>
-                  <p className="text-sm font-bold text-green-600">+8%</p>
-                </div>
-              </div>
-            </div>
+        </div>
+      </div>
+
+      {/* Row 6: Analytics Snapshot + Reports Summary */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Analytics Snapshot */}
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-slate-900">Analytics Snapshot</h2>
+            <button
+              onClick={() => router.push('/analytics')}
+              className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+            >
+              View analytics
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
-          
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-            <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <p className="text-3xl font-bold text-slate-900">18</p>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="grid grid-cols-2 gap-6">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">{analyticsSnapshot.productivity}%</div>
+                <div className="text-sm text-slate-600">Productivity</div>
               </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-600 font-medium">Team Members</p>
-                <div className="flex items-center justify-between">
-                  <p className="text-xs text-slate-500">vs last month</p>
-                  <p className="text-sm font-bold text-green-600">+2%</p>
-                </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">{analyticsSnapshot.efficiency}%</div>
+                <div className="text-sm text-slate-600">Efficiency</div>
               </div>
-            </div>
-          </div>
-          
-          <div className="group relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-            <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <TrendingUp className="w-6 h-6 text-white" />
-                </div>
-                <p className="text-3xl font-bold text-slate-900">87%</p>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">{analyticsSnapshot.completionRate}%</div>
+                <div className="text-sm text-slate-600">Completion Rate</div>
               </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-600 font-medium">Success Rate</p>
-                <div className="flex items-center justify-between">
-                  <p className="text-xs text-slate-500">vs last month</p>
-                  <p className="text-sm font-bold text-green-600">+5%</p>
-                </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-orange-600">{analyticsSnapshot.teamSatisfaction}%</div>
+                <div className="text-sm text-slate-600">Team Satisfaction</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Charts Section */}
-          <div className="lg:col-span-8 space-y-8">
-            {/* Analytics Header */}
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Analytics Overview</h2>
-                <p className="text-slate-600">Track your performance and team productivity</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <button className="px-4 py-2 bg-white border border-indigo-200 rounded-xl text-sm font-medium text-slate-700 hover:bg-indigo-50 transition-all duration-200 flex items-center gap-2">
-                  <RefreshCw className="w-4 h-4" />
-                  Refresh
-                </button>
-                <button className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl text-sm font-medium hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg flex items-center gap-2">
-                  <Download className="w-4 h-4" />
-                  Export Report
-                </button>
-              </div>
-            </div>
-            
-            {/* Enhanced Charts Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="group bg-gradient-to-br from-white to-indigo-50 rounded-2xl shadow-xl border border-indigo-100 p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900">Project Progress</h3>
-                    <p className="text-sm text-slate-600">Real-time project tracking</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1 text-green-600 bg-green-100 px-2 py-1 rounded-lg">
-                      <ArrowUpRight className="w-3 h-3" />
-                      <span className="text-xs font-bold">12%</span>
-                    </div>
-                    <span className="text-xs text-slate-500">growth</span>
-                  </div>
-                </div>
-                <div className="h-48 flex items-center justify-center bg-white/50 rounded-xl backdrop-blur-sm">
-                  <ProjectProgress />
-                </div>
-              </div>
-              
-              <div className="group bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-xl border border-purple-100 p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900">Task Distribution</h3>
-                    <p className="text-sm text-slate-600">Team workload analysis</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1 text-blue-600 bg-blue-100 px-2 py-1 rounded-lg">
-                      <ArrowUpRight className="w-3 h-3" />
-                      <span className="text-xs font-bold">8%</span>
-                    </div>
-                    <span className="text-xs text-slate-500">efficiency</span>
-                  </div>
-                </div>
-                <div className="h-48 flex items-center justify-center bg-white/50 rounded-xl backdrop-blur-sm">
-                  <TaskDistribution />
-                </div>
-              </div>
-            </div>
-            
-            {/* Enhanced Recent Activity */}
-            <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl shadow-xl border border-slate-100 p-6 hover:shadow-2xl transition-all duration-300">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">Recent Activity</h3>
-                  <p className="text-sm text-slate-600">Latest updates from your team</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold hover:bg-indigo-200 transition-colors">
-                    View All
-                  </button>
-                  <button className="p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
-                    <MoreHorizontal className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-              <RecentActivity />
-            </div>
+        {/* Reports Summary */}
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-slate-900">Recent Reports</h2>
+            <button
+              onClick={() => router.push('/reports')}
+              className="text-sm text-red-600 hover:text-red-700 font-medium flex items-center gap-1"
+            >
+              View all reports
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
-
-          {/* Enhanced Sidebar */}
-          <div className="lg:col-span-4 space-y-8">
-            {/* Upcoming Deadlines */}
-            <div className="bg-gradient-to-br from-white to-orange-50 rounded-2xl shadow-xl border border-orange-100 p-6 hover:shadow-2xl transition-all duration-300">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">Upcoming Deadlines</h3>
-                  <p className="text-sm text-slate-600">Tasks that need attention</p>
-                </div>
-                <div className="w-8 h-8 bg-orange-100 rounded-xl flex items-center justify-center">
-                  <Clock className="w-4 h-4 text-orange-600" />
-                </div>
-              </div>
-              <UpcomingDeadlines />
-            </div>
-
-            {/* Enhanced Quick Actions */}
-            <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl shadow-2xl p-6 text-white relative overflow-hidden">
-              <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-              <div className="relative">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h3 className="text-lg font-bold">Power Tools</h3>
-                    <p className="text-indigo-100 text-sm">Supercharge your workflow</p>
-                  </div>
-                  <Zap className="w-6 h-6 text-yellow-300" />
-                </div>
-                <div className="space-y-3">
-                  <button className="w-full px-4 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white font-bold hover:bg-white/30 transition-all duration-200 flex items-center gap-3">
-                    <Rocket className="w-5 h-5" />
-                    <span>Launch Project</span>
-                    <ChevronRight className="w-4 h-4 ml-auto" />
-                  </button>
-                  <button className="w-full px-4 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white font-bold hover:bg-white/30 transition-all duration-200 flex items-center gap-3">
-                    <MessageSquare className="w-5 h-5" />
-                    <span>Team Chat</span>
-                    <ChevronRight className="w-4 h-4 ml-auto" />
-                  </button>
-                  <button className="w-full px-4 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl text-white font-bold hover:bg-white/30 transition-all duration-200 flex items-center gap-3">
-                    <Share2 className="w-5 h-5" />
-                    <span>Share Report</span>
-                    <ChevronRight className="w-4 h-4 ml-auto" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Enhanced Team Overview */}
-            <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl border border-blue-100 p-6 hover:shadow-2xl transition-all duration-300">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">Team Stars</h3>
-                  <p className="text-sm text-slate-600">Top performers this week</p>
-                </div>
-                <div className="w-8 h-8 bg-blue-100 rounded-xl flex items-center justify-center">
-                  <Trophy className="w-4 h-4 text-blue-600" />
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-3 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl hover:from-yellow-100 hover:to-orange-100 transition-colors border border-yellow-200">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="space-y-3">
+              {recentReports.map((report, index) => (
+                <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
                   <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                        JD
-                      </div>
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
-                        <Star className="w-2 h-2 text-white fill-white" />
-                      </div>
+                    <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
+                      <FileText className="w-4 h-4 text-slate-600" />
                     </div>
                     <div>
-                      <p className="font-bold text-slate-900">John Doe</p>
-                      <p className="text-xs text-slate-600">Project Manager</p>
+                      <div className="font-medium text-slate-900">{report.title}</div>
+                      <div className="text-sm text-slate-600">{report.date}</div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm font-bold text-orange-600">🔥 98</p>
-                    <p className="text-xs text-slate-500">points</p>
-                  </div>
+                  <span className="text-xs text-slate-500 bg-slate-200 px-2 py-1 rounded">
+                    {report.type}
+                  </span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl hover:from-blue-100 hover:to-indigo-100 transition-colors border border-blue-200">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                      MK
-                    </div>
-                    <div>
-                      <p className="font-bold text-slate-900">Mike Kim</p>
-                      <p className="text-xs text-slate-600">Developer</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-bold text-blue-600">⚡ 87</p>
-                    <p className="text-xs text-slate-500">points</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl hover:from-green-100 hover:to-emerald-100 transition-colors border border-green-200">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                      SJ
-                    </div>
-                    <div>
-                      <p className="font-bold text-slate-900">Sarah Johnson</p>
-                      <p className="text-xs text-slate-600">Designer</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-bold text-green-600">💎 76</p>
-                    <p className="text-xs text-slate-500">points</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ConsistentLayout>
   );
 }
