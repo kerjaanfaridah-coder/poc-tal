@@ -287,139 +287,237 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             className="space-y-6"
           >
             <div className="mt-6">
-              {/* Total Budget Input */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Total Budget (IDR)</label>
-                <input
-                  type="number"
-                  value={newProject.budget}
-                  onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value) || 0})}
-                  className="w-full rounded-lg border border-gray-200 px-4 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                  placeholder="Enter total project budget"
-                />
+              {/* Modern Budget Header */}
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Budget Planning</h2>
+                    <p className="text-gray-600">Set your project budget and allocate resources</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-gray-500 mb-1">Total Budget</div>
+                    <div className="text-3xl font-bold text-gray-900">
+                      IDR {newProject.budget.toLocaleString('id-ID')}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modern Total Budget Input */}
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100">
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    💰 Total Project Budget (IDR)
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">IDR</span>
+                    <input
+                      type="number"
+                      value={newProject.budget}
+                      onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value) || 0})}
+                      className="w-full pl-16 pr-4 py-4 text-2xl font-bold bg-white border-2 border-red-200 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-400 transition-all"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
               </div>
 
-              {/* Summary Cards */}
-              <div className="grid grid-cols-3 gap-6 mb-6">
+              {/* Modern Budget Overview Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {/* Budget Planned Card */}
-                <div className="rounded-xl border border-gray-200 p-6 bg-white hover:shadow-sm transition">
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center mr-3">
-                      <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                       </svg>
                     </div>
-                    <span className="text-sm text-gray-500">Budget Planned</span>
+                    <div className="text-right">
+                      <div className="text-sm text-white/80">Total</div>
+                      <div className="text-2xl font-bold">100%</div>
+                    </div>
                   </div>
-                  <p className="text-3xl font-semibold tracking-tight text-gray-900">
+                  <div className="text-sm text-white/90 mb-1">Budget Planned</div>
+                  <div className="text-3xl font-bold">
                     IDR {newProject.budget.toLocaleString('id-ID')}
-                  </p>
+                  </div>
                 </div>
 
                 {/* Spent Card */}
-                <div className="rounded-xl border border-gray-200 p-6 bg-white hover:shadow-sm transition">
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3">
-                      <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                     </div>
-                    <span className="text-sm text-gray-500">Spent</span>
+                    <div className="text-right">
+                      <div className="text-sm text-white/80">Used</div>
+                      <div className="text-2xl font-bold">
+                        {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}%
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-3xl font-semibold tracking-tight text-red-500">
+                  <div className="text-sm text-white/90 mb-1">Amount Spent</div>
+                  <div className="text-3xl font-bold">
                     IDR {((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)).toLocaleString('id-ID')}
-                  </p>
-                  <p className="text-sm text-gray-500 mt-1">
-                    {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}% of total
-                  </p>
+                  </div>
                 </div>
 
                 {/* Remaining Card */}
-                <div className="rounded-xl border border-gray-200 p-6 bg-white hover:shadow-sm transition">
-                  <div className="flex items-center mb-3">
-                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
-                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <span className="text-sm text-gray-500">Remaining</span>
+                    <div className="text-right">
+                      <div className="text-sm text-white/80">Left</div>
+                      <div className="text-2xl font-bold">
+                        {newProject.budget > 0 ? Math.round(((newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))) / newProject.budget) * 100) : 0}%
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-3xl font-semibold tracking-tight text-green-600">
+                  <div className="text-sm text-white/90 mb-1">Remaining</div>
+                  <div className="text-3xl font-bold">
                     IDR {(newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))).toLocaleString('id-ID')}
-                  </p>
-                  <p className="text-sm text-gray-500 mt-1">
-                    {newProject.budget > 0 ? Math.round(((newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))) / newProject.budget) * 100) : 0}% available
-                  </p>
+                  </div>
                 </div>
               </div>
 
-              {/* Budget Usage Overview */}
-              <div className="mb-6">
-                <div className="text-sm text-gray-500 mb-2">Budget Usage Overview</div>
-                <div className="h-2 rounded-full bg-gray-100">
-                  <div 
-                    className="h-2 rounded-full bg-gradient-to-r from-red-400 to-red-600"
-                    style={{ 
-                      width: newProject.budget > 0 ? 
-                        Math.min((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100, 100) + '%' 
-                      : '0%'
-                    }}
-                  ></div>
+              {/* Modern Progress Bar */}
+              <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Budget Usage</h3>
+                  <span className="text-sm font-medium text-gray-600">
+                    {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}% Used
+                  </span>
+                </div>
+                <div className="relative">
+                  <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-red-400 via-red-500 to-red-600 rounded-full transition-all duration-500 ease-out"
+                      style={{ 
+                        width: newProject.budget > 0 ? 
+                          Math.min((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100, 100) + '%' 
+                        : '0%'
+                      }}
+                    ></div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-4 rounded-full animate-pulse"></div>
                 </div>
               </div>
 
-              {/* Budget Breakdown */}
-              <div className="bg-white rounded-xl border border-gray-200">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Budget Breakdown</h3>
-                  
-                  <div className="space-y-1">
-                    {/* Outsource */}
-                    <div className="flex items-center justify-between py-4 border-b border-gray-100">
-                      <span className="text-sm text-gray-700">Outsource</span>
-                      <input
-                        type="number"
-                        value={newProject.outsource || 0}
-                        onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
-                        className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                        placeholder="0"
-                      />
+              {/* Modern Budget Breakdown */}
+              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900">💸 Budget Breakdown</h3>
+                </div>
+                <div className="p-6 space-y-4">
+                  {/* Outsource */}
+                  <div className="group">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-red-300 hover:bg-red-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A9.001 9.001 0 0112 21a9.001 9.001 0 01-9-9.255A9.001 9.001 0 0112 3c4.474 0 8.268 3.12 9.255 7.255z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900">Outsource</div>
+                          <div className="text-sm text-gray-500">External services & contractors</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-500">IDR</span>
+                        <input
+                          type="number"
+                          value={newProject.outsource || 0}
+                          onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
+                          className="w-32 text-right font-semibold bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                          placeholder="0"
+                        />
+                      </div>
                     </div>
+                  </div>
 
-                    {/* Cost Other */}
-                    <div className="flex items-center justify-between py-4 border-b border-gray-100">
-                      <span className="text-sm text-gray-700">Cost Other</span>
-                      <input
-                        type="number"
-                        value={newProject.costOther || 0}
-                        onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
-                        className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                        placeholder="0"
-                      />
+                  {/* Cost Other */}
+                  <div className="group">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
+                          <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900">Cost Other</div>
+                          <div className="text-sm text-gray-500">Miscellaneous expenses</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-500">IDR</span>
+                        <input
+                          type="number"
+                          value={newProject.costOther || 0}
+                          onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
+                          className="w-32 text-right font-semibold bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                          placeholder="0"
+                        />
+                      </div>
                     </div>
+                  </div>
 
-                    {/* Cost Overtime */}
-                    <div className="flex items-center justify-between py-4 border-b border-gray-100">
-                      <span className="text-sm text-gray-700">Cost Overtime</span>
-                      <input
-                        type="number"
-                        value={newProject.costOvertime || 0}
-                        onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
-                        className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                        placeholder="0"
-                      />
+                  {/* Cost Overtime */}
+                  <div className="group">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                          <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900">Cost Overtime</div>
+                          <div className="text-sm text-gray-500">Extra hours & overtime pay</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-500">IDR</span>
+                        <input
+                          type="number"
+                          value={newProject.costOvertime || 0}
+                          onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
+                          className="w-32 text-right font-semibold bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                          placeholder="0"
+                        />
+                      </div>
                     </div>
+                  </div>
 
-                    {/* Cost Man Power */}
-                    <div className="flex items-center justify-between py-4">
-                      <span className="text-sm text-gray-700">Cost Man Power</span>
-                      <input
-                        type="number"
-                        value={newProject.costManPower || 0}
-                        onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
-                        className="w-40 text-right rounded-lg border border-gray-200 px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
-                        placeholder="0"
-                      />
+                  {/* Cost Man Power */}
+                  <div className="group">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                          <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900">Cost Man Power</div>
+                          <div className="text-sm text-gray-500">Team salaries & wages</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-500">IDR</span>
+                        <input
+                          type="number"
+                          value={newProject.costManPower || 0}
+                          onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
+                          className="w-32 text-right font-semibold bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                          placeholder="0"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
