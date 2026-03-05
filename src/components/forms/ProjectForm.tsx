@@ -627,8 +627,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
-                            value={taskNotes[''] || ''}
-                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            value={taskNotes['survey'] || ''}
+                            onChange={(e) => handleNotesChange('survey', e.target.value)}
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
                             placeholder="Add notes..."
                           />
@@ -684,8 +684,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
-                            value={taskNotes[''] || ''}
-                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            value={taskNotes['material-approval'] || ''}
+                            onChange={(e) => handleNotesChange('material-approval', e.target.value)}
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
                             placeholder="Add notes..."
                           />
@@ -741,8 +741,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
-                            value={taskNotes[''] || ''}
-                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            value={taskNotes['cable-delivery'] || ''}
+                            onChange={(e) => handleNotesChange('cable-delivery', e.target.value)}
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
                             placeholder="Add notes..."
                           />
@@ -798,8 +798,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
-                            value={taskNotes[''] || ''}
-                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            value={taskNotes['cabling-installation'] || ''}
+                            onChange={(e) => handleNotesChange('cabling-installation', e.target.value)}
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
                             placeholder="Add notes..."
                           />
@@ -855,8 +855,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
-                            value={taskNotes[''] || ''}
-                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            value={taskNotes['marking-device'] || ''}
+                            onChange={(e) => handleNotesChange('marking-device', e.target.value)}
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
                             placeholder="Add notes..."
                           />
@@ -912,8 +912,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
-                            value={taskNotes[''] || ''}
-                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            value={taskNotes['report-progress-2'] || ''}
+                            onChange={(e) => handleNotesChange('report-progress-2', e.target.value)}
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
                             placeholder="Add notes..."
                           />
@@ -969,8 +969,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
                             type="text"
-                            value={taskNotes[''] || ''}
-                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            value={taskNotes['qc-cabling'] || ''}
+                            onChange={(e) => handleNotesChange('qc-cabling', e.target.value)}
                             className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
                             placeholder="Add notes..."
                           />
