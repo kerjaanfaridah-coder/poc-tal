@@ -506,16 +506,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           <span className={getCOINColor('C')}>{getCOINValues('kick-off').C}</span>
@@ -593,16 +593,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -668,16 +668,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -750,16 +750,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -825,16 +825,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -900,16 +900,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -969,16 +969,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1038,16 +1038,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1107,16 +1107,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1176,16 +1176,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1252,16 +1252,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1321,16 +1321,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1390,16 +1390,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1459,16 +1459,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1528,16 +1528,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1597,16 +1597,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1666,16 +1666,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1735,16 +1735,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1811,16 +1811,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1880,16 +1880,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -1949,16 +1949,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2018,16 +2018,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2087,16 +2087,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2156,16 +2156,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2225,16 +2225,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
@@ -2294,16 +2294,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues(taskId).C}</span>
+                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('O')}>{getCOINValues(taskId).O}</span>
+                          <span className={getCOINColor('O')}>{getCOINValues('shop-drawing').O}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('I')}>{getCOINValues(taskId).I}</span>
+                          <span className={getCOINColor('I')}>{getCOINValues('shop-drawing').I}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('N')}>{getCOINValues(taskId).N}</span>
+                          <span className={getCOINColor('N')}>{getCOINValues('shop-drawing').N}</span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <input 
