@@ -162,7 +162,7 @@ export default function TeamPage() {
   };
 
   const getPerformanceBadge = (performance: number) => {
-    if (performance >= 95) return { color: 'bg-purple-100 text-purple-800 border-purple-200', icon: <Crown className="w-3 h-3" />, text: 'Top Performer' };
+    if (performance >= 95) return { color: 'bg-red-100 text-red-800 border-red-200', icon: <Crown className="w-3 h-3" />, text: 'Top Performer' };
     if (performance >= 90) return { color: 'bg-blue-100 text-blue-800 border-blue-200', icon: <Star className="w-3 h-3" />, text: 'Excellent' };
     if (performance >= 85) return { color: 'bg-green-100 text-green-800 border-green-200', icon: <Trophy className="w-3 h-3" />, text: 'Great' };
     return { color: 'bg-orange-100 text-orange-800 border-orange-200', icon: <Target className="w-3 h-3" />, text: 'Good' };
@@ -229,13 +229,13 @@ export default function TeamPage() {
         </div>
 
         <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
           <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Zap className="w-6 h-6 text-white" />
               </div>
-              <div className="flex items-center gap-1 bg-purple-100 text-purple-700 px-2 py-1 rounded-lg text-xs font-bold">
+              <div className="flex items-center gap-1 bg-red-100 text-red-700 px-2 py-1 rounded-lg text-xs font-bold">
                 <ArrowUpRight className="w-3 h-3" />
                 PRO
               </div>
@@ -284,7 +284,7 @@ export default function TeamPage() {
       </div>
 
       {/* Search and Actions */}
-      <div className="bg-white rounded-2xl shadow-lg border border-indigo-100 p-6 mb-8">
+      <div className="bg-white rounded-2xl shadow-lg border border-red-100 p-6 mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -294,7 +294,7 @@ export default function TeamPage() {
                 placeholder="Search team members..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent w-80"
+                className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent w-80"
               />
             </div>
             <button className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 transition-all duration-200 flex items-center gap-2">
@@ -309,7 +309,7 @@ export default function TeamPage() {
                   onClick={() => setSelectedRole(role)}
                   className={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${
                     selectedRole === role
-                      ? 'bg-white text-indigo-600 shadow-sm'
+                      ? 'bg-white text-red-600 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -321,7 +321,7 @@ export default function TeamPage() {
           
           <button
             onClick={handleNewMember}
-            className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-bold hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg flex items-center gap-2"
+            className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2"
           >
             <Plus className="w-5 h-5" />
             Add Member
@@ -338,7 +338,7 @@ export default function TeamPage() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="relative">
-                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg">
+                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg">
                       {member.avatar}
                     </div>
                     <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-md">
@@ -394,7 +394,7 @@ export default function TeamPage() {
                   <div className="flex items-center gap-2">
                     <div className="flex-1 bg-slate-200 rounded-full h-2">
                       <div 
-                        className="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full transition-all duration-300" 
+                        className="bg-gradient-to-r from-red-500 to-orange-600 h-2 rounded-full transition-all duration-300" 
                         style={{ width: `${member.performance}%` }}
                       ></div>
                     </div>
@@ -407,7 +407,7 @@ export default function TeamPage() {
                 <p className="text-sm font-medium text-slate-700 mb-2">Skills</p>
                 <div className="flex flex-wrap gap-2">
                   {member.skills.map((skill, index) => (
-                    <span key={index} className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-lg text-xs font-medium">
+                    <span key={index} className="px-2 py-1 bg-red-100 text-red-800 rounded-lg text-xs font-medium">
                       {skill}
                     </span>
                   ))}
@@ -420,10 +420,10 @@ export default function TeamPage() {
                   <span className="font-medium text-slate-700">{member.department}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="p-2 text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition-colors">
+                  <button className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
                     <Mail className="w-4 h-4" />
                   </button>
-                  <button className="p-2 text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 rounded-lg transition-colors">
+                  <button className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
                     <Phone className="w-4 h-4" />
                   </button>
                   <button
@@ -449,7 +449,7 @@ export default function TeamPage() {
           <p className="text-slate-600 mb-6">Get started by adding your first team member</p>
           <button
             onClick={handleNewMember}
-            className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-bold hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg flex items-center gap-2 mx-auto"
+            className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2 mx-auto"
           >
             <Plus className="w-5 h-5" />
             Add Member
