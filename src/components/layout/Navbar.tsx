@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Bell, User, Settings, LogOut, ChevronDown } from 'lucide-react';
+import { Search, Bell, User, LogOut, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
@@ -50,11 +50,6 @@ export default function Navbar() {
               <button className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
                 <User className="w-4 h-4" />
                 Profile
-              </button>
-              
-              <button className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
-                <Settings className="w-4 h-4" />
-                Settings
               </button>
               
               <div className="mt-1 pt-1">

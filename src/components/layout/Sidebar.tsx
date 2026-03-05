@@ -1,14 +1,14 @@
 'use client';
 
 import { 
-  LayoutDashboard, 
+  Home, 
+  Users, 
   FolderKanban, 
   CheckSquare, 
-  Users, 
   BarChart3, 
   Calendar, 
-  FileText, 
-  Settings 
+  FileText,
+  LayoutDashboard
 } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -20,7 +20,6 @@ const menuItems = [
   { icon: BarChart3, label: 'Analytics', href: '/analytics' },
   { icon: Calendar, label: 'Calendar', href: '/calendar' },
   { icon: FileText, label: 'Reports', href: '/reports' },
-  { icon: Settings, label: 'Settings', href: '/settings' },
 ];
 
 export default function Sidebar() {
