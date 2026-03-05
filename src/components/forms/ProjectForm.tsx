@@ -393,7 +393,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">1. Kick off Meeting</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Kick off Meeting</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['kick-off'] || 'Project Manager'}
@@ -442,7 +442,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">2. Produce Shop Drawing</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Produce Shop Drawing</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['shop-drawing'] || 'Designed'}
@@ -491,7 +491,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">3. Project ON DP 1</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Project ON DP 1</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['dp1'] || 'Finance AR'}
@@ -547,7 +547,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">4. Survey</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Survey</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['survey'] || 'Site Manager'}
@@ -596,7 +596,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">5. Material Approval</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Material Approval</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['material-approval'] || 'Warehouse'}
@@ -645,7 +645,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">6. Cable Delivery</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Cable Delivery</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['cable-delivery'] || 'Warehouse'}
@@ -694,7 +694,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">7. Cabling Installation</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Cabling Installation</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['cabling-installation'] || 'Technician'}
@@ -743,7 +743,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">8. Marking Device</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Marking Device</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['marking-device'] || 'Technician'}
@@ -792,7 +792,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">9. Report Progress to Owner</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Report Progress to Owner</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['report-progress-2'] || 'Project Manager'}
@@ -841,7 +841,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">10. QC Cabling & Placement</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">QC Cabling & Placement</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['qc-cabling'] || 'QC'}
@@ -897,7 +897,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">11. Payment DP II</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Payment DP II</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['payment-dp2'] || 'Finance AR'}
@@ -946,7 +946,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">12. Device Delivery</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Device Delivery</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['device-delivery'] || 'Warehouse'}
@@ -995,7 +995,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">13. Device Installation</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Device Installation</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['device-installation'] || 'Technician'}
@@ -1044,7 +1044,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">14. QC Installation & Racking</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">QC Installation & Racking</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['qc-installation'] || 'QC'}
@@ -1093,7 +1093,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">15. Report Progress to Owner</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Report Progress to Owner</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['report-progress-3'] || 'Project Manager'}
@@ -1142,7 +1142,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">16. Integration - Setting & Configuration</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Integration - Setting & Configuration</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['integration'] || 'Engineer'}
@@ -1191,7 +1191,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">17. Testing Function</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Testing Function</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['testing'] || 'Engineer'}
@@ -1240,7 +1240,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">18. QC Integration</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">QC Integration</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['qc-integration'] || 'QC'}
@@ -1296,7 +1296,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">19. Handover Document</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Handover Document</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['handover-doc'] || 'Project Support'}
@@ -1345,7 +1345,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">20. Test Commisioning</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Test Commisioning</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['test-commissioning'] || 'Engineer'}
@@ -1394,7 +1394,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">21. Final QC</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Final QC</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['final-qc'] || 'QC'}
@@ -1443,7 +1443,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">22. Function/ Defect Checklist</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Function/ Defect Checklist</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['defect-checklist'] || 'QC'}
@@ -1492,7 +1492,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">23. Repair Defect</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Repair Defect</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['repair-defect'] || 'Technician'}
@@ -1541,7 +1541,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">24. Training</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Training</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['training'] || 'Project Manager'}
@@ -1590,7 +1590,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">25. BAST</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">BAST</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['bast'] || 'Project Manager'}
@@ -1639,7 +1639,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         </td>
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">26. Maintenance</td>
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Maintenance</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <select 
                             value={taskAssignments['maintenance'] || 'Maintenance'}
