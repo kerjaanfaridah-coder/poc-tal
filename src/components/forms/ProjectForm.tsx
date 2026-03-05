@@ -306,20 +306,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 const amountSpentPercentage = totalBudget > 0 ? Math.round((amountSpent / totalBudget) * 100) : 0;
                 const remainingPercentage = totalBudget > 0 ? Math.round((remaining / totalBudget) * 100) : 0;
 
-                // Helper function to format Indonesian currency with dots
-                const formatIDR = (value: number | string) => {
-                  const numValue = typeof value === 'string' ? parseInt(value.replace(/\./g, '')) || 0 : value;
-                  return numValue.toLocaleString('id-ID');
-                };
-
-                // Helper function to format input value while typing
-                const formatInputValue = (value: string) => {
-                  // Remove all non-digit characters
-                  const cleanValue = value.replace(/\D/g, '');
-                  // Add dots as thousands separators
-                  return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                };
-
                 return (
                   <>
                     {/* Stats Cards - Following Projects Page Design */}
@@ -337,7 +323,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <p className="text-sm font-bold text-slate-600 font-semibold">Budget Planned</p>
                             <div className="flex items-center justify-between">
                               <p className="text-xs text-slate-500">Total allocation</p>
-                              <p className="text-sm font-bold text-blue-600">IDR {formatIDR(totalBudget)}</p>
+                              <p className="text-sm font-bold text-blue-600">IDR {totalBudget.toLocaleString('id-ID')}</p>
                             </div>
                           </div>
                         </div>
@@ -356,7 +342,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <p className="text-sm font-bold text-slate-600 font-semibold">Amount Spent</p>
                             <div className="flex items-center justify-between">
                               <p className="text-xs text-slate-500">vs budget</p>
-                              <p className="text-sm font-bold text-red-600">IDR {formatIDR(amountSpent)}</p>
+                              <p className="text-sm font-bold text-red-600">IDR {amountSpent.toLocaleString('id-ID')}</p>
                             </div>
                           </div>
                         </div>
@@ -375,7 +361,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             <p className="text-sm font-bold text-slate-600 font-semibold">Remaining</p>
                             <div className="flex items-center justify-between">
                               <p className="text-xs text-slate-500">vs budget</p>
-                              <p className="text-sm font-bold text-green-600">IDR {formatIDR(remaining)}</p>
+                              <p className="text-sm font-bold text-green-600">IDR {remaining.toLocaleString('id-ID')}</p>
                             </div>
                           </div>
                         </div>
@@ -397,18 +383,12 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           <div className="relative">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">IDR</span>
                             <input
-                              type="text"
-                              value={formatInputValue(newProject.budget?.toString() || '')}
-                              onChange={(e) => {
-                                const cleanValue = e.target.value.replace(/\D/g, '');
-                                setNewProject({...newProject, budget: parseInt(cleanValue) || 0});
-                              }}
+                              type="number"
+                              value={newProject.budget}
+                              onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value) || 0})}
                               className="w-full pl-16 pr-4 py-3 text-xl font-bold bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                               placeholder="0"
                             />
-                            <div className="absolute -top-8 left-0 text-xs text-slate-500">
-                              IDR {formatInputValue(newProject.budget?.toString() || '0')}
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -440,24 +420,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <div className="relative">
-                                <input
-                                  type="text"
-                                  value={formatInputValue(newProject.outsource?.toString() || '')}
-                                  onChange={(e) => {
-                                    const cleanValue = e.target.value.replace(/\D/g, '');
-                                    setNewProject({...newProject, outsource: parseInt(cleanValue) || 0});
-                                  }}
-                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pl-12"
-                                  placeholder="IDR 0"
-                                />
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold pointer-events-none">
-                                  IDR
-                                </span>
-                                <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  {formatInputValue(newProject.outsource?.toString() || '0')}
-                                </div>
-                              </div>
+                              <span className="text-sm text-slate-500">IDR</span>
+                              <input
+                                type="number"
+                                value={newProject.outsource || 0}
+                                onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
+                                className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                placeholder="0"
+                              />
                             </div>
                           </div>
                         </div>
@@ -477,24 +447,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <div className="relative">
-                                <input
-                                  type="text"
-                                  value={formatInputValue(newProject.costOther?.toString() || '')}
-                                  onChange={(e) => {
-                                    const cleanValue = e.target.value.replace(/\D/g, '');
-                                    setNewProject({...newProject, costOther: parseInt(cleanValue) || 0});
-                                  }}
-                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pl-12"
-                                  placeholder="IDR 0"
-                                />
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold pointer-events-none">
-                                  IDR
-                                </span>
-                                <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  {formatInputValue(newProject.costOther?.toString() || '0')}
-                                </div>
-                              </div>
+                              <span className="text-sm text-slate-500">IDR</span>
+                              <input
+                                type="number"
+                                value={newProject.costOther || 0}
+                                onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
+                                className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                placeholder="0"
+                              />
                             </div>
                           </div>
                         </div>
@@ -514,24 +474,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <div className="relative">
-                                <input
-                                  type="text"
-                                  value={formatInputValue(newProject.costOvertime?.toString() || '')}
-                                  onChange={(e) => {
-                                    const cleanValue = e.target.value.replace(/\D/g, '');
-                                    setNewProject({...newProject, costOvertime: parseInt(cleanValue) || 0});
-                                  }}
-                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pl-12"
-                                  placeholder="IDR 0"
-                                />
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold pointer-events-none">
-                                  IDR
-                                </span>
-                                <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  {formatInputValue(newProject.costOvertime?.toString() || '0')}
-                                </div>
-                              </div>
+                              <span className="text-sm text-slate-500">IDR</span>
+                              <input
+                                type="number"
+                                value={newProject.costOvertime || 0}
+                                onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
+                                className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                placeholder="0"
+                              />
                             </div>
                           </div>
                         </div>
@@ -551,24 +501,14 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </div>
                             </div>
                             <div className="flex items-center gap-3">
-                              <div className="relative">
-                                <input
-                                  type="text"
-                                  value={formatInputValue(newProject.costManPower?.toString() || '')}
-                                  onChange={(e) => {
-                                    const cleanValue = e.target.value.replace(/\D/g, '');
-                                    setNewProject({...newProject, costManPower: parseInt(cleanValue) || 0});
-                                  }}
-                                  className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent pl-12"
-                                  placeholder="IDR 0"
-                                />
-                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-semibold pointer-events-none">
-                                  IDR
-                                </span>
-                                <div className="absolute -top-6 right-0 text-xs text-slate-500 whitespace-nowrap">
-                                  {formatInputValue(newProject.costManPower?.toString() || '0')}
-                                </div>
-                              </div>
+                              <span className="text-sm text-slate-500">IDR</span>
+                              <input
+                                type="number"
+                                value={newProject.costManPower || 0}
+                                onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
+                                className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                placeholder="0"
+                              />
                             </div>
                           </div>
                         </div>
@@ -999,64 +939,124 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            {/* Issue Tracker - Modern Visual UX */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-gray-900">Issue Tracker</h2>
-              </div>
-
-              {/* Modern Summary with Badges */}
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <div className="flex items-center gap-6 text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="text-gray-600 font-medium">Total:</span>
-                    <span className="text-xl font-bold text-gray-900">
-                      {newProject.issues?.length || 0}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-500">🔴</span>
-                    <span className="text-gray-600 font-medium">Open:</span>
-                    <span className="text-lg font-bold text-red-600">
-                      {newProject.issues?.filter(issue => issue.status === 'open').length || 0}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-blue-500">🔵</span>
-                    <span className="text-gray-600 font-medium">In Progress:</span>
-                    <span className="text-lg font-bold text-blue-600">
-                      {newProject.issues?.filter(issue => issue.status === 'in-progress').length || 0}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-green-500">🟢</span>
-                    <span className="text-gray-600 font-medium">Resolved:</span>
-                    <span className="text-lg font-bold text-green-600">
-                      {newProject.issues?.filter(issue => issue.status === 'resolved' || issue.status === 'closed').length || 0}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Balanced Quick Add Form */}
+            {/* Modern Issue Header */}
+            <div className="mb-8">
               <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Plus className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm font-medium text-gray-700">Add Issue</span>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">🚨 Issue</h2>
+                  <p className="text-gray-600">Track and manage project issues and bugs</p>
                 </div>
-                <div className="grid grid-cols-12 gap-3">
-                  <div className="col-span-6">
+              </div>
+
+              {/* Stats Cards - Following Projects Page Design */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">📋</span>
+                      </div>
+                      <p className="text-3xl font-bold text-slate-900">{newProject.issues?.length || 0}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-slate-600 font-semibold">Total Issues</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-500">all issues</p>
+                        <p className="text-sm font-bold text-blue-600">Active</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">🔴</span>
+                      </div>
+                      <p className="text-3xl font-bold text-slate-900">
+                        {newProject.issues?.filter(issue => issue.status === 'open').length || 0}
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-slate-600 font-semibold">Open</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-500">need attention</p>
+                        <p className="text-sm font-bold text-red-600">Urgent</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">🔵</span>
+                      </div>
+                      <p className="text-3xl font-bold text-slate-900">
+                        {newProject.issues?.filter(issue => issue.status === 'in-progress').length || 0}
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-slate-600 font-semibold">In Progress</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-500">being worked</p>
+                        <p className="text-sm font-bold text-blue-600">Active</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">🟢</span>
+                      </div>
+                      <p className="text-3xl font-bold text-slate-900">
+                        {newProject.issues?.filter(issue => issue.status === 'resolved' || issue.status === 'closed').length || 0}
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-slate-600 font-semibold">Resolved</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-500">completed</p>
+                        <p className="text-sm font-bold text-green-600">Done</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add Issue Section - Following Projects Page Search/Actions Style */}
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6 mb-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <Plus className="w-4 h-4 text-white" />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900">Add New Issue</h3>
+                </div>
+                
+                <div className="flex flex-col lg:flex-row lg:items-end gap-6">
+                  <div className="flex-1">
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Issue Title</label>
                     <input
                       type="text"
                       placeholder="Enter issue title..."
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                       id="quick-add-issue-title"
                     />
                   </div>
-                  <div className="col-span-2">
+                  <div className="w-32">
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Severity</label>
                     <select
                       id="quick-add-issue-severity"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                       defaultValue="medium"
                     >
                       <option value="low">Low</option>
@@ -1064,15 +1064,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       <option value="high">High</option>
                     </select>
                   </div>
-                  <div className="col-span-3">
+                  <div className="flex-1 lg:w-48">
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Assignee</label>
                     <input
                       type="text"
-                      placeholder="Assignee..."
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                      placeholder="Assignee name..."
+                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                       id="quick-add-issue-assignee"
                     />
                   </div>
-                  <div className="col-span-1">
+                  <div className="lg:w-24">
                     <button
                       type="button"
                       onClick={() => {
@@ -1094,93 +1095,105 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         (document.getElementById('quick-add-issue-title') as HTMLInputElement).value = '';
                         (document.getElementById('quick-add-issue-assignee') as HTMLInputElement).value = '';
                       }}
-                      className="w-full px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm font-medium transition-colors"
+                      className="w-full px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 text-sm font-bold transition-all duration-200 shadow-lg hover:shadow-xl"
                     >
-                      Add
+                      Add Issue
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Modern Issue Table */}
+              {/* Issue Table - Clean Data List */}
               {newProject.issues.length > 0 && (
-                <div className="border border-gray-200 rounded-lg overflow-hidden">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="bg-gray-50 border-b border-gray-200">
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Title</th>
-                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Severity</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Assignee</th>
-                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                        <th className="px-4 py-3 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {newProject.issues.map((issue, index) => {
-                        const severityColor = issue.severity === 'high' ? 'bg-red-100 text-red-800 border-red-200' :
-                                           issue.severity === 'medium' ? 'bg-orange-100 text-orange-800 border-orange-200' :
-                                           'bg-gray-100 text-gray-800 border-gray-200';
-                        const severityIcon = issue.severity === 'high' ? '🔴' :
-                                           issue.severity === 'medium' ? '🟠' : '⚪';
-                        
-                        const statusColor = issue.status === 'open' ? 'bg-red-100 text-red-800 border-red-200' :
-                                          issue.status === 'in-progress' ? 'bg-blue-100 text-blue-800 border-blue-200' :
-                                          issue.status === 'resolved' ? 'bg-green-100 text-green-800 border-green-200' :
-                                          'bg-gray-100 text-gray-800 border-gray-200';
-                        const statusIcon = issue.status === 'open' ? '🔴' :
-                                          issue.status === 'in-progress' ? '🔵' : '🟢';
-                        
-                        return (
-                          <tr key={issue.id} className="hover:bg-gray-50 transition-colors">
-                            <td className="px-4 py-3">
-                              <div className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
-                                {issue.title || 'Untitled Issue'}
-                              </div>
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${severityColor}`}>
-                                <span>{severityIcon}</span>
-                                {issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1)}
-                              </span>
-                            </td>
-                            <td className="px-4 py-3">
-                              <div className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
-                                {issue.assignedTo || 'Unassigned'}
-                              </div>
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              <select
-                                value={issue.status}
-                                onChange={(e) => {
-                                  const updatedIssues = [...newProject.issues]
-                                  updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
-                                  setNewProject({...newProject, issues: updatedIssues})
-                                }}
-                                className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border cursor-pointer ${statusColor}`}
-                              >
-                                <option value="open" className="bg-red-100 text-red-800">🔴 Open</option>
-                                <option value="in-progress" className="bg-blue-100 text-blue-800">🔵 In Progress</option>
-                                <option value="resolved" className="bg-green-100 text-green-800">🟢 Resolved</option>
-                                <option value="closed" className="bg-gray-100 text-gray-800">⚪ Closed</option>
-                              </select>
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const updatedIssues = newProject.issues.filter((_, issueIndex) => issueIndex !== index)
-                                  setNewProject({...newProject, issues: updatedIssues})
-                                }}
-                                className="text-red-500 hover:text-red-600 text-lg"
-                              >
-                                🗑
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                  <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
+                        <span className="text-lg">🚨</span>
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-900">All Issues</h3>
+                    </div>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-slate-50 border-b border-slate-200">
+                          <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ minWidth: '200px' }}>Title</th>
+                          <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Severity</th>
+                          <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '180px' }}>Assignee</th>
+                          <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '140px' }}>Status</th>
+                          <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider" style={{ width: '120px' }}>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-200">
+                        {newProject.issues.map((issue, index) => {
+                          const severityColor = issue.severity === 'high' ? 'bg-red-100 text-red-800 border-red-200' :
+                                             issue.severity === 'medium' ? 'bg-orange-100 text-orange-800 border-orange-200' :
+                                             'bg-gray-100 text-gray-800 border-gray-200';
+                          const severityIcon = issue.severity === 'high' ? '🔴' :
+                                             issue.severity === 'medium' ? '🟠' : '⚪';
+                          
+                          const statusColor = issue.status === 'open' ? 'bg-red-100 text-red-800 border-red-200' :
+                                            issue.status === 'in-progress' ? 'bg-blue-100 text-blue-800 border-blue-200' :
+                                            issue.status === 'resolved' ? 'bg-green-100 text-green-800 border-green-200' :
+                                            'bg-gray-100 text-gray-800 border-gray-200';
+                          const statusIcon = issue.status === 'open' ? '🔴' :
+                                            issue.status === 'in-progress' ? '🔵' : '🟢';
+                          
+                          return (
+                            <tr key={issue.id} className="hover:bg-slate-50 transition-colors">
+                              <td className="px-6 py-4">
+                                <div className="text-sm font-medium text-slate-900">
+                                  {issue.title || 'Untitled Issue'}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 text-center">
+                                <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border ${severityColor}`}>
+                                  <span>{severityIcon}</span>
+                                  {issue.severity.charAt(0).toUpperCase() + issue.severity.slice(1)}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className="text-sm text-slate-900">
+                                  {issue.assignedTo || 'Unassigned'}
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 text-center">
+                                <select
+                                  value={issue.status}
+                                  onChange={(e) => {
+                                    const updatedIssues = [...newProject.issues]
+                                    updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
+                                    setNewProject({...newProject, issues: updatedIssues})
+                                  }}
+                                  className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border cursor-pointer ${statusColor}`}
+                                >
+                                  <option value="open" className="bg-red-100 text-red-800">🔴 Open</option>
+                                  <option value="in-progress" className="bg-blue-100 text-blue-800">🔵 In Progress</option>
+                                  <option value="resolved" className="bg-green-100 text-green-800">🟢 Resolved</option>
+                                  <option value="closed" className="bg-gray-100 text-gray-800">⚪ Closed</option>
+                                </select>
+                              </td>
+                              <td className="px-6 py-4 text-center">
+                                <div className="flex items-center justify-center gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const updatedIssues = newProject.issues.filter((_, issueIndex) => issueIndex !== index)
+                                      setNewProject({...newProject, issues: updatedIssues})
+                                    }}
+                                    className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 text-xs font-semibold transition-all duration-200"
+                                  >
+                                    🗑️
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
             </div>
@@ -1282,9 +1295,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             </div>
           </>
         ) : (
-          // Other steps - show card title (except Budget step)
+          // Other steps - show card title (except Budget and Issue steps)
           <>
-            {currentStep !== 3 && (
+            {currentStep !== 3 && currentStep !== 5 && (
               <CardHeader>
                 <CardTitle className="text-xl font-semibold text-gray-900">
                   {steps[currentStep - 1].name}
