@@ -183,15 +183,13 @@ export default function TeamPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Users className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">{teamMembers.length}</p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">{teamMembers.length}</p>
-                <p className="text-sm text-slate-600 font-medium">Total Members</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+3</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">Total Members</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">this month</p>
+                <p className="text-sm font-bold text-green-600">+3</p>
               </div>
             </div>
           </div>
@@ -204,17 +202,15 @@ export default function TeamPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Shield className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {teamMembers.filter(m => m.status === 'active').length}
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {teamMembers.filter(m => m.status === 'active').length}
-                </p>
-                <p className="text-sm text-slate-600 font-medium">Active Now</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+2</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">Active Now</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs yesterday</p>
+                <p className="text-sm font-bold text-green-600">+2</p>
               </div>
             </div>
           </div>
@@ -227,17 +223,15 @@ export default function TeamPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Zap className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {teamMembers.filter(m => m.performance >= 90).length}
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {teamMembers.filter(m => m.performance >= 90).length}
-                </p>
-                <p className="text-sm text-slate-600 font-medium">Top Performers</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+15%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">Top Performers</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
+                <p className="text-sm font-bold text-green-600">+15%</p>
               </div>
             </div>
           </div>
@@ -250,17 +244,15 @@ export default function TeamPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Trophy className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {Math.round(teamMembers.reduce((sum, m) => sum + m.performance, 0) / teamMembers.length)}%
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {Math.round(teamMembers.reduce((sum, m) => sum + m.performance, 0) / teamMembers.length)}%
-                </p>
-                <p className="text-sm text-slate-600 font-medium">Avg Performance</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+5%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">Avg Performance</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
+                <p className="text-sm font-bold text-green-600">+5%</p>
               </div>
             </div>
           </div>

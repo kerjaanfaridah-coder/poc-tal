@@ -137,15 +137,13 @@ export default function TasksPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
                 <CheckSquare className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">{tasks.length}</p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">{tasks.length}</p>
-                <p className="text-sm text-slate-600 font-medium">Total Tasks</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+15%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">Total Tasks</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last week</p>
+                <p className="text-sm font-bold text-green-600">+15%</p>
               </div>
             </div>
           </div>
@@ -158,17 +156,15 @@ export default function TasksPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {tasks.filter(t => t.status === 'completed').length}
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {tasks.filter(t => t.status === 'completed').length}
-                </p>
-                <p className="text-sm text-slate-600 font-medium">Completed</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+8%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">Completed</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last week</p>
+                <p className="text-sm font-bold text-green-600">+8%</p>
               </div>
             </div>
           </div>
@@ -181,17 +177,15 @@ export default function TasksPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Clock className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {tasks.filter(t => t.status === 'in-progress').length}
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {tasks.filter(t => t.status === 'in-progress').length}
-                </p>
-                <p className="text-sm text-slate-600 font-medium">In Progress</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+12%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">In Progress</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last week</p>
+                <p className="text-sm font-bold text-green-600">+12%</p>
               </div>
             </div>
           </div>
@@ -204,17 +198,15 @@ export default function TasksPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
                 <AlertTriangle className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {tasks.filter(t => t.status === 'todo').length}
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {tasks.filter(t => t.status === 'todo').length}
-                </p>
-                <p className="text-sm text-slate-600 font-medium">To Do</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-orange-600">+5%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">To Do</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last week</p>
+                <p className="text-sm font-bold text-orange-600">+5%</p>
               </div>
             </div>
           </div>

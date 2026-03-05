@@ -59,15 +59,13 @@ export default function ProjectsPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
                 <FolderKanban className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">{projects.length}</p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">{projects.length}</p>
-                <p className="text-sm text-slate-600 font-medium">Total Projects</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+12%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">Total Projects</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
+                <p className="text-sm font-bold text-green-600">+12%</p>
               </div>
             </div>
           </div>
@@ -80,17 +78,15 @@ export default function ProjectsPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {projects.filter(p => p.status === 'completed').length}
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {projects.filter(p => p.status === 'completed').length}
-                </p>
-                <p className="text-sm text-slate-600 font-medium">Completed</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+8%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">Completed</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
+                <p className="text-sm font-bold text-green-600">+8%</p>
               </div>
             </div>
           </div>
@@ -103,17 +99,15 @@ export default function ProjectsPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Users className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {projects.filter(p => p.status === 'in-progress').length}
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {projects.filter(p => p.status === 'in-progress').length}
-                </p>
-                <p className="text-sm text-slate-600 font-medium">In Progress</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-green-600">+2%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">In Progress</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
+                <p className="text-sm font-bold text-green-600">+2%</p>
               </div>
             </div>
           </div>
@@ -126,17 +120,15 @@ export default function ProjectsPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
                 <AlertTriangle className="w-6 h-6 text-white" />
               </div>
+              <p className="text-3xl font-bold text-slate-900">
+                {projects.filter(p => p.status === 'on-hold').length}
+              </p>
             </div>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-3xl font-bold text-slate-900 mb-1">
-                  {projects.filter(p => p.status === 'on-hold').length}
-                </p>
-                <p className="text-sm text-slate-600 font-medium">On Hold</p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-bold text-orange-600">+5%</p>
+            <div className="space-y-1">
+              <p className="text-sm text-slate-600 font-medium">On Hold</p>
+              <div className="flex items-center justify-between">
                 <p className="text-xs text-slate-500">vs last month</p>
+                <p className="text-sm font-bold text-orange-600">+5%</p>
               </div>
             </div>
           </div>
