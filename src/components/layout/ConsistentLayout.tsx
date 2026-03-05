@@ -39,11 +39,9 @@ export default function ConsistentLayout({
             {/* Quick Actions */}
             <div className="flex items-center gap-3">
               <button className="px-4 py-2 bg-white border border-indigo-200 rounded-xl text-sm font-medium text-slate-700 hover:bg-indigo-50 transition-all duration-200 flex items-center gap-2">
-                <Settings className="w-4 h-4" />
                 Settings
               </button>
               <button className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl text-sm font-medium hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-lg flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
                 Quick Action
               </button>
             </div>
