@@ -28,6 +28,12 @@ export default function TeamPage() {
       { id: '10', title: 'Final Inspection', project: 'Project Site', assigned: 'Inspector', time: '09:00 – 11:00' },
       { id: '11', title: 'Report Preparation', project: 'Office', assigned: 'Admin', time: '14:00 – 16:00' },
       { id: '12', title: 'Team Review', project: 'Meeting Room', assigned: 'Team Lead', time: '16:00 – 18:00' }
+    ],
+    Saturday: [
+      { id: '13', title: 'Weekend Setup', project: 'Event Hall', assigned: 'Setup Team', time: '10:00 – 14:00' }
+    ],
+    Sunday: [
+      { id: '14', title: 'System Backup', project: 'Server Room', assigned: 'IT Admin', time: '08:00 – 10:00' }
     ]
   });
 
@@ -204,7 +210,7 @@ export default function TeamPage() {
         </div>
 
         {/* Board Layout */}
-        <div className="grid grid-cols-5 gap-5">
+        <div className="grid grid-cols-7 gap-3">
           {Object.entries(teamScheduleData).map(([day, schedules]) => (
             <div key={day} className="min-h-[400px]">
               {/* Column Header */}
@@ -373,6 +379,8 @@ export default function TeamPage() {
                   <option value="Wednesday">Wednesday</option>
                   <option value="Thursday">Thursday</option>
                   <option value="Friday">Friday</option>
+                  <option value="Saturday">Saturday</option>
+                  <option value="Sunday">Sunday</option>
                 </select>
               </div>
             </div>
