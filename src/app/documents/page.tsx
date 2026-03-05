@@ -84,27 +84,36 @@ export default function DocumentsPage() {
 
   // Modal state
   const [showAddTemplateModal, setShowAddTemplateModal] = useState(false);
-  const [showBastModal, setShowBastModal] = useState(false);
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [selectedProject, setSelectedProject] = useState('');
   const [newTemplate, setNewTemplate] = useState({
     name: '',
     category: 'Handover',
     description: '',
     fileName: ''
   });
-  const [bastData, setBastData] = useState({
-    projectName: 'Home Theater Installation',
-    clientName: 'Thrisna Private Lounge',
-    location: 'Jakarta',
-    completionDate: '20 Mar 2026',
-    projectDescription: 'Instalasi sistem home theater lengkap dengan audio visual dan lighting',
-    technicianTeam: 'Alwan, Robi, Andry',
-    systemInstalled: 'Audio System, Visual Display, Lighting Control',
-    notes: 'Sistem telah diuji dan berfungsi dengan baik',
+  const [documentData, setDocumentData] = useState({
+    projectName: '',
+    clientName: '',
+    location: '',
+    completionDate: '',
+    projectDescription: '',
+    technicianTeam: '',
+    systemInstalled: '',
+    notes: '',
     clientRepresentative: '',
-    companyPIC: 'Jovan'
+    companyPIC: ''
   });
+
+  // Available projects data
+  const availableProjects = [
+    { id: '1', name: 'Home Theater – Thrisna Lounge', client: 'Thrisna Private Lounge', location: 'Jakarta', completionDate: '20 Mar 2026', pic: 'Jovan', technicians: 'Alwan, Robi, Andry' },
+    { id: '2', name: 'Conference Room – Office Project', client: 'Tech Company Indonesia', location: 'Jakarta', completionDate: '15 Mar 2026', pic: 'Sujadi', technicians: 'Eka, Sopian' },
+    { id: '3', name: 'Lighting Installation – Hotel', client: 'Grand Hotel Jakarta', location: 'Jakarta', completionDate: '10 Mar 2026', pic: 'Jovan', technicians: 'Alwan, Robi' }
+  ];
 
   // Categories
   const categories = ['All', 'Handover', 'Technical', 'Client'];
@@ -143,18 +152,46 @@ export default function DocumentsPage() {
 
   // Use template function
   const handleUseTemplate = (template) => {
-    if (template.name === 'BAST Template') {
-      setShowBastModal(true);
-    } else {
-      // Generate document based on template
-      const generatedFileName = `${template.name.replace(' Template', '')} - Project Home Theater - ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'})}.docx`;
-      alert(`Generating document: ${generatedFileName}`);
+    setSelectedTemplate(template);
+    setShowDocumentModal(true);
+    setSelectedProject('');
+    setDocumentData({
+      projectName: '',
+      clientName: '',
+      location: '',
+      completionDate: '',
+      projectDescription: '',
+      technicianTeam: '',
+      systemInstalled: '',
+      notes: '',
+      clientRepresentative: '',
+      companyPIC: ''
+    });
+  };
+
+  // Handle project selection
+  const handleProjectSelection = (projectId) => {
+    const project = availableProjects.find(p => p.id === projectId);
+    if (project) {
+      setSelectedProject(projectId);
+      setDocumentData({
+        projectName: project.name,
+        clientName: project.client,
+        location: project.location,
+        completionDate: project.completionDate,
+        projectDescription: `Project completion for ${project.name}`,
+        technicianTeam: project.technicians,
+        systemInstalled: 'Audio System, Visual Display, Lighting Control',
+        notes: 'Project completed successfully and tested',
+        clientRepresentative: '',
+        companyPIC: project.pic
+      });
     }
   };
 
-  // Generate BAST function
-  const handleGenerateBast = () => {
-    const fileName = `BAST - ${bastData.projectName.replace(/\s+/g, ' ')} - ${bastData.completionDate}.pdf`;
+  // Generate document function
+  const handleGenerateDocument = () => {
+    const fileName = `${selectedTemplate.name.replace(' Template', '')} - ${documentData.projectName.replace(/\s+/g, ' ')} - ${documentData.completionDate}.pdf`;
     
     // Create PDF document
     const doc = new jsPDF();
@@ -164,120 +201,52 @@ export default function DocumentsPage() {
     const margin = 20;
     let yPosition = margin;
     
-    // Title
-    doc.setFontSize(20);
+    // Company Header
+    doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
-    doc.text('BERITA ACARA SERAH TERIMA', pageWidth / 2, yPosition, { align: 'center' });
+    doc.text('POC Technology', pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 8;
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Audio Visual & Lighting Solutions', pageWidth / 2, yPosition, { align: 'center' });
+    yPosition += 15;
+    
+    // Document Title
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text(selectedTemplate.name.toUpperCase(), pageWidth / 2, yPosition, { align: 'center' });
     yPosition += 20;
     
-    // Opening paragraph
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'normal');
-    const openingText = 'Pada hari ini telah dilakukan serah terima pekerjaan instalasi sistem sesuai dengan spesifikasi yang telah disepakati antara pihak penyedia jasa dan pihak klien.';
-    const splitOpening = doc.splitTextToSize(openingText, pageWidth - 2 * margin);
-    doc.text(splitOpening, margin, yPosition);
-    yPosition += splitOpening.length * 7 + 10;
+    // Document type specific content
+    let documentContent = '';
     
-    // Project Details Section
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.text('PROJECT DETAILS', margin, yPosition);
-    yPosition += 10;
-    
-    // Draw line under section title
-    doc.setLineWidth(0.5);
-    doc.line(margin, yPosition, pageWidth - margin, yPosition);
-    yPosition += 10;
-    
-    // Project details table
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    
-    const details = [
-      ['Project Name:', bastData.projectName],
-      ['Client:', bastData.clientName],
-      ['Location:', bastData.location],
-      ['Completion Date:', bastData.completionDate],
-      ['PIC:', bastData.companyPIC],
-      ['Technician Team:', bastData.technicianTeam]
-    ];
-    
-    details.forEach(([label, value]) => {
-      doc.setFont('helvetica', 'bold');
-      doc.text(label, margin, yPosition);
-      doc.setFont('helvetica', 'normal');
-      doc.text(value, margin + 60, yPosition);
-      yPosition += 8;
-    });
-    
-    yPosition += 10;
-    
-    // System Installed Section
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.text('SYSTEM INSTALLED', margin, yPosition);
-    yPosition += 10;
-    
-    doc.setLineWidth(0.5);
-    doc.line(margin, yPosition, pageWidth - margin, yPosition);
-    yPosition += 10;
-    
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    const splitSystem = doc.splitTextToSize(bastData.systemInstalled, pageWidth - 2 * margin);
-    doc.text(splitSystem, margin, yPosition);
-    yPosition += splitSystem.length * 7 + 10;
-    
-    // Project Description Section
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.text('PROJECT DESCRIPTION', margin, yPosition);
-    yPosition += 10;
-    
-    doc.setLineWidth(0.5);
-    doc.line(margin, yPosition, pageWidth - margin, yPosition);
-    yPosition += 10;
-    
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    const splitDescription = doc.splitTextToSize(bastData.projectDescription, pageWidth - 2 * margin);
-    doc.text(splitDescription, margin, yPosition);
-    yPosition += splitDescription.length * 7 + 10;
-    
-    // Statement Section
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.text('STATEMENT', margin, yPosition);
-    yPosition += 10;
-    
-    doc.setLineWidth(0.5);
-    doc.line(margin, yPosition, pageWidth - margin, yPosition);
-    yPosition += 10;
-    
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    const statementText = 'Pekerjaan telah diselesaikan dengan baik dan sistem telah diuji serta berfungsi sesuai spesifikasi.';
-    const splitStatement = doc.splitTextToSize(statementText, pageWidth - 2 * margin);
-    doc.text(splitStatement, margin, yPosition);
-    yPosition += splitStatement.length * 7 + 10;
-    
-    // Notes Section
-    if (bastData.notes) {
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.text('NOTES', margin, yPosition);
-      yPosition += 10;
-      
-      doc.setLineWidth(0.5);
-      doc.line(margin, yPosition, pageWidth - margin, yPosition);
-      yPosition += 10;
-      
-      doc.setFontSize(11);
-      doc.setFont('helvetica', 'normal');
-      const splitNotes = doc.splitTextToSize(bastData.notes, pageWidth - 2 * margin);
-      doc.text(splitNotes, margin, yPosition);
-      yPosition += splitNotes.length * 7 + 10;
+    switch(selectedTemplate.name) {
+      case 'BAST Template':
+        documentContent = generateBastContent();
+        break;
+      case 'Handover Checklist':
+        documentContent = generateHandoverChecklistContent();
+        break;
+      case 'Installation Completion':
+        documentContent = generateInstallationCompletionContent();
+        break;
+      case 'Warranty Letter':
+        documentContent = generateWarrantyLetterContent();
+        break;
+      case 'Maintenance Guide':
+        documentContent = generateMaintenanceGuideContent();
+        break;
+      default:
+        documentContent = generateGenericDocumentContent();
     }
+    
+    // Add document content
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    const splitContent = doc.splitTextToSize(documentContent, pageWidth - 2 * margin);
+    doc.text(splitContent, margin, yPosition);
+    yPosition += splitContent.length * 7 + 20;
     
     // Signature Section
     doc.setFontSize(14);
@@ -300,7 +269,7 @@ export default function DocumentsPage() {
     doc.text('Client Representative:', margin, signatureY - 10);
     doc.rect(margin, signatureY, signatureWidth, signatureHeight);
     doc.setFont('helvetica', 'normal');
-    doc.text(bastData.clientRepresentative || '_________________', margin, signatureY + signatureHeight + 10);
+    doc.text(documentData.clientRepresentative || '_________________', margin, signatureY + signatureHeight + 10);
     
     // Company Representative
     const companyX = pageWidth - margin - signatureWidth;
@@ -308,7 +277,7 @@ export default function DocumentsPage() {
     doc.text('Company Representative:', companyX, signatureY - 10);
     doc.rect(companyX, signatureY, signatureWidth, signatureHeight);
     doc.setFont('helvetica', 'normal');
-    doc.text(bastData.companyPIC, companyX, signatureY + signatureHeight + 10);
+    doc.text(documentData.companyPIC, companyX, signatureY + signatureHeight + 10);
     
     // Generated date at bottom
     doc.setFontSize(10);
@@ -318,8 +287,284 @@ export default function DocumentsPage() {
     // Save the PDF
     doc.save(fileName);
     
-    alert(`BAST PDF document generated: ${fileName}`);
-    setShowBastModal(false);
+    alert(`${selectedTemplate.name} PDF document generated: ${fileName}`);
+    setShowDocumentModal(false);
+  };
+
+  // Content generators for different template types
+  const generateBastContent = () => {
+    return `
+BERITA ACARA SERAH TERIMA
+
+Pada hari ini telah dilakukan serah terima pekerjaan instalasi sistem sesuai dengan spesifikasi yang telah disepakati antara pihak penyedia jasa dan pihak klien.
+
+PROJECT DETAILS
+================
+
+Project Name: ${documentData.projectName}
+Client: ${documentData.clientName}
+Location: ${documentData.location}
+Completion Date: ${documentData.completionDate}
+PIC: ${documentData.companyPIC}
+Technician Team: ${documentData.technicianTeam}
+
+SYSTEM INSTALLED
+================
+
+${documentData.systemInstalled}
+
+PROJECT DESCRIPTION
+==================
+
+${documentData.projectDescription}
+
+STATEMENT
+=========
+
+Pekerjaan telah diselesaikan dengan baik dan sistem telah diuji serta berfungsi sesuai spesifikasi.
+
+NOTES
+=====
+
+${documentData.notes}
+    `;
+  };
+
+  const generateHandoverChecklistContent = () => {
+    return `
+PROJECT HANDOVER CHECKLIST
+
+Project: ${documentData.projectName}
+Client: ${documentData.clientName}
+Location: ${documentData.location}
+Date: ${documentData.completionDate}
+
+INSTALLATION CHECKLIST
+====================
+
+☐ Audio System Installation
+☐ Visual Display Setup
+☐ Lighting Control System
+☐ Cable Management
+☐ System Testing
+☐ User Training
+
+DOCUMENTATION CHECKLIST
+========================
+
+☐ As Built Drawings
+☐ Wiring Diagrams
+☐ System Configuration
+☐ User Manual
+☐ Warranty Certificate
+☐ Maintenance Guide
+
+TESTING RESULTS
+================
+
+${documentData.systemInstalled}
+
+All systems tested and functioning properly.
+
+NOTES
+=====
+
+${documentData.notes}
+
+Project completed and ready for client handover.
+    `;
+  };
+
+  const generateInstallationCompletionContent = () => {
+    return `
+INSTALLATION COMPLETION CERTIFICATE
+
+This is to certify that the installation work for the following project has been completed:
+
+PROJECT INFORMATION
+==================
+
+Project Name: ${documentData.projectName}
+Client: ${documentData.clientName}
+Location: ${documentData.location}
+Completion Date: ${documentData.completionDate}
+Project Manager: ${documentData.companyPIC}
+Technical Team: ${documentData.technicianTeam}
+
+INSTALLATION SCOPE
+=================
+
+${documentData.systemInstalled}
+
+PROJECT DESCRIPTION
+==================
+
+${documentData.projectDescription}
+
+COMPLETION STATUS
+=================
+
+✓ All equipment installed as per specifications
+✓ System testing completed successfully
+✓ User training conducted
+✓ Documentation handed over
+
+REMARKS
+=======
+
+${documentData.notes}
+
+The installation is complete and the system is fully operational.
+    `;
+  };
+
+  const generateWarrantyLetterContent = () => {
+    return `
+WARRANTY CERTIFICATE
+
+Project: ${documentData.projectName}
+Client: ${documentData.clientName}
+Location: ${documentData.location}
+Installation Date: ${documentData.completionDate}
+
+WARRANTY TERMS
+=============
+
+POC Technology warrants that all equipment and installation work provided for the above project shall be free from defects in materials and workmanship for a period of:
+
+• Equipment: 12 months from installation date
+• Installation Work: 12 months from completion date
+• Labor: 12 months from completion date
+
+COVERED SYSTEMS
+==============
+
+${documentData.systemInstalled}
+
+WARRANTY CONDITIONS
+==================
+
+This warranty covers:
+- Defects in materials and workmanship
+- Equipment failure under normal use
+- Installation defects
+
+This warranty does not cover:
+- Damage from misuse or negligence
+- Normal wear and tear
+- Unauthorized modifications
+
+CLAIM PROCEDURE
+===============
+
+For warranty claims, please contact:
+Project Manager: ${documentData.companyPIC}
+Email: support@poc-technology.com
+Phone: +62-21-5555-1234
+
+This warranty is valid from ${documentData.completionDate} until ${new Date(new Date(documentData.completionDate).getTime() + 365 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}.
+    `;
+  };
+
+  const generateMaintenanceGuideContent = () => {
+    return `
+MAINTENANCE GUIDE
+
+Project: ${documentData.projectName}
+Client: ${documentData.clientName}
+Location: ${documentData.location}
+Installation Date: ${documentData.completionDate}
+
+SYSTEM OVERVIEW
+===============
+
+${documentData.systemInstalled}
+
+MAINTENANCE SCHEDULE
+===================
+
+Daily Maintenance:
+- Check system power status
+- Verify basic functionality
+- Clean equipment surfaces
+
+Weekly Maintenance:
+- Check cable connections
+- Test all system functions
+- Clean filters and vents
+
+Monthly Maintenance:
+- Full system diagnostic
+- Software updates if applicable
+- Calibration checks
+
+Quarterly Maintenance:
+- Professional inspection recommended
+- Deep cleaning of equipment
+- Performance optimization
+
+TROUBLESHOOTING
+===============
+
+Common Issues:
+1. No Power: Check power supply and connections
+2. No Sound: Verify audio connections and settings
+3. Display Issues: Check video cables and input sources
+4. Remote Control: Replace batteries if needed
+
+For technical support:
+Contact: ${documentData.companyPIC}
+Email: support@poc-technology.com
+Phone: +62-21-5555-1234
+
+SAFETY PRECAUTIONS
+==================
+
+- Always disconnect power before cleaning
+- Use only recommended cleaning materials
+- Do not attempt unauthorized repairs
+- Keep ventilation areas clear
+
+NOTES
+=====
+
+${documentData.notes}
+
+Regular maintenance ensures optimal system performance and longevity.
+    `;
+  };
+
+  const generateGenericDocumentContent = () => {
+    return `
+DOCUMENT: ${selectedTemplate.name}
+
+PROJECT INFORMATION
+==================
+
+Project Name: ${documentData.projectName}
+Client: ${documentData.clientName}
+Location: ${documentData.location}
+Completion Date: ${documentData.completionDate}
+Project Manager: ${documentData.companyPIC}
+Technical Team: ${documentData.technicianTeam}
+
+SYSTEM DETAILS
+=============
+
+${documentData.systemInstalled}
+
+PROJECT DESCRIPTION
+==================
+
+${documentData.projectDescription}
+
+ADDITIONAL NOTES
+===============
+
+${documentData.notes}
+
+This document is generated for project documentation purposes.
+    `;
   };
 
   // Get category color
@@ -534,20 +779,35 @@ export default function DocumentsPage() {
         </div>
       )}
 
-      {/* BAST Generation Modal */}
-      {showBastModal && (
+      {/* Document Generation Modal */}
+      {showDocumentModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4">Generate BAST Document</h3>
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">Generate Document</h3>
             
             <div className="space-y-4">
+              {/* Project Selector */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Select Project</label>
+                <select
+                  value={selectedProject}
+                  onChange={(e) => handleProjectSelection(e.target.value)}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="">Choose a project...</option>
+                  {availableProjects.map(project => (
+                    <option key={project.id} value={project.id}>{project.name}</option>
+                  ))}
+                </select>
+              </div>
+
               {/* Project Name */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Project Name</label>
                 <input
                   type="text"
-                  value={bastData.projectName}
-                  onChange={(e) => setBastData({...bastData, projectName: e.target.value})}
+                  value={documentData.projectName}
+                  onChange={(e) => setDocumentData({...documentData, projectName: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -557,8 +817,8 @@ export default function DocumentsPage() {
                 <label className="block text-xs font-bold text-slate-700 mb-2">Client Name</label>
                 <input
                   type="text"
-                  value={bastData.clientName}
-                  onChange={(e) => setBastData({...bastData, clientName: e.target.value})}
+                  value={documentData.clientName}
+                  onChange={(e) => setDocumentData({...documentData, clientName: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -568,8 +828,8 @@ export default function DocumentsPage() {
                 <label className="block text-xs font-bold text-slate-700 mb-2">Location</label>
                 <input
                   type="text"
-                  value={bastData.location}
-                  onChange={(e) => setBastData({...bastData, location: e.target.value})}
+                  value={documentData.location}
+                  onChange={(e) => setDocumentData({...documentData, location: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -579,8 +839,8 @@ export default function DocumentsPage() {
                 <label className="block text-xs font-bold text-slate-700 mb-2">Completion Date</label>
                 <input
                   type="text"
-                  value={bastData.completionDate}
-                  onChange={(e) => setBastData({...bastData, completionDate: e.target.value})}
+                  value={documentData.completionDate}
+                  onChange={(e) => setDocumentData({...documentData, completionDate: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -589,8 +849,8 @@ export default function DocumentsPage() {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Project Description</label>
                 <textarea
-                  value={bastData.projectDescription}
-                  onChange={(e) => setBastData({...bastData, projectDescription: e.target.value})}
+                  value={documentData.projectDescription}
+                  onChange={(e) => setDocumentData({...documentData, projectDescription: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   rows={3}
                 />
@@ -601,8 +861,8 @@ export default function DocumentsPage() {
                 <label className="block text-xs font-bold text-slate-700 mb-2">Technician Team</label>
                 <input
                   type="text"
-                  value={bastData.technicianTeam}
-                  onChange={(e) => setBastData({...bastData, technicianTeam: e.target.value})}
+                  value={documentData.technicianTeam}
+                  onChange={(e) => setDocumentData({...documentData, technicianTeam: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -611,8 +871,8 @@ export default function DocumentsPage() {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">System Installed</label>
                 <textarea
-                  value={bastData.systemInstalled}
-                  onChange={(e) => setBastData({...bastData, systemInstalled: e.target.value})}
+                  value={documentData.systemInstalled}
+                  onChange={(e) => setDocumentData({...documentData, systemInstalled: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   rows={2}
                 />
@@ -622,8 +882,8 @@ export default function DocumentsPage() {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Notes / Remarks</label>
                 <textarea
-                  value={bastData.notes}
-                  onChange={(e) => setBastData({...bastData, notes: e.target.value})}
+                  value={documentData.notes}
+                  onChange={(e) => setDocumentData({...documentData, notes: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   rows={2}
                 />
@@ -635,8 +895,8 @@ export default function DocumentsPage() {
                   <label className="block text-xs font-bold text-slate-700 mb-2">Client Representative</label>
                   <input
                     type="text"
-                    value={bastData.clientRepresentative}
-                    onChange={(e) => setBastData({...bastData, clientRepresentative: e.target.value})}
+                    value={documentData.clientRepresentative}
+                    onChange={(e) => setDocumentData({...documentData, clientRepresentative: e.target.value})}
                     placeholder="Enter client representative name"
                     className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
@@ -645,8 +905,8 @@ export default function DocumentsPage() {
                   <label className="block text-xs font-bold text-slate-700 mb-2">Company PIC</label>
                   <input
                     type="text"
-                    value={bastData.companyPIC}
-                    onChange={(e) => setBastData({...bastData, companyPIC: e.target.value})}
+                    value={documentData.companyPIC}
+                    onChange={(e) => setDocumentData({...documentData, companyPIC: e.target.value})}
                     className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
@@ -656,16 +916,21 @@ export default function DocumentsPage() {
             {/* Modal Actions */}
             <div className="flex items-center gap-3 mt-6">
               <button
-                onClick={() => setShowBastModal(false)}
+                onClick={() => {
+                  setShowDocumentModal(false);
+                  setSelectedTemplate(null);
+                  setSelectedProject('');
+                }}
                 className="flex-1 px-4 py-2 text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors font-medium text-sm"
               >
                 Cancel
               </button>
               <button
-                onClick={handleGenerateBast}
-                className="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm"
+                onClick={handleGenerateDocument}
+                disabled={!selectedProject || !documentData.projectName}
+                className="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Generate BAST
+                Generate {selectedTemplate?.name.replace(' Template', '')}
               </button>
             </div>
           </div>
