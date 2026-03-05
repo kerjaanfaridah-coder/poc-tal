@@ -305,12 +305,11 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                 const remaining = totalBudget - amountSpent;
                 const amountSpentPercentage = totalBudget > 0 ? Math.round((amountSpent / totalBudget) * 100) : 0;
                 const remainingPercentage = totalBudget > 0 ? Math.round((remaining / totalBudget) * 100) : 0;
-                const budgetUsagePercentage = totalBudget > 0 ? Math.round((amountSpent / totalBudget) * 100) : 0;
 
                 return (
                   <>
                     {/* Stats Cards - Following Projects Page Design */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                       <div className="group relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
                         <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
@@ -367,25 +366,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </div>
                         </div>
                       </div>
-
-                      <div className="group relative">
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-                        <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-                              <span className="text-2xl">📊</span>
-                            </div>
-                            <p className="text-3xl font-bold text-slate-900">{budgetUsagePercentage}%</p>
-                          </div>
-                          <div className="space-y-1">
-                            <p className="text-sm font-bold text-slate-600 font-semibold">Budget Usage</p>
-                            <div className="flex items-center justify-between">
-                              <p className="text-xs text-slate-500">utilization</p>
-                              <p className="text-sm font-bold text-purple-600">Active</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
 
                     {/* Add Budget Section - Following Projects Page Search/Actions Style */}
@@ -410,34 +390,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               placeholder="0"
                             />
                           </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Budget Usage Progress - Clean Data List */}
-                    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden mb-10">
-                      <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
-                            <span className="text-lg">📊</span>
-                          </div>
-                          <h3 className="text-lg font-bold text-slate-900">Budget Usage</h3>
-                          <span className="text-sm font-medium text-slate-600 ml-auto">
-                            {budgetUsagePercentage}% Used
-                          </span>
-                        </div>
-                      </div>
-                      <div className="p-6">
-                        <div className="relative">
-                          <div className="h-4 bg-slate-100 rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-gradient-to-r from-red-400 via-red-500 to-red-600 rounded-full transition-all duration-500 ease-out"
-                              style={{ 
-                                width: Math.min(budgetUsagePercentage, 100) + '%'
-                              }}
-                            ></div>
-                          </div>
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-4 rounded-full animate-pulse"></div>
                         </div>
                       </div>
                     </div>
