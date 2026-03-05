@@ -1,39 +1,67 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp, Plus, Search, Filter, X } from 'lucide-react';
+import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp, Plus, Search, Filter, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
 export default function TeamPage() {
-  // Simple team schedule data
+  // Week navigation state
+  const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
+  
+  // Calculate week dates
+  const getWeekDates = (offset: number = 0) => {
+    const today = new Date();
+    const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - currentDay + 1 + (offset * 7)); // Adjust to Monday
+    
+    const weekDates = [];
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + i);
+      weekDates.push({
+        day: days[i],
+        date: date,
+        dateString: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      });
+    }
+    
+    return weekDates;
+  };
+
+  const currentWeekDates = getWeekDates(currentWeekOffset);
+
+  // Simple team schedule data with dates
   const [teamScheduleData, setTeamScheduleData] = useState({
     Monday: [
-      { id: '1', title: 'Install Speaker', project: 'Home Theater – Thrishna Lounge', assigned: 'Technician', time: '08:00 – 10:00' },
-      { id: '2', title: 'Testing System', project: 'Conference Room', assigned: 'Engineer', time: '14:00 – 16:00' }
+      { id: '1', title: 'Install Speaker', project: 'Home Theater – Thrishna Lounge', assigned: 'Technician', time: '08:00 – 10:00', date: 'Mar 11' },
+      { id: '2', title: 'Testing System', project: 'Conference Room', assigned: 'Engineer', time: '14:00 – 16:00', date: 'Mar 11' }
     ],
     Tuesday: [
-      { id: '3', title: 'Network Setup', project: 'Office Building', assigned: 'IT Specialist', time: '09:00 – 12:00' },
-      { id: '4', title: 'Equipment Check', project: 'Main Hall', assigned: 'Technician', time: '13:00 – 15:00' },
-      { id: '5', title: 'Client Meeting', project: 'Board Room', assigned: 'Project Manager', time: '16:00 – 17:00' }
+      { id: '3', title: 'Network Setup', project: 'Office Building', assigned: 'IT Specialist', time: '09:00 – 12:00', date: 'Mar 12' },
+      { id: '4', title: 'Equipment Check', project: 'Main Hall', assigned: 'Technician', time: '13:00 – 15:00', date: 'Mar 12' },
+      { id: '5', title: 'Client Meeting', project: 'Board Room', assigned: 'Project Manager', time: '16:00 – 17:00', date: 'Mar 12' }
     ],
     Wednesday: [
-      { id: '6', title: 'Security Installation', project: 'Entrance', assigned: 'Security Team', time: '10:00 – 14:00' },
-      { id: '7', title: 'Sound Calibration', project: 'Auditorium', assigned: 'Audio Engineer', time: '15:00 – 18:00' }
+      { id: '6', title: 'Security Installation', project: 'Entrance', assigned: 'Security Team', time: '10:00 – 14:00', date: 'Mar 13' },
+      { id: '7', title: 'Sound Calibration', project: 'Auditorium', assigned: 'Audio Engineer', time: '15:00 – 18:00', date: 'Mar 13' }
     ],
     Thursday: [
-      { id: '8', title: 'Maintenance Check', project: 'All Rooms', assigned: 'Maintenance', time: '08:00 – 12:00' },
-      { id: '9', title: 'Training Session', project: 'Training Room', assigned: 'Trainer', time: '13:00 – 17:00' }
+      { id: '8', title: 'Maintenance Check', project: 'All Rooms', assigned: 'Maintenance', time: '08:00 – 12:00', date: 'Mar 14' },
+      { id: '9', title: 'Training Session', project: 'Training Room', assigned: 'Trainer', time: '13:00 – 17:00', date: 'Mar 14' }
     ],
     Friday: [
-      { id: '10', title: 'Final Inspection', project: 'Project Site', assigned: 'Inspector', time: '09:00 – 11:00' },
-      { id: '11', title: 'Report Preparation', project: 'Office', assigned: 'Admin', time: '14:00 – 16:00' },
-      { id: '12', title: 'Team Review', project: 'Meeting Room', assigned: 'Team Lead', time: '16:00 – 18:00' }
+      { id: '10', title: 'Final Inspection', project: 'Project Site', assigned: 'Inspector', time: '09:00 – 11:00', date: 'Mar 15' },
+      { id: '11', title: 'Report Preparation', project: 'Office', assigned: 'Admin', time: '14:00 – 16:00', date: 'Mar 15' },
+      { id: '12', title: 'Team Review', project: 'Meeting Room', assigned: 'Team Lead', time: '16:00 – 18:00', date: 'Mar 15' }
     ],
     Saturday: [
-      { id: '13', title: 'Weekend Setup', project: 'Event Hall', assigned: 'Setup Team', time: '10:00 – 14:00' }
+      { id: '13', title: 'Weekend Setup', project: 'Event Hall', assigned: 'Setup Team', time: '10:00 – 14:00', date: 'Mar 16' }
     ],
     Sunday: [
-      { id: '14', title: 'System Backup', project: 'Server Room', assigned: 'IT Admin', time: '08:00 – 10:00' }
+      { id: '14', title: 'System Backup', project: 'Server Room', assigned: 'IT Admin', time: '08:00 – 10:00', date: 'Mar 17' }
     ]
   });
 
@@ -61,16 +89,29 @@ export default function TeamPage() {
   const totalTasksAssigned = teamWorkload.reduce((sum, member) => sum + member.tasks, 0);
   const totalTasksCompleted = teamWorkload.reduce((sum, member) => sum + member.completed, 0);
 
+  // Format week range display
+  const formatWeekRange = () => {
+    const startDate = currentWeekDates[0].date;
+    const endDate = currentWeekDates[6].date;
+    const startFormat = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const endFormat = endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `${startFormat} – ${endFormat}`;
+  };
+
   // Add new schedule function
   const handleAddSchedule = () => {
     if (newSchedule.title && newSchedule.project && newSchedule.assigned) {
       const scheduleId = `schedule-${Date.now()}`;
+      const dayIndex = currentWeekDates.findIndex(d => d.day === newSchedule.day);
+      const scheduleDate = dayIndex >= 0 ? currentWeekDates[dayIndex].dateString : 'TBD';
+      
       const scheduleToAdd = {
         id: scheduleId,
         title: newSchedule.title,
         project: newSchedule.project,
         assigned: newSchedule.assigned,
-        time: newSchedule.time || 'TBD'
+        time: newSchedule.time || 'TBD',
+        date: scheduleDate
       };
 
       setTeamScheduleData(prev => {
@@ -92,6 +133,19 @@ export default function TeamPage() {
       });
       setShowAddScheduleModal(false);
     }
+  };
+
+  // Navigation functions
+  const goToPreviousWeek = () => {
+    setCurrentWeekOffset(prev => prev - 1);
+  };
+
+  const goToNextWeek = () => {
+    setCurrentWeekOffset(prev => prev + 1);
+  };
+
+  const goToCurrentWeek = () => {
+    setCurrentWeekOffset(0);
   };
 
   return (
@@ -177,18 +231,46 @@ export default function TeamPage() {
 
       {/* Team Schedule Section */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Calendar className="w-4 h-4 text-white" />
+        {/* Header with Week Navigation */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Calendar className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-slate-900">Team Schedule</h3>
+                <p className="text-sm text-slate-500">{formatWeekRange()}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-semibold text-slate-900">Team Schedule</h3>
-              <p className="text-sm text-slate-500">Weekly team activities</p>
+            
+            {/* Week Navigation */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={goToPreviousWeek}
+                className="p-2 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4 text-slate-600" />
+              </button>
+              <button
+                onClick={goToCurrentWeek}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  currentWeekOffset === 0 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                Current Week
+              </button>
+              <button
+                onClick={goToNextWeek}
+                className="p-2 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors"
+              >
+                <ChevronRight className="w-4 h-4 text-slate-600" />
+              </button>
             </div>
           </div>
-          
+
           {/* Header Controls */}
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -215,17 +297,20 @@ export default function TeamPage() {
 
         {/* Board Layout */}
         <div className="grid grid-cols-7 gap-3">
-          {Object.entries(teamScheduleData).map(([day, schedules]) => (
-            <div key={day} className="min-h-[400px]">
+          {currentWeekDates.map((weekDay) => (
+            <div key={weekDay.day} className="min-h-[400px]">
               {/* Column Header */}
               <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 p-3 mb-3">
-                <h4 className="font-semibold text-slate-900 text-center">{day}</h4>
-                <p className="text-xs text-slate-600 text-center">{schedules.length} activities</p>
+                <h4 className="font-semibold text-slate-900 text-center">{weekDay.day}</h4>
+                <p className="text-xs text-slate-600 text-center">{weekDay.dateString}</p>
+                <p className="text-xs text-slate-500 text-center mt-1">
+                  {teamScheduleData[weekDay.day as keyof typeof teamScheduleData]?.length || 0} activities
+                </p>
               </div>
 
               {/* Schedule Cards */}
               <div className="space-y-3">
-                {schedules.map((schedule) => (
+                {(teamScheduleData[weekDay.day as keyof typeof teamScheduleData] || []).map((schedule) => (
                   <div key={schedule.id} className="group">
                     <div className="bg-white border border-slate-200 rounded-xl p-3 hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer">
                       {/* Task Title */}
@@ -237,6 +322,12 @@ export default function TeamPage() {
                       <p className="text-xs text-slate-600 mb-2 line-clamp-2">
                         {schedule.project}
                       </p>
+                      
+                      {/* Date */}
+                      <div className="flex items-center gap-1 mb-2">
+                        <Calendar className="w-3 h-3 text-slate-400" />
+                        <span className="text-xs text-slate-600">{schedule.date}</span>
+                      </div>
                       
                       {/* Assigned Person */}
                       <div className="flex items-center gap-1 mb-2">
