@@ -5,7 +5,8 @@ import {
   Users, 
   FolderKanban, 
   CheckSquare, 
-  LayoutDashboard
+  LayoutDashboard,
+  FileText
 } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -14,6 +15,7 @@ const menuItems = [
   { icon: FolderKanban, label: 'Projects', href: '/projects' },
   { icon: CheckSquare, label: 'Tasks', href: '/tasks' },
   { icon: Users, label: 'Team', href: '/team' },
+  { icon: FileText, label: 'Documents', href: '/documents' },
 ];
 
 export default function Sidebar() {
