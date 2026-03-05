@@ -1042,8 +1042,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   <h3 className="text-lg font-bold text-slate-900">Add New Issue</h3>
                 </div>
                 
-                <div className="flex flex-col lg:flex-row lg:items-end gap-6">
-                  <div className="flex-1">
+                <div className="flex flex-col lg:flex-row lg:items-end gap-4">
+                  <div className="flex-1 lg:max-w-[45%]">
                     <label className="block text-xs font-bold text-slate-700 mb-2">Issue Title</label>
                     <input
                       type="text"
@@ -1052,7 +1052,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       id="quick-add-issue-title"
                     />
                   </div>
-                  <div className="w-32">
+                  <div className="w-full lg:w-[15%]">
                     <label className="block text-xs font-bold text-slate-700 mb-2">Severity</label>
                     <select
                       id="quick-add-issue-severity"
@@ -1064,7 +1064,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       <option value="high">High</option>
                     </select>
                   </div>
-                  <div className="flex-1 lg:w-48">
+                  <div className="flex-1 lg:max-w-[30%]">
                     <label className="block text-xs font-bold text-slate-700 mb-2">Assignee</label>
                     <input
                       type="text"
@@ -1073,7 +1073,8 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       id="quick-add-issue-assignee"
                     />
                   </div>
-                  <div className="lg:w-24">
+                  <div className="lg:w-auto">
+                    <label className="block text-xs font-bold text-slate-700 mb-2">&nbsp;</label>
                     <button
                       type="button"
                       onClick={() => {
