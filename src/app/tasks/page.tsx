@@ -406,7 +406,7 @@ export default function TasksPage() {
                           max="100"
                           value={task.progress}
                           onChange={(e) => handleProgressChange(task.id, Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
-                          className="w-8 text-sm font-medium text-slate-900 bg-transparent border-0 text-center focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+                          className="w-8 text-sm font-medium text-slate-900 bg-transparent border-0 text-center focus:outline-none focus:ring-2 focus:ring-red-500 rounded [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
                         />
                         <span className="text-sm font-medium text-slate-900">%</span>
                       </div>
