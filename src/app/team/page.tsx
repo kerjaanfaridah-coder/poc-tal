@@ -47,9 +47,11 @@ export default function TeamPage() {
   // Add schedule modal state
   const [showAddScheduleModal, setShowAddScheduleModal] = useState(false);
   const [newSchedule, setNewSchedule] = useState({
+    projectName: '',
     title: '',
-    project: '',
+    location: '',
     assigned: '',
+    date: '',
     time: '',
     day: 'Monday'
   });
@@ -79,34 +81,44 @@ export default function TeamPage() {
 
   // Add new schedule function
   const handleAddSchedule = () => {
-    if (newSchedule.title && newSchedule.project && newSchedule.assigned) {
+    if (newSchedule.projectName && newSchedule.title && newSchedule.location && newSchedule.assigned && newSchedule.date) {
       const scheduleId = `schedule-${Date.now()}`;
-      const dayIndex = currentWeekDates.findIndex(d => d.day === newSchedule.day);
-      const scheduleDate = dayIndex >= 0 ? currentWeekDates[dayIndex].dateString : 'TBD';
+      
+      // Auto-detect day from date
+      const selectedDate = new Date(newSchedule.date);
+      const dayIndex = selectedDate.getDay();
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const detectedDay = days[dayIndex];
+      
+      // Format date for display
+      const formattedDate = selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       
       const scheduleToAdd = {
         id: scheduleId,
         title: newSchedule.title,
-        project: newSchedule.project,
+        project: newSchedule.projectName,
+        location: newSchedule.location,
         assigned: newSchedule.assigned,
-        time: newSchedule.time || 'TBD',
-        date: scheduleDate
+        date: formattedDate,
+        time: newSchedule.time || 'TBD'
       };
 
       setTeamScheduleData(prev => {
         // Ensure the day array exists
-        const currentDaySchedules = prev[newSchedule.day as keyof typeof prev] || [];
+        const currentDaySchedules = prev[detectedDay as keyof typeof prev] || [];
         return {
           ...prev,
-          [newSchedule.day]: [...currentDaySchedules, scheduleToAdd]
+          [detectedDay]: [...currentDaySchedules, scheduleToAdd]
         };
       });
 
       // Reset form and close modal
       setNewSchedule({
+        projectName: '',
         title: '',
-        project: '',
+        location: '',
         assigned: '',
+        date: '',
         time: '',
         day: 'Monday'
       });
@@ -313,9 +325,14 @@ export default function TeamPage() {
                         {schedule.title}
                       </h5>
                       
-                      {/* Project/Location */}
-                      <p className="text-xs text-slate-600 mb-2 line-clamp-2">
+                      {/* Project Name */}
+                      <p className="text-xs text-slate-600 mb-1 font-medium">
                         {schedule.project}
+                      </p>
+                      
+                      {/* Location */}
+                      <p className="text-xs text-slate-600 mb-2 line-clamp-2">
+                        📍 {schedule.location}
                       </p>
                       
                       {/* Date */}
@@ -363,6 +380,17 @@ export default function TeamPage() {
 
             <div className="space-y-4">
               <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Project Name</label>
+                <input
+                  type="text"
+                  value={newSchedule.projectName}
+                  onChange={(e) => setNewSchedule({...newSchedule, projectName: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter project name..."
+                />
+              </div>
+
+              <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Task Title</label>
                 <input
                   type="text"
@@ -374,13 +402,13 @@ export default function TeamPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-2">Project/Location</label>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Location</label>
                 <input
                   type="text"
-                  value={newSchedule.project}
-                  onChange={(e) => setNewSchedule({...newSchedule, project: e.target.value})}
+                  value={newSchedule.location}
+                  onChange={(e) => setNewSchedule({...newSchedule, location: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter project or location..."
+                  placeholder="Enter location..."
                 />
               </div>
 
@@ -396,6 +424,16 @@ export default function TeamPage() {
               </div>
 
               <div>
+                <label className="block text-xs font-bold text-slate-700 mb-2">Date</label>
+                <input
+                  type="date"
+                  value={newSchedule.date}
+                  onChange={(e) => setNewSchedule({...newSchedule, date: e.target.value})}
+                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Time (Optional)</label>
                 <input
                   type="text"
@@ -404,23 +442,6 @@ export default function TeamPage() {
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="e.g., 09:00 – 11:00"
                 />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-2">Day</label>
-                <select
-                  value={newSchedule.day}
-                  onChange={(e) => setNewSchedule({...newSchedule, day: e.target.value})}
-                  className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="Monday">Monday</option>
-                  <option value="Tuesday">Tuesday</option>
-                  <option value="Wednesday">Wednesday</option>
-                  <option value="Thursday">Thursday</option>
-                  <option value="Friday">Friday</option>
-                  <option value="Saturday">Saturday</option>
-                  <option value="Sunday">Sunday</option>
-                </select>
               </div>
             </div>
 
