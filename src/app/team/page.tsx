@@ -73,10 +73,14 @@ export default function TeamPage() {
         time: newSchedule.time || 'TBD'
       };
 
-      setTeamScheduleData(prev => ({
-        ...prev,
-        [newSchedule.day]: [...prev[newSchedule.day], scheduleToAdd]
-      }));
+      setTeamScheduleData(prev => {
+        // Ensure the day array exists
+        const currentDaySchedules = prev[newSchedule.day as keyof typeof prev] || [];
+        return {
+          ...prev,
+          [newSchedule.day]: [...currentDaySchedules, scheduleToAdd]
+        };
+      });
 
       // Reset form and close modal
       setNewSchedule({
