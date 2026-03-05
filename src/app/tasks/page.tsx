@@ -393,9 +393,9 @@ export default function TasksPage() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex-1 bg-slate-200 rounded-full h-2 min-w-0">
+                      <div className="flex-1 bg-slate-200 rounded-full h-3 min-w-0 shadow-inner">
                         <div 
-                          className="bg-gradient-to-r from-red-500 to-orange-600 h-2 rounded-full transition-all duration-300" 
+                          className="bg-gradient-to-r from-red-500 to-orange-600 h-3 rounded-full transition-all duration-300 shadow-sm" 
                           style={{ width: `${task.progress}%` }}
                         ></div>
                       </div>
