@@ -289,123 +289,170 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <div className="mt-6">
-              {/* Modern Budget Header */}
-              <div className="mb-8">
-                {/* Modern Total Budget Input */}
-                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100">
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    💰 Total Project Budget (IDR)
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">IDR</span>
-                    <input
-                      type="number"
-                      value={newProject.budget}
-                      onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value) || 0})}
-                      className="w-full pl-16 pr-4 py-4 text-2xl font-bold bg-white border-2 border-red-200 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-400 transition-all"
-                      placeholder="0"
-                    />
-                  </div>
+            {/* Modern Budget Header */}
+            <div className="mb-8">
+              <div className="mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">💰 Budget</h2>
+                  <p className="text-gray-600">Manage and track your project budget allocation</p>
                 </div>
               </div>
 
-              {/* Modern Budget Overview Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {/* Budget Planned Card */}
-                <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                      </svg>
+              {/* Stats Cards - Following Projects Page Design */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">💰</span>
+                      </div>
+                      <p className="text-3xl font-bold text-slate-900">100%</p>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm text-white/80">Total</div>
-                      <div className="text-2xl font-bold">100%</div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-slate-600 font-semibold">Budget Planned</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-500">Total allocation</p>
+                        <p className="text-sm font-bold text-blue-600">IDR {newProject.budget.toLocaleString('id-ID')}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-sm text-white/90 mb-1">Budget Planned</div>
-                  <div className="text-3xl font-bold">
-                    IDR {newProject.budget.toLocaleString('id-ID')}
                   </div>
                 </div>
 
-                {/* Spent Card */}
-                <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm text-white/80">Used</div>
-                      <div className="text-2xl font-bold">
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">💸</span>
+                      </div>
+                      <p className="text-3xl font-bold text-slate-900">
                         {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}%
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-slate-600 font-semibold">Amount Spent</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-500">vs budget</p>
+                        <p className="text-sm font-bold text-red-600">IDR {((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)).toLocaleString('id-ID')}</p>
                       </div>
                     </div>
                   </div>
-                  <div className="text-sm text-white/90 mb-1">Amount Spent</div>
-                  <div className="text-3xl font-bold">
-                    IDR {((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)).toLocaleString('id-ID')}
-                  </div>
                 </div>
 
-                {/* Remaining Card */}
-                <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm text-white/80">Left</div>
-                      <div className="text-2xl font-bold">
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">💵</span>
+                      </div>
+                      <p className="text-3xl font-bold text-slate-900">
                         {newProject.budget > 0 ? Math.round(((newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))) / newProject.budget) * 100) : 0}%
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-slate-600 font-semibold">Remaining</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-500">vs budget</p>
+                        <p className="text-sm font-bold text-green-600">IDR {(newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))).toLocaleString('id-ID')}</p>
                       </div>
                     </div>
                   </div>
-                  <div className="text-sm text-white/90 mb-1">Remaining</div>
-                  <div className="text-3xl font-bold">
-                    IDR {(newProject.budget - ((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0))).toLocaleString('id-ID')}
+                </div>
+
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                  <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <span className="text-2xl">📊</span>
+                      </div>
+                      <p className="text-3xl font-bold text-slate-900">
+                        {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}%
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-slate-600 font-semibold">Budget Usage</p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-slate-500">utilization</p>
+                        <p className="text-sm font-bold text-purple-600">Active</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Modern Progress Bar */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Budget Usage</h3>
-                  <span className="text-sm font-medium text-gray-600">
-                    {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}% Used
-                  </span>
-                </div>
-                <div className="relative">
-                  <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-red-400 via-red-500 to-red-600 rounded-full transition-all duration-500 ease-out"
-                      style={{ 
-                        width: newProject.budget > 0 ? 
-                          Math.min((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100, 100) + '%' 
-                        : '0%'
-                      }}
-                    ></div>
+              {/* Add Budget Section - Following Projects Page Search/Actions Style */}
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6 mb-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <Plus className="w-4 h-4 text-white" />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-4 rounded-full animate-pulse"></div>
+                  <h3 className="text-lg font-bold text-slate-900">Set Total Budget</h3>
+                </div>
+                
+                <div className="flex flex-col lg:flex-row lg:items-end gap-6">
+                  <div className="flex-1">
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Total Project Budget (IDR)</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">IDR</span>
+                      <input
+                        type="number"
+                        value={newProject.budget}
+                        onChange={(e) => setNewProject({...newProject, budget: parseInt(e.target.value) || 0})}
+                        className="w-full pl-16 pr-4 py-3 text-xl font-bold bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        placeholder="0"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Modern Budget Breakdown */}
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900">💸 Budget Breakdown</h3>
+              {/* Budget Usage Progress - Clean Data List */}
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden mb-10">
+                <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
+                      <span className="text-lg">📊</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900">Budget Usage</h3>
+                    <span className="text-sm font-medium text-slate-600 ml-auto">
+                      {newProject.budget > 0 ? Math.round((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100) : 0}% Used
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="relative">
+                    <div className="h-4 bg-slate-100 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-red-400 via-red-500 to-red-600 rounded-full transition-all duration-500 ease-out"
+                        style={{ 
+                          width: newProject.budget > 0 ? 
+                            Math.min((((newProject.outsource || 0) + (newProject.costOther || 0) + (newProject.costOvertime || 0) + (newProject.costManPower || 0)) / newProject.budget) * 100, 100) + '%' 
+                          : '0%'
+                        }}
+                      ></div>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-4 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Budget Breakdown Table - Clean Data List */}
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-slate-200 rounded-xl flex items-center justify-center">
+                      <span className="text-lg">💸</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900">Budget Breakdown</h3>
+                  </div>
                 </div>
                 <div className="p-6 space-y-4">
                   {/* Outsource */}
                   <div className="group">
-                    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-red-300 hover:bg-red-50 transition-all duration-200">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-red-300 hover:bg-red-50 transition-all duration-200">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
                           <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -413,17 +460,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </svg>
                         </div>
                         <div>
-                          <div className="font-semibold text-gray-900">Outsource</div>
-                          <div className="text-sm text-gray-500">External services & contractors</div>
+                          <div className="font-semibold text-slate-900">Outsource</div>
+                          <div className="text-sm text-slate-500">External services & contractors</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-500">IDR</span>
+                        <span className="text-sm text-slate-500">IDR</span>
                         <input
                           type="number"
                           value={newProject.outsource || 0}
                           onChange={(e) => setNewProject({...newProject, outsource: parseInt(e.target.value) || 0})}
-                          className="w-32 text-right font-semibold bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                          className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           placeholder="0"
                         />
                       </div>
@@ -432,7 +479,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                   {/* Cost Other */}
                   <div className="group">
-                    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-all duration-200">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-orange-300 hover:bg-orange-50 transition-all duration-200">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-200 transition-colors">
                           <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -440,17 +487,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </svg>
                         </div>
                         <div>
-                          <div className="font-semibold text-gray-900">Cost Other</div>
-                          <div className="text-sm text-gray-500">Miscellaneous expenses</div>
+                          <div className="font-semibold text-slate-900">Cost Other</div>
+                          <div className="text-sm text-slate-500">Miscellaneous expenses</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-500">IDR</span>
+                        <span className="text-sm text-slate-500">IDR</span>
                         <input
                           type="number"
                           value={newProject.costOther || 0}
                           onChange={(e) => setNewProject({...newProject, costOther: parseInt(e.target.value) || 0})}
-                          className="w-32 text-right font-semibold bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                          className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           placeholder="0"
                         />
                       </div>
@@ -459,7 +506,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                   {/* Cost Overtime */}
                   <div className="group">
-                    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
                           <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -467,17 +514,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </svg>
                         </div>
                         <div>
-                          <div className="font-semibold text-gray-900">Cost Overtime</div>
-                          <div className="text-sm text-gray-500">Extra hours & overtime pay</div>
+                          <div className="font-semibold text-slate-900">Cost Overtime</div>
+                          <div className="text-sm text-slate-500">Extra hours & overtime pay</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-500">IDR</span>
+                        <span className="text-sm text-slate-500">IDR</span>
                         <input
                           type="number"
                           value={newProject.costOvertime || 0}
                           onChange={(e) => setNewProject({...newProject, costOvertime: parseInt(e.target.value) || 0})}
-                          className="w-32 text-right font-semibold bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                          className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           placeholder="0"
                         />
                       </div>
@@ -486,7 +533,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
 
                   {/* Cost Man Power */}
                   <div className="group">
-                    <div className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
+                    <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
                           <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -494,17 +541,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </svg>
                         </div>
                         <div>
-                          <div className="font-semibold text-gray-900">Cost Man Power</div>
-                          <div className="text-sm text-gray-500">Team salaries & wages</div>
+                          <div className="font-semibold text-slate-900">Cost Man Power</div>
+                          <div className="text-sm text-slate-500">Team salaries & wages</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-500">IDR</span>
+                        <span className="text-sm text-slate-500">IDR</span>
                         <input
                           type="number"
                           value={newProject.costManPower || 0}
                           onChange={(e) => setNewProject({...newProject, costManPower: parseInt(e.target.value) || 0})}
-                          className="w-32 text-right font-semibold bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-200 focus:border-red-400"
+                          className="w-32 text-right font-semibold bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                           placeholder="0"
                         />
                       </div>
@@ -525,10 +572,117 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            {/* Modern Pending Items Header - Following Budget Page Structure */}
+            {/* Modern Pending Items Header */}
               <div className="mb-8">
-                {/* Modern Add Item Input - Similar to Budget Input */}
-                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100 mb-8">
+                <div className="mb-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">📋 Pending Items</h2>
+                    <p className="text-gray-600">Track decisions, actions, and tasks for your project</p>
+                  </div>
+                </div>
+
+                {/* Stats Cards - Following Projects Page Design */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-2xl">📊</span>
+                        </div>
+                        <p className="text-3xl font-bold text-slate-900">{newProject.pendingItems?.length || 0}</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-600 font-semibold">Total Items</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-slate-500">vs last week</p>
+                          <p className="text-sm font-bold text-green-600">+12%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-2xl">⏰</span>
+                        </div>
+                        <p className="text-3xl font-bold text-slate-900">
+                          {(() => {
+                            const today = new Date();
+                            const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+                            return newProject.pendingItems?.filter(item => {
+                              if (!item.dueDate || item.completed) return false;
+                              const dueDate = new Date(item.dueDate);
+                              return dueDate <= threeDaysFromNow && dueDate >= today;
+                            }).length || 0;
+                          })()}
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-600 font-semibold">Due Soon</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-slate-500">vs last week</p>
+                          <p className="text-sm font-bold text-orange-600">+5%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-2xl">🚨</span>
+                        </div>
+                        <p className="text-3xl font-bold text-slate-900">
+                          {(() => {
+                            const today = new Date();
+                            return newProject.pendingItems?.filter(item => {
+                              if (!item.dueDate || item.completed) return false;
+                              const dueDate = new Date(item.dueDate);
+                              return dueDate < today;
+                            }).length || 0;
+                          })()}
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-600 font-semibold">Overdue</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-slate-500">vs last week</p>
+                          <p className="text-sm font-bold text-red-600">+2%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-2xl">✅</span>
+                        </div>
+                        <p className="text-3xl font-bold text-slate-900">
+                          {newProject.pendingItems?.filter(item => item.completed).length || 0}
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-600 font-semibold">Completed</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-slate-500">vs last week</p>
+                          <p className="text-sm font-bold text-green-600">+8%</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Add New Item Section - Clearly Separated Form Card */}
+                <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6 mb-10">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
                       <Plus className="w-4 h-4 text-white" />
@@ -636,138 +790,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       <Plus className="w-5 h-5" />
                       Add Item
                     </button>
-                  </div>
-                </div>
-
-                {/* Modern Items Overview Cards - Following Budget Cards Style */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                  {/* Total Items Card */}
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
-                        <span className="text-2xl">📊</span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-white/80">Total</div>
-                        <div className="text-2xl font-bold">{newProject.pendingItems?.length || 0}</div>
-                      </div>
-                    </div>
-                    <div className="text-sm text-white/90 mb-1">Total Items</div>
-                    <div className="text-3xl font-bold">
-                      {newProject.pendingItems?.length || 0}
-                    </div>
-                  </div>
-
-                  {/* Due Soon Card */}
-                  <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
-                        <span className="text-2xl">⏰</span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-white/80">Alert</div>
-                        <div className="text-2xl font-bold">
-                          {(() => {
-                            const today = new Date();
-                            const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
-                            return newProject.pendingItems?.filter(item => {
-                              if (!item.dueDate || item.completed) return false;
-                              const dueDate = new Date(item.dueDate);
-                              return dueDate <= threeDaysFromNow && dueDate >= today;
-                            }).length || 0;
-                          })()}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-sm text-white/90 mb-1">Due Soon</div>
-                    <div className="text-3xl font-bold">
-                      {(() => {
-                        const today = new Date();
-                        const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
-                        return newProject.pendingItems?.filter(item => {
-                          if (!item.dueDate || item.completed) return false;
-                          const dueDate = new Date(item.dueDate);
-                          return dueDate <= threeDaysFromNow && dueDate >= today;
-                        }).length || 0;
-                      })()}
-                    </div>
-                  </div>
-
-                  {/* Overdue Card */}
-                  <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
-                        <span className="text-2xl">🚨</span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-white/80">Critical</div>
-                        <div className="text-2xl font-bold">
-                          {(() => {
-                            const today = new Date();
-                            return newProject.pendingItems?.filter(item => {
-                              if (!item.dueDate || item.completed) return false;
-                              const dueDate = new Date(item.dueDate);
-                              return dueDate < today;
-                            }).length || 0;
-                          })()}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-sm text-white/90 mb-1">Overdue</div>
-                    <div className="text-3xl font-bold">
-                      {(() => {
-                        const today = new Date();
-                        return newProject.pendingItems?.filter(item => {
-                          if (!item.dueDate || item.completed) return false;
-                          const dueDate = new Date(item.dueDate);
-                          return dueDate < today;
-                        }).length || 0;
-                      })()}
-                    </div>
-                  </div>
-
-                  {/* Completed Card */}
-                  <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
-                        <span className="text-2xl">✅</span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm text-white/80">Done</div>
-                        <div className="text-2xl font-bold">
-                          {newProject.pendingItems?.filter(item => item.completed).length || 0}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-sm text-white/90 mb-1">Completed</div>
-                    <div className="text-3xl font-bold">
-                      {newProject.pendingItems?.filter(item => item.completed).length || 0}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Modern Progress Bar - Following Budget Progress Style */}
-                <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8 shadow-sm">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">Items Progress</h3>
-                    <span className="text-sm font-medium text-gray-600">
-                      {newProject.pendingItems?.length > 0 ? 
-                        Math.round((newProject.pendingItems?.filter(item => item.completed).length / newProject.pendingItems.length) * 100) : 0
-                      }% Completed
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 rounded-full transition-all duration-500 ease-out"
-                        style={{ 
-                          width: newProject.pendingItems?.length > 0 ? 
-                            Math.round((newProject.pendingItems?.filter(item => item.completed).length / newProject.pendingItems.length) * 100) + '%' 
-                          : '0%'
-                        }}
-                      ></div>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-4 rounded-full animate-pulse"></div>
                   </div>
                 </div>
 
