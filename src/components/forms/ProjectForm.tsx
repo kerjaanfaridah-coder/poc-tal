@@ -802,36 +802,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   </tbody>
                 </table>
               </div>
-
-              {/* Activity Timeline - Simplified */}
-              <div className="border-t border-gray-200 pt-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <h3 className="text-sm font-medium text-gray-900">Activity</h3>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                    <span className="text-gray-900">Decision added – John Doe</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
-                    <span className="text-gray-900">Due date updated</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                    <span className="text-gray-900">Item completed</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                    <span className="text-gray-900">Added decision – 2 minutes ago</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-                    <span className="text-gray-900">Updated due date – yesterday</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </motion.div>
         )
