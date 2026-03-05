@@ -363,7 +363,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Produce Shop Drawing</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Design Team</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['shop-drawing'] || 'Designed'}
+                            onChange={(e) => handleAssignmentChange('shop-drawing', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">03 Jan 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">10 Jan 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">7</td>
@@ -382,7 +392,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Project On DP1</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Finance Team</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['dp1'] || 'Finance AR'}
+                            onChange={(e) => handleAssignmentChange('dp1', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">11 Jan 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">15 Jan 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">4</td>
@@ -408,7 +428,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       </tr>
                       <tr className="hover:bg-slate-50 transition-colors">
                         <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">Survey</td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">Survey Team</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['survey'] || 'Site Manager'}
+                            onChange={(e) => handleAssignmentChange('survey', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">16 Jan 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">18 Jan 2024</td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">2</td>
