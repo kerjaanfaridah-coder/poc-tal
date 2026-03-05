@@ -265,16 +265,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     const hasError = coinErrors[taskId];
     
     return (
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center justify-center">
         <input
           type="number"
           min="0"
           max="100"
           value={value}
           onChange={(e) => handleCoinChange(taskId, coinType, e.target.value)}
-          className={`w-12 px-1 py-1 text-xs font-semibold bg-white border rounded focus:outline-none focus:ring-1 ${getCoinInputColor(coinType)} ${hasError ? 'border-red-500' : ''}`}
+          className={`w-10 px-1 py-1 text-xs font-semibold bg-white border rounded focus:outline-none focus:ring-1 ${getCoinInputColor(coinType)} ${hasError ? 'border-red-500' : ''}`}
         />
-        <span className={`text-xs font-semibold ${getCoinInputColor(coinType).replace('border-', 'text-').split(' ')[0]}`}>%</span>
+        <span className={`text-xs font-semibold ml-1 ${getCoinInputColor(coinType).replace('border-', 'text-').split(' ')[0]}`}>%</span>
       </div>
     );
   };
@@ -675,9 +675,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -748,9 +745,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -832,9 +826,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -905,9 +896,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -982,9 +970,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -1049,9 +1034,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -1120,9 +1102,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -1189,9 +1168,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -1256,9 +1232,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -1334,9 +1307,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -1401,9 +1371,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -1472,9 +1439,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -1539,9 +1503,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -1610,9 +1571,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -1677,9 +1635,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -1748,9 +1703,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -1815,9 +1767,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -1893,9 +1842,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -1960,9 +1906,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -2031,9 +1974,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -2098,9 +2038,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -2169,9 +2106,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -2236,9 +2170,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
@@ -2307,9 +2238,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           </select>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
@@ -2374,9 +2302,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               <option key={status} value={status}>{status}</option>
                             ))}
                           </select>
-                        </td>
-                        <td className="px-2 py-3 text-center whitespace-nowrap">
-                          <span className={getCOINColor('C')}>{getCOINValues('shop-drawing').C}</span>
                         </td>
                         <td className="px-2 py-3 text-center whitespace-nowrap">
                           {renderCoinInput('shop-drawing', 'C')}
