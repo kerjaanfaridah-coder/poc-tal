@@ -522,122 +522,164 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            {/* Pending Items - Simplified UX */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-gray-900">Pending Items</h2>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const newItem = {
-                      id: `pending-${Date.now()}`,
-                      itemName: '',
-                      dueDate: '',
-                      assignedPerson: '',
-                      completed: false
-                    }
-                    setNewProject({...newProject, pendingItems: [...newProject.pendingItems, newItem]})
-                  }}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  Add Task
-                </button>
-              </div>
-
-              {/* Simplified Summary */}
-              <div className="bg-gray-50 rounded-lg p-3 mb-6">
-                <div className="flex items-center gap-4 text-sm">
-                  <span className="text-gray-600">Total:</span>
-                  <span className="font-semibold text-gray-900">
-                    {newProject.pendingItems?.length || 0}
-                  </span>
-                  <span className="text-gray-400">|</span>
-                  <span className="text-gray-600">Due Soon:</span>
-                  <span className="font-semibold text-orange-600">
-                    {(() => {
-                      const today = new Date();
-                      const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
-                      return newProject.pendingItems?.filter(item => {
-                        if (!item.dueDate || item.completed) return false;
-                        const dueDate = new Date(item.dueDate);
-                        return dueDate <= threeDaysFromNow && dueDate >= today;
-                      }).length || 0;
-                    })()}
-                  </span>
-                  <span className="text-gray-400">|</span>
-                  <span className="text-gray-600">Overdue:</span>
-                  <span className="font-semibold text-red-600">
-                    {(() => {
-                      const today = new Date();
-                      return newProject.pendingItems?.filter(item => {
-                        if (!item.dueDate || item.completed) return false;
-                        const dueDate = new Date(item.dueDate);
-                        return dueDate < today;
-                      }).length || 0;
-                    })()}
-                  </span>
-                </div>
-              </div>
-
-              {/* Simplified Quick Add */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <Plus className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm font-medium text-gray-700">Add Pending Item</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <select
-                    id="quick-add-type-simple-form"
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                    defaultValue="decision"
-                  >
-                    <option value="decision">Decision</option>
-                    <option value="action">Action</option>
-                    <option value="change">Change</option>
-                    <option value="task">Task</option>
-                  </select>
-                  <input
-                    type="text"
-                    placeholder="Description..."
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                    id="quick-add-description-simple-form"
-                  />
-                  <input
-                    type="date"
-                    className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                    id="quick-add-date-simple-form"
-                  />
+            {/* Modern Pending Items Header */}
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">📋 Pending Items</h2>
+                    <p className="text-gray-600">Track decisions, actions, and tasks for your project</p>
+                  </div>
                   <button
                     type="button"
                     onClick={() => {
-                      const type = (document.getElementById('quick-add-type-simple-form') as HTMLSelectElement)?.value || 'decision';
-                      const description = (document.getElementById('quick-add-description-simple-form') as HTMLInputElement)?.value || 'New Item';
-                      const dueDate = (document.getElementById('quick-add-date-simple-form') as HTMLInputElement)?.value || '';
-                      
                       const newItem = {
                         id: `pending-${Date.now()}`,
-                        itemName: description,
-                        dueDate: dueDate,
+                        itemName: '',
+                        dueDate: '',
                         assignedPerson: '',
                         completed: false
-                      };
-                      
-                      setNewProject({
-                        ...newProject,
-                        pendingItems: [...(newProject.pendingItems || []), newItem]
-                      });
-                      
-                      // Clear form
-                      (document.getElementById('quick-add-description-simple-form') as HTMLInputElement).value = '';
-                      (document.getElementById('quick-add-date-simple-form') as HTMLInputElement).value = '';
+                      }
+                      setNewProject({...newProject, pendingItems: [...newProject.pendingItems, newItem]})
                     }}
-                    className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+                    className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                   >
-                    Add
+                    <Plus className="w-5 h-5" />
+                    <span className="font-semibold">Add Item</span>
                   </button>
                 </div>
-              </div>
+
+                {/* Modern Stats Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm text-blue-600 font-medium">Total Items</div>
+                        <div className="text-2xl font-bold text-blue-900">{newProject.pendingItems?.length || 0}</div>
+                      </div>
+                      <div className="w-10 h-10 bg-blue-200 rounded-lg flex items-center justify-center">
+                        <span className="text-lg">📊</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm text-orange-600 font-medium">Due Soon</div>
+                        <div className="text-2xl font-bold text-orange-900">
+                          {(() => {
+                            const today = new Date();
+                            const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+                            return newProject.pendingItems?.filter(item => {
+                              if (!item.dueDate || item.completed) return false;
+                              const dueDate = new Date(item.dueDate);
+                              return dueDate <= threeDaysFromNow && dueDate >= today;
+                            }).length || 0;
+                          })()}
+                        </div>
+                      </div>
+                      <div className="w-10 h-10 bg-orange-200 rounded-lg flex items-center justify-center">
+                        <span className="text-lg">⏰</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-4 border border-red-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm text-red-600 font-medium">Overdue</div>
+                        <div className="text-2xl font-bold text-red-900">
+                          {(() => {
+                            const today = new Date();
+                            return newProject.pendingItems?.filter(item => {
+                              if (!item.dueDate || item.completed) return false;
+                              const dueDate = new Date(item.dueDate);
+                              return dueDate < today;
+                            }).length || 0;
+                          })()}
+                        </div>
+                      </div>
+                      <div className="w-10 h-10 bg-red-200 rounded-lg flex items-center justify-center">
+                        <span className="text-lg">🚨</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm text-green-600 font-medium">Completed</div>
+                        <div className="text-2xl font-bold text-green-900">
+                          {newProject.pendingItems?.filter(item => item.completed).length || 0}
+                        </div>
+                      </div>
+                      <div className="w-10 h-10 bg-green-200 rounded-lg flex items-center justify-center">
+                        <span className="text-lg">✅</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modern Quick Add Section */}
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100 mb-8">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                      <Plus className="w-4 h-4 text-white" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900">Quick Add Item</h3>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <select
+                      id="quick-add-type-modern-form"
+                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
+                      defaultValue="decision"
+                    >
+                      <option value="decision">🤔 Decision</option>
+                      <option value="action">⚡ Action</option>
+                      <option value="change">🔄 Change</option>
+                      <option value="task">📝 Task</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="What needs to be done?"
+                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
+                      id="quick-add-description-modern-form"
+                    />
+                    <input
+                      type="date"
+                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
+                      id="quick-add-date-modern-form"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const type = (document.getElementById('quick-add-type-modern-form') as HTMLSelectElement)?.value || 'decision';
+                        const description = (document.getElementById('quick-add-description-modern-form') as HTMLInputElement)?.value || 'New Item';
+                        const dueDate = (document.getElementById('quick-add-date-modern-form') as HTMLInputElement)?.value || '';
+                        
+                        const newItem = {
+                          id: `pending-${Date.now()}`,
+                          itemName: description,
+                          dueDate: dueDate,
+                          assignedPerson: '',
+                          completed: false
+                        };
+                        
+                        setNewProject({
+                          ...newProject,
+                          pendingItems: [...(newProject.pendingItems || []), newItem]
+                        });
+                        
+                        // Clear form
+                        (document.getElementById('quick-add-description-modern-form') as HTMLInputElement).value = '';
+                        (document.getElementById('quick-add-date-modern-form') as HTMLInputElement).value = '';
+                      }}
+                      className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                    >
+                      Add Item
+                    </button>
+                  </div>
+                </div>
 
               {/* Simplified Table */}
               <div className="border border-gray-200 rounded-lg overflow-hidden mb-8">
