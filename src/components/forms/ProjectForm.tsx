@@ -617,7 +617,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <select
                       id="quick-add-type-modern-form"
-                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
+                      className="px-4 py-3 pr-10 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium appearance-none"
                       defaultValue="decision"
                     >
                       <option value="decision">🤔 Decision</option>
@@ -640,7 +640,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                     />
                     <select
                       id="quick-add-priority-modern-form"
-                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
+                      className="px-4 py-3 pr-10 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium appearance-none"
                       defaultValue="medium"
                     >
                       <option value="low">🟢 Low</option>
@@ -806,7 +806,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                     updatedItems[index].priority = e.target.value as 'low' | 'medium' | 'high';
                                     setNewProject({...newProject, pendingItems: updatedItems});
                                   }}
-                                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${priorityConfigItem.color}`}
+                                  className={`inline-flex items-center gap-1 px-2 py-1 pr-8 rounded-full text-xs font-medium appearance-none ${priorityConfigItem.color}`}
                                 >
                                   <option value="low">🟢 Low</option>
                                   <option value="medium">🟡 Medium</option>
@@ -937,7 +937,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   <div className="col-span-2">
                     <select
                       id="quick-add-issue-severity"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                      className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 appearance-none"
                       defaultValue="medium"
                     >
                       <option value="low">Low</option>
@@ -1037,7 +1037,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                   updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
                                   setNewProject({...newProject, issues: updatedIssues})
                                 }}
-                                className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border cursor-pointer ${statusColor}`}
+                                className={`inline-flex items-center gap-1 px-2 py-1 pr-8 rounded-full text-xs font-medium border cursor-pointer appearance-none ${statusColor}`}
                               >
                                 <option value="open" className="bg-red-100 text-red-800">🔴 Open</option>
                                 <option value="in-progress" className="bg-blue-100 text-blue-800">🔵 In Progress</option>
