@@ -191,6 +191,11 @@ export default function DocumentsPage() {
 
   // Generate document function
   const handleGenerateDocument = () => {
+    if (!selectedTemplate) {
+      alert('Please select a template first');
+      return;
+    }
+    
     const fileName = `${selectedTemplate.name.replace(' Template', '')} - ${documentData.projectName.replace(/\s+/g, ' ')} - ${documentData.completionDate}.pdf`;
     
     // Create PDF document
@@ -927,10 +932,10 @@ This document is generated for project documentation purposes.
               </button>
               <button
                 onClick={handleGenerateDocument}
-                disabled={!selectedProject || !documentData.projectName}
+                disabled={!selectedProject || !documentData.projectName || !selectedTemplate}
                 className="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Generate {selectedTemplate?.name.replace(' Template', '')}
+                Generate {selectedTemplate?.name ? selectedTemplate.name.replace(' Template', '') : 'Document'}
               </button>
             </div>
           </div>
