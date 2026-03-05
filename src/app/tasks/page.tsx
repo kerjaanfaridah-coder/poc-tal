@@ -392,13 +392,7 @@ export default function TasksPage() {
                     <span className="text-sm text-slate-600">{task.dueDate}</span>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="flex-1 bg-slate-200 rounded-full h-2">
-                        <div 
-                          className="bg-gradient-to-r from-red-500 to-orange-600 h-2 rounded-full transition-all duration-300" 
-                          style={{ width: `${task.progress}%` }}
-                        ></div>
-                      </div>
+                    <div className="flex items-center justify-end gap-3">
                       <div className="flex items-center gap-1">
                         <input
                           type="number"
