@@ -438,7 +438,7 @@ export default function TeamPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {updatedTeamWorkload.map((member) => {
             const workloadPercentage = Math.min((member.tasks / WEEKLY_CAPACITY) * 100, 100);
             const progressColor = workloadPercentage <= 40 ? 'from-green-400 to-green-600' : 
@@ -447,34 +447,40 @@ export default function TeamPage() {
             
             return (
               <div key={member.id} className="group">
-                <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 p-4 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-9 h-9 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shadow-sm">
+                <div className="bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-lg transition-all duration-200 flex flex-col h-full">
+                  {/* Card Header */}
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center shadow-sm flex-shrink-0">
                       <span className="text-white font-bold text-sm">{member.avatar}</span>
                     </div>
-                    <div className="flex-1">
-                      <div className="font-semibold text-slate-900 text-sm">{member.name}</div>
-                      <div className="text-xs text-slate-600">{member.role}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-bold text-slate-900 text-base leading-tight">{member.name}</div>
+                      <div className="text-sm text-slate-500 leading-tight">{member.role}</div>
                       <div className="flex items-center gap-2 mt-1">
                         <div className={`w-2 h-2 rounded-full ${member.status === 'active' ? 'bg-green-500' : 'bg-gray-400'}`}></div>
                         <span className="text-xs text-slate-600 capitalize">{member.status}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-slate-900">{member.tasks}</div>
-                      <div className="text-xs text-slate-600">tasks this week</div>
-                    </div>
+
+                  {/* Tasks Information */}
+                  <div className="mb-3">
+                    <div className="text-xs text-slate-500 mb-1">Tasks This Week</div>
+                    <div className="text-2xl font-bold text-slate-900">{member.tasks}</div>
                   </div>
-                  <div className="w-full">
-                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div 
-                        className={`h-full bg-gradient-to-r ${progressColor} rounded-full transition-all duration-500`} 
-                        style={{ width: `${workloadPercentage}%` }}
-                      ></div>
+
+                  {/* Workload Progress */}
+                  <div className="mt-auto">
+                    <div className="text-xs text-slate-500 mb-2">Workload</div>
+                    <div className="w-full">
+                      <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full bg-gradient-to-r ${progressColor} rounded-full transition-all duration-500`} 
+                          style={{ width: `${workloadPercentage}%` }}
+                        ></div>
+                      </div>
+                      <div className="text-xs text-slate-600 mt-2 text-center font-medium">{workloadPercentage.toFixed(0)}%</div>
                     </div>
-                    <div className="text-xs text-slate-600 mt-1 text-center">{workloadPercentage.toFixed(0)}% workload</div>
                   </div>
                 </div>
               </div>
