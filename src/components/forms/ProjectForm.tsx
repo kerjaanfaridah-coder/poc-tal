@@ -534,25 +534,35 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   </div>
                 </div>
 
-                {/* Modern Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-sm text-blue-600 font-medium">Total Items</div>
-                        <div className="text-2xl font-bold text-blue-900">{newProject.pendingItems?.length || 0}</div>
+                {/* Stats Cards - Following Projects Page Design */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-2xl">📊</span>
+                        </div>
+                        <p className="text-3xl font-bold text-slate-900">{newProject.pendingItems?.length || 0}</p>
                       </div>
-                      <div className="w-10 h-10 bg-blue-200 rounded-lg flex items-center justify-center">
-                        <span className="text-lg">📊</span>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-600 font-semibold">Total Items</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-slate-500">vs last week</p>
+                          <p className="text-sm font-bold text-green-600">+12%</p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 border border-orange-200">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-sm text-orange-600 font-medium">Due Soon</div>
-                        <div className="text-2xl font-bold text-orange-900">
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-2xl">⏰</span>
+                        </div>
+                        <p className="text-3xl font-bold text-slate-900">
                           {(() => {
                             const today = new Date();
                             const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
@@ -562,19 +572,26 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               return dueDate <= threeDaysFromNow && dueDate >= today;
                             }).length || 0;
                           })()}
-                        </div>
+                        </p>
                       </div>
-                      <div className="w-10 h-10 bg-orange-200 rounded-lg flex items-center justify-center">
-                        <span className="text-lg">⏰</span>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-600 font-semibold">Due Soon</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-slate-500">vs last week</p>
+                          <p className="text-sm font-bold text-orange-600">+5%</p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-4 border border-red-200">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-sm text-red-600 font-medium">Overdue</div>
-                        <div className="text-2xl font-bold text-red-900">
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-2xl">🚨</span>
+                        </div>
+                        <p className="text-3xl font-bold text-slate-900">
                           {(() => {
                             const today = new Date();
                             return newProject.pendingItems?.filter(item => {
@@ -583,77 +600,83 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               return dueDate < today;
                             }).length || 0;
                           })()}
-                        </div>
+                        </p>
                       </div>
-                      <div className="w-10 h-10 bg-red-200 rounded-lg flex items-center justify-center">
-                        <span className="text-lg">🚨</span>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-600 font-semibold">Overdue</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-slate-500">vs last week</p>
+                          <p className="text-sm font-bold text-red-600">+2%</p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-sm text-green-600 font-medium">Completed</div>
-                        <div className="text-2xl font-bold text-green-900">
-                          {newProject.pendingItems?.filter(item => item.completed).length || 0}
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
+                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+                          <span className="text-2xl">✅</span>
                         </div>
+                        <p className="text-3xl font-bold text-slate-900">
+                          {newProject.pendingItems?.filter(item => item.completed).length || 0}
+                        </p>
                       </div>
-                      <div className="w-10 h-10 bg-green-200 rounded-lg flex items-center justify-center">
-                        <span className="text-lg">✅</span>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-600 font-semibold">Completed</p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-slate-500">vs last week</p>
+                          <p className="text-sm font-bold text-green-600">+8%</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Modern Quick Add Section */}
-                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100 mb-8">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
-                      <Plus className="w-4 h-4 text-white" />
+                {/* Add Item Section - Following Projects Page Search/Actions Style */}
+                <div className="bg-white rounded-2xl shadow-lg border border-red-100 p-6 mb-8">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
+                      <select
+                        id="quick-add-type-modern-form"
+                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        defaultValue="decision"
+                      >
+                        <option value="decision">🤔 Decision</option>
+                        <option value="action">⚡ Action</option>
+                        <option value="issue">🚨 Issue</option>
+                        <option value="risk">⚠️ Risk</option>
+                        <option value="followup">📝 Follow Up</option>
+                      </select>
+                      <input
+                        type="text"
+                        placeholder="Description..."
+                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent flex-1"
+                        id="quick-add-description-modern-form"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Assignee..."
+                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent w-32"
+                        id="quick-add-assignee-modern-form"
+                      />
+                      <select
+                        id="quick-add-priority-modern-form"
+                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        defaultValue="medium"
+                      >
+                        <option value="low">🟢 Low</option>
+                        <option value="medium">🟡 Medium</option>
+                        <option value="high">🔴 High</option>
+                      </select>
+                      <input
+                        type="date"
+                        className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        id="quick-add-date-modern-form"
+                      />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900">Add Item</h3>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <select
-                      id="quick-add-type-modern-form"
-                      className="px-4 py-3 pr-10 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium appearance-none"
-                      defaultValue="decision"
-                    >
-                      <option value="decision">🤔 Decision</option>
-                      <option value="action">⚡ Action</option>
-                      <option value="issue">� Issue</option>
-                      <option value="risk">⚠️ Risk</option>
-                      <option value="followup">📝 Follow Up</option>
-                    </select>
-                    <input
-                      type="text"
-                      placeholder="Description..."
-                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
-                      id="quick-add-description-modern-form"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Assignee..."
-                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
-                      id="quick-add-assignee-modern-form"
-                    />
-                    <select
-                      id="quick-add-priority-modern-form"
-                      className="px-4 py-3 pr-10 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium appearance-none"
-                      defaultValue="medium"
-                    >
-                      <option value="low">🟢 Low</option>
-                      <option value="medium">🟡 Medium</option>
-                      <option value="high">🔴 High</option>
-                    </select>
-                    <input
-                      type="date"
-                      className="px-4 py-3 bg-white border border-red-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-400 font-medium"
-                      id="quick-add-date-modern-form"
-                    />
-                  </div>
-                  <div className="mt-4">
+                    
                     <button
                       type="button"
                       onClick={() => {
@@ -684,43 +707,42 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         (document.getElementById('quick-add-assignee-modern-form') as HTMLInputElement).value = '';
                         (document.getElementById('quick-add-date-modern-form') as HTMLInputElement).value = '';
                       }}
-                      className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                      className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2"
                     >
+                      <Plus className="w-5 h-5" />
                       Add Item
                     </button>
                   </div>
                 </div>
 
-              {/* Modern Items Table */}
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900">📝 All Items</h3>
-                </div>
-                
-                {newProject.pendingItems?.length === 0 ? (
-                  <div className="p-12 text-center">
-                    <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <span className="text-2xl">📋</span>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">No items yet</h3>
-                    <p className="text-gray-600">Add your first item to get started</p>
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-gray-50 border-b border-gray-200">
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+              {/* Items Table - Following Tasks Page Design */}
+              <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Type</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Description</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Assignee</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Priority</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Due</th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Status</th>
+                        <th className="px-6 py-4 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200">
+                      {newProject.pendingItems?.length === 0 ? (
+                        <tr>
+                          <td colSpan={7} className="px-6 py-12 text-center">
+                            <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                              <span className="text-2xl">📋</span>
+                            </div>
+                            <h3 className="text-lg font-semibold text-slate-900 mb-2">No items yet</h3>
+                            <p className="text-slate-600">Add your first item to get started</p>
+                          </td>
                         </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200">
-                        {newProject.pendingItems?.map((item, index) => {
+                      ) : (
+                        newProject.pendingItems?.map((item, index) => {
                           const today = new Date();
                           const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
                           const dueDate = item.dueDate ? new Date(item.dueDate) : null;
@@ -729,19 +751,19 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           
                           // Auto status calculation
                           let status = 'Open';
-                          let statusColor = 'bg-gray-100 text-gray-800';
+                          let statusColor = 'bg-gray-100 text-gray-800 border-gray-200';
                           if (item.completed) {
                             status = 'Completed';
-                            statusColor = 'bg-green-100 text-green-800';
+                            statusColor = 'bg-green-100 text-green-800 border-green-200';
                           } else if (isOverdue) {
                             status = 'Overdue';
-                            statusColor = 'bg-red-100 text-red-800';
+                            statusColor = 'bg-red-100 text-red-800 border-red-200';
                           } else if (isDueSoon) {
                             status = 'Due Soon';
-                            statusColor = 'bg-orange-100 text-orange-800';
+                            statusColor = 'bg-orange-100 text-orange-800 border-orange-200';
                           } else if (item.status === 'in-progress') {
                             status = 'In Progress';
-                            statusColor = 'bg-blue-100 text-blue-800';
+                            statusColor = 'bg-blue-100 text-blue-800 border-blue-200';
                           }
                           
                           const itemType = item.itemType || 'decision';
@@ -754,56 +776,40 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           };
                           
                           const priorityConfig = {
-                            low: { icon: '🟢', color: 'bg-green-100 text-green-800' },
-                            medium: { icon: '🟡', color: 'bg-yellow-100 text-yellow-800' },
-                            high: { icon: '🔴', color: 'bg-red-100 text-red-800' }
+                            low: { icon: '🟢', color: 'bg-green-100 text-green-800 border-green-200' },
+                            medium: { icon: '🟡', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
+                            high: { icon: '🔴', color: 'bg-red-100 text-red-800 border-red-200' }
                           };
                           
                           const config = typeConfig[itemType] || typeConfig.decision;
                           const priorityConfigItem = priorityConfig[item.priority] || priorityConfig.medium;
                           
                           return (
-                            <tr key={item.id} className="hover:bg-gray-50 transition-colors">
-                              <td className="px-4 py-3">
-                                <div className="relative">
-                                  <select
-                                    value={item.itemType}
+                            <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                              <td className="px-6 py-4">
+                                <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${config.color}`}>
+                                  <span>{config.icon}</span>
+                                  {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div>
+                                  <input
+                                    type="text"
+                                    value={item.itemName}
                                     onChange={(e) => {
                                       const updatedItems = [...newProject.pendingItems];
-                                      updatedItems[index].itemType = e.target.value as 'decision' | 'action' | 'issue' | 'risk' | 'followup';
+                                      updatedItems[index].itemName = e.target.value;
                                       setNewProject({...newProject, pendingItems: updatedItems});
                                     }}
-                                    className={`inline-flex items-center gap-1 px-2 py-1 pr-8 rounded-full text-xs font-medium appearance-none cursor-pointer ${config.color}`}
-                                  >
-                                    <option value="decision">🤔 Decision</option>
-                                    <option value="action">⚡ Action</option>
-                                    <option value="issue">🚨 Issue</option>
-                                    <option value="risk">⚠️ Risk</option>
-                                    <option value="followup">📝 Follow Up</option>
-                                  </select>
-                                  <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                                    <svg className="w-3 h-3 text-current opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                  </div>
+                                    className={`font-medium text-slate-900 bg-transparent border-0 focus:outline-none focus:ring-2 focus:ring-red-500 rounded px-2 py-1 w-full ${
+                                      item.completed ? 'line-through opacity-60' : ''
+                                    }`}
+                                    placeholder="Description..."
+                                  />
                                 </div>
                               </td>
-                              <td className="px-4 py-3">
-                                <input
-                                  type="text"
-                                  value={item.itemName}
-                                  onChange={(e) => {
-                                    const updatedItems = [...newProject.pendingItems];
-                                    updatedItems[index].itemName = e.target.value;
-                                    setNewProject({...newProject, pendingItems: updatedItems});
-                                  }}
-                                  className={`font-medium text-gray-900 border border-gray-300 rounded px-2 py-1 w-full text-sm ${
-                                    item.completed ? 'line-through opacity-60' : ''
-                                  }`}
-                                  placeholder="Description..."
-                                />
-                              </td>
-                              <td className="px-4 py-3">
+                              <td className="px-6 py-4">
                                 <input
                                   type="text"
                                   value={item.assignedPerson}
@@ -812,26 +818,17 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                     updatedItems[index].assignedPerson = e.target.value;
                                     setNewProject({...newProject, pendingItems: updatedItems});
                                   }}
-                                  className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+                                  className="text-sm text-slate-900 bg-transparent border-0 focus:outline-none focus:ring-2 focus:ring-red-500 rounded px-2 py-1 w-full"
                                   placeholder="Assignee..."
                                 />
                               </td>
-                              <td className="px-4 py-3">
-                                <select
-                                  value={item.priority}
-                                  onChange={(e) => {
-                                    const updatedItems = [...newProject.pendingItems];
-                                    updatedItems[index].priority = e.target.value as 'low' | 'medium' | 'high';
-                                    setNewProject({...newProject, pendingItems: updatedItems});
-                                  }}
-                                  className={`inline-flex items-center gap-1 px-2 py-1 pr-8 rounded-full text-xs font-medium appearance-none ${priorityConfigItem.color}`}
-                                >
-                                  <option value="low">🟢 Low</option>
-                                  <option value="medium">🟡 Medium</option>
-                                  <option value="high">🔴 High</option>
-                                </select>
+                              <td className="px-6 py-4">
+                                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${priorityConfigItem.color}`}>
+                                  <span>{priorityConfigItem.icon}</span>
+                                  {item.priority.charAt(0).toUpperCase() + item.priority.slice(1)}
+                                </span>
                               </td>
-                              <td className="px-4 py-3">
+                              <td className="px-6 py-4">
                                 <input
                                   type="date"
                                   value={item.dueDate}
@@ -840,38 +837,16 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                     updatedItems[index].dueDate = e.target.value;
                                     setNewProject({...newProject, pendingItems: updatedItems});
                                   }}
-                                  className="px-2 py-1 border border-gray-300 rounded text-sm"
+                                  className="text-sm text-slate-600 bg-transparent border-0 focus:outline-none focus:ring-2 focus:ring-red-500 rounded px-2 py-1"
                                 />
                               </td>
-                              <td className="px-4 py-3">
-                                <div className="relative">
-                                  <select
-                                    value={item.completed ? 'completed' : status.toLowerCase().replace(' ', '-')}
-                                    onChange={(e) => {
-                                      const updatedItems = [...newProject.pendingItems];
-                                      if (e.target.value === 'completed') {
-                                        updatedItems[index].completed = true;
-                                      } else {
-                                        updatedItems[index].completed = false;
-                                        updatedItems[index].status = e.target.value as 'open' | 'in-progress' | 'due-soon' | 'overdue' | 'completed';
-                                      }
-                                      setNewProject({...newProject, pendingItems: updatedItems});
-                                    }}
-                                    className={`inline-flex items-center gap-1 px-2 py-1 pr-8 rounded-full text-xs font-medium appearance-none cursor-pointer ${statusColor}`}
-                                  >
-                                    <option value="open">📋 Open</option>
-                                    <option value="in-progress">🔄 In Progress</option>
-                                    <option value="completed">✅ Completed</option>
-                                  </select>
-                                  <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-                                    <svg className="w-3 h-3 text-current opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                  </div>
-                                </div>
+                              <td className="px-6 py-4">
+                                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border ${statusColor}`}>
+                                  {status}
+                                </span>
                               </td>
-                              <td className="px-4 py-3 text-right">
-                                <div className="flex items-center justify-end gap-2">
+                              <td className="px-6 py-4">
+                                <div className="flex items-center justify-center gap-2">
                                   <button
                                     type="button"
                                     onClick={() => {
@@ -879,7 +854,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                       updatedItems[index].completed = !updatedItems[index].completed;
                                       setNewProject({...newProject, pendingItems: updatedItems});
                                     }}
-                                    className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all duration-200 ${
+                                    className={`p-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
                                       item.completed 
                                         ? 'bg-gray-100 text-gray-600 hover:bg-gray-200' 
                                         : 'bg-green-100 text-green-600 hover:bg-green-200'
@@ -893,7 +868,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                       const updatedItems = newProject.pendingItems.filter((_, itemIndex) => itemIndex !== index);
                                       setNewProject({...newProject, pendingItems: updatedItems});
                                     }}
-                                    className="px-3 py-1 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 text-xs font-semibold transition-all duration-200"
+                                    className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 text-xs font-semibold transition-all duration-200"
                                   >
                                     🗑️
                                   </button>
@@ -901,11 +876,11 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                               </td>
                             </tr>
                           );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -977,7 +952,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                   <div className="col-span-2">
                     <select
                       id="quick-add-issue-severity"
-                      className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 appearance-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                       defaultValue="medium"
                     >
                       <option value="low">Low</option>
@@ -1077,7 +1052,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                   updatedIssues[index].status = e.target.value as Project['issues'][0]['status']
                                   setNewProject({...newProject, issues: updatedIssues})
                                 }}
-                                className={`inline-flex items-center gap-1 px-2 py-1 pr-8 rounded-full text-xs font-medium border cursor-pointer appearance-none ${statusColor}`}
+                                className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border cursor-pointer ${statusColor}`}
                               >
                                 <option value="open" className="bg-red-100 text-red-800">🔴 Open</option>
                                 <option value="in-progress" className="bg-blue-100 text-blue-800">🔵 In Progress</option>
