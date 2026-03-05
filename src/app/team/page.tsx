@@ -72,6 +72,9 @@ export default function TeamPage() {
   // Calculate summary stats
   const totalMembers = teamWorkload.length;
   const totalActivities = Object.values(teamScheduleData).reduce((sum, day) => sum + day.length, 0);
+  
+  // Define weekly capacity
+  const WEEKLY_CAPACITY = 10;
 
   // Format week range display
   const formatWeekRange = () => {
@@ -374,7 +377,11 @@ export default function TeamPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {teamWorkload.map((member) => {
-            const completionPercentage = member.tasks > 0 ? (member.completed / member.tasks) * 100 : 0;
+            const workloadPercentage = (member.tasks / WEEKLY_CAPACITY) * 100;
+            const progressColor = workloadPercentage <= 40 ? 'from-green-400 to-green-600' : 
+                               workloadPercentage <= 80 ? 'from-orange-400 to-orange-600' : 
+                               'from-red-400 to-red-600';
+            
             return (
               <div key={member.id} className="group">
                 <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 p-4 hover:border-green-300 hover:bg-green-50 transition-all duration-200">
@@ -394,21 +401,17 @@ export default function TeamPage() {
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-center">
                       <div className="text-lg font-bold text-slate-900">{member.tasks}</div>
-                      <div className="text-xs text-slate-600">tasks</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-green-600">{member.completed}</div>
-                      <div className="text-xs text-slate-600">done</div>
+                      <div className="text-xs text-slate-600">tasks this week</div>
                     </div>
                   </div>
                   <div className="w-full">
                     <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-500" 
-                        style={{ width: `${completionPercentage}%` }}
+                        className={`h-full bg-gradient-to-r ${progressColor} rounded-full transition-all duration-500`} 
+                        style={{ width: `${Math.min(workloadPercentage, 100)}%` }}
                       ></div>
                     </div>
-                    <div className="text-xs text-slate-600 mt-1 text-center">{completionPercentage.toFixed(0)}%</div>
+                    <div className="text-xs text-slate-600 mt-1 text-center">{workloadPercentage.toFixed(0)}% workload</div>
                   </div>
                 </div>
               </div>
