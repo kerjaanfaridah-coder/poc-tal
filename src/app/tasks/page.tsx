@@ -131,6 +131,19 @@ export default function TasksPage() {
   const handleDeleteTask = (taskId: string, taskTitle: string) => {
     if (confirm(`Are you sure you want to delete "${taskTitle}"? This action cannot be undone.`)) {
       setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+      // Clear localStorage if all tasks are deleted
+      const updatedTasks = tasks.filter(task => task.id !== taskId);
+      if (updatedTasks.length === 0) {
+        localStorage.removeItem('tasks');
+      }
+    }
+  };
+
+  // Clear all tasks function
+  const handleClearAllTasks = () => {
+    if (confirm('Are you sure you want to clear all tasks? This action cannot be undone.')) {
+      setTasks([]);
+      localStorage.removeItem('tasks');
     }
   };
 
@@ -326,13 +339,24 @@ export default function TasksPage() {
             </div>
           </div>
           
-          <button
-            onClick={handleNewTask}
-            className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2"
-          >
-            <Plus className="w-5 h-5" />
-            New Task
-          </button>
+          <div className="flex items-center gap-3">
+            {tasks.length > 0 && (
+              <button
+                onClick={handleClearAllTasks}
+                className="px-4 py-2 bg-white border border-red-200 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-all duration-200 flex items-center gap-2"
+              >
+                <Trash2 className="w-4 h-4" />
+                Clear All
+              </button>
+            )}
+            <button
+              onClick={handleNewTask}
+              className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              New Task
+            </button>
+          </div>
         </div>
       </div>
 
