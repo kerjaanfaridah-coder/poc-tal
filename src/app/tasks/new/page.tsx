@@ -198,47 +198,63 @@ export default function NewTaskPage() {
               <label className="block text-sm font-bold text-slate-700 mb-2">
                 Progress <span className="text-xs text-slate-500">(optional)</span>
               </label>
-              <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-xl p-4 border border-slate-200">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${
+              <div className="bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 rounded-2xl p-6 border border-slate-200 shadow-xl">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-4 h-4 rounded-full transition-all duration-300 ${
                       formData.progress === 0 ? 'bg-slate-300' :
-                      formData.progress <= 25 ? 'bg-red-400' :
-                      formData.progress <= 50 ? 'bg-orange-400' :
-                      formData.progress <= 75 ? 'bg-yellow-400' :
-                      formData.progress < 100 ? 'bg-green-400' : 'bg-green-500'
-                    }`}></div>
+                      formData.progress <= 25 ? 'bg-red-500 shadow-lg shadow-red-500/50' :
+                      formData.progress <= 50 ? 'bg-orange-500 shadow-lg shadow-orange-500/50' :
+                      formData.progress <= 75 ? 'bg-yellow-500 shadow-lg shadow-yellow-500/50' :
+                      formData.progress < 100 ? 'bg-green-500 shadow-lg shadow-green-500/50' : 'bg-green-600 shadow-lg shadow-green-600/50'
+                    }`}>
+                      <div className="w-2 h-2 rounded-full bg-white opacity-50"></div>
+                    </div>
                     <span className="text-sm font-medium text-slate-700">Task Progress</span>
                   </div>
                   <div className="relative">
-                    <span className="text-2xl font-bold text-slate-900">{formData.progress}%</span>
-                    {/* Spacer to prevent overlap */}
-                    <div className="absolute -top-6 left-0 w-full h-6"></div>
+                    <span className="text-3xl font-bold text-slate-900">{formData.progress}%</span>
+                    <div className="absolute -top-8 left-0 w-full h-8"></div>
+                    {/* Progress status text */}
+                    <div className="absolute -top-8 left-0 text-xs text-slate-500">
+                      {formData.progress === 0 ? 'Not Started' :
+                       formData.progress <= 25 ? 'Just Beginning' :
+                       formData.progress <= 50 ? 'Making Progress' :
+                       formData.progress <= 75 ? 'Almost There' :
+                       formData.progress === 100 ? 'Completed!' : 'In Progress'}
+                    </div>
                   </div>
                 </div>
                 
-                {/* Progress Bar */}
-                <div className="relative">
-                  <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                {/* Enhanced Progress Bar */}
+                <div className="relative mb-4">
+                  <div className="w-full bg-slate-200 rounded-full h-4 overflow-hidden shadow-inner">
                     <div 
-                      className={`h-full rounded-full transition-all duration-500 ease-out ${
+                      className={`h-full rounded-full transition-all duration-700 ease-out relative ${
                         formData.progress === 0 ? 'bg-slate-300' :
-                        formData.progress <= 25 ? 'bg-gradient-to-r from-red-400 to-red-500' :
-                        formData.progress <= 50 ? 'bg-gradient-to-r from-orange-400 to-orange-500' :
-                        formData.progress <= 75 ? 'bg-gradient-to-r from-yellow-400 to-yellow-500' :
-                        formData.progress < 100 ? 'bg-gradient-to-r from-green-400 to-green-500' : 'bg-gradient-to-r from-green-500 to-green-600'
+                        formData.progress <= 25 ? 'bg-gradient-to-r from-red-500 to-red-600 shadow-lg' :
+                        formData.progress <= 50 ? 'bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg' :
+                        formData.progress <= 75 ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 shadow-lg' :
+                        formData.progress < 100 ? 'bg-gradient-to-r from-green-500 to-green-600 shadow-lg' : 'bg-gradient-to-r from-green-600 to-green-700 shadow-lg'
                       }`}
                       style={{ width: `${formData.progress}%` }}
-                    ></div>
+                    >
+                      {/* Animated shine effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full"></div>
+                    </div>
                   </div>
                   {/* Progress markers */}
-                  <div className="absolute top-0 left-0 right-0 flex justify-between px-1 -mt-6">
+                  <div className="absolute top-0 left-0 right-0 flex justify-between px-2 -mt-7">
                     {[0, 25, 50, 75, 100].map((marker) => (
-                      <div key={marker} className="relative">
-                        <div className={`w-2 h-2 rounded-full border-2 border-white ${
-                          formData.progress >= marker ? 'bg-slate-600' : 'bg-slate-300'
-                        }`}></div>
-                        <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-xs text-slate-500">
+                      <div key={marker} className="relative group">
+                        <div className={`w-3 h-3 rounded-full border-2 border-white transition-all duration-300 ${
+                          formData.progress >= marker ? 'bg-slate-700 shadow-md' : 'bg-slate-400'
+                        }`}>
+                          {formData.progress >= marker && (
+                            <div className="w-1 h-1 rounded-full bg-white animate-pulse"></div>
+                          )}
+                        </div>
+                        <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity">
                           {marker}%
                         </span>
                       </div>
@@ -246,8 +262,8 @@ export default function NewTaskPage() {
                   </div>
                 </div>
 
-                {/* Progress Controls */}
-                <div className="flex items-center gap-3 mt-4">
+                {/* Enhanced Progress Controls */}
+                <div className="flex items-center gap-4 mb-4">
                   <div className="flex-1 relative">
                     <input
                       type="range"
@@ -255,21 +271,23 @@ export default function NewTaskPage() {
                       max="100"
                       value={formData.progress}
                       onChange={(e) => handleInputChange('progress', parseInt(e.target.value))}
-                      className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider"
+                      className="w-full h-3 bg-slate-300 rounded-lg appearance-none cursor-pointer slider"
                     />
-                    {/* Custom thumb */}
+                    {/* Enhanced custom thumb */}
                     <div 
-                      className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-gradient-to-r from-red-500 to-orange-500 rounded-full shadow-lg cursor-pointer pointer-events-none"
+                      className="absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-gradient-to-r from-red-500 to-orange-500 rounded-full shadow-xl cursor-pointer pointer-events-none transition-all duration-200"
                       style={{ left: `${formData.progress}%`, transform: 'translateX(-50%)' }}
-                    ></div>
+                    >
+                      <div className="w-2 h-2 rounded-full bg-white opacity-50"></div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 bg-white rounded-lg border border-slate-200 px-3 py-2">
+                  <div className="flex items-center gap-2 bg-white rounded-xl border border-slate-200 px-4 py-3 shadow-sm">
                     <button
                       type="button"
-                      onClick={() => handleInputChange('progress', Math.max(0, formData.progress - 10))}
-                      className="w-6 h-6 rounded bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"
+                      onClick={() => handleInputChange('progress', Math.max(0, formData.progress - 5))}
+                      className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all duration-200"
                     >
-                      <span className="text-slate-600 text-xs">-</span>
+                      <span className="text-slate-600 text-sm font-medium">−</span>
                     </button>
                     <input
                       type="number"
@@ -277,32 +295,32 @@ export default function NewTaskPage() {
                       max="100"
                       value={formData.progress}
                       onChange={(e) => handleInputChange('progress', Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
-                      className="w-12 text-center bg-transparent border-0 text-sm font-medium text-slate-900 focus:outline-none"
+                      className="w-16 text-center bg-transparent border-0 text-sm font-bold text-slate-900 focus:outline-none"
                     />
                     <button
                       type="button"
-                      onClick={() => handleInputChange('progress', Math.min(100, formData.progress + 10))}
-                      className="w-6 h-6 rounded bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"
+                      onClick={() => handleInputChange('progress', Math.min(100, formData.progress + 5))}
+                      className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all duration-200"
                     >
-                      <span className="text-slate-600 text-xs">+</span>
+                      <span className="text-slate-600 text-sm font-medium">+</span>
                     </button>
                   </div>
                 </div>
 
-                {/* Quick Progress Options */}
-                <div className="flex gap-2 mt-3">
+                {/* Enhanced Quick Progress Options */}
+                <div className="flex flex-wrap gap-2">
                   {[0, 25, 50, 75, 100].map((value) => (
                     <button
                       key={value}
                       type="button"
                       onClick={() => handleInputChange('progress', value)}
-                      className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-200 ${
+                      className={`px-4 py-2 rounded-xl text-sm font-bold transition-all duration-200 ${
                         formData.progress === value
-                          ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-md'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          ? 'bg-gradient-to-r from-red-500 to-orange-600 text-white shadow-lg transform scale-105'
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:scale-105'
                       }`}
                     >
-                      {value === 0 ? 'Not Started' : `${value}%`}
+                      {value === 0 ? '🚀 Start' : value === 100 ? '✅ Done' : `${value}%`}
                     </button>
                   ))}
                 </div>
@@ -334,29 +352,40 @@ export default function NewTaskPage() {
       <style jsx>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
-          width: 20px;
-          height: 20px;
+          width: 24px;
+          height: 24px;
           background: linear-gradient(to right, #ef4444, #f97316);
           border-radius: 50%;
           cursor: pointer;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+          border: 2px solid white;
         }
         .slider::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
+          width: 24px;
+          height: 24px;
           background: linear-gradient(to right, #ef4444, #f97316);
           border-radius: 50%;
           cursor: pointer;
-          border: none;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          border: 2px solid white;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         .slider::-webkit-slider-track {
           background: #e2e8f0;
           border-radius: 9999px;
+          height: 12px;
         }
         .slider::-moz-range-track {
           background: #e2e8f0;
           border-radius: 9999px;
+          height: 12px;
+        }
+        .slider::-webkit-slider-thumb:hover {
+          transform: scale(1.1);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        .slider::-moz-range-thumb:hover {
+          transform: scale(1.1);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
       `}</style>
     </ConsistentLayout>
