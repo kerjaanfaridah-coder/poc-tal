@@ -87,6 +87,21 @@ export default function NewTaskPage() {
         {/* Form Container */}
         <div className="bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Project */}
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">
+                Project <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.project}
+                onChange={(e) => handleInputChange('project', e.target.value)}
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
+                placeholder="Enter project name..."
+              />
+            </div>
+
             {/* Task Name */}
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-2">
@@ -102,38 +117,8 @@ export default function NewTaskPage() {
               />
             </div>
 
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">
-                Description <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                required
-                value={formData.description}
-                onChange={(e) => handleInputChange('description', e.target.value)}
-                rows={4}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 resize-none"
-                placeholder="Enter task description..."
-              />
-            </div>
-
             {/* Two Column Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Project */}
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2">
-                  Project <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.project}
-                  onChange={(e) => handleInputChange('project', e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Enter project name..."
-                />
-              </div>
-
               {/* Assignee */}
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">
@@ -148,10 +133,7 @@ export default function NewTaskPage() {
                   placeholder="Enter assignee name..."
                 />
               </div>
-            </div>
 
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Priority */}
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">
@@ -163,7 +145,7 @@ export default function NewTaskPage() {
                       key={priority}
                       type="button"
                       onClick={() => handleInputChange('priority', priority)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all duration-200 ${
+                      className={`px-4 py-2 rounded-xl text-sm font-bold border transition-all duration-200 ${
                         formData.priority === priority
                           ? getPriorityColor(priority)
                           : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
@@ -174,7 +156,10 @@ export default function NewTaskPage() {
                   ))}
                 </div>
               </div>
+            </div>
 
+            {/* Two Column Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Status */}
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">
@@ -186,7 +171,7 @@ export default function NewTaskPage() {
                       key={status}
                       type="button"
                       onClick={() => handleInputChange('status', status)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all duration-200 ${
+                      className={`px-4 py-2 rounded-xl text-sm font-bold border transition-all duration-200 ${
                         formData.status === status
                           ? getStatusColor(status)
                           : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
@@ -197,23 +182,38 @@ export default function NewTaskPage() {
                   ))}
                 </div>
               </div>
+
+              {/* Due Date */}
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">
+                  Due Date <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                  <input
+                    type="date"
+                    required
+                    value={formData.dueDate}
+                    onChange={(e) => handleInputChange('dueDate', e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Due Date */}
+            {/* Description */}
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-2">
-                Due Date <span className="text-red-500">*</span>
+                Description <span className="text-red-500">*</span>
               </label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-                <input
-                  type="date"
-                  required
-                  value={formData.dueDate}
-                  onChange={(e) => handleInputChange('dueDate', e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                />
-              </div>
+              <textarea
+                required
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
+                rows={4}
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 resize-none"
+                placeholder="Enter task description..."
+              />
             </div>
 
             {/* Progress */}
