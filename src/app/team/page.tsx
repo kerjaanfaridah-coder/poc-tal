@@ -1,18 +1,35 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp } from 'lucide-react';
+import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp, Plus, Search, Filter } from 'lucide-react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
 export default function TeamPage() {
   // Simple team schedule data
-  const teamSchedule = [
-    { id: '1', day: 'Monday', date: '2024-03-11', activities: 4 },
-    { id: '2', day: 'Tuesday', date: '2024-03-12', activities: 6 },
-    { id: '3', day: 'Wednesday', date: '2024-03-13', activities: 8 },
-    { id: '4', day: 'Thursday', date: '2024-03-14', activities: 5 },
-    { id: '5', day: 'Friday', date: '2024-03-15', activities: 7 }
-  ];
+  const teamScheduleData = {
+    Monday: [
+      { id: '1', title: 'Install Speaker', project: 'Home Theater – Thrishna Lounge', assigned: 'Technician', time: '08:00 – 10:00' },
+      { id: '2', title: 'Testing System', project: 'Conference Room', assigned: 'Engineer', time: '14:00 – 16:00' }
+    ],
+    Tuesday: [
+      { id: '3', title: 'Network Setup', project: 'Office Building', assigned: 'IT Specialist', time: '09:00 – 12:00' },
+      { id: '4', title: 'Equipment Check', project: 'Main Hall', assigned: 'Technician', time: '13:00 – 15:00' },
+      { id: '5', title: 'Client Meeting', project: 'Board Room', assigned: 'Project Manager', time: '16:00 – 17:00' }
+    ],
+    Wednesday: [
+      { id: '6', title: 'Security Installation', project: 'Entrance', assigned: 'Security Team', time: '10:00 – 14:00' },
+      { id: '7', title: 'Sound Calibration', project: 'Auditorium', assigned: 'Audio Engineer', time: '15:00 – 18:00' }
+    ],
+    Thursday: [
+      { id: '8', title: 'Maintenance Check', project: 'All Rooms', assigned: 'Maintenance', time: '08:00 – 12:00' },
+      { id: '9', title: 'Training Session', project: 'Training Room', assigned: 'Trainer', time: '13:00 – 17:00' }
+    ],
+    Friday: [
+      { id: '10', title: 'Final Inspection', project: 'Project Site', assigned: 'Inspector', time: '09:00 – 11:00' },
+      { id: '11', title: 'Report Preparation', project: 'Office', assigned: 'Admin', time: '14:00 – 16:00' },
+      { id: '12', title: 'Team Review', project: 'Meeting Room', assigned: 'Team Lead', time: '16:00 – 18:00' }
+    ]
+  };
 
   // Simple team workload data
   const teamWorkload = [
@@ -24,7 +41,7 @@ export default function TeamPage() {
 
   // Calculate summary stats
   const totalMembers = teamWorkload.length;
-  const activeToday = teamSchedule.find(day => day.day === 'Monday')?.activities || 0;
+  const totalActivities = Object.values(teamScheduleData).reduce((sum, day) => sum + day.length, 0);
   const totalTasksAssigned = teamWorkload.reduce((sum, member) => sum + member.tasks, 0);
   const totalTasksCompleted = teamWorkload.reduce((sum, member) => sum + member.completed, 0);
 
@@ -58,12 +75,12 @@ export default function TeamPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Activity className="w-6 h-6 text-white" />
               </div>
-              <p className="text-3xl font-bold text-slate-900">{activeToday}</p>
+              <p className="text-3xl font-bold text-slate-900">{totalActivities}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-600 font-semibold">Active Today</p>
+              <p className="text-sm font-bold text-slate-600 font-semibold">Weekly Activities</p>
               <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">activities</p>
+                <p className="text-xs text-slate-500">scheduled</p>
                 <p className="text-sm font-bold text-green-600">Busy</p>
               </div>
             </div>
@@ -111,24 +128,80 @@ export default function TeamPage() {
 
       {/* Team Schedule Section */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
-            <Calendar className="w-4 h-4 text-white" />
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Calendar className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-slate-900">Team Schedule</h3>
+              <p className="text-sm text-slate-500">Weekly team activities</p>
+            </div>
           </div>
-          <div>
-            <h3 className="text-xl font-semibold text-slate-900">Team Schedule</h3>
-            <p className="text-sm text-slate-500">Weekly team activities</p>
+          
+          {/* Header Controls */}
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search schedule..."
+                className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <button className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors flex items-center gap-2">
+              <Filter className="w-4 h-4" />
+              Filter
+            </button>
+            <button className="px-6 py-3 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-xl font-bold hover:from-red-600 hover:to-orange-700 transition-all duration-200 shadow-lg flex items-center gap-2 whitespace-nowrap">
+              <Plus className="w-5 h-5" />
+              Add Schedule
+            </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-4">
-          {teamSchedule.map((day) => (
-            <div key={day.id} className="group">
-              <div className="text-center p-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer">
-                <div className="font-semibold text-slate-900 mb-1">{day.day}</div>
-                <div className="text-xs text-slate-600 mb-3">{day.date}</div>
-                <div className="text-2xl font-bold text-blue-600 mb-1">{day.activities}</div>
-                <div className="text-xs text-slate-600">activities</div>
+        {/* Board Layout */}
+        <div className="grid grid-cols-5 gap-5">
+          {Object.entries(teamScheduleData).map(([day, schedules]) => (
+            <div key={day} className="min-h-[400px]">
+              {/* Column Header */}
+              <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200 p-3 mb-3">
+                <h4 className="font-semibold text-slate-900 text-center">{day}</h4>
+                <p className="text-xs text-slate-600 text-center">{schedules.length} activities</p>
+              </div>
+
+              {/* Schedule Cards */}
+              <div className="space-y-3">
+                {schedules.map((schedule) => (
+                  <div key={schedule.id} className="group">
+                    <div className="bg-white border border-slate-200 rounded-xl p-3 hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer">
+                      {/* Task Title */}
+                      <h5 className="font-semibold text-slate-900 text-sm mb-2 line-clamp-2">
+                        {schedule.title}
+                      </h5>
+                      
+                      {/* Project/Location */}
+                      <p className="text-xs text-slate-600 mb-2 line-clamp-2">
+                        {schedule.project}
+                      </p>
+                      
+                      {/* Assigned Person */}
+                      <div className="flex items-center gap-1 mb-2">
+                        <User className="w-3 h-3 text-slate-400" />
+                        <span className="text-xs text-slate-600">{schedule.assigned}</span>
+                      </div>
+                      
+                      {/* Time */}
+                      {schedule.time && (
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-slate-400" />
+                          <span className="text-xs text-slate-500">{schedule.time}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
