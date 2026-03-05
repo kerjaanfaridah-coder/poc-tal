@@ -107,8 +107,8 @@ export default function Sidebar() {
                   className={cn(
                     "w-full flex items-center gap-3 px-4 h-11 rounded-xl text-left transition-all duration-200",
                     isActive(item.href)
-                      ? "bg-indigo-50 text-indigo-700 font-semibold border border-indigo-200"
-                      : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-medium"
+                      ? "bg-red-50 text-red-700 font-semibold border border-red-200"
+                      : "text-gray-700 hover:bg-red-50 hover:text-red-900 font-medium"
                   )}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -145,8 +145,8 @@ export default function Sidebar() {
                         className={cn(
                           "w-full flex items-center gap-3 px-4 h-10 rounded-xl text-left transition-all duration-200",
                           isActive(child.href)
-                            ? "bg-indigo-50 text-indigo-700 font-semibold border border-indigo-200"
-                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium"
+                            ? "bg-red-50 text-red-700 font-semibold border border-red-200"
+                            : "text-gray-600 hover:bg-red-50 hover:text-red-900 font-medium"
                         )}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
