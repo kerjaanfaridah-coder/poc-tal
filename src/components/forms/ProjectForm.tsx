@@ -672,7 +672,7 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                       <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                       <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assignee</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due</th>
+                      <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
                       <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                       <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                     </tr>
@@ -761,23 +761,43 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             />
                           </td>
                           <td className="px-3 py-2">
-                            <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusColor}`}>
-                              {status}
-                            </span>
+                            <select
+                              value={item.completed ? 'completed' : isOverdue ? 'overdue' : isDueSoon ? 'due-soon' : 'normal'}
+                              onChange={(e) => {
+                                const updatedItems = [...newProject.pendingItems];
+                                const newStatus = e.target.value;
+                                if (newStatus === 'completed') {
+                                  updatedItems[index].completed = true;
+                                } else {
+                                  updatedItems[index].completed = false;
+                                }
+                                setNewProject({...newProject, pendingItems: updatedItems});
+                              }}
+                              className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border cursor-pointer ${
+                                item.completed ? 'bg-green-100 text-green-800 border-green-200' :
+                                isOverdue ? 'bg-red-100 text-red-800 border-red-200' :
+                                isDueSoon ? 'bg-orange-100 text-orange-800 border-orange-200' :
+                                'bg-gray-100 text-gray-800 border-gray-200'
+                              }`}
+                            >
+                              <option value="normal">📋 Normal</option>
+                              <option value="due-soon">⏰ Due Soon</option>
+                              <option value="overdue">🚨 Overdue</option>
+                              <option value="completed">✅ Completed</option>
+                            </select>
                           </td>
                           <td className="px-3 py-2 text-right">
-                            <div className="flex items-center justify-end gap-2">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const updatedItems = newProject.pendingItems.filter((_, itemIndex) => itemIndex !== index);
-                                  setNewProject({...newProject, pendingItems: updatedItems});
-                                }}
-                                className="text-red-500 hover:text-red-600"
-                              >
-                                🗑
-                              </button>
-                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updatedItems = newProject.pendingItems.filter((_, itemIndex) => itemIndex !== index);
+                                setNewProject({...newProject, pendingItems: updatedItems});
+                              }}
+                              className="text-red-500 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors"
+                              title="Delete item"
+                            >
+                              🗑️
+                            </button>
                           </td>
                         </tr>
                       );
