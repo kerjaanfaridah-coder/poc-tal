@@ -289,15 +289,6 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             <div className="mt-6">
               {/* Modern Budget Header */}
               <div className="mb-8">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="text-right">
-                    <div className="text-sm text-gray-500 mb-1">Total Budget</div>
-                    <div className="text-3xl font-bold text-gray-900">
-                      IDR {newProject.budget.toLocaleString('id-ID')}
-                    </div>
-                  </div>
-                </div>
-
                 {/* Modern Total Budget Input */}
                 <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100">
                   <label className="block text-sm font-semibold text-gray-700 mb-3">
