@@ -104,6 +104,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   // Add task status state
   const [taskStatuses, setTaskStatuses] = useState<{[key: string]: string}>({});
 
+  // Add task notes state
+  const [taskNotes, setTaskNotes] = useState<{[key: string]: string}>({});
+
   const assignmentOptions = [
     'Designed',
     'Drafter', 
@@ -146,6 +149,13 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
     setTaskStatuses(prev => ({
       ...prev,
       [taskId]: status
+    }));
+  };
+
+  const handleNotesChange = (taskId: string, notes: string) => {
+    setTaskNotes(prev => ({
+      ...prev,
+      [taskId]: notes
     }));
   };
 
@@ -436,7 +446,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes['kick-off'] || ''}
+                            onChange={(e) => handleNotesChange('kick-off', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -485,7 +503,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes['shop-drawing'] || ''}
+                            onChange={(e) => handleNotesChange('shop-drawing', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -534,7 +560,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes['dp1'] || ''}
+                            onChange={(e) => handleNotesChange('dp1', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -590,7 +624,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -639,7 +681,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -688,7 +738,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -737,7 +795,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -786,7 +852,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -835,7 +909,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -884,7 +966,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -940,7 +1030,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -989,7 +1087,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1038,7 +1144,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1087,7 +1201,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1136,7 +1258,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1185,7 +1315,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1234,7 +1372,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1283,7 +1429,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1339,7 +1493,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1388,7 +1550,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1437,7 +1607,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1486,7 +1664,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1535,7 +1721,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1584,7 +1778,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1633,7 +1835,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
@@ -1682,7 +1892,15 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="text"
+                            value={taskNotes[''] || ''}
+                            onChange={(e) => handleNotesChange('', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full"
+                            placeholder="Add notes..."
+                          />
+                        </td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className="text-gray-400 text-sm">No document</span>
                         </td>
