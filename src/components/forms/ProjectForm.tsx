@@ -386,14 +386,1305 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
-                      {/* Empty state for real-time data entry */}
-                      <tr>
-                        <td colSpan={9} className="px-4 py-12 text-center text-slate-500">
-                          <div className="flex flex-col items-center space-y-3">
-                            <div className="text-6xl">📋</div>
-                            <div className="text-lg font-medium">No tasks added yet</div>
-                            <div className="text-sm">Start adding tasks to track your project progress</div>
-                          </div>
+                      {/* PHASE 1 */}
+                      <tr className="bg-gradient-to-r from-blue-50 to-indigo-50">
+                        <td colSpan={9} className="px-4 py-4 font-bold text-blue-900 border-b-2 border-blue-200">
+                          PHASE 1
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">1. Kick off Meeting</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['kick-off'] || 'Project Manager'}
+                            onChange={(e) => handleAssignmentChange('kick-off', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['kick-off']?.start || ''}
+                            onChange={(e) => handleDateChange('kick-off', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['kick-off']?.end || ''}
+                            onChange={(e) => handleDateChange('kick-off', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('kick-off')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['kick-off'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('kick-off', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">2. Produce Shop Drawing</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['shop-drawing'] || 'Designed'}
+                            onChange={(e) => handleAssignmentChange('shop-drawing', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['shop-drawing']?.start || ''}
+                            onChange={(e) => handleDateChange('shop-drawing', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['shop-drawing']?.end || ''}
+                            onChange={(e) => handleDateChange('shop-drawing', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('shop-drawing')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['shop-drawing'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('shop-drawing', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">3. Project ON DP 1</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['dp1'] || 'Finance AR'}
+                            onChange={(e) => handleAssignmentChange('dp1', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['dp1']?.start || ''}
+                            onChange={(e) => handleDateChange('dp1', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['dp1']?.end || ''}
+                            onChange={(e) => handleDateChange('dp1', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('dp1')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['dp1'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('dp1', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+
+                      {/* PHASE 2 */}
+                      <tr className="bg-gradient-to-r from-green-50 to-emerald-50">
+                        <td colSpan={9} className="px-4 py-4 font-bold text-green-900 border-b-2 border-green-200">
+                          PHASE 2
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">4. Survey</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['survey'] || 'Site Manager'}
+                            onChange={(e) => handleAssignmentChange('survey', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['survey']?.start || ''}
+                            onChange={(e) => handleDateChange('survey', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['survey']?.end || ''}
+                            onChange={(e) => handleDateChange('survey', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('survey')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['survey'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('survey', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">5. Material Approval</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['material-approval'] || 'Warehouse'}
+                            onChange={(e) => handleAssignmentChange('material-approval', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['material-approval']?.start || ''}
+                            onChange={(e) => handleDateChange('material-approval', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['material-approval']?.end || ''}
+                            onChange={(e) => handleDateChange('material-approval', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('material-approval')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['material-approval'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('material-approval', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">6. Cable Delivery</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['cable-delivery'] || 'Warehouse'}
+                            onChange={(e) => handleAssignmentChange('cable-delivery', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['cable-delivery']?.start || ''}
+                            onChange={(e) => handleDateChange('cable-delivery', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['cable-delivery']?.end || ''}
+                            onChange={(e) => handleDateChange('cable-delivery', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('cable-delivery')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['cable-delivery'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('cable-delivery', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">7. Cabling Installation</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['cabling-installation'] || 'Technician'}
+                            onChange={(e) => handleAssignmentChange('cabling-installation', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['cabling-installation']?.start || ''}
+                            onChange={(e) => handleDateChange('cabling-installation', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['cabling-installation']?.end || ''}
+                            onChange={(e) => handleDateChange('cabling-installation', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('cabling-installation')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['cabling-installation'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('cabling-installation', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">8. Marking Device</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['marking-device'] || 'Technician'}
+                            onChange={(e) => handleAssignmentChange('marking-device', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['marking-device']?.start || ''}
+                            onChange={(e) => handleDateChange('marking-device', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['marking-device']?.end || ''}
+                            onChange={(e) => handleDateChange('marking-device', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('marking-device')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['marking-device'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('marking-device', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">9. Report Progress to Owner</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['report-progress-2'] || 'Project Manager'}
+                            onChange={(e) => handleAssignmentChange('report-progress-2', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['report-progress-2']?.start || ''}
+                            onChange={(e) => handleDateChange('report-progress-2', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['report-progress-2']?.end || ''}
+                            onChange={(e) => handleDateChange('report-progress-2', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('report-progress-2')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['report-progress-2'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('report-progress-2', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">10. QC Cabling & Placement</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['qc-cabling'] || 'QC'}
+                            onChange={(e) => handleAssignmentChange('qc-cabling', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['qc-cabling']?.start || ''}
+                            onChange={(e) => handleDateChange('qc-cabling', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['qc-cabling']?.end || ''}
+                            onChange={(e) => handleDateChange('qc-cabling', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('qc-cabling')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['qc-cabling'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('qc-cabling', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+
+                      {/* PHASE 3 */}
+                      <tr className="bg-gradient-to-r from-purple-50 to-pink-50">
+                        <td colSpan={9} className="px-4 py-4 font-bold text-purple-900 border-b-2 border-purple-200">
+                          PHASE 3
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">11. Payment DP II</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['payment-dp2'] || 'Finance AR'}
+                            onChange={(e) => handleAssignmentChange('payment-dp2', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['payment-dp2']?.start || ''}
+                            onChange={(e) => handleDateChange('payment-dp2', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['payment-dp2']?.end || ''}
+                            onChange={(e) => handleDateChange('payment-dp2', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('payment-dp2')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['payment-dp2'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('payment-dp2', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">12. Device Delivery</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['device-delivery'] || 'Warehouse'}
+                            onChange={(e) => handleAssignmentChange('device-delivery', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['device-delivery']?.start || ''}
+                            onChange={(e) => handleDateChange('device-delivery', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['device-delivery']?.end || ''}
+                            onChange={(e) => handleDateChange('device-delivery', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('device-delivery')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['device-delivery'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('device-delivery', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">13. Device Installation</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['device-installation'] || 'Technician'}
+                            onChange={(e) => handleAssignmentChange('device-installation', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['device-installation']?.start || ''}
+                            onChange={(e) => handleDateChange('device-installation', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['device-installation']?.end || ''}
+                            onChange={(e) => handleDateChange('device-installation', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('device-installation')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['device-installation'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('device-installation', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">14. QC Installation & Racking</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['qc-installation'] || 'QC'}
+                            onChange={(e) => handleAssignmentChange('qc-installation', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['qc-installation']?.start || ''}
+                            onChange={(e) => handleDateChange('qc-installation', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['qc-installation']?.end || ''}
+                            onChange={(e) => handleDateChange('qc-installation', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('qc-installation')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['qc-installation'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('qc-installation', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">15. Report Progress to Owner</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['report-progress-3'] || 'Project Manager'}
+                            onChange={(e) => handleAssignmentChange('report-progress-3', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['report-progress-3']?.start || ''}
+                            onChange={(e) => handleDateChange('report-progress-3', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['report-progress-3']?.end || ''}
+                            onChange={(e) => handleDateChange('report-progress-3', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('report-progress-3')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['report-progress-3'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('report-progress-3', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">16. Integration - Setting & Configuration</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['integration'] || 'Engineer'}
+                            onChange={(e) => handleAssignmentChange('integration', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['integration']?.start || ''}
+                            onChange={(e) => handleDateChange('integration', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['integration']?.end || ''}
+                            onChange={(e) => handleDateChange('integration', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('integration')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['integration'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('integration', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">17. Testing Function</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['testing'] || 'Engineer'}
+                            onChange={(e) => handleAssignmentChange('testing', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['testing']?.start || ''}
+                            onChange={(e) => handleDateChange('testing', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['testing']?.end || ''}
+                            onChange={(e) => handleDateChange('testing', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('testing')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['testing'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('testing', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">18. QC Integration</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['qc-integration'] || 'QC'}
+                            onChange={(e) => handleAssignmentChange('qc-integration', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['qc-integration']?.start || ''}
+                            onChange={(e) => handleDateChange('qc-integration', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['qc-integration']?.end || ''}
+                            onChange={(e) => handleDateChange('qc-integration', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('qc-integration')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['qc-integration'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('qc-integration', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+
+                      {/* PHASE 4 */}
+                      <tr className="bg-gradient-to-r from-orange-50 to-yellow-50">
+                        <td colSpan={9} className="px-4 py-4 font-bold text-orange-900 border-b-2 border-orange-200">
+                          PHASE 4
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">19. Handover Document</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['handover-doc'] || 'Project Support'}
+                            onChange={(e) => handleAssignmentChange('handover-doc', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['handover-doc']?.start || ''}
+                            onChange={(e) => handleDateChange('handover-doc', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['handover-doc']?.end || ''}
+                            onChange={(e) => handleDateChange('handover-doc', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('handover-doc')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['handover-doc'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('handover-doc', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">20. Test Commisioning</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['test-commissioning'] || 'Engineer'}
+                            onChange={(e) => handleAssignmentChange('test-commissioning', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['test-commissioning']?.start || ''}
+                            onChange={(e) => handleDateChange('test-commissioning', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['test-commissioning']?.end || ''}
+                            onChange={(e) => handleDateChange('test-commissioning', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('test-commissioning')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['test-commissioning'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('test-commissioning', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">21. Final QC</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['final-qc'] || 'QC'}
+                            onChange={(e) => handleAssignmentChange('final-qc', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['final-qc']?.start || ''}
+                            onChange={(e) => handleDateChange('final-qc', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['final-qc']?.end || ''}
+                            onChange={(e) => handleDateChange('final-qc', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('final-qc')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['final-qc'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('final-qc', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">22. Function/ Defect Checklist</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['defect-checklist'] || 'QC'}
+                            onChange={(e) => handleAssignmentChange('defect-checklist', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['defect-checklist']?.start || ''}
+                            onChange={(e) => handleDateChange('defect-checklist', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['defect-checklist']?.end || ''}
+                            onChange={(e) => handleDateChange('defect-checklist', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('defect-checklist')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['defect-checklist'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('defect-checklist', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">23. Repair Defect</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['repair-defect'] || 'Technician'}
+                            onChange={(e) => handleAssignmentChange('repair-defect', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['repair-defect']?.start || ''}
+                            onChange={(e) => handleDateChange('repair-defect', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['repair-defect']?.end || ''}
+                            onChange={(e) => handleDateChange('repair-defect', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('repair-defect')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['repair-defect'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('repair-defect', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">24. Training</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['training'] || 'Project Manager'}
+                            onChange={(e) => handleAssignmentChange('training', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['training']?.start || ''}
+                            onChange={(e) => handleDateChange('training', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['training']?.end || ''}
+                            onChange={(e) => handleDateChange('training', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('training')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['training'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('training', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">25. BAST</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['bast'] || 'Project Manager'}
+                            onChange={(e) => handleAssignmentChange('bast', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['bast']?.start || ''}
+                            onChange={(e) => handleDateChange('bast', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['bast']?.end || ''}
+                            onChange={(e) => handleDateChange('bast', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('bast')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['bast'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('bast', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-slate-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-medium text-slate-900 whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]">26. Maintenance</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskAssignments['maintenance'] || 'Maintenance'}
+                            onChange={(e) => handleAssignmentChange('maintenance', e.target.value)}
+                            className="px-3 py-1 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {assignmentOptions.map(option => (
+                              <option key={option} value={option}>{option}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['maintenance']?.start || ''}
+                            onChange={(e) => handleDateChange('maintenance', 'start', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <input 
+                            type="date"
+                            value={taskDates['maintenance']?.end || ''}
+                            onChange={(e) => handleDateChange('maintenance', 'end', e.target.value)}
+                            className="px-2 py-1 text-sm bg-white border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap">{calculateDays('maintenance')}</td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <select 
+                            value={taskStatuses['maintenance'] || 'Not Started'}
+                            onChange={(e) => handleStatusChange('maintenance', e.target.value)}
+                            className="px-2 py-1 text-xs font-semibold rounded-full bg-white border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            {statusOptions.map(status => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 whitespace-nowrap">0%</span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]"></td>
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <span className="text-gray-400 text-sm">No document</span>
                         </td>
                       </tr>
                     </tbody>
