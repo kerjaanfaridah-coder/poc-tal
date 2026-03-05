@@ -66,7 +66,7 @@ export default function NewTaskPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Task Name */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-sm font-bold text-slate-700 mb-2">
                 Task Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -81,10 +81,11 @@ export default function NewTaskPage() {
 
             {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Description
+              <label className="block text-sm font-bold text-slate-700 mb-2">
+                Description <span className="text-red-500">*</span>
               </label>
               <textarea
+                required
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
                 rows={4}
@@ -97,7 +98,7 @@ export default function NewTaskPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Project */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-bold text-slate-700 mb-2">
                   Project <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -112,11 +113,12 @@ export default function NewTaskPage() {
 
               {/* Assignee */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Assignee
+                <label className="block text-sm font-bold text-slate-700 mb-2">
+                  Assignee <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
+                  required
                   value={formData.assignee}
                   onChange={(e) => handleInputChange('assignee', e.target.value)}
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
@@ -129,8 +131,8 @@ export default function NewTaskPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Priority */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Priority
+                <label className="block text-sm font-bold text-slate-700 mb-2">
+                  Priority <span className="text-red-500">*</span>
                 </label>
                 <div className="flex gap-2">
                   {['low', 'medium', 'high'].map(priority => (
@@ -152,8 +154,8 @@ export default function NewTaskPage() {
 
               {/* Status */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Status
+                <label className="block text-sm font-bold text-slate-700 mb-2">
+                  Status <span className="text-red-500">*</span>
                 </label>
                 <div className="flex gap-2">
                   {['todo', 'in-progress', 'completed'].map(status => (
@@ -176,13 +178,14 @@ export default function NewTaskPage() {
 
             {/* Due Date */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Due Date
+              <label className="block text-sm font-bold text-slate-700 mb-2">
+                Due Date <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
                 <input
                   type="date"
+                  required
                   value={formData.dueDate}
                   onChange={(e) => handleInputChange('dueDate', e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
@@ -192,7 +195,7 @@ export default function NewTaskPage() {
 
             {/* Progress */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-sm font-bold text-slate-700 mb-2">
                 Progress <span className="text-xs text-slate-500">(optional)</span>
               </label>
               <div className="space-y-2">
