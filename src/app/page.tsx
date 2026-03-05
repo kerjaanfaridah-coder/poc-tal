@@ -19,7 +19,6 @@ import {
   MoreHorizontal,
   Bell,
   Search,
-  Settings,
   LayoutGrid,
   List,
   Filter,
@@ -110,7 +109,6 @@ export default function Dashboard() {
               </button>
               
               <button className="p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all duration-200">
-                <Settings className="w-5 h-5" />
               </button>
               
               <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-purple-500/25">
