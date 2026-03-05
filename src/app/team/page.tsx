@@ -33,35 +33,14 @@ export default function TeamPage() {
 
   const currentWeekDates = getWeekDates(currentWeekOffset);
 
-  // Real-time team schedule data
+  // Empty team schedule data
   const [teamScheduleData, setTeamScheduleData] = useState({
-    Monday: [
-      { id: '1', title: 'Morning Standup', project: 'Conference Room A', assigned: 'Sarah Johnson', time: '09:00 – 09:30', date: 'Mar 11' },
-      { id: '2', title: 'Client Presentation', project: 'Board Room', assigned: 'John Doe', time: '10:00 – 11:30', date: 'Mar 11' },
-      { id: '3', title: 'Code Review', project: 'Development Team', assigned: 'Mike Chen', time: '14:00 – 15:00', date: 'Mar 11' }
-    ],
-    Tuesday: [
-      { id: '4', title: 'Design Review', project: 'Design Lab', assigned: 'Emily Davis', time: '10:00 – 11:00', date: 'Mar 12' },
-      { id: '5', title: 'Sprint Planning', project: 'Meeting Room B', assigned: 'John Doe', time: '13:00 – 14:30', date: 'Mar 12' },
-      { id: '6', title: 'Security Audit', project: 'Server Room', assigned: 'IT Team', time: '15:00 – 17:00', date: 'Mar 12' }
-    ],
-    Wednesday: [
-      { id: '7', title: 'Product Demo', project: 'Client Office', assigned: 'Sarah Johnson', time: '11:00 – 12:00', date: 'Mar 13' },
-      { id: '8', title: 'Team Building', project: 'Activity Center', assigned: 'All Team', time: '14:00 – 16:00', date: 'Mar 13' }
-    ],
-    Thursday: [
-      { id: '9', title: 'Stakeholder Meeting', project: 'Executive Office', assigned: 'John Doe', time: '09:00 – 10:30', date: 'Mar 14' },
-      { id: '10', title: 'Performance Review', project: 'HR Department', assigned: 'Emily Davis', time: '13:00 – 15:00', date: 'Mar 14' },
-      { id: '11', title: 'Infrastructure Update', project: 'Data Center', assigned: 'IT Team', time: '16:00 – 18:00', date: 'Mar 14' }
-    ],
-    Friday: [
-      { id: '12', title: 'Weekly Retrospective', project: 'Team Room', assigned: 'All Team', time: '10:00 – 11:00', date: 'Mar 15' },
-      { id: '13', title: 'Client Workshop', project: 'Training Room', assigned: 'Mike Chen', time: '13:00 – 16:00', date: 'Mar 15' },
-      { id: '14', title: 'Deploy Production', project: 'Production Server', assigned: 'DevOps Team', time: '17:00 – 19:00', date: 'Mar 15' }
-    ],
-    Saturday: [
-      { id: '15', title: 'System Maintenance', project: 'Server Room', assigned: 'IT Team', time: '08:00 – 12:00', date: 'Mar 16' }
-    ],
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
     Sunday: []
   });
 
