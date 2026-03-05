@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
-import { Users, Activity, CheckCircle, Target, TrendingUp } from 'lucide-react';
+import { Users, Activity, CheckCircle, Target } from 'lucide-react';
 
 export default function DashboardPage() {
-  // Import team workload data from Team page
+  // Import team workload data from Team page (same data)
   const [teamWorkload] = useState([
     { id: '1', name: 'Jovan', role: 'Senior Engineer', tasks: 8, completed: 5, avatar: 'J', status: 'active' },
     { id: '2', name: 'Alwan', role: 'Lighting Engineer', tasks: 6, completed: 4, avatar: 'A', status: 'active' },
@@ -14,16 +14,49 @@ export default function DashboardPage() {
     { id: '5', name: 'Andry', role: 'Technician', tasks: 10, completed: 7, avatar: 'A', status: 'active' },
     { id: '6', name: 'Eka', role: 'Technician', tasks: 9, completed: 6, avatar: 'E', status: 'active' },
     { id: '7', name: 'Sopian', role: 'Technician', tasks: 8, completed: 5, avatar: 'S', status: 'active' },
-    { id: '8', name: 'Sobirin', role: 'Team Lead', tasks: 7, completed: 4, avatar: 'S', status: 'active' },
+    { id: '8', name: 'Sobirin', role: 'Technician', tasks: 7, completed: 4, avatar: 'S', status: 'active' },
     { id: '9', name: 'Puji', role: 'Technician', tasks: 6, completed: 3, avatar: 'P', status: 'active' },
     { id: '10', name: 'Dany', role: 'Maintenance', tasks: 5, completed: 2, avatar: 'D', status: 'active' }
   ]);
 
-  // Define weekly capacity
+  // Empty team schedule data (same as Team page)
+  const [teamScheduleData] = useState({
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: []
+  });
+
+  // Define weekly capacity (same as Team page)
   const WEEKLY_CAPACITY = 10;
 
-  // Calculate total tasks in the week (mock data for now)
-  const totalWeeklyTasks = 45;
+  // Calculate total tasks in the week (same as Team page)
+  const totalWeeklyTasks = Object.values(teamScheduleData).reduce((sum, day) => sum + day.length, 0);
+
+  // Calculate real-time workload for each team member (same as Team page)
+  const calculateMemberWorkload = (memberName) => {
+    let taskCount = 0;
+    
+    // Count tasks assigned to this member from all schedules
+    Object.values(teamScheduleData).forEach(daySchedules => {
+      daySchedules.forEach(schedule => {
+        if (schedule.assigned.includes(memberName)) {
+          taskCount++;
+        }
+      });
+    });
+    
+    return taskCount;
+  };
+
+  // Update team workload with real-time data (same as Team page)
+  const updatedTeamWorkload = teamWorkload.map(member => ({
+    ...member,
+    tasks: calculateMemberWorkload(member.name)
+  }));
 
   return (
     <ConsistentLayout title="Dashboard" subtitle="Team workload overview and project status">
@@ -36,7 +69,7 @@ export default function DashboardPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Users className="w-6 h-6 text-white" />
               </div>
-              <p className="text-3xl font-bold text-slate-900">{teamWorkload.length}</p>
+              <p className="text-3xl font-bold text-slate-900">{updatedTeamWorkload.length}</p>
             </div>
             <div className="space-y-1">
               <p className="text-sm font-bold text-slate-600 font-semibold">Total Members</p>
@@ -58,10 +91,10 @@ export default function DashboardPage() {
               <p className="text-3xl font-bold text-slate-900">{totalWeeklyTasks}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-bold text-slate-600 font-semibold">Total Tasks This Week</p>
+              <p className="text-sm font-bold text-slate-600 font-semibold">Tasks This Week</p>
               <div className="flex items-center justify-between">
-                <p className="text-xs text-slate-500">all tasks</p>
-                <p className="text-sm font-bold text-green-600">Scheduled</p>
+                <p className="text-xs text-slate-500">scheduled</p>
+                <p className="text-sm font-bold text-green-600">Active</p>
               </div>
             </div>
           </div>
@@ -74,7 +107,7 @@ export default function DashboardPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
                 <Target className="w-6 h-6 text-white" />
               </div>
-              <p className="text-3xl font-bold text-slate-900">{teamWorkload.reduce((sum, member) => sum + member.tasks, 0)}</p>
+              <p className="text-3xl font-bold text-slate-900">{updatedTeamWorkload.reduce((sum, member) => sum + member.tasks, 0)}</p>
             </div>
             <div className="space-y-1">
               <p className="text-sm font-bold text-slate-600 font-semibold">Tasks Assigned</p>
@@ -93,7 +126,7 @@ export default function DashboardPage() {
               <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
-              <p className="text-3xl font-bold text-slate-900">{teamWorkload.reduce((sum, member) => sum + member.completed, 0)}</p>
+              <p className="text-3xl font-bold text-slate-900">{updatedTeamWorkload.reduce((sum, member) => sum + member.completed, 0)}</p>
             </div>
             <div className="space-y-1">
               <p className="text-sm font-bold text-slate-600 font-semibold">Tasks Completed</p>
@@ -120,7 +153,7 @@ export default function DashboardPage() {
 
         {/* Team Workload Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {teamWorkload.map((member) => {
+          {updatedTeamWorkload.map((member) => {
             const workloadPercentage = totalWeeklyTasks > 0 ? Math.min((member.tasks / totalWeeklyTasks) * 100, 100) : 0;
             const progressColor = workloadPercentage <= 40 ? 'from-green-400 to-green-600' : 
                                workloadPercentage <= 80 ? 'from-orange-400 to-orange-600' : 
