@@ -94,6 +94,9 @@ export default function TeamPage() {
     return taskCount;
   };
 
+  // Calculate total tasks in the week
+  const totalWeeklyTasks = Object.values(teamScheduleData).reduce((sum, daySchedules) => sum + daySchedules.length, 0);
+
   // Update team workload with real-time data
   const updatedTeamWorkload = teamWorkload.map(member => ({
     ...member,
@@ -440,7 +443,7 @@ export default function TeamPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {updatedTeamWorkload.map((member) => {
-            const workloadPercentage = Math.min((member.tasks / WEEKLY_CAPACITY) * 100, 100);
+            const workloadPercentage = totalWeeklyTasks > 0 ? Math.min((member.tasks / totalWeeklyTasks) * 100, 100) : 0;
             const progressColor = workloadPercentage <= 40 ? 'from-green-400 to-green-600' : 
                                workloadPercentage <= 80 ? 'from-orange-400 to-orange-600' : 
                                'from-red-400 to-red-600';
