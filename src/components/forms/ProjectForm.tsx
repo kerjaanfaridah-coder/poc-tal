@@ -104,6 +104,9 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
   // Add task status state
   const [taskStatuses, setTaskStatuses] = useState<{[key: string]: string}>({});
 
+  // Add COIN state (Completed, Overdue, In Progress, Not Started)
+  const [taskCoins, setTaskCoins] = useState<{[key: string]: {C: number, O: number, I: number, N: number}}>({});
+
   const assignmentOptions = [
     'Designed',
     'Drafter', 
@@ -147,6 +150,44 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
       ...prev,
       [taskId]: status
     }));
+    
+    // Automatically calculate COIN based on status
+    const coinValues = {C: 0, O: 0, I: 0, N: 0};
+    
+    switch(status) {
+      case 'Complete':
+        coinValues.C = 100;
+        break;
+      case 'Overdue':
+        coinValues.O = 100;
+        break;
+      case 'In Progress':
+        coinValues.I = 100;
+        break;
+      case 'Not Started':
+        coinValues.N = 100;
+        break;
+    }
+    
+    setTaskCoins(prev => ({
+      ...prev,
+      [taskId]: coinValues
+    }));
+  };
+
+  const getCoinColor = (type: 'C' | 'O' | 'I' | 'N'): string => {
+    switch(type) {
+      case 'C': // Completed
+        return 'text-green-700 bg-green-100';
+      case 'O': // Overdue
+        return 'text-red-700 bg-red-100';
+      case 'I': // In Progress
+        return 'text-blue-700 bg-blue-100';
+      case 'N': // Not Started
+        return 'text-gray-700 bg-gray-100';
+      default:
+        return 'text-gray-700 bg-gray-100';
+    }
   };
 
   const getStatusBadgeColor = (status: string): string => {
@@ -380,15 +421,21 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">End Date</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Days</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Status</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Achievement %</th>
+                        <th className="px-4 py-3 text-center text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap" colSpan={4}>ACHIEVEMENT %</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Notes</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider whitespace-nowrap">Evidence / Link</th>
+                      </tr>
+                      <tr className="bg-slate-50 border-b border-slate-200">
+                        <th className="px-4 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider whitespace-nowrap">C</th>
+                        <th className="px-4 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider whitespace-nowrap">O</th>
+                        <th className="px-4 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider whitespace-nowrap">I</th>
+                        <th className="px-4 py-2 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider whitespace-nowrap">N</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
                       {/* PHASE 1 – PLANNING */}
                       <tr className="bg-gradient-to-r from-blue-50 to-indigo-50">
-                        <td colSpan={9} className="px-4 py-4 font-bold text-blue-900 border-b-2 border-blue-200">
+                        <td colSpan={12} className="px-4 py-4 font-bold text-blue-900 border-b-2 border-blue-200">
                           PHASE 1 – PLANNING
                         </td>
                       </tr>
@@ -433,8 +480,25 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('C')}`}>
+                            {taskCoins['kick-off']?.C || 100}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('O')}`}>
+                            {taskCoins['kick-off']?.O || 0}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('I')}`}>
+                            {taskCoins['kick-off']?.I || 0}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('N')}`}>
+                            {taskCoins['kick-off']?.N || 0}%
+                          </span>
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Initial project kickoff with stakeholders</td>
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -484,8 +548,25 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('C')}`}>
+                            {taskCoins['shop-drawing']?.C || 100}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('O')}`}>
+                            {taskCoins['shop-drawing']?.O || 0}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('I')}`}>
+                            {taskCoins['shop-drawing']?.I || 0}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('N')}`}>
+                            {taskCoins['shop-drawing']?.N || 0}%
+                          </span>
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Technical drawings and specifications</td>
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -535,8 +616,25 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 whitespace-nowrap">50%</span>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('C')}`}>
+                            {taskCoins['dp1']?.C || 0}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('O')}`}>
+                            {taskCoins['dp1']?.O || 0}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('I')}`}>
+                            {taskCoins['dp1']?.I || 100}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('N')}`}>
+                            {taskCoins['dp1']?.N || 0}%
+                          </span>
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Down payment processing</td>
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -593,8 +691,25 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 whitespace-nowrap">100%</span>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('C')}`}>
+                            {taskCoins['survey']?.C || 100}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('O')}`}>
+                            {taskCoins['survey']?.O || 0}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('I')}`}>
+                            {taskCoins['survey']?.I || 0}%
+                          </span>
+                        </td>
+                        <td className="px-2 py-3 text-center whitespace-nowrap">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getCoinColor('N')}`}>
+                            {taskCoins['survey']?.N || 0}%
+                          </span>
                         </td>
                         <td className="px-4 py-3 text-sm text-slate-600 whitespace-nowrap overflow-hidden text-ellipsis max-w-[250px]">Site survey and measurement</td>
                         <td className="px-4 py-3 whitespace-nowrap">
