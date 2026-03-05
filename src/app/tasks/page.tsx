@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, Calendar, Users, CheckCircle, Trash2, AlertTriangle, Clock, ArrowUpRight, TrendingUp, CheckSquare, Circle, MoreHorizontal, Star, Flag, FolderKanban } from 'lucide-react';
+import { Plus, Search, Filter, Calendar, Users, CheckCircle, Trash2, AlertTriangle, Clock, ArrowUpRight, TrendingUp, CheckSquare, Circle, MoreHorizontal, Star, Flag, FolderKanban, ChevronUp, ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
@@ -399,15 +399,31 @@ export default function TasksPage() {
                           style={{ width: `${task.progress}%` }}
                         ></div>
                       </div>
-                      <input
-                        type="number"
-                        min="0"
-                        max="100"
-                        value={task.progress}
-                        onChange={(e) => handleProgressChange(task.id, Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
-                        className="w-12 text-sm font-medium text-slate-900 bg-transparent border-0 text-center focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
-                      />
-                      <span className="text-sm font-medium text-slate-900">%</span>
+                      <div className="flex items-center gap-1">
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          value={task.progress}
+                          onChange={(e) => handleProgressChange(task.id, Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
+                          className="w-8 text-sm font-medium text-slate-900 bg-transparent border-0 text-center focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+                        />
+                        <span className="text-sm font-medium text-slate-900">%</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleProgressChange(task.id, Math.min(100, task.progress + 5))}
+                          className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition-colors"
+                        >
+                          <ChevronUp className="w-3 h-3" />
+                        </button>
+                        <button
+                          onClick={() => handleProgressChange(task.id, Math.max(0, task.progress - 5))}
+                          className="p-1 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition-colors"
+                        >
+                          <ChevronDown className="w-3 h-3" />
+                        </button>
+                      </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-center">
