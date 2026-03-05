@@ -525,117 +525,10 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            {/* Modern Pending Items Header */}
+            {/* Modern Pending Items Header - Following Budget Page Structure */}
               <div className="mb-8">
-                <div className="mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">📋 Pending Items</h2>
-                    <p className="text-gray-600">Track decisions, actions, and tasks for your project</p>
-                  </div>
-                </div>
-
-                {/* Stats Cards - Following Projects Page Design */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                  <div className="group relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
-                          <span className="text-2xl">📊</span>
-                        </div>
-                        <p className="text-3xl font-bold text-slate-900">{newProject.pendingItems?.length || 0}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-sm font-bold text-slate-600 font-semibold">Total Items</p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-slate-500">vs last week</p>
-                          <p className="text-sm font-bold text-green-600">+12%</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
-                          <span className="text-2xl">⏰</span>
-                        </div>
-                        <p className="text-3xl font-bold text-slate-900">
-                          {(() => {
-                            const today = new Date();
-                            const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
-                            return newProject.pendingItems?.filter(item => {
-                              if (!item.dueDate || item.completed) return false;
-                              const dueDate = new Date(item.dueDate);
-                              return dueDate <= threeDaysFromNow && dueDate >= today;
-                            }).length || 0;
-                          })()}
-                        </p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-sm font-bold text-slate-600 font-semibold">Due Soon</p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-slate-500">vs last week</p>
-                          <p className="text-sm font-bold text-orange-600">+5%</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
-                          <span className="text-2xl">🚨</span>
-                        </div>
-                        <p className="text-3xl font-bold text-slate-900">
-                          {(() => {
-                            const today = new Date();
-                            return newProject.pendingItems?.filter(item => {
-                              if (!item.dueDate || item.completed) return false;
-                              const dueDate = new Date(item.dueDate);
-                              return dueDate < today;
-                            }).length || 0;
-                          })()}
-                        </p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-sm font-bold text-slate-600 font-semibold">Overdue</p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-slate-500">vs last week</p>
-                          <p className="text-sm font-bold text-red-600">+2%</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500"></div>
-                    <div className="relative bg-white/90 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
-                          <span className="text-2xl">✅</span>
-                        </div>
-                        <p className="text-3xl font-bold text-slate-900">
-                          {newProject.pendingItems?.filter(item => item.completed).length || 0}
-                        </p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-sm font-bold text-slate-600 font-semibold">Completed</p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-slate-500">vs last week</p>
-                          <p className="text-sm font-bold text-green-600">+8%</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Add New Item Section - Clearly Separated Form Card */}
-                <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border border-slate-200 p-6 mb-10">
+                {/* Modern Add Item Input - Similar to Budget Input */}
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6 border border-red-100 mb-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
                       <Plus className="w-4 h-4 text-white" />
@@ -743,6 +636,138 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                       <Plus className="w-5 h-5" />
                       Add Item
                     </button>
+                  </div>
+                </div>
+
+                {/* Modern Items Overview Cards - Following Budget Cards Style */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                  {/* Total Items Card */}
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
+                        <span className="text-2xl">📊</span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm text-white/80">Total</div>
+                        <div className="text-2xl font-bold">{newProject.pendingItems?.length || 0}</div>
+                      </div>
+                    </div>
+                    <div className="text-sm text-white/90 mb-1">Total Items</div>
+                    <div className="text-3xl font-bold">
+                      {newProject.pendingItems?.length || 0}
+                    </div>
+                  </div>
+
+                  {/* Due Soon Card */}
+                  <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
+                        <span className="text-2xl">⏰</span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm text-white/80">Alert</div>
+                        <div className="text-2xl font-bold">
+                          {(() => {
+                            const today = new Date();
+                            const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+                            return newProject.pendingItems?.filter(item => {
+                              if (!item.dueDate || item.completed) return false;
+                              const dueDate = new Date(item.dueDate);
+                              return dueDate <= threeDaysFromNow && dueDate >= today;
+                            }).length || 0;
+                          })()}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-sm text-white/90 mb-1">Due Soon</div>
+                    <div className="text-3xl font-bold">
+                      {(() => {
+                        const today = new Date();
+                        const threeDaysFromNow = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+                        return newProject.pendingItems?.filter(item => {
+                          if (!item.dueDate || item.completed) return false;
+                          const dueDate = new Date(item.dueDate);
+                          return dueDate <= threeDaysFromNow && dueDate >= today;
+                        }).length || 0;
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* Overdue Card */}
+                  <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
+                        <span className="text-2xl">🚨</span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm text-white/80">Critical</div>
+                        <div className="text-2xl font-bold">
+                          {(() => {
+                            const today = new Date();
+                            return newProject.pendingItems?.filter(item => {
+                              if (!item.dueDate || item.completed) return false;
+                              const dueDate = new Date(item.dueDate);
+                              return dueDate < today;
+                            }).length || 0;
+                          })()}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-sm text-white/90 mb-1">Overdue</div>
+                    <div className="text-3xl font-bold">
+                      {(() => {
+                        const today = new Date();
+                        return newProject.pendingItems?.filter(item => {
+                          if (!item.dueDate || item.completed) return false;
+                          const dueDate = new Date(item.dueDate);
+                          return dueDate < today;
+                        }).length || 0;
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* Completed Card */}
+                  <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur">
+                        <span className="text-2xl">✅</span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm text-white/80">Done</div>
+                        <div className="text-2xl font-bold">
+                          {newProject.pendingItems?.filter(item => item.completed).length || 0}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-sm text-white/90 mb-1">Completed</div>
+                    <div className="text-3xl font-bold">
+                      {newProject.pendingItems?.filter(item => item.completed).length || 0}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modern Progress Bar - Following Budget Progress Style */}
+                <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Items Progress</h3>
+                    <span className="text-sm font-medium text-gray-600">
+                      {newProject.pendingItems?.length > 0 ? 
+                        Math.round((newProject.pendingItems?.filter(item => item.completed).length / newProject.pendingItems.length) * 100) : 0
+                      }% Completed
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 rounded-full transition-all duration-500 ease-out"
+                        style={{ 
+                          width: newProject.pendingItems?.length > 0 ? 
+                            Math.round((newProject.pendingItems?.filter(item => item.completed).length / newProject.pendingItems.length) * 100) + '%' 
+                          : '0%'
+                        }}
+                      ></div>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent h-4 rounded-full animate-pulse"></div>
                   </div>
                 </div>
 
