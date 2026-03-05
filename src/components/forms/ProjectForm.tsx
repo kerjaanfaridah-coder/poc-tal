@@ -765,10 +765,28 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                           return (
                             <tr key={item.id} className="hover:bg-gray-50 transition-colors">
                               <td className="px-4 py-3">
-                                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${config.color}`}>
-                                  <span>{config.icon}</span>
-                                  {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
-                                </span>
+                                <div className="relative">
+                                  <select
+                                    value={item.itemType}
+                                    onChange={(e) => {
+                                      const updatedItems = [...newProject.pendingItems];
+                                      updatedItems[index].itemType = e.target.value as 'decision' | 'action' | 'issue' | 'risk' | 'followup';
+                                      setNewProject({...newProject, pendingItems: updatedItems});
+                                    }}
+                                    className={`inline-flex items-center gap-1 px-2 py-1 pr-8 rounded-full text-xs font-medium appearance-none cursor-pointer ${config.color}`}
+                                  >
+                                    <option value="decision">🤔 Decision</option>
+                                    <option value="action">⚡ Action</option>
+                                    <option value="issue">🚨 Issue</option>
+                                    <option value="risk">⚠️ Risk</option>
+                                    <option value="followup">📝 Follow Up</option>
+                                  </select>
+                                  <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                                    <svg className="w-3 h-3 text-current opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                  </div>
+                                </div>
                               </td>
                               <td className="px-4 py-3">
                                 <input
@@ -826,9 +844,31 @@ export default function ProjectForm({ onSubmit, onCancel, initialData }: Project
                                 />
                               </td>
                               <td className="px-4 py-3">
-                                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${statusColor}`}>
-                                  {status}
-                                </span>
+                                <div className="relative">
+                                  <select
+                                    value={item.completed ? 'completed' : status.toLowerCase().replace(' ', '-')}
+                                    onChange={(e) => {
+                                      const updatedItems = [...newProject.pendingItems];
+                                      if (e.target.value === 'completed') {
+                                        updatedItems[index].completed = true;
+                                      } else {
+                                        updatedItems[index].completed = false;
+                                        updatedItems[index].status = e.target.value as 'open' | 'in-progress' | 'due-soon' | 'overdue' | 'completed';
+                                      }
+                                      setNewProject({...newProject, pendingItems: updatedItems});
+                                    }}
+                                    className={`inline-flex items-center gap-1 px-2 py-1 pr-8 rounded-full text-xs font-medium appearance-none cursor-pointer ${statusColor}`}
+                                  >
+                                    <option value="open">📋 Open</option>
+                                    <option value="in-progress">🔄 In Progress</option>
+                                    <option value="completed">✅ Completed</option>
+                                  </select>
+                                  <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                                    <svg className="w-3 h-3 text-current opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                  </div>
+                                </div>
                               </td>
                               <td className="px-4 py-3 text-right">
                                 <div className="flex items-center justify-end gap-2">
