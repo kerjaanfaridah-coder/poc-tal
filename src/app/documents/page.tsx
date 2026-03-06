@@ -87,7 +87,7 @@ export default function DocumentsPage() {
   };
 
   // Preview template function
-  const handlePreviewTemplate = (template) => {
+  const handlePreviewTemplate = (template: any) => {
     alert(`Preview functionality for ${template.name}\n\nThis will show a preview of the template layout and content structure.`);
   };
 
