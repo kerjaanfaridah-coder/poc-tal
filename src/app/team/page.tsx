@@ -373,7 +373,7 @@ export default function TeamPage() {
 
               {/* Schedule Cards */}
               <div className="space-y-3">
-                {(teamScheduleData[weekDay.day as keyof typeof teamScheduleData] || []).map((schedule) => (
+                {(teamScheduleData[weekDay.day as keyof typeof teamScheduleData] || []).map((schedule: any) => (
                   <div key={schedule.id} className="group">
                     <div className="bg-white border border-slate-200 rounded-xl p-3 hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer relative">
                       {/* Delete Button */}
@@ -383,7 +383,7 @@ export default function TeamPage() {
                           
                           setTeamScheduleData(prev => ({
                             ...prev,
-                            [weekDay.day]: daySchedules.filter(s => s.id !== schedule.id)
+                            [weekDay.day]: daySchedules.filter((s: any) => s.id !== schedule.id)
                           }));
                         }}
                         className="absolute top-2 right-2 p-1 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 opacity-0 group-hover:opacity-100 transition-all duration-200"
