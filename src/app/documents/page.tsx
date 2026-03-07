@@ -92,10 +92,10 @@ export default function DocumentsPage() {
   };
 
   // Edit template function
-  const handleEditTemplate = (template) => {
+  const handleEditTemplate = (template: any) => {
     alert(`Edit functionality for ${template.name}\n\nThis will open an editor to modify the template content and structure.`);
   };
-  const handleUseTemplate = (template) => {
+  const handleUseTemplate = (template: any) => {
     setSelectedTemplate(template);
     setShowDocumentModal(true);
     setSelectedProject('');
