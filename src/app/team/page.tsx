@@ -4,6 +4,36 @@ import { useState } from 'react';
 import { Calendar, Users, Clock, User, Activity, CheckCircle, Target, TrendingUp, Plus, Search, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 
+// TypeScript interfaces
+interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  avatar: string;
+  email: string;
+  phone: string;
+  skills: string[];
+  currentProjects: number;
+  availability: string;
+  status: 'Available' | 'Busy' | 'On Leave';
+}
+
+interface ScheduleItem {
+  id: string;
+  title: string;
+  time: string;
+  duration: string;
+  type: string;
+  priority: 'Low' | 'Medium' | 'High';
+  status: 'Scheduled' | 'In Progress' | 'Completed';
+  assigned: string[];
+  location: string;
+}
+
+interface TeamScheduleData {
+  [key: string]: ScheduleItem[];
+}
+
 export default function TeamPage() {
   // Week navigation state
   const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
@@ -34,7 +64,7 @@ export default function TeamPage() {
   const currentWeekDates = getWeekDates(currentWeekOffset);
 
   // Empty team schedule data
-  const [teamScheduleData, setTeamScheduleData] = useState({
+  const [teamScheduleData, setTeamScheduleData] = useState<TeamScheduleData>({
     Monday: [],
     Tuesday: [],
     Wednesday: [],
@@ -79,12 +109,12 @@ export default function TeamPage() {
   const WEEKLY_CAPACITY = 10;
 
   // Calculate real-time workload for each team member
-  const calculateMemberWorkload = (memberId) => {
+  const calculateMemberWorkload = (memberId: any) => {
     let taskCount = 0;
     
     // Count tasks assigned to this member from all schedules
-    Object.values(teamScheduleData).forEach(daySchedules => {
-      daySchedules.forEach(schedule => {
+    Object.values(teamScheduleData).forEach((daySchedules: any) => {
+      daySchedules.forEach((schedule: any) => {
         if (schedule.assigned.includes(memberId)) {
           taskCount++;
         }
@@ -113,7 +143,7 @@ export default function TeamPage() {
   };
 
   // Add new schedule function
-  const handleAddSchedule = () => {
+  const handleAddSchedule = (day: string) => {
     if (newSchedule.projectName && newSchedule.title && newSchedule.location && newSchedule.assigned.length > 0 && newSchedule.date) {
       const scheduleId = `schedule-${Date.now()}`;
       
@@ -142,9 +172,9 @@ export default function TeamPage() {
         time: newSchedule.time || 'TBD'
       };
 
-      setTeamScheduleData(prev => {
+      setTeamScheduleData((prev: any) => {
         // Ensure the day array exists
-        const currentDaySchedules = prev[detectedDay as keyof typeof prev] || [];
+        const currentDaySchedules = prev[detectedDay] || [];
         return {
           ...prev,
           [detectedDay]: [...currentDaySchedules, scheduleToAdd]
@@ -167,7 +197,7 @@ export default function TeamPage() {
   };
 
   // Helper functions for assignee management
-  const handleAddAssignee = (memberId) => {
+  const handleAddAssignee = (memberId: any) => {
     if (newSchedule.assigned.length >= 3) {
       alert('Maximum 3 team members per schedule.');
       return;
@@ -512,7 +542,7 @@ export default function TeamPage() {
                 <input
                   type="text"
                   value={newSchedule.projectName}
-                  onChange={(e) => setNewSchedule({...newSchedule, projectName: e.target.value})}
+                  onChange={(e: any) => setNewSchedule({...newSchedule, projectName: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter project name..."
                 />
@@ -523,7 +553,7 @@ export default function TeamPage() {
                 <input
                   type="text"
                   value={newSchedule.title}
-                  onChange={(e) => setNewSchedule({...newSchedule, title: e.target.value})}
+                  onChange={(e: any) => setNewSchedule({...newSchedule, title: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter task title..."
                 />
@@ -534,7 +564,7 @@ export default function TeamPage() {
                 <input
                   type="text"
                   value={newSchedule.location}
-                  onChange={(e) => setNewSchedule({...newSchedule, location: e.target.value})}
+                  onChange={(e: any) => setNewSchedule({...newSchedule, location: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter location..."
                 />
@@ -619,7 +649,7 @@ export default function TeamPage() {
                 <input
                   type="date"
                   value={newSchedule.date}
-                  onChange={(e) => setNewSchedule({...newSchedule, date: e.target.value})}
+                  onChange={(e: any) => setNewSchedule({...newSchedule, date: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -629,7 +659,7 @@ export default function TeamPage() {
                 <input
                   type="text"
                   value={newSchedule.time}
-                  onChange={(e) => setNewSchedule({...newSchedule, time: e.target.value})}
+                  onChange={(e: any) => setNewSchedule({...newSchedule, time: e.target.value})}
                   className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="e.g., 09:00 – 11:00"
                 />
