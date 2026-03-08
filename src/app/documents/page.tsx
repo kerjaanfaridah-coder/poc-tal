@@ -114,7 +114,7 @@ export default function DocumentsPage() {
   };
 
   // Handle project selection
-  const handleProjectSelection = (projectId) => {
+  const handleProjectSelection = (projectId: any) => {
     const project = availableProjects.find(p => p.id === projectId);
     if (project) {
       setSelectedProject(projectId);
@@ -123,12 +123,9 @@ export default function DocumentsPage() {
         clientName: project.client,
         location: project.location,
         completionDate: project.completionDate,
-        projectDescription: `Project completion for ${project.name}`,
+        projectDescription: project.description,
         technicianTeam: project.technicians,
-        systemInstalled: 'Audio System, Visual Display, Lighting Control',
-        notes: 'Project completed successfully and tested',
-        clientRepresentative: '',
-        companyPIC: project.pic
+        systemInstalled: project.type
       });
     }
   };
