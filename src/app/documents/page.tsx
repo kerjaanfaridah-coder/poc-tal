@@ -140,7 +140,7 @@ export default function DocumentsPage() {
       return;
     }
     
-    const fileName = `${selectedTemplate.name.replace(' Template', '')} - ${documentData.projectName.replace(/\s+/g, ' ')} - ${documentData.completionDate}.pdf`;
+    const fileName = `${(selectedTemplate as any)?.name?.replace(' Template', '') || 'Document'} - ${documentData.projectName.replace(/\s+/g, ' ')} - ${documentData.completionDate}.pdf`;
     
     // Create PDF document
     const doc = new jsPDF();
@@ -164,7 +164,7 @@ export default function DocumentsPage() {
     // Document Title
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text(selectedTemplate.name.toUpperCase(), pageWidth / 2, yPosition, { align: 'center' });
+    doc.text((selectedTemplate as any)?.name?.toUpperCase() || 'DOCUMENT', pageWidth / 2, yPosition, { align: 'center' });
     yPosition += 20;
     
     // Document type specific content
@@ -219,7 +219,7 @@ export default function DocumentsPage() {
     // Save the PDF
     doc.save(fileName);
     
-    alert(`${selectedTemplate.name} PDF document generated: ${fileName}`);
+    alert(`${(selectedTemplate as any)?.name || 'Document'} PDF document generated: ${fileName}`);
     setShowDocumentModal(false);
   };
 
@@ -263,7 +263,7 @@ ${documentData.notes}
   };
 
   // Get category color
-  const getCategoryColor = (category) => {
+  const getCategoryColor = (category: any) => {
     if (!category) return 'bg-gray-100 text-gray-800 border-gray-200';
     switch(category) {
       case 'Handover': return 'bg-blue-100 text-blue-800 border-blue-200';
@@ -632,7 +632,7 @@ ${documentData.notes}
                 disabled={!selectedProject || !documentData.projectName || !selectedTemplate}
                 className="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Generate {selectedTemplate?.name ? selectedTemplate.name.replace(' Template', '') : 'Document'}
+                Generate {(selectedTemplate as any)?.name ? (selectedTemplate as any).name.replace(' Template', '') : 'Document'}
               </button>
             </div>
           </div>
