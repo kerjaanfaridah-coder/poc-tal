@@ -140,7 +140,8 @@ export default function DocumentsPage() {
       return;
     }
     
-    const fileName = `${(selectedTemplate as any)?.name?.replace(' Template', '') || 'Document'} - ${documentData.projectName.replace(/\s+/g, ' ')} - ${documentData.completionDate}.pdf`;
+    const templateName = (selectedTemplate as any)?.name || 'Document';
+    const fileName = `${templateName.replace(' Template', '')} - ${documentData.projectName.replace(/\s+/g, ' ')} - ${documentData.completionDate}.pdf`;
     
     // Create PDF document
     const doc = new jsPDF();
