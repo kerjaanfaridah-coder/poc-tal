@@ -45,6 +45,12 @@ const sidebarItems: SidebarItem[] = [
     label: 'Schedule Team Project',
     icon: '📅',
     href: '/schedule'
+  },
+  {
+    id: 'documents',
+    label: 'Documents',
+    icon: '📄',
+    href: '/documents'
   }
 ]
 
