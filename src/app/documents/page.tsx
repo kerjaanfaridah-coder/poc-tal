@@ -123,9 +123,12 @@ export default function DocumentsPage() {
         clientName: project.client,
         location: project.location,
         completionDate: project.completionDate,
-        projectDescription: project.description,
+        projectDescription: '', // Using empty string since description property doesn't exist
         technicianTeam: project.technicians,
-        systemInstalled: project.type
+        systemInstalled: '', // Using empty string since type property doesn't exist
+        notes: '',
+        clientRepresentative: project.pic || '',
+        companyPIC: ''
       });
     }
   };
