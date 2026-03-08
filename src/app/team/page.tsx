@@ -628,7 +628,7 @@ export default function TeamPage() {
                 <div className="space-y-2">
                   {/* Selected Assignees */}
                   <div className="flex flex-wrap gap-2">
-                    {getSelectedAssignees().map((member) => (
+                    {getSelectedAssignees().map((member: any) => (
                       <div key={member.id} className="inline-flex items-center gap-1 bg-slate-100 rounded-lg px-2 py-1 text-xs">
                         <span className="w-5 h-5 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center">
                           <span className="text-white font-bold text-xs">{member.avatar}</span>
