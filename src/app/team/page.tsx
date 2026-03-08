@@ -202,15 +202,15 @@ export default function TeamPage() {
       alert('Maximum 3 team members per schedule.');
       return;
     }
-    if (!newSchedule.assigned.includes(memberId)) {
-      setNewSchedule({...newSchedule, assigned: [...newSchedule.assigned, memberId]});
+    if (!(newSchedule.assigned as any[]).includes(memberId)) {
+      setNewSchedule({...newSchedule, assigned: [...(newSchedule.assigned as any[]), memberId]});
     }
     setShowAssigneeDropdown(false);
     setAssigneeSearch('');
   };
 
-  const handleRemoveAssignee = (memberId) => {
-    setNewSchedule({...newSchedule, assigned: newSchedule.assigned.filter(id => id !== memberId)});
+  const handleRemoveAssignee = (memberId: any) => {
+    setNewSchedule({...newSchedule, assigned: (newSchedule.assigned as any[]).filter((id: any) => id !== memberId)});
   };
 
   const getFilteredTeamMembers = () => {
