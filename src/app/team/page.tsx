@@ -76,7 +76,7 @@ export default function TeamPage() {
 
   // Add schedule modal state
   const [showAddScheduleModal, setShowAddScheduleModal] = useState(false);
-  const [newSchedule, setNewSchedule] = useState({
+  const [newSchedule, setNewSchedule] = useState<any>({
     projectName: '',
     title: '',
     location: '',
@@ -143,7 +143,7 @@ export default function TeamPage() {
   };
 
   // Add new schedule function
-  const handleAddSchedule = (day: string) => {
+  const handleAddSchedule = (day: any) => {
     if (newSchedule.projectName && newSchedule.title && newSchedule.location && newSchedule.assigned.length > 0 && newSchedule.date) {
       const scheduleId = `schedule-${Date.now()}`;
       
@@ -157,10 +157,64 @@ export default function TeamPage() {
       const formattedDate = selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       
       // Get assigned member names
-      const assignedNames = newSchedule.assigned.map(memberId => {
-        const member = teamWorkload.find(m => m.id === memberId);
+      const assignedNames = newSchedule.assigned.map((memberId: any) => {
+        const member = teamWorkload.find((m: any) => m.id === memberId);
         return member ? member.name : '';
-      }).filter(name => name).join(', ');
+      }).filter((name: any) => name).join(', ');
+      
+      const scheduleToAdd = {
+        id: scheduleId,
+        title: newSchedule.title,
+        project: newSchedule.projectName,
+        location: newSchedule.location,
+        assigned: assignedNames,
+        date: formattedDate,
+        time: newSchedule.time || 'TBD'
+      };
+
+      setTeamScheduleData((prev: any) => {
+        // Ensure the day array exists
+        const currentDaySchedules = prev[detectedDay] || [];
+        return {
+          ...prev,
+          [detectedDay]: [...currentDaySchedules, scheduleToAdd]
+        };
+      });
+
+      // Reset form and close modal
+      setNewSchedule({
+        projectName: '',
+        title: '',
+        location: '',
+        assigned: [],
+        date: '',
+        time: ''
+      });
+      setShowAssigneeDropdown(false);
+      setAssigneeSearch('');
+      setShowAddScheduleModal(false);
+    }
+  };
+
+  // Delete schedule function
+  const handleDeleteSchedule = (day: any, scheduleId: any) => {
+    if (newSchedule.projectName && newSchedule.title && newSchedule.location && newSchedule.assigned.length > 0 && newSchedule.date) {
+      const scheduleId = `schedule-${Date.now()}`;
+      
+      // Auto-detect day from date
+      const selectedDate = new Date(newSchedule.date);
+      const dayIndex = selectedDate.getDay();
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const detectedDay = days[dayIndex];
+      
+      // Format date for display
+      const formattedDate = selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      
+      // Get assigned member names
+      const assignedNames = newSchedule.assigned.map((memberId: any) => {
+        const member = teamWorkload.find((m: any) => m.id === memberId);
+        return member ? member.name : '';
+      }).filter((name: any) => name).join(', ');
       
       const scheduleToAdd = {
         id: scheduleId,
@@ -198,7 +252,7 @@ export default function TeamPage() {
 
   // Helper functions for assignee management
   const handleAddAssignee = (memberId: any) => {
-    if (newSchedule.assigned.length >= 3) {
+    if ((newSchedule.assigned as any[]).length >= 3) {
       alert('Maximum 3 team members per schedule.');
       return;
     }
@@ -214,20 +268,19 @@ export default function TeamPage() {
   };
 
   const getFilteredTeamMembers = () => {
-    return teamWorkload.filter(member => 
+    return teamWorkload.filter((member: any) => 
       member.name.toLowerCase().includes(assigneeSearch.toLowerCase()) ||
       member.role.toLowerCase().includes(assigneeSearch.toLowerCase())
     );
   };
 
   const getSelectedAssignees = () => {
-    return newSchedule.assigned.map(memberId => {
-      const member = teamWorkload.find(m => m.id === memberId);
-      return member || null;
-    }).filter(Boolean);
+    return newSchedule.assigned.map((memberId: any) => {
+      const member = teamWorkload.find((m: any) => m.id === memberId);
+      return member || { id: memberId, name: memberId, role: 'Unknown' };
+    });
   };
 
-  
   // Navigation functions
   const goToPreviousWeek = () => {
     setCurrentWeekOffset(prev => prev - 1);
