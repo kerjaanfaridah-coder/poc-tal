@@ -5,9 +5,42 @@ import { Search, Filter, Plus, FileText, Eye, Download, Edit, Upload, Calendar, 
 import ConsistentLayout from '@/components/layout/ConsistentLayout';
 import jsPDF from 'jspdf';
 
+// TypeScript interfaces
+interface Template {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  lastUpdated: string;
+  fileName: string;
+}
+
+interface Project {
+  id: string;
+  name: string;
+  client: string;
+  location: string;
+  completionDate: string;
+  pic: string;
+  technicians: string;
+}
+
+interface DocumentData {
+  projectName: string;
+  clientName: string;
+  location: string;
+  completionDate: string;
+  projectDescription: string;
+  technicianTeam: string;
+  systemInstalled: string;
+  notes: string;
+  clientRepresentative: string;
+  companyPIC: string;
+}
+
 export default function DocumentsPage() {
   // Template data
-  const [templates, setTemplates] = useState([
+  const [templates, setTemplates] = useState<Template[]>([
     {
       id: '1',
       name: 'BAST Template',
@@ -19,19 +52,19 @@ export default function DocumentsPage() {
   ]);
 
   // Modal state
-  const [showAddTemplateModal, setShowAddTemplateModal] = useState(false);
-  const [showDocumentModal, setShowDocumentModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
-  const [selectedProject, setSelectedProject] = useState('');
-  const [newTemplate, setNewTemplate] = useState({
+  const [showAddTemplateModal, setShowAddTemplateModal] = useState<boolean>(false);
+  const [showDocumentModal, setShowDocumentModal] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+  const [selectedProject, setSelectedProject] = useState<string>('');
+  const [newTemplate, setNewTemplate] = useState<Partial<Template>>({
     name: '',
     category: 'Handover',
     description: '',
     fileName: ''
   });
-  const [documentData, setDocumentData] = useState({
+  const [documentData, setDocumentData] = useState<DocumentData>({
     projectName: '',
     clientName: '',
     location: '',
@@ -45,7 +78,7 @@ export default function DocumentsPage() {
   });
 
   // Available projects data
-  const availableProjects = [
+  const availableProjects: Project[] = [
     { id: '1', name: 'Home Theater – Thrisna Lounge', client: 'Thrisna Private Lounge', location: 'Jakarta', completionDate: '20 Mar 2026', pic: 'Jovan', technicians: 'Alwan, Robi, Andry' },
     { id: '2', name: 'Conference Room – Office Project', client: 'Tech Company Indonesia', location: 'Jakarta', completionDate: '15 Mar 2026', pic: 'Sujadi', technicians: 'Eka, Sopian' },
     { id: '3', name: 'Lighting Installation – Hotel', client: 'Grand Hotel Jakarta', location: 'Jakarta', completionDate: '10 Mar 2026', pic: 'Jovan', technicians: 'Alwan, Robi' }
@@ -71,13 +104,13 @@ export default function DocumentsPage() {
   // Add new template
   const handleAddTemplate = () => {
     if (newTemplate.name && newTemplate.description && newTemplate.fileName) {
-      const template = {
+      const template: Template = {
         id: Date.now().toString(),
-        name: newTemplate.name,
-        description: newTemplate.description,
-        category: newTemplate.category,
+        name: newTemplate.name || '',
+        description: newTemplate.description || '',
+        category: newTemplate.category || 'Handover',
         lastUpdated: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-        fileName: newTemplate.fileName
+        fileName: newTemplate.fileName || ''
       };
       
       setTemplates([...templates, template]);
@@ -87,15 +120,15 @@ export default function DocumentsPage() {
   };
 
   // Preview template function
-  const handlePreviewTemplate = (template: any) => {
+  const handlePreviewTemplate = (template: Template) => {
     alert(`Preview functionality for ${template.name}\n\nThis will show a preview of the template layout and content structure.`);
   };
 
   // Edit template function
-  const handleEditTemplate = (template: any) => {
+  const handleEditTemplate = (template: Template) => {
     alert(`Edit functionality for ${template.name}\n\nThis will open an editor to modify the template content and structure.`);
   };
-  const handleUseTemplate = (template: any) => {
+  const handleUseTemplate = (template: Template) => {
     setSelectedTemplate(template);
     setShowDocumentModal(true);
     setSelectedProject('');
@@ -114,7 +147,7 @@ export default function DocumentsPage() {
   };
 
   // Handle project selection
-  const handleProjectSelection = (projectId: any) => {
+  const handleProjectSelection = (projectId: string) => {
     const project = availableProjects.find(p => p.id === projectId);
     if (project) {
       setSelectedProject(projectId);
@@ -140,7 +173,7 @@ export default function DocumentsPage() {
       return;
     }
     
-    const templateName = (selectedTemplate as any)?.name || 'Document';
+    const templateName = selectedTemplate?.name || 'Document';
     const fileName = `${templateName.replace(' Template', '')} - ${documentData.projectName.replace(/\s+/g, ' ')} - ${documentData.completionDate}.pdf`;
     
     // Create PDF document
@@ -165,7 +198,7 @@ export default function DocumentsPage() {
     // Document Title
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text((selectedTemplate as any)?.name?.toUpperCase() || 'DOCUMENT', pageWidth / 2, yPosition, { align: 'center' });
+    doc.text(selectedTemplate?.name?.toUpperCase() || 'DOCUMENT', pageWidth / 2, yPosition, { align: 'center' });
     yPosition += 20;
     
     // Document type specific content
@@ -220,7 +253,7 @@ export default function DocumentsPage() {
     // Save the PDF
     doc.save(fileName);
     
-    alert(`${(selectedTemplate as any)?.name || 'Document'} PDF document generated: ${fileName}`);
+    alert(`${selectedTemplate?.name || 'Document'} PDF document generated: ${fileName}`);
     setShowDocumentModal(false);
   };
 
@@ -264,7 +297,7 @@ ${documentData.notes}
   };
 
   // Get category color
-  const getCategoryColor = (category: any) => {
+  const getCategoryColor = (category: string) => {
     if (!category) return 'bg-gray-100 text-gray-800 border-gray-200';
     switch(category) {
       case 'Handover': return 'bg-blue-100 text-blue-800 border-blue-200';
@@ -633,7 +666,7 @@ ${documentData.notes}
                 disabled={!selectedProject || !documentData.projectName || !selectedTemplate}
                 className="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Generate {(selectedTemplate as any)?.name ? (selectedTemplate as any).name.replace(' Template', '') : 'Document'}
+                Generate {selectedTemplate?.name ? selectedTemplate.name.replace(' Template', '') : 'Document'}
               </button>
             </div>
           </div>
